@@ -1,0 +1,10 @@
+<button
+  [class]="class"
+  mat-raised-button
+  [disabled]="isDisabled"
+  [color]="color"
+  [type]="type"
+  (click)="onClick($any($event))"
+>
+  {{ label }}
+</button>

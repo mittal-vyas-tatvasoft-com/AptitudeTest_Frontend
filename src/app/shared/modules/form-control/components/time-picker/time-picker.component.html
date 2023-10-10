@@ -1,0 +1,68 @@
+<!-- <div [formGroup]="form">
+  <mat-form-field>
+    <mat-label>{{ formControlModel.label }}</mat-label>
+    <input
+      matInput
+      [ngxTimepicker]="timePicker"
+      aria-label="time picker"
+      [value]="'0:00 am'"
+      readonly
+      [formControlName]="formControlModel.key"
+    />
+    <ngx-material-timepicker-toggle
+      matSuffix
+      [for]="timePicker"
+    ></ngx-material-timepicker-toggle>
+    <ngx-material-timepicker #timePicker> </ngx-material-timepicker>
+    <mat-error>{{
+      validationService.getError(form, formControlModel, formControlModel.key)
+    }}</mat-error>
+  </mat-form-field>
+</div> -->
+
+<div [formGroup]="form">
+  <mat-form-field appearance="outline" id="matPicker">
+    <mat-label>{{ timePickerModel.label }}</mat-label>
+    <input
+      [type]="timePickerModel.inputType"
+      [name]="timePickerModel.key"
+      matInput
+      [ngxMatTimepicker]="timepicker"
+      [format]="timePickerModel.format"
+      [required]="timePickerModel.required"
+      readonly
+      [formControlName]="timePickerModel.key"
+      [id]="timePickerModel.key"
+      (ngModelChange)="changeTime()"
+    />
+
+    <mat-icon
+      matPrefix
+      *ngIf="
+        form.get(timePickerModel.key)?.value &&
+        !form.get(timePickerModel.key)?.disabled &&
+        !form.get(timePickerModel.key)?.hasValidator(Validators.required)
+      "
+      (click)="onClear($event)"
+    >
+      close
+    </mat-icon>
+
+    <mat-icon
+      matSuffix
+      *ngIf="!form.get(timePickerModel.key)?.disabled"
+      (click)="openFromIcon(timepicker)"
+    >
+      schedule
+    </mat-icon>
+  </mat-form-field>
+  <ngx-mat-timepicker #timepicker></ngx-mat-timepicker>
+  <app-button
+    class="setButton"
+    type="submit"
+    label="Set Now"
+    (btnClick)="setNow()"
+    *ngIf="timePickerModel.setNowButton"
+  >
+  </app-button>
+</div>
