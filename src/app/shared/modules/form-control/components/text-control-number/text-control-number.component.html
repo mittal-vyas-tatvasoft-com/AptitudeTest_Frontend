@@ -1,0 +1,16 @@
+<div [formGroup]="form">
+  <mat-form-field appearance="outline">
+    <mat-label>{{ formControlModel.label }}</mat-label>
+    <input
+      matInput
+      [formControlName]="formControlModel.key"
+      [id]="formControlModel.key"
+      [type]="formControlModel.inputType || ''"
+      [maxlength]="formControlModel.maxLength || null"
+      numbersOnly
+    />
+    <mat-error>{{
+      validationService.getError(form, formControlModel, formControlModel.key)
+    }}</mat-error>
+  </mat-form-field>
+</div>

@@ -1,0 +1,13 @@
+<div [formGroup]="form">
+  <mat-form-field>
+    <mat-label>{{ formControlModel.label }}</mat-label>
+    <mat-select [formControlName]="formControlModel.key">
+      <mat-option *ngFor="let option of options" [value]="option.value">
+        {{ option.label }}
+      </mat-option>
+    </mat-select>
+    <mat-error>{{
+      validationService.getError(form, formControlModel, formControlModel.key)
+    }}</mat-error>
+  </mat-form-field>
+</div>
