@@ -34,19 +34,19 @@ export class LoginService {
     this.router.navigate(['/']);
   }
 
-  login(payload: LoginModel): Observable<ResponseModel<string>> {
-    return this.http
-    .post<ResponseModel<string>>(`${environment.baseURL}UserAuthentication/Login`, payload)
-    .pipe(
-      map((res: any) => {
-        if (res.result) {
-          console.log(res.result)
-          this.setToken(res.data.accessToken);
-        }
-        return res;
-      }),
-    );
-  }
+  // login(payload: LoginModel): Observable<ResponseModel<string>> {
+  //   return this.http
+  //   .post<ResponseModel<string>>(`${environment.baseURL}UserAuthentication/Login`, payload)
+  //   .pipe(
+  //     map((res: any) => {
+  //       if (res.result) {
+  //         console.log(res.result)
+  //         this.setToken(res.data.accessToken);
+  //       }
+  //       return res;
+  //     }),
+  //   );
+  // }
 
 
   forgotPassword(
