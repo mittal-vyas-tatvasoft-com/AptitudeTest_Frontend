@@ -6,6 +6,9 @@ import { loginControl } from '../../configs/login.config';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { validations } from 'src/app/shared/messages/validation.static';
+import { Navigation } from 'src/app/shared/common/enum';
 
 @Component({
   selector: 'app-login',
@@ -24,9 +27,13 @@ export class LoginComponent {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private router: Router,
+    private snackbarService :SnackbarService
   ) {
     this.form = this.formBuilder.group({
-      userName: ['', Validators.required],
+      userName: ['', [
+        Validators.required,
+        Validators.pattern(validations.common.emailREGEX),
+      ],],
       password: ['', Validators.required]
     });
   }
@@ -35,36 +42,33 @@ export class LoginComponent {
     this.loginFailed = false;
 
     if (this.form.valid) {
-      const loginData: LoginModel = {
-        username: this.form.value.userName,
-        password: this.form.value.password
+      const payload = {
+        email: this.form.value.userName,
+        password: this.form.value.password,
       };
-      this.submitted = true;
-
-    this.loginService.login(loginData)
+      this.loginService
+        .login(payload)
         .pipe(takeUntil(this.ngUnsubscribe$))
         .subscribe({
           next: (res: ResponseModel<string>) => {
-            console.log("res",res)
+            console.log("result",res)
             if (res.result) {
-              if (res.statusCode === 200) {
-                console.log("called")
                 this.router.navigate([
-                  '/masters'
+                  `${Navigation.Admin}`,
                 ]);
-              }
-            }else{
+            } else {
               this.loginFailed = true;
+              this.snackbarService.error(res.message);
             }
           },
-          error: (error) => {
+          error: (error: { message: string; }) => {
             this.loginFailed = true;
-            this.submitted = false;
-          console.log("loggin error")
+            this.snackbarService.error(error.message);
           },
         });
-    } 
-
+    } else {
+      this.form.markAllAsTouched();
+    }
   }
 
   onIconClick(event: any) {

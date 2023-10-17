@@ -1,1 +1,82 @@
-<p>technology works!</p>
+<p>Technology works!</p>
+
+<div class="button-container">
+  <div class="button-row" >
+      <mat-form-field class="filter-input" *ngIf="showFilters">
+          <mat-label>Filter by Status</mat-label>
+          <mat-select [(value)]="filterValue">
+              <mat-option value="all">All</mat-option>
+              <mat-option value="active">Active</mat-option>
+              <mat-option value="inactive">Inactive</mat-option>
+          </mat-select>
+      </mat-form-field>
+      <mat-form-field class="filter-input" *ngIf="showFilters">
+          <input matInput placeholder="Search by Technology Name" [(ngModel)]="searchValue" />
+      </mat-form-field>
+      <button mat-raised-button color="primary" *ngIf="showFilters" (click)="applyFilter()">Search</button>
+      <button mat-raised-button color="warn" *ngIf="showFilters && searchValue || filterValue !== 'all'" (click)="clearSearch()">Clear</button>
+  </div>
+
+  <div class="check-buttons">
+    <button mat-icon-button (click)="toggleFilters()">
+      <mat-icon>{{ showFilters ? 'filter_alt' : 'filter_alt_off' }}</mat-icon>
+    </button>
+    <button mat-raised-button color="primary" (click)="openAddTechnologyDialog()">Add Technology</button>
+      <button mat-raised-button color="primary" (click)="checkAll()">Check All</button>
+      <button mat-raised-button color="warn" (click)="uncheckAll()">Uncheck All</button>
+  </div>
+</div>
+
+
+ <div class="table-container">
+  <div class="mat-elevation-z8">
+    <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+  
+      <!-- Sr. No. Column -->
+      <ng-container matColumnDef="srNo">
+        <th mat-header-cell *matHeaderCellDef> Sr. No. </th>
+        <td mat-cell *matCellDef="let element; let i = index">{{ i + 1 }}</td>
+      </ng-container>
+  
+      <!-- Technology Name Column -->
+      <ng-container matColumnDef="technologyName">
+        <th mat-header-cell *matHeaderCellDef> Technology Name </th>
+        <td mat-cell *matCellDef="let element">
+          <ng-container *ngIf="!element.isEditMode; else editMode">
+            {{ element.name }}
+          </ng-container>
+          <ng-template #editMode>
+            <input [(ngModel)]="element.name" placeholder="Technology Name" />
+            <button mat-icon-button (click)="save(element)">
+              <mat-icon>save</mat-icon>
+            </button>
+          </ng-template>
+        </td>
+      </ng-container>
+  
+      <!-- Status Column -->
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status </th>
+        <td mat-cell *matCellDef="let element">
+          <mat-slide-toggle [(ngModel)]="element.status"></mat-slide-toggle>
+        </td>
+      </ng-container>
+  
+      <!-- Action Column -->
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action </th>
+        <td mat-cell *matCellDef="let element">
+          <button mat-icon-button (click)="save(element)"><mat-icon>save</mat-icon></button>
+          <button mat-icon-button (click)="delete(element.id)"><mat-icon>delete</mat-icon></button>
+        </td>
+      </ng-container>
+  
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  
+    <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" showFirstLastButtons></mat-paginator>
+  </div>
+  </div>
+  
+  

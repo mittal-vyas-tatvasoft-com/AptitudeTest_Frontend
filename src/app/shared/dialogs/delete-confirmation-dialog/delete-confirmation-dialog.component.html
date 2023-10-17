@@ -1,0 +1,20 @@
+<div [style]="dialogWidth" class="seachange-theme">
+  <div mat-dialog-title>{{ title }}</div>
+  <p class="sub-header-title">{{ subHeaderTitle }}</p>
+
+  <div fxLayout fxLayoutAlign="end center" fxLayoutGap="0.8rem" class="actions">
+    <button class="cancel-btn" mat-flat-button [mat-dialog-close]="false">
+      {{ buttonText ? buttonText.cancel : 'cancel' }}
+    </button>
+    <button
+      mat-flat-button
+      [mat-dialog-close]="{ confirm: true }"
+      color="primary"
+      [ngClass]="{
+        'primary-delete-btn': buttonText.ok === 'Archive'
+      }"
+    >
+      {{ buttonText ? buttonText.ok : 'ok' }}
+    </button>
+  </div>
+</div>

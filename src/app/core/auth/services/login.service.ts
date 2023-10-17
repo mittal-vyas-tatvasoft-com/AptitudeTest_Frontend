@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginModel } from '../interfaces/login.interface';
-import { Observable, of, throwError } from 'rxjs';
+import { Observable, map, of, throwError } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ForgotPasswordModel } from '../interfaces/forgot-password.interface';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { ResetPasswordModel } from '../interfaces/reset-password.interface';
+import { HttpClient } from '@angular/common/http';
 
 
 @Injectable({
@@ -13,7 +14,7 @@ import { ResetPasswordModel } from '../interfaces/reset-password.interface';
 })
 export class LoginService {
   storageToken = 'token';
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient,private router: Router) {}
 
   setToken(token: string): void {
     localStorage.setItem(this.storageToken, token);
@@ -28,55 +29,40 @@ export class LoginService {
   }
 
   logout(): void {
+    console.log("this.storageToken",this.storageToken)
     localStorage.removeItem(this.storageToken);
     this.router.navigate(['/']);
   }
 
-  login(loginData: LoginModel): Observable<ResponseModel<string>> {
-    if (loginData.username === 'user' && loginData.password === 'password') {
-      this.setToken(loginData.username);
-      return of({ 
-        result: true,
-        statusCode: 200,
-        message: 'Login successful',
-        data: 'Success'
-       });
-    } else {
-      return of({ 
-        result: false,
-        statusCode: 400,
-        message: 'Login Failed',
-        data: 'Failed'
-       });
-    }
+  login(payload: LoginModel): Observable<ResponseModel<string>> {
+    return this.http
+    .post<ResponseModel<string>>(`${environment.baseURL}UserAuthentication/Login`, payload)
+    .pipe(
+      map((res: any) => {
+        if (res.result) {
+          console.log(res.result)
+          this.setToken(res.data.accessToken);
+        }
+        return res;
+      }),
+    );
   }
 
-  forgotPassword(data: ForgotPasswordModel): Observable<ResponseModel<string>> {
-    if (data.userName === 'test@gmail.com' ){
-      return of({ 
-        result: true,
-        statusCode: 200,
-        message: 'Password reset successful',
-        data: 'Success'
-       });
-    }
-    else {
-      return of({ 
-        result: false,
-        statusCode: 400,
-        message: 'Password reset Failed',
-        data: 'Failed'
-       });
-    }
+
+  forgotPassword(
+    userName: ForgotPasswordModel,
+  ): Observable<ResponseModel<string>> {
+    const url = `${environment.baseURL}UserAuthentication/ForgetPassword?email=${userName.Email}`;
+    return this.http.post<ResponseModel<string>>(url,null);
   }
 
-  resetPassword(data: ResetPasswordModel): Observable<ResponseModel<string>> {
-    return of({ 
-      result: true,
-      statusCode: 200,
-      message: 'Password reset successful',
-      data: 'Success'
-     });
+  resetPassword(
+    payload: ResetPasswordModel,
+  ): Observable<ResponseModel<string>> {
+    return this.http.post<ResponseModel<string>>(
+      `${environment.baseURL}UserAuthentication/ResetPassword`,
+      payload,
+    );
   }
 
   

@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { TechnologyRoutingModule } from './technology-routing.module';
 import { AddTechnologyComponent } from './components/add-technology/add-technology.component';
 import { TechnologyComponent } from './components/technology/technology.component';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -13,7 +15,9 @@ import { TechnologyComponent } from './components/technology/technology.componen
   ],
   imports: [
     CommonModule,
-    TechnologyRoutingModule
+    TechnologyRoutingModule,
+    SharedModule,
+    FormsModule
   ]
 })
 export class TechnologyModule { }

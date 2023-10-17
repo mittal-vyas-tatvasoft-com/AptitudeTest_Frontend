@@ -5,7 +5,7 @@ export const loginControl = {
       label: 'User Name',
       required: true,
       requiredErrMsg: 'User name is required',
-    //   patternErrMsg: 'User name is not valid',
+      patternErrMsg: 'User name is not valid',
       inputType: 'text',
       displayIcon: true,
       iconName: 'person',

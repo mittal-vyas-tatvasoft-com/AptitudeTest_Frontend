@@ -1,1 +1,13 @@
-<p>add-technology works!</p>
+<div class="custom-dialog">
+    <h2 mat-dialog-title>{{ dialogTitle }}</h2>
+    <mat-dialog-content>
+        <mat-form-field class="input-field">
+            <input matInput placeholder="Technology Name" [(ngModel)]="newTechnology.name" name="name" required>
+        </mat-form-field>
+        <mat-checkbox [(ngModel)]="newTechnology.isActive">Is Active</mat-checkbox>
+    </mat-dialog-content>
+    <mat-dialog-actions>
+        <button mat-button (click)="onCancelClick()" class="cancel-button">Cancel</button>
+        <button mat-button (click)="onSaveClick()" cdkFocusInitial class="save-button">{{ saveButtonText }}</button>
+      </mat-dialog-actions>
+</div>

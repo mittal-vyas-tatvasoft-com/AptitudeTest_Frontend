@@ -1,7 +1,25 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { Navigation } from '../shared/common/enum';
+import { AuthGuard } from './guards/auth/auth.guard';
+import { CoreComponent } from './core.component';
 
 const routes: Routes = [
+  {
+    path: '',
+    component: CoreComponent,
+    canActivate: [AuthGuard],
+    data: { breadCrumb: 'Admin' },
+    children: [
+      {
+        path: `${Navigation.Masters}`,
+        loadChildren: () =>
+          import(
+            '../modules/masters/masters.module'
+          ).then((m) => m.MastersModule),
+      },
+    ],
+  },
 ];
 
 @NgModule({

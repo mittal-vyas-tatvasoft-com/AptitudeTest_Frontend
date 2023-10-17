@@ -6,6 +6,7 @@ import { validations } from 'src/app/shared/messages/validation.static';
 import { LoginService } from '../../services/login.service';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { forgotControl } from '../../configs/forgot-password.config';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-forgot-password',
@@ -22,8 +23,9 @@ export class ForgotPasswordComponent {
 
   constructor(
     private fb: FormBuilder,
-    private forgotPasswordService: LoginService, // Use the service
+    private loginService: LoginService, // Use the service
     private router: Router,
+    private snackbarService : SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -42,37 +44,67 @@ export class ForgotPasswordComponent {
     });
   }
 
-  onForgot() {
-    if (this.form.valid) {
-      const data = {
-        userName: this.form.value.userName,
-      };
-
-      this.disable = true;
-
-      this.forgotPasswordService
-      .forgotPassword(data)
-      .pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe({
-        next: (res: ResponseModel<string>) => {
-          if (res.result) {
-            if (res.statusCode === 200) {
-              this.router.navigate(['/reset-password']);
-            }
-          } else {
-            this.forgotFailed = true;
-            console.error(`Password reset failed: ${res.message}`);
-          }
-          this.disable = false;
-        },
-        error: () => {
-          this.forgotFailed = true;
-          console.error('An error occurred while resetting the password.');
-          this.disable = false;
-        },
-      });
+    onForgot() {
+      if (this.form.valid) {
+        const data = {
+          Email: this.form.value.userName,
+        };
+  
+        this.disable = true;
+  
+        this.loginService
+          .forgotPassword(data)
+          .pipe(takeUntil(this.ngUnsubscribe$))
+          .subscribe({
+            next: (res: ResponseModel<string>) => {
+              if (res.result) {
+                this.snackbarService.success(res.message);
+                this.router.navigate(['/reset-password']);
+              } else {
+                this.forgotFailed = true;
+                this.snackbarService.error(res.message);
+                this.disable = false;
+              }
+            },
+            error: (error) => {
+              this.forgotFailed = true;
+              this.snackbarService.error(error.message);
+              this.disable = false;
+            },
+          });
+      }
     }
-  }
+
+    // if (this.form.valid) {
+    //   const data = {
+    //     userName: this.form.value.userName,
+    //   };
+
+    //   this.disable = true;
+
+    //   this.forgotPasswordService
+    //   .forgotPassword(data)
+    //   .pipe(takeUntil(this.ngUnsubscribe$))
+    //   .subscribe({
+    //     next: (res: ResponseModel<string>) => {
+    //       if (res.result) {
+    //         if (res.statusCode === 200) {
+    //           this.router.navigate(['/reset-password']);
+    //         }
+    //       } else {
+    //         this.forgotFailed = true;
+    //         console.error(`Password reset failed: ${res.message}`);
+    //       }
+    //       this.disable = false;
+    //     },
+    //     error: () => {
+    //       this.forgotFailed = true;
+    //       console.error('An error occurred while resetting the password.');
+    //       this.disable = false;
+    //     },
+    //   });
+    // }
+ 
 
   ngOnDestroy() {
     this.ngUnsubscribe$.next();
