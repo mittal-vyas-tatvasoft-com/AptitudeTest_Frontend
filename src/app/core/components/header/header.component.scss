@@ -1,0 +1,43 @@
+
+div.header.site-header{
+  height:inherit;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 30px;
+  background-color:#2d61ac;
+
+  div.left img{
+  margin:15px 0 10px;
+  width:209px;
+  height:51px;}
+}
+
+.navbar {
+  padding: 10px; 
+}
+
+.menu {
+  list-style: none; 
+  margin: 0; 
+  padding: 0; 
+}
+
+.menu li {
+  display: inline; 
+}
+
+.menu li a {
+  text-decoration: none; 
+  color: white;
+  font-weight: bold;
+}
+
+.menu li a:hover {
+  color: #ff6600; 
+}
+
+.menu li.spacer {
+  width: 20px; 
+  display: inline-block; 
+}

@@ -1,0 +1,18 @@
+.site-footer{
+    padding:16px 30px;
+    display:flex;
+    justify-content:space-between;
+    background-color:#f2f2f2;
+     margin-top:60px;
+
+    p{
+        font-size:13px;
+        color:#6f6f6f;
+        margin:0;
+        line-height:1.385;
+    }
+
+    p+p{
+        padding-left:15px;
+    }
+}

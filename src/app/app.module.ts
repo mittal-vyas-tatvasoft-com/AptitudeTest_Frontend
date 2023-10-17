@@ -7,7 +7,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MastersModule } from './modules/masters/masters.module';
 import { UsersModule } from './modules/users/users.module';
 import { CoreModule } from './core/core.module';
-import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthTokenInterceptor } from './core/interceptors/auth/auth-token.interceptor';
 
 @NgModule({
@@ -20,7 +20,8 @@ import { AuthTokenInterceptor } from './core/interceptors/auth/auth-token.interc
     BrowserAnimationsModule,
     MastersModule,
     UsersModule,
-    CoreModule
+    CoreModule,
+    HttpClientModule
   ],
   providers: [
     {

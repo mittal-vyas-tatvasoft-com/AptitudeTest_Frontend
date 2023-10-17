@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { CollegeComponent } from './components/college/college.component';
 import { AddCollegeComponent } from './components/add-college/add-college.component';
 import { CollegeRountingModule } from './college-routing.module';
+import { CoreModule } from 'src/app/core/core.module';
 
 
 
@@ -13,7 +14,8 @@ import { CollegeRountingModule } from './college-routing.module';
   ],
   imports: [
     CommonModule,
-    CollegeRountingModule
+    CollegeRountingModule,
+    CoreModule
   ]
 })
 export class CollegeModule { }

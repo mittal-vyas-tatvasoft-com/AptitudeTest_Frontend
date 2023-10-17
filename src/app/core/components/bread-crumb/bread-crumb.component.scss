@@ -1,0 +1,17 @@
+ul {
+  list-style: none;
+}
+
+li {
+  display: inline-block;
+}
+.mat-toolbar {
+  justify-content: space-between;
+  height: 30px;
+  padding: 0 30px;
+  background-color: ghostwhite !important;
+  @media (max-width: 767px) {
+    height: 13px;
+    padding: 0 10px;
+  }
+}

@@ -2,11 +2,12 @@ import { Component } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { Subject, takeUntil } from 'rxjs';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { forgotControl } from '../../configs/forgot-password.config';
 import { resetPasswordControl } from '../../configs/reset-password.config';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-reset-password',
@@ -20,15 +21,21 @@ export class ResetPasswordComponent {
   resetModel = resetPasswordControl;
   resetFailed = false;
   passwordsDoNotMatch: boolean = false;
+  encryptedEmail!: string;
   private ngUnsubscribe$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
-    private resetPasswordService: LoginService, 
+    private loginService: LoginService, 
     private router: Router,
+    private route: ActivatedRoute,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
+    this.route.queryParams.subscribe(params => {
+      this.encryptedEmail = params['email'];
+    });
     this.createForm();
   }
 
@@ -50,34 +57,29 @@ export class ResetPasswordComponent {
   }
 
   resetPassword() {
+    const payload = {
+      newPassword: this.form.value.newPassword,
+      encryptedEmail: this.encryptedEmail
+    };
     if (this.form.valid) {
-      const data = {
-        newPassword: this.form.value.newPassword,
-      };
-
       this.disable = true;
-
-      this.resetPasswordService
-      .resetPassword(data)
-      .pipe(takeUntil(this.ngUnsubscribe$))
-      .subscribe({
-        next: (res: ResponseModel<string>) => {
-          if (res.result) {
-            if (res.statusCode === 200) {
-              this.router.navigate(['']);
+      this.loginService
+        .resetPassword(payload)
+        .pipe(takeUntil(this.ngUnsubscribe$))
+        .subscribe({
+          next: (res: ResponseModel<string>) => {
+            if (res.result) {
+              this.snackbarService.success(res.message);
+              this.form.reset();
+              this.router.navigate(['/']);
+            } else {
+              this.snackbarService.error(res.message);
             }
-          } else {
-            this.resetFailed = true;
-            console.error(`Password reset failed: ${res.message}`);
-          }
-          this.disable = false;
-        },
-        error: () => {
-          this.resetFailed = true;
-          console.error('An error occurred while resetting the password.');
-          this.disable = false;
-        },
-      });
+          },
+          error: (error) => {
+            this.snackbarService.error(error.message);
+          },
+        });
     }
   }
 
