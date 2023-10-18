@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { LoginService } from '../../auth/services/login.service';
 
 @Component({
@@ -8,8 +8,13 @@ import { LoginService } from '../../auth/services/login.service';
 })
 export class HeaderComponent {
   isAuthenticated: boolean = false;
+  public mobileScreen: boolean = (window.innerWidth < 575)
+  constructor(private loginService: LoginService) { }
 
-  constructor(private loginService: LoginService) {}
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.mobileScreen = window.innerWidth < 575;
+  }
 
   ngOnInit(): void {
     this.isAuthenticated = this.loginService.isLoggedIn();
@@ -24,6 +29,12 @@ export class HeaderComponent {
   }
   onClick() {
     this.onMenuIconClick.emit();
+  }
+
+  getInitials(firstName: string, lastName: string): string {
+    const firstInitial = firstName ? firstName.charAt(0).toUpperCase() : '';
+    const lastInitial = lastName ? lastName.charAt(0).toUpperCase() : '';
+    return `${firstInitial}${lastInitial}`;
   }
 
 }

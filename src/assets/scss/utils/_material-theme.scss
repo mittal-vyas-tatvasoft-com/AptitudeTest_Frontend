@@ -1,7 +1,8 @@
 // Custom Theming for Angular Material
 // For more information: https://material.angular.io/guide/theming
-@use '@angular/material' as mat;
+@use "@angular/material" as mat;
 // Plus imports for other components in your app.
+@import "@angular/material/theming";
 
 // Include the common styles for Angular Material. We include this here so that you only
 // have to load a single css file for Angular Material in your app.
@@ -11,23 +12,281 @@
 // Define the palettes for your theme using the Material Design palettes available in palette.scss
 // (imported above). For each palette, you can optionally specify a default, lighter, and darker
 // hue. Available color palettes: https://material.io/design/color/
-$Aptitude_test-primary: mat.define-palette(mat.$indigo-palette);
-$Aptitude_test-accent: mat.define-palette(mat.$pink-palette, A200, A100, A400);
+$primary: (
+  50: #eaeff7,
+  100: #d5dfee,
+  200: #abc0de,
+  300: #81a0cd,
+  400: #5781bd,
+  500: #2d61ac,
+  600: #244e8a,
+  700: #1b3a67,
+  800: #122745,
+  900: #091322,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #091322,
+    300: #091322,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  ),
+);
+
+$accent: (
+  50: #fef4e9,
+  100: #fcead3,
+  200: #f9d5a6,
+  300: #f7bf7a,
+  400: #f4aa4d,
+  500: #f19521,
+  600: #c1771a,
+  700: #915914,
+  800: #603c0d,
+  900: #301e07,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #180f03,
+    300: #180f03,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  ),
+);
+
+$red-palette: (
+  50: #f9e8e8,
+  100: #f3d0d0,
+  200: #e7a2a2,
+  300: #da7373,
+  400: #ce4545,
+  500: #c21616,
+  600: #9b1212,
+  700: #740d0d,
+  800: #4e0909,
+  900: #270404,
+  contrast: (
+    50: #000000,
+    100: #000000,
+    200: #130202,
+    300: #130202,
+    400: #ffffff,
+    500: #ffffff,
+    600: #ffffff,
+    700: #ffffff,
+    800: #ffffff,
+    900: #ffffff,
+  ),
+);
+
+// Define the palettes for your theme using the Material Design palettes available in palette.scss
+// (imported above). For each palette, you can optionally specify a default, lighter, and darker
+// hue. Available color palettes: https://material.io/design/color/
+$Aptitude_test-primary: mat.define-palette($primary, 500);
+$Aptitude_test-accent: mat.define-palette($accent, 500);
 
 // The warn palette is optional (defaults to red).
-$Aptitude_test-warn: mat.define-palette(mat.$red-palette);
+$Aptitude_test-warn: mat.define-palette($red-palette, 500);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$Aptitude_test-theme: mat.define-light-theme((
-  color: (
-    primary: $Aptitude_test-primary,
-    accent: $Aptitude_test-accent,
-    warn: $Aptitude_test-warn,
+$Aptitude_test-theme: mat.define-light-theme(
+  (
+    color: (
+      primary: $Aptitude_test-primary,
+      accent: $Aptitude_test-accent,
+      warn: $Aptitude_test-warn,
+    ),
   )
-));
+);
 
 // Include theme styles for core and each component used in your app.
 // Alternatively, you can import and @include the theme mixins for each component
 // that you are using.
 @include mat.all-component-themes($Aptitude_test-theme);
+
+$heading-font-family: "'Poppins', sans-serif !important";
+
+// color varianble
+$primary300: mat-color($primary, 300);
+$primary400: mat-color($primary, 400);
+$primary500: mat-color($primary, 500);
+$primary600: mat-color($primary, 600);
+$primary700: mat-color($primary, 700);
+$accent400: mat-color($accent, 400);
+$accent500: mat-color($accent, 500);
+$accent600: mat-color($accent, 600);
+$black: #000000;
+$white: #ffffff;
+$color51545F: #51545f;
+$color30343C: #30343c;
+$color666870: #666870;
+
+// Mat FormField
+.mat-mdc-form-field {
+  width: 100%;
+  &.mat-form-field-appearance-outline {
+    .mat-mdc-text-field-wrapper {
+      background: $white;
+      &.mdc-text-field--outlined {
+        --mdc-outlined-text-field-outline-width: 1px;
+        --mdc-outlined-text-field-focus-outline-width: 1px;
+        --mdc-outlined-text-field-container-shape: 6px;
+      }
+
+      &:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
+      &:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
+      &:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
+        border-color: #b8b8b8;
+      }
+
+      &:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover
+        .mdc-notched-outline
+        .mdc-notched-outline__leading,
+      &:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover
+        .mdc-notched-outline
+        .mdc-notched-outline__notch,
+      &:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover
+        .mdc-notched-outline
+        .mdc-notched-outline__trailing,
+      &:not(.mdc-text-field--disabled).mdc-text-field--focused
+        .mdc-notched-outline
+        .mdc-notched-outline__leading,
+      &:not(.mdc-text-field--disabled).mdc-text-field--focused
+        .mdc-notched-outline
+        .mdc-notched-outline__notch,
+      &:not(.mdc-text-field--disabled).mdc-text-field--focused
+        .mdc-notched-outline
+        .mdc-notched-outline__trailing {
+        border-color: $primary500;
+      }
+
+      &.mdc-text-field--outlined {
+        .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
+          --mat-mdc-form-field-label-transform: translateY(-29.75px)
+            scale(var(--mat-mdc-form-field-floating-label-scale, 0.75));
+        }
+        &:not(.mdc-text-field--disabled).mdc-text-field--focused
+          .mdc-floating-label,
+        &:not(.mdc-text-field--disabled).mdc-text-field--focused
+          .mdc-floating-label--float-above {
+          color: $primary500;
+        }
+      }
+
+      .mat-mdc-form-field-flex {
+        .mat-mdc-form-field-infix {
+          min-height: 44px;
+          padding-top: 13px;
+          padding-bottom: 13px;
+        }
+        .mdc-notched-outline {
+          .mat-mdc-floating-label {
+            top: 22.5px;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 400;
+            color: rgba($color30343C, $alpha: 0.6);
+          }
+        }
+        .mat-mdc-form-field-input-control {
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 400;
+          color: $color30343C;
+          margin: 0;
+          height: 20px;
+          display: block;
+        }
+        textarea.mat-mdc-form-field-input-control {
+          height: auto;
+        }
+        .mat-mdc-form-field-icon-suffix {
+          .material-icons {
+            padding: 9px;
+          }
+          .mat-mdc-icon-button.mat-mdc-button-base {
+            --mdc-icon-button-state-layer-size: 44;
+            padding: 10px;
+          }
+        }
+        .mat-mdc-form-field-icon-prefix {
+          padding-right: 0;
+          .material-icons {
+            padding: 9px;
+          }
+          .mat-mdc-icon-button.mat-mdc-button-base {
+            --mdc-icon-button-state-layer-size: 44;
+            padding: 10px;
+          }
+        }
+      }
+      &.mdc-text-field--disabled {
+        border-color: #b8b8b8;
+        background: rgba($color: $black, $alpha: 0.07);
+      }
+    }
+  }
+  &.mat-mdc-form-field-has-icon-prefix {
+    .mat-mdc-text-field-wrapper {
+      padding-left: 0;
+    }
+  }
+  .mat-mdc-form-field-subscript-wrapper {
+    line-height: 20px;
+  }
+}
+
+// Mat Icon
+.mat-icon.material-icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  img {
+    width: inherit;
+    height: inherit;
+  }
+}
+
+.mat-mdc-menu-trigger[aria-expanded="true"] {
+  background: rgba($color: $black, $alpha: 0.1);
+}
+.mat-mdc-icon-button {
+  .mat-mdc-button-persistent-ripple {
+    border-radius: inherit !important;
+  }
+}
+
+// Mat Menu Panel
+.mat-mdc-menu-panel.mat-mdc-elevation-specific {
+  border-radius: 6px;
+  box-shadow: 0px 3px 10px 0px rgba($color: $black, $alpha: 0.2);
+  min-width: 110px;
+  background: $white;
+  .mat-mdc-menu-content {
+    .mat-mdc-menu-item {
+      min-height: auto;
+      padding: 8px 10px;
+      .mat-icon {
+        width: 18px;
+        height: 18px;
+        margin-right: 10px;
+        margin-bottom: 1px;
+      }
+      .mat-mdc-menu-item-text {
+        font-size: 14px;
+        line-height: 20px;
+        color: $color51545F;
+        font-family: "Poppins", sans-serif;
+      }
+    }
+  }
+}

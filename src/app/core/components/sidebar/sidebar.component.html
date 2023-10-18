@@ -1,31 +1,220 @@
-<!-- Start Header -->
-<app-header [isHandset]="isHandset$ | async" (onMenuIconClick)="drawer.toggle()"></app-header>
-<!-- End Header -->
-<mat-sidenav-container class="sidenav-container">
-  <mat-sidenav
-    #drawer
-    class="sidenav"
-    
-    [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-    [mode]="(isHandset$ | async) ? 'over' : 'side'"
-    [opened]="(isHandset$ | async) === false"
-  >
-    <app-side-bar-navigation></app-side-bar-navigation>
-  </mat-sidenav>
-  <mat-sidenav-content>
-    <div class="wrapper">
-      <!-- Main Navigation -->
-      <!-- End Main Navigation -->
-      <app-bread-crumb></app-bread-crumb>
-      <!-- Main Content -->
-      <main class="main-content">
-        <router-outlet></router-outlet>
-      </main>
-      <!-- End Main Content -->
+<aside class="sidebar">
+    <!-- <mat-accordion multi>
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header routerLink="table">
+                <em class="icon"> <img src="assets/images/dashboard-white-ic.svg" alt="" /></em>
+                Dashboard
+            </mat-expansion-panel-header>
+        </mat-expansion-panel>
 
-      <!-- Start Footer -->
-      <app-footer></app-footer>
-      <!-- End Footer -->
-    </div>
-  </mat-sidenav-content>
-</mat-sidenav-container>
+        <mat-expansion-panel hideToggle>
+            <mat-expansion-panel-header>
+                <mat-icon class="icon">
+                    {{ routeConfig.Websites.icon }}
+                </mat-icon>
+                {{ routeConfig.Websites.label }}
+            </mat-expansion-panel-header>
+
+            <mat-accordion multi class="sub-menu">
+                <mat-expansion-panel hideToggle>
+                    <div *ngFor="let item of routeConfig.Websites.Components">
+                        <a mat-list-item [routerLink]="item.path">{{ item.label }}</a>
+                    </div>
+                    <app-tree-view
+              *ngIf="navFacadeService.clientList$"
+              [data]="navFacadeService.clientList$ | async"
+              [expand]="expandBtn"
+              [collapse]="collapseBtn"
+              (btnClick)="edit($event)"
+              [visibility]="true"
+            ></app-tree-view>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-icon class="icon">
+                    {{ routeConfig.Masters.icon }}
+                </mat-icon>
+                {{ routeConfig.Masters.label }}
+            </mat-expansion-panel-header>
+            <mat-accordion multi class="sub-menu">
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header *ngFor="let item of routeConfig.Masters.Components">
+                        <a mat-list-item [routerLink]="item.path">{{ item.label }}</a>
+                    </mat-expansion-panel-header>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-icon class="icon">
+                    {{ routeConfig.UsersConfig.icon }}
+                </mat-icon>
+                {{ routeConfig.UsersConfig.label }}
+            </mat-expansion-panel-header>
+            <mat-accordion multi class="sub-menu">
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header *ngFor="let item of routeConfig.UsersConfig.Components">
+                        <a mat-list-item [routerLink]="item.path">{{ item.label }}</a>
+                    </mat-expansion-panel-header>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-expansion-panel>
+
+        <mat-expansion-panel>
+            <mat-expansion-panel-header>
+                <mat-icon class="icon">
+                    {{ routeConfig.Utilities.icon }}
+                </mat-icon>
+                {{ routeConfig.Utilities.label }}
+            </mat-expansion-panel-header>
+            <mat-accordion multi class="sub-menu">
+                <mat-expansion-panel hideToggle>
+                    <mat-expansion-panel-header *ngFor="let item of routeConfig.Utilities.Components">
+                        <a mat-list-item [routerLink]="item.path">{{ item.label }}</a>
+                    </mat-expansion-panel-header>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </mat-expansion-panel>
+    </mat-accordion> -->
+    <ul class="main-navigation">
+        <li class="nav-link">
+            <a href="javascript:void(0)" routerLink="/dashboard" class="nav-item" routerLinkActive="active"
+                title="Dashboard">
+                <mat-icon class="nav-icon">
+                    <img src="./assets/images/dashboard-grey.svg" alt="Dashboard">
+                </mat-icon>
+                Dashboard
+            </a>
+        </li>
+        <li class="nav-link">
+            <a href="javascript:void(0)" routerLink="/groups" class="nav-item" routerLinkActive="active" title="Groups">
+                <mat-icon class="nav-icon">
+                    <img src="./assets/images/group-grey.svg" alt="Groups">
+                </mat-icon>
+                Groups
+            </a>
+        </li>
+        <li class="nav-link">
+            <a href="javascript:void(0)" routerLink="/candidates" class="nav-item" routerLinkActive="active"
+                title="Candidates">
+                <mat-icon class="nav-icon">
+                    <img src="./assets/images/candidates-grey.svg" alt="Candidates">
+                </mat-icon>
+                Candidates
+            </a>
+        </li>
+        <li class="nav-link">
+            <a href="javascript:void(0)" routerLink="/test" class="nav-item" routerLinkActive="active" title="Test">
+                <mat-icon class="nav-icon">
+                    <img src="./assets/images/test-grey.svg" alt="Test">
+                </mat-icon>
+                Test
+            </a>
+        </li>
+        <li class="nav-link">
+            <a href="javascript:void(0)" routerLink="/results" class="nav-item" routerLinkActive="active"
+                title="Results">
+                <mat-icon class="nav-icon">
+                    <img src="./assets/images/result-grey.svg" alt="Results">
+                </mat-icon>
+                Results
+            </a>
+        </li>
+        <li class="nav-link">
+            <mat-accordion class="nested-navigation" [multi]="false">
+                <mat-expansion-panel class="nested-navigation" (click)="toggleAccordion(1)"
+                    [expanded]="currentlyOpenAccordion === 1">
+                    <mat-expansion-panel-header>
+                        <a href="javascript:void(0)" class="nav-item" routerLinkActive="active" title="Manage Master">
+                            <mat-icon class="nav-icon">
+                                <img src="./assets/images/manage-master-grey.svg" alt="Dashboard">
+                            </mat-icon>
+                            Manage Master
+                        </a>
+                    </mat-expansion-panel-header>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="javascript:void(0)" routerLink="/degree" class="nav-item" routerLinkActive="active"
+                                title="Degree">
+                                Degree
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" routerLink="/college" class="nav-item"
+                                routerLinkActive="active" title="College">
+                                College
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" routerLink="/profile" class="nav-item"
+                                routerLinkActive="active" title="Profile">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" routerLink="/stream" class="nav-item" routerLinkActive="active"
+                                title="Stream">
+                                Stream
+                            </a>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </li>
+        <li class="nav-link">
+            <mat-accordion class="nested-navigation" [multi]="false">
+                <mat-expansion-panel class="nested-navigation" (click)="toggleAccordion(2)"
+                    [expanded]="currentlyOpenAccordion === 2">
+                    <mat-expansion-panel-header>
+                        <a href="javascript:void(0)" class="nav-item" routerLinkActive="active" title="Question">
+                            <mat-icon class="nav-icon">
+                                <img src="./assets/images/question-grey.svg" alt="Dashboard">
+                            </mat-icon>
+                            Question
+                        </a>
+                    </mat-expansion-panel-header>
+                    <ul class="sub-menu">
+                        <li>
+                            <a href="javascript:void(0)" routerLink="/modules" class="nav-item"
+                                routerLinkActive="active" title="Modules">
+                                Modules
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" routerLink="/topics" class="nav-item" routerLinkActive="active"
+                                title="Topics">
+                                Topics
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" routerLink="/question-group" class="nav-item"
+                                routerLinkActive="active" title="Question Group">
+                                Question Group
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" routerLink="/question-list" class="nav-item"
+                                routerLinkActive="active" title="Question List">
+                                Question List
+                            </a>
+                        </li>
+                    </ul>
+                </mat-expansion-panel>
+            </mat-accordion>
+        </li>
+        <li class="nav-link">
+            <a href="javascript:void(0)" routerLink="/setting" class="nav-item" routerLinkActive="active"
+                title="Setting">
+                <mat-icon class="nav-icon">
+                    <img src="./assets/images/setting-grey.svg" alt="Setting">
+                </mat-icon>
+                Setting
+            </a>
+        </li>
+    </ul>
+
+</aside>

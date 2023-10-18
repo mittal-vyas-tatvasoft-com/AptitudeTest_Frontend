@@ -1,20 +1,51 @@
-<div class="header site-header">
-  <div class="left">
-      <img src="assets/images/tatvasoft.png" alt="site-logo">
-      <div class="navbar">
-          <ul class="menu">
-              <li><a href="#" title="public area">Public</a></li>
-              <li class="spacer"></li>
-              <li *ngIf="!isAuthenticated"><a routerLink="" title="click here to log-in">Login</a></li>
-            <!-- <li *ngIf="isAuthenticated">
-                <mat-menu #dashboardMenu="matMenu">
-                  <button mat-menu-item routerLink="/master">Dashboard Page</button>
-                </mat-menu>
-                <button mat-menu-trigger [matMenuTriggerFor]="dashboardMenu">Dashboard</button>
-              </li> -->
-              <li class="spacer"></li>
-              <li *ngIf="isAuthenticated"><a (click)="logout()" title="click here to log out">Logout</a></li>
-          </ul>
-      </div>
-  </div>
-</div>
+<header>
+  <mat-toolbar color="primary">
+    <div class="header-left">
+      <a class="logo" href="/" routerLink="/" title="Tatvasoft">
+        <img [src]="mobileScreen ? './assets/images/tatvasoft-abstract.svg' : './assets/images/tatvasoft-white.svg'" alt="Tatvasoft">
+      </a>
+      <button mat-icon-button class="btn-menu" (click)="onClick()">
+        <mat-icon>
+          <img src="./assets/images/hamburg-white.svg" alt="Menu" />
+        </mat-icon>
+      </button>
+    </div>
+    <div class="header-right">
+      <ul class="top-actions">
+        <li>
+          <span class="logged-time">
+            24-10-2023<em class="time">12:14:46</em>
+          </span>
+        </li>
+        <li>
+          <!-- Profile Menu -->
+          <button class="btn-user-profile" mat-icon-button [matMenuTriggerFor]="ProfileMenu">
+            <mat-icon class="letter-avatar">
+              {{ getInitials('Tatva', 'Soft') }}
+            </mat-icon>
+            <p class="text-block">Tatvasoft
+              <span class="username">Admin</span>
+            </p>
+            <mat-icon class="arrow">
+              <img src="./assets/images/chevron-down-white.svg" alt="Chevron" />
+            </mat-icon>
+          </button>
+          <mat-menu #ProfileMenu="matMenu" class="profile-menu" xPosition="before">
+            <button mat-menu-item routerLink="/change-password">
+              <mat-icon>
+                <img src="./assets/images/change-password-grey.svg" alt="Change Password" />
+              </mat-icon>
+              <span>Change Password</span>
+            </button>
+            <button mat-menu-item routerLink="/">
+              <mat-icon>
+                <img src="./assets/images/logout-grey.svg" alt="Logout" />
+              </mat-icon>
+              <span>Logout</span>
+            </button>
+          </mat-menu>
+        </li>
+      </ul>
+    </div>
+  </mat-toolbar>
+</header>

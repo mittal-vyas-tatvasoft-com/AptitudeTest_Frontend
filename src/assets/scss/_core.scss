@@ -1,3 +1,25 @@
-@import './utils/_material-overrides.scss';
-@import './utils/_variable.scss';
-@import './utils/material-theme';
+@import "./utils/material-overrides";
+@import "./utils/variable";
+@import "./reset";
+@import "./grid";
+@import "./utils/material-theme";
+
+// Spacing CSS goes here
+.flex-wrap {
+  flex-wrap: wrap;
+}
+.flex-grow1 {
+  flex-grow: 1 !important;
+}
+.flex-shrink0 {
+  flex-shrink: 0 !important;
+}
+.text-nowrap {
+  white-space: nowrap;
+}
+.w-100 {
+  width: 100% !important;
+}
+.mb-4p {
+  margin-bottom: 4px !important;
+}
