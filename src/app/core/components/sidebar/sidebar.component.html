@@ -80,6 +80,7 @@
             </mat-accordion>
         </mat-expansion-panel>
     </mat-accordion> -->
+
     <ul class="main-navigation">
         <li class="nav-link">
             <a href="javascript:void(0)" routerLink="/dashboard" class="nav-item" routerLinkActive="active"
@@ -137,28 +138,10 @@
                         </a>
                     </mat-expansion-panel-header>
                     <ul class="sub-menu">
-                        <li>
-                            <a href="javascript:void(0)" routerLink="/degree" class="nav-item" routerLinkActive="active"
-                                title="Degree">
-                                Degree
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" routerLink="/college" class="nav-item"
-                                routerLinkActive="active" title="College">
-                                College
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" routerLink="/profile" class="nav-item"
-                                routerLinkActive="active" title="Profile">
-                                Profile
-                            </a>
-                        </li>
-                        <li>
-                            <a href="javascript:void(0)" routerLink="/stream" class="nav-item" routerLinkActive="active"
-                                title="Stream">
-                                Stream
+                        <li *ngFor="let item of routeConfig.Masters.Components">
+                            <a href="javascript:void(0)" [routerLink]="item.path" class="nav-item"
+                                routerLinkActive="active" title="Degree">
+                                {{ item.label }}
                             </a>
                         </li>
                     </ul>

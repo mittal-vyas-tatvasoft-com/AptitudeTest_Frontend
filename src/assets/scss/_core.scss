@@ -5,6 +5,9 @@
 @import "./utils/material-theme";
 
 // Spacing CSS goes here
+.text-center{
+  text-align: center!important;
+}
 .flex-wrap {
   flex-wrap: wrap;
 }

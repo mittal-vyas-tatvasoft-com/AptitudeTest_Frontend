@@ -19,7 +19,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     BreadCrumbComponent,
     SidebarComponent,
     LayoutComponent,
-    SidebarComponent
+    SidebarComponent,
   ],
   imports: [
     CommonModule,

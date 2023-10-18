@@ -59,11 +59,7 @@ export class SidebarComponent {
   currentlyOpenAccordion: number | null = null;
 
   // Function to toggle the open state of a mat-accordion
-  toggleAccordion(accordionIndex: number) {
-    if (this.currentlyOpenAccordion === accordionIndex) {
-      this.currentlyOpenAccordion = null; // Close the accordion if it's already open
-    } else {
-      this.currentlyOpenAccordion = accordionIndex; // Open the accordion
-    }
+  toggleAccordion(index: number) {
+    this.currentlyOpenAccordion = this.currentlyOpenAccordion === index ? null : index;
   }
 }

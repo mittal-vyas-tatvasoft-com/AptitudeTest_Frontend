@@ -129,6 +129,43 @@ $white: #ffffff;
 $color51545F: #51545f;
 $color30343C: #30343c;
 $color666870: #666870;
+$color676D79: #676d79;
+
+// Mat Button
+.mdc-button.mat-mdc-button-base,
+.mat-mdc-unelevated-button.mat-mdc-button-base {
+  height: auto;
+  padding: 12px 20px;
+  border-radius: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 20px;
+  letter-spacing: 0.14px !important;
+  transition: all 0.3s ease-in-out;
+  text-transform: capitalize;
+  overflow: hidden;
+  min-width: auto;
+  font-family: "Poppins", sans-serif;
+  border: 1px solid transparent;
+}
+
+// Mat Button Primary
+.mdc-button.mat-primary.mat-mdc-unelevated-button {
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: $primary500;
+  }
+}
+.mdc-button.mat-primary.mdc-button--outlined {
+  border-color: $primary500;
+  background-color: transparent;
+  &:hover,
+  &:focus,
+  &:active {
+    background-color: rgba(76, 93, 222, 0.07);
+  }
+}
 
 // Mat FormField
 .mat-mdc-form-field {
@@ -136,6 +173,7 @@ $color666870: #666870;
   &.mat-form-field-appearance-outline {
     .mat-mdc-text-field-wrapper {
       background: $white;
+      padding-right: 10px;
       &.mdc-text-field--outlined {
         --mdc-outlined-text-field-outline-width: 1px;
         --mdc-outlined-text-field-focus-outline-width: 1px;
@@ -145,7 +183,7 @@ $color666870: #666870;
       &:not(.mdc-text-field--disabled) .mdc-notched-outline__leading,
       &:not(.mdc-text-field--disabled) .mdc-notched-outline__notch,
       &:not(.mdc-text-field--disabled) .mdc-notched-outline__trailing {
-        border-color: #b8b8b8;
+        border-color: #b8bfcb;
       }
 
       &:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover
@@ -171,7 +209,8 @@ $color666870: #666870;
 
       &.mdc-text-field--outlined {
         .mdc-notched-outline--upgraded .mdc-floating-label--float-above {
-          --mat-mdc-form-field-label-transform: translateY(-29.75px)
+          color: $color676D79 !important;
+          --mat-mdc-form-field-label-transform: translateY(-28px)
             scale(var(--mat-mdc-form-field-floating-label-scale, 0.75));
         }
         &:not(.mdc-text-field--disabled).mdc-text-field--focused
@@ -190,11 +229,13 @@ $color666870: #666870;
         }
         .mdc-notched-outline {
           .mat-mdc-floating-label {
-            top: 22.5px;
+            top: 21px;
             font-size: 14px;
             line-height: 20px;
             font-weight: 400;
-            color: rgba($color30343C, $alpha: 0.6);
+            color: rgba($color30343C, $alpha: 0.5);
+            letter-spacing: 0;
+            font-family: "Poppins", sans-serif;
           }
         }
         .mat-mdc-form-field-input-control {
@@ -205,6 +246,8 @@ $color666870: #666870;
           margin: 0;
           height: 20px;
           display: block;
+          letter-spacing: 0;
+          font-family: "Poppins", sans-serif;
         }
         textarea.mat-mdc-form-field-input-control {
           height: auto;
@@ -287,6 +330,417 @@ $color666870: #666870;
         color: $color51545F;
         font-family: "Poppins", sans-serif;
       }
+    }
+  }
+}
+
+// Mat Fab Button
+.mat-mdc-fab.mdc-fab {
+  --mdc-fab-container-shape: 6px;
+  --mdc-fab-icon-size: 20px;
+  box-shadow: none !important;
+  width: 46px;
+  height: 46px;
+  .mat-icon {
+    width: 20px;
+    height: 20px;
+  }
+  &.mat-primary {
+    background-color: $primary500;
+    &:hover,
+    &:focus {
+      background-color: $primary600;
+    }
+  }
+}
+.mat-mdc-mini-fab.mdc-fab {
+  --mdc-fab-container-shape: 6px;
+  --mdc-fab-icon-size: 18px;
+  box-shadow: none !important;
+  width: 40px;
+  height: 40px;
+  .mat-icon {
+    width: 18px;
+    height: 18px;
+  }
+  &.mat-primary {
+    background-color: $primary500;
+    &:hover,
+    &:focus {
+      background-color: $primary600;
+    }
+  }
+}
+
+// Mat Card
+.mat-mdc-card.mdc-card {
+  box-shadow: 0px 2px 15px 0px rgba(0, 0, 0, 0.05);
+  border-radius: 6px;
+  background: $white;
+  .mat-mdc-card-header {
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 12px 0;
+    .mat-mdc-card-title {
+      font-family: "Poppins", sans-serif;
+      font-size: 20px;
+      font-style: normal;
+      font-weight: 500;
+      line-height: 24px;
+      color: $color51545F;
+    }
+  }
+  .mat-mdc-card-content {
+    padding: 20px 12px 12px;
+  }
+  &.table-card {
+    .mat-mdc-card-content {
+      padding: 0;
+    }
+  }
+}
+
+// Mat Table
+.mat-table-wrapper {
+  overflow-x: auto;
+}
+.mat-mdc-table.mdc-data-table__table {
+  background: transparent;
+  .mat-mdc-header-row {
+    height: 46px;
+    .mat-mdc-header-cell {
+      background: transparent;
+      color: $color51545F;
+      font-family: "Poppins", sans-serif;
+      font-size: 14px;
+      line-height: 24px;
+      font-weight: 600;
+      vertical-align: middle;
+      padding: 11px 10px;
+      border: 0;
+      white-space: nowrap;
+      border-bottom: 1px solid #d7e0ef;
+      text-transform: capitalize;
+      font-feature-settings: "clig" off, "liga" off;
+      &.mat-column-action {
+        width: 50px;
+        text-align: center;
+      }
+    }
+  }
+  .mdc-data-table__content {
+    .mat-mdc-row {
+      height: 52px;
+      .mat-mdc-cell {
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        vertical-align: middle;
+        padding: 15px 10px;
+        border-bottom: 1px solid #d7e0ef;
+        color: $color51545F;
+        .mat-mdc-chip {
+          margin: -6px 0;
+        }
+        .mat-mdc-menu-trigger {
+          width: 40px;
+          height: 40px;
+          padding: 8px;
+        }
+      }
+      .mat-mdc-cell.mat-column-action {
+        padding-top: 6px;
+        padding-bottom: 6px;
+        min-width: auto;
+        text-align: center;
+      }
+    }
+  }
+}
+.mat-custom-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 15px;
+  .pagination-left {
+    display: flex;
+    align-items: center;
+    .pagination-select.mat-mdc-form-field {
+      width: 98px;
+      margin-right: 12px;
+    }
+    .page-info {
+      display: inline-block;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 14px;
+      color: $color51545F;
+    }
+  }
+  .pagination-right {
+    display: flex;
+    align-items: center;
+    li {
+      margin-left: 8px;
+      .mat-mdc-outlined-button {
+        text-decoration: none;
+        &:not(:disabled) {
+          align-items: center;
+          justify-content: center;
+          padding: 6px;
+          border-radius: 4px;
+          border: 1px solid #b8bfcb;
+          min-width: 32px;
+          height: 32px;
+          .mdc-button__label {
+            display: inline-flex;
+            font-size: 14px;
+            line-height: 20px;
+            font-weight: 500;
+            color: $color51545F;
+            img {
+              width: 20px;
+              height: 20px;
+            }
+          }
+          &:hover {
+            background: rgba($color: $primary500, $alpha: 0.08);
+          }
+          &.active {
+            background: $primary500;
+            border-color: $primary500;
+            .mdc-button__label {
+              color: $white;
+            }
+          }
+        }
+        &[disabled] {
+          .mdc-button__label {
+            img {
+              opacity: 0.5;
+            }
+          }
+        }
+      }
+      &:first-child {
+        .mat-mdc-outlined-button {
+          &:not(:disabled) {
+            .mdc-button__label {
+              img {
+                margin-left: -2px;
+              }
+            }
+          }
+        }
+      }
+      &:last-child {
+        .mat-mdc-outlined-button {
+          &:not(:disabled) {
+            .mdc-button__label {
+              img {
+                margin-right: -2px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Mat Chips
+.mat-mdc-chip.mat-mdc-standard-chip {
+  min-height: 24px;
+  height: auto;
+  border-radius: 50px;
+  &:not(.mdc-evolution-chip--disabled) {
+    background: transparent;
+  }
+  .mdc-evolution-chip__action {
+    padding: 0 16px;
+    .mat-mdc-chip-action-label {
+      font-size: 12px;
+      line-height: 24px;
+      font-weight: 500;
+      color: $color51545F;
+    }
+  }
+}
+.ChipSuccess.mat-mdc-chip.mat-mdc-standard-chip:not(
+    .mdc-evolution-chip--disabled
+  ) {
+  background-color: #edf9ed;
+  .mdc-evolution-chip__action {
+    .mat-mdc-chip-action-label {
+      color: #46a746;
+    }
+  }
+}
+.ChipDanger.mat-mdc-chip.mat-mdc-standard-chip:not(
+    .mdc-evolution-chip--disabled
+  ) {
+  background-color: #edf9ed;
+  .mdc-evolution-chip__action {
+    .mat-mdc-chip-action-label {
+      color: #46a746;
+    }
+  }
+}
+.ChipInactive.mat-mdc-chip.mat-mdc-standard-chip:not(
+    .mdc-evolution-chip--disabled
+  ) {
+  background-color: #ececec;
+  .mdc-evolution-chip__action {
+    .mat-mdc-chip-action-label {
+      color: #8b8b8b;
+    }
+  }
+}
+
+// Mat Select
+.mat-mdc-form-field {
+  .mat-mdc-select {
+    display: block;
+    margin: -2px 0;
+    .mat-mdc-select-trigger {
+      .mat-mdc-select-value {
+        .mat-mdc-select-value-text {
+          font-size: 14px;
+          line-height: 20px;
+          font-weight: 400;
+          letter-spacing: 0.28px;
+          color: $color30343C;
+          font-family: "Poppins", sans-serif;
+        }
+      }
+      .mat-mdc-select-arrow-wrapper {
+        .mat-mdc-select-arrow {
+          color: #737984;
+          width: 14px;
+          height: 14px;
+          background: url("./../../images/select-chevron-down.svg") no-repeat
+            center center;
+          background-size: 14px 14px;
+          transition: all 100ms ease-in-out;
+          transform: rotate(0deg);
+          svg {
+            display: none;
+          }
+        }
+      }
+    }
+    &.mat-mdc-select[aria-expanded="true"] {
+      .mat-mdc-select-trigger {
+        .mat-mdc-select-arrow-wrapper {
+          .mat-mdc-select-arrow {
+            transform: rotate(-180deg);
+          }
+        }
+      }
+    }
+  }
+}
+
+// Mat Select Panel
+div.mat-mdc-select-panel {
+  box-shadow: 0px 3px 10px 0px rgba($color: $black, $alpha: 0.2) !important;
+  padding: 5px 0px !important;
+  border-radius: 6px !important;
+  .mat-mdc-option.mdc-list-item {
+    font-feature-settings: "clig" off, "liga" off;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 16px;
+    text-transform: capitalize;
+    color: $color51545F;
+    min-height: 36px;
+    padding: 8px 10px;
+    .mat-mdc-option-pseudo-checkbox {
+      display: none;
+    }
+    &:focus,
+    &.mat-mdc-option-active {
+      background-color: #e3ecf9;
+    }
+    &.mdc-list-item--selected:not(.mdc-list-item--disabled):not(
+        .mat-mdc-option-multiple
+      ) {
+      background-color: #e3ecf9;
+      .mdc-list-item__primary-text,
+      .mdc-list-item__primary-text
+        + .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after {
+        color: #23252c;
+      }
+    }
+  }
+}
+
+// Mat Dialog
+.primary-dialog {
+  width: 556px;
+  max-width: 556px;
+  .mdc-dialog {
+    box-shadow: none;
+    .mdc-dialog__container {
+      .mdc-dialog__surface {
+        border-radius: 6px;
+        .dialog-header {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          background: #eef0f6;
+          padding: 12px 8px 12px 20px;
+          .mat-mdc-dialog-title {
+            flex-grow: 1;
+            color: $primary500;
+            font-size: 20px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: 24px;
+            text-transform: capitalize;
+            padding: 0;
+            margin-right: 16px;
+            &::before {
+              display: none;
+            }
+          }
+          .dialog-close.mdc-icon-button {
+            flex-shrink: 0;
+            width: 36px;
+            height: 36px;
+            padding: 6px;
+          }
+        }
+        .mat-mdc-dialog-content.dialog-body {
+          padding: 24px;
+        }
+        .mat-mdc-dialog-actions.dialog-footer {
+          padding: 14px 20px;
+          .mat-mdc-button-base + .mat-mdc-button-base {
+            margin-left: 12px;
+          }
+        }
+      }
+    }
+  }
+  &.dialog-lg {
+    width: 960px;
+    max-width: 960px;
+  }
+}
+
+/* Responsive Media Queries
+-------------------------------------------------------------------------------------------------*/
+@media (max-width: 767px) {
+  .mat-custom-pagination {
+    padding: 20px 16px;
+    flex-direction: column;
+    align-items: center;
+    .pagination-right {
+      padding-top: 16px;
     }
   }
 }
