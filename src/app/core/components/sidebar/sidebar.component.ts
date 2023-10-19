@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -26,6 +26,8 @@ export class SidebarComponent {
     private loginService: LoginService,
     private router: Router,
   ) { }
+  
+  @Output() onMenuIconClick = new EventEmitter();
 
   ngOnInit(): void {
     this.isLoggedIn = this.loginService.isLoggedIn();
@@ -61,5 +63,9 @@ export class SidebarComponent {
   // Function to toggle the open state of a mat-accordion
   toggleAccordion(index: number) {
     this.currentlyOpenAccordion = this.currentlyOpenAccordion === index ? null : index;
+  }
+
+  onClick() {
+    this.onMenuIconClick.emit();
   }
 }

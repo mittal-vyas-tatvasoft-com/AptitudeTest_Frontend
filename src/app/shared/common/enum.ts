@@ -27,7 +27,7 @@ export enum Navigation {
   Degree = 'degree',
   Stream = 'stream',
   Technology = 'technology',
-
+  Profile = 'profile',
 
   //Utilities Navigation
   Utilities = 'utilities',

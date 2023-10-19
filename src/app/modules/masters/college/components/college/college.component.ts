@@ -2,8 +2,9 @@ import { Component } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddCollegeComponent } from '../add-college/add-college.component';
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
-export interface UserData {
+export interface CollegeData {
   name: string;
   abbreviation: string;
   status: string;
@@ -19,7 +20,7 @@ export class CollegeComponent {
   selectedOption = '10';
   paginationOptionsList: string[] = ['10', '20', '25'];
   displayedColumns: string[] = ['name', 'abbreviation', 'status', 'action'];
-  dataSource: MatTableDataSource<UserData>;
+  dataSource: MatTableDataSource<CollegeData>;
 
   constructor(public dialog: MatDialog) {
     this.dataSource = new MatTableDataSource([
@@ -43,10 +44,10 @@ export class CollegeComponent {
     this.dialog.open(AddCollegeComponent, dialogConfig);
   }
 
-  handleEditCollegeDialog() {
+  handleDeleteProfileDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["primary-dialog"];
+    dialogConfig.panelClass = ["confirmation-dialog"];
     dialogConfig.autoFocus = false;
-    this.dialog.open(AddCollegeComponent, dialogConfig);
+    this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
   }
 }

@@ -21,25 +21,29 @@ export const navBarRoutes = {
   Masters: {
     Components: [
       {
-        label: 'College',
-        path: `./${Navigation.Masters}/${Navigation.College}`,
-      },
-      {
-        label: 'Location',
-        path: `./${Navigation.Masters}/${Navigation.Location}`,
-      },
-      {
         label: 'Degree',
         path: `./${Navigation.Masters}/${Navigation.Degree}`,
       },
       {
-        label: 'Stream',
-        path: `./${Navigation.Masters}/${Navigation.Stream}`,
+        label: 'College',
+        path: `./${Navigation.Masters}/${Navigation.College}`,
       },
       {
-        label: 'Technology',
-        path: `./${Navigation.Masters}/${Navigation.Technology}`,
+        label: 'Profile',
+        path: `./${Navigation.Masters}/${Navigation.Profile}`,
       },
+      // {
+      //   label: 'Location',
+      //   path: `./${Navigation.Masters}/${Navigation.Location}`,
+      // },
+      // {
+      //   label: 'Stream',
+      //   path: `./${Navigation.Masters}/${Navigation.Stream}`,
+      // },
+      // {
+      //   label: 'Technology',
+      //   path: `./${Navigation.Masters}/${Navigation.Technology}`,
+      // },
     ],
     label: 'Manage Master',
     icon: '	manage_accounts',

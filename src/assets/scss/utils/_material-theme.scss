@@ -186,6 +186,15 @@ $color676D79: #676d79;
         border-color: #b8bfcb;
       }
 
+      &:not(.mdc-text-field--disabled) .mdc-text-field__input::placeholder {
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        color: rgba($color30343C, $alpha: 0.5);
+        letter-spacing: 0;
+        font-family: "Poppins", sans-serif;
+      }
+
       &:not(.mdc-text-field--disabled):not(.mdc-text-field--focused):hover
         .mdc-notched-outline
         .mdc-notched-outline__leading,
@@ -226,6 +235,44 @@ $color676D79: #676d79;
           min-height: 44px;
           padding-top: 13px;
           padding-bottom: 13px;
+
+          .mat-mdc-chip-set {
+            margin: -7px 0;
+            .mdc-evolution-chip-set__chips {
+              display: inline-flex;
+              align-items: center;
+              margin-left: 0;
+              .mat-mdc-chip.mat-mdc-standard-chip {
+                background: #e8ebef;
+                margin: 4px 4px 4px -2px;
+                .mdc-evolution-chip__cell--primary {
+                  padding-left: 6px;
+                  .mat-mdc-chip-action-label {
+                    font-size: 12px;
+                    line-height: 26px;
+                    font-weight: 400;
+                    color: $color51545F;
+                  }
+                }
+                .mdc-evolution-chip__cell--trailing {
+                  padding: 0 6px;
+                  .mat-mdc-chip-remove {
+                    padding-left: 0;
+                    padding-right: 0;
+                    opacity: 1;
+                    &:hover {
+                      opacity: 0.8;
+                    }
+                  }
+                }
+              }
+              .mat-mdc-chip-input.mdc-text-field__input {
+                &::placeholder {
+                  opacity: 1;
+                }
+              }
+            }
+          }
         }
         .mdc-notched-outline {
           .mat-mdc-floating-label {
@@ -284,7 +331,7 @@ $color676D79: #676d79;
     }
   }
   .mat-mdc-form-field-subscript-wrapper {
-    line-height: 20px;
+    line-height: 27px;
   }
 }
 
@@ -322,7 +369,6 @@ $color676D79: #676d79;
         width: 18px;
         height: 18px;
         margin-right: 10px;
-        margin-bottom: 1px;
       }
       .mat-mdc-menu-item-text {
         font-size: 14px;
@@ -679,9 +725,9 @@ div.mat-mdc-select-panel {
 }
 
 // Mat Dialog
-.primary-dialog {
+.primary-dialog.cdk-overlay-pane {
   width: 556px;
-  max-width: 556px;
+  max-width: 556px !important;
   .mdc-dialog {
     box-shadow: none;
     .mdc-dialog__container {
@@ -728,7 +774,49 @@ div.mat-mdc-select-panel {
   }
   &.dialog-lg {
     width: 960px;
-    max-width: 960px;
+    max-width: 960px !important;
+  }
+}
+
+// Mat Dialog
+.confirmation-dialog.cdk-overlay-pane {
+  width: 452px;
+  max-width: 452px !important;
+  .mdc-dialog {
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.2);
+    .mdc-dialog__container {
+      .mdc-dialog__surface {
+        border-radius: 6px;
+        .mat-mdc-dialog-content.dialog-body {
+          padding: 24px 24px 10px;
+          text-align: center;
+          .confirmation-icon {
+            margin: 4px auto 20px;
+            width: 80px;
+            height: 80px;
+            background: rgba($color: $primary500, $alpha: 0.09);
+            border-radius: 50%;
+            img {
+              width: 36px;
+              height: 36px;
+            }
+          }
+          .confirmation-message {
+            font-size: 16px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 25px;
+            color: $color51545F;
+          }
+        }
+        .mat-mdc-dialog-actions.dialog-footer {
+          padding: 20px;
+          .mat-mdc-button-base + .mat-mdc-button-base {
+            margin-left: 12px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -741,6 +829,41 @@ div.mat-mdc-select-panel {
     align-items: center;
     .pagination-right {
       padding-top: 16px;
+    }
+  }
+
+  .primary-dialog.cdk-overlay-pane {
+    width: 100%;
+    max-width: 80vw !important;
+    .mdc-dialog {
+      .mdc-dialog__container {
+        .mdc-dialog__surface {
+          .dialog-header {
+            padding: 8px 8px 8px 16px;
+            .mat-mdc-dialog-title {
+              font-size: 18px;
+              line-height: 22px;
+            }
+          }
+          .mat-mdc-dialog-content.dialog-body {
+            padding: 16px 16px 0;
+          }
+          .mat-mdc-dialog-actions.dialog-footer {
+            padding: 12px 16px;
+          }
+        }
+      }
+    }
+  }
+
+  .confirmation-dialog.cdk-overlay-pane {
+    width: 100%;
+    max-width: 90vw !important;
+  }
+
+  .mat-mdc-form-field {
+    .mat-mdc-form-field-subscript-wrapper {
+      line-height: 21px;
     }
   }
 }

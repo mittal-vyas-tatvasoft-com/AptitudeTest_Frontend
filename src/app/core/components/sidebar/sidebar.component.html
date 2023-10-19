@@ -84,7 +84,7 @@
     <ul class="main-navigation">
         <li class="nav-link">
             <a href="javascript:void(0)" routerLink="/dashboard" class="nav-item" routerLinkActive="active"
-                title="Dashboard">
+                title="Dashboard" (click)="onClick()">
                 <mat-icon class="nav-icon">
                     <img src="./assets/images/dashboard-grey.svg" alt="Dashboard">
                 </mat-icon>
@@ -92,7 +92,8 @@
             </a>
         </li>
         <li class="nav-link">
-            <a href="javascript:void(0)" routerLink="/groups" class="nav-item" routerLinkActive="active" title="Groups">
+            <a href="javascript:void(0)" routerLink="/groups" class="nav-item" routerLinkActive="active" title="Groups"
+                (click)="onClick()">
                 <mat-icon class="nav-icon">
                     <img src="./assets/images/group-grey.svg" alt="Groups">
                 </mat-icon>
@@ -101,7 +102,7 @@
         </li>
         <li class="nav-link">
             <a href="javascript:void(0)" routerLink="/candidates" class="nav-item" routerLinkActive="active"
-                title="Candidates">
+                title="Candidates" (click)="onClick()">
                 <mat-icon class="nav-icon">
                     <img src="./assets/images/candidates-grey.svg" alt="Candidates">
                 </mat-icon>
@@ -110,7 +111,7 @@
         </li>
         <li class="nav-link">
             <a href="javascript:void(0)" routerLink="/test" class="nav-item" routerLinkActive="active" title="Test">
-                <mat-icon class="nav-icon">
+                <mat-icon class="nav-icon" (click)="onClick()">
                     <img src="./assets/images/test-grey.svg" alt="Test">
                 </mat-icon>
                 Test
@@ -118,7 +119,7 @@
         </li>
         <li class="nav-link">
             <a href="javascript:void(0)" routerLink="/results" class="nav-item" routerLinkActive="active"
-                title="Results">
+                title="Results" (click)="onClick()">
                 <mat-icon class="nav-icon">
                     <img src="./assets/images/result-grey.svg" alt="Results">
                 </mat-icon>
@@ -140,7 +141,7 @@
                     <ul class="sub-menu">
                         <li *ngFor="let item of routeConfig.Masters.Components">
                             <a href="javascript:void(0)" [routerLink]="item.path" class="nav-item"
-                                routerLinkActive="active" title="Degree">
+                                routerLinkActive="active" [title]="item.label" (click)="onClick()">
                                 {{ item.label }}
                             </a>
                         </li>
@@ -153,7 +154,8 @@
                 <mat-expansion-panel class="nested-navigation" (click)="toggleAccordion(2)"
                     [expanded]="currentlyOpenAccordion === 2">
                     <mat-expansion-panel-header>
-                        <a href="javascript:void(0)" class="nav-item" routerLinkActive="active" title="Question">
+                        <a href="javascript:void(0)" class="nav-item" routerLinkActive="active" title="Question"
+                            (click)="onClick()">
                             <mat-icon class="nav-icon">
                                 <img src="./assets/images/question-grey.svg" alt="Dashboard">
                             </mat-icon>
@@ -163,25 +165,25 @@
                     <ul class="sub-menu">
                         <li>
                             <a href="javascript:void(0)" routerLink="/modules" class="nav-item"
-                                routerLinkActive="active" title="Modules">
+                                routerLinkActive="active" title="Modules" (click)="onClick()">
                                 Modules
                             </a>
                         </li>
                         <li>
                             <a href="javascript:void(0)" routerLink="/topics" class="nav-item" routerLinkActive="active"
-                                title="Topics">
+                                title="Topics" (click)="onClick()">
                                 Topics
                             </a>
                         </li>
                         <li>
                             <a href="javascript:void(0)" routerLink="/question-group" class="nav-item"
-                                routerLinkActive="active" title="Question Group">
+                                routerLinkActive="active" title="Question Group" (click)="onClick()">
                                 Question Group
                             </a>
                         </li>
                         <li>
                             <a href="javascript:void(0)" routerLink="/question-list" class="nav-item"
-                                routerLinkActive="active" title="Question List">
+                                routerLinkActive="active" title="Question List" (click)="onClick()">
                                 Question List
                             </a>
                         </li>
@@ -191,7 +193,7 @@
         </li>
         <li class="nav-link">
             <a href="javascript:void(0)" routerLink="/setting" class="nav-item" routerLinkActive="active"
-                title="Setting">
+                title="Setting" (click)="onClick()">
                 <mat-icon class="nav-icon">
                     <img src="./assets/images/setting-grey.svg" alt="Setting">
                 </mat-icon>
