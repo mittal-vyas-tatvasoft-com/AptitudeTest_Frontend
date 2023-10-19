@@ -237,7 +237,17 @@ $color676D79: #676d79;
           padding-bottom: 13px;
 
           .mat-mdc-chip-set {
-            margin: -7px 0;
+            margin: 0;
+            &.mat-mdc-chip-set[tabindex="0"] {
+              margin: -7px 0;
+              .mdc-evolution-chip-set__chips {
+                .mat-mdc-chip-input.mdc-text-field__input {
+                  &::placeholder {
+                    opacity: 1;
+                  }
+                }
+              }
+            }
             .mdc-evolution-chip-set__chips {
               display: inline-flex;
               align-items: center;
@@ -245,6 +255,11 @@ $color676D79: #676d79;
               .mat-mdc-chip.mat-mdc-standard-chip {
                 background: #e8ebef;
                 margin: 4px 4px 4px -2px;
+                &:hover {
+                  .mat-mdc-chip-focus-overlay {
+                    opacity: 0;
+                  }
+                }
                 .mdc-evolution-chip__cell--primary {
                   padding-left: 6px;
                   .mat-mdc-chip-action-label {
@@ -264,11 +279,6 @@ $color676D79: #676d79;
                       opacity: 0.8;
                     }
                   }
-                }
-              }
-              .mat-mdc-chip-input.mdc-text-field__input {
-                &::placeholder {
-                  opacity: 1;
                 }
               }
             }
@@ -811,6 +821,7 @@ div.mat-mdc-select-panel {
         }
         .mat-mdc-dialog-actions.dialog-footer {
           padding: 20px;
+          min-height: auto;
           .mat-mdc-button-base + .mat-mdc-button-base {
             margin-left: 12px;
           }
