@@ -1,86 +1,217 @@
-.body{
-  box-sizing:border-box;
+.body {
+  box-sizing: border-box;
   padding: 0px 0px 0px 10px;
   min-height: calc(100vh - 250px);
 }
 
-.login-page-wrapper .tc-login-row,.login-page-wrapper .row{
-    display:flex;
-    margin-left:inherit;
-    align-items:center;
-    justify-content:center;
-    max-width:300px;
-    margin:0 auto 20px;
+.login-page-wrapper .tc-login-row,
+.login-page-wrapper .row {
+  display: flex;
+  margin-left: inherit;
+  align-items: center;
+  justify-content: center;
+  max-width: 300px;
+  margin: 0 auto 20px;
 }
 
-.login-page-wrapper .tc-login-row input{
-    box-shadow:none;
-    outline:none;
-    border:1px solid #d3d3d3;
-    height:36px;
-    line-height:34px;
-    padding:0 15px;
-    max-width:200px;
-    font-family:'Open Sans',sans-serif;
-    font-size:16px;
-    border-radius:3px;
-    transition:all 0.5s;
+.login-page-wrapper .tc-login-row input {
+  box-shadow: none;
+  outline: none;
+  border: 1px solid #d3d3d3;
+  height: 36px;
+  line-height: 34px;
+  padding: 0 15px;
+  max-width: 200px;
+  font-family: "Open Sans", sans-serif;
+  font-size: 16px;
+  border-radius: 3px;
+  transition: all 0.5s;
 }
 
-.login-page-wrapper div.row.forgot-pass-link a{
-    margin-left:0!important;
-    font-size:14px!important;
-    color:#0b2e58!important;
-    text-decoration:underline;
-    transition:0.3s all;
+.login-page-wrapper div.row.forgot-pass-link a {
+  margin-left: 0 !important;
+  font-size: 14px !important;
+  color: #0b2e58 !important;
+  text-decoration: underline;
+  transition: 0.3s all;
 }
 
-.login-page-wrapper .button-wrapper{
-    padding-left:90px;
-    margin-bottom:0;
+.login-page-wrapper .button-wrapper {
+  padding-left: 90px;
+  margin-bottom: 0;
 }
 
-.sub{
-    margin-right: 10px;
+.sub {
+  margin-right: 10px;
 }
 
 .navbar {
-    padding: 10px; 
-  }
-  
-  .menu {
-    list-style: none; 
-    margin: 0; 
-    padding: 0; 
-  }
-  
-  .menu li {
-    display: inline; 
-  }
-  
-  .menu li a {
-    text-decoration: none; 
-    color: white;
-    font-weight: bold;
-  }
-  
-  .menu li a:hover {
-    color: #ff6600; 
-  }
-  
-  .menu li.spacer {
-    width: 20px; 
-    display: inline-block; 
-  }
-   
-div.pagehelp{
-    border:0;
-    font-size:15px;
-    color:#333333;
-    margin-top:10px;
-    padding:6px 0;
-    background-color:transparent;
+  padding: 10px;
 }
 
+.menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
+.menu li {
+  display: inline;
+}
 
+.menu li a {
+  text-decoration: none;
+  color: white;
+  font-weight: bold;
+}
+
+.menu li a:hover {
+  color: #ff6600;
+}
+
+.menu li.spacer {
+  width: 20px;
+  display: inline-block;
+}
+
+div.pagehelp {
+  border: 0;
+  font-size: 15px;
+  color: #333333;
+  margin-top: 10px;
+  padding: 6px 0;
+  background-color: transparent;
+}
+
+.login-wrapper {
+  position: relative;
+  background: #ffffff;
+  padding: 30px 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 47%;
+    background: url("./../../../../../assets/images/login-bg.svg") no-repeat top
+      center;
+    background-size: 100% 100%;
+    z-index: 0;
+  }
+  .login-header {
+    position: relative;
+    z-index: 1;
+    padding: 15px 24px;
+    text-align: center;
+    .logo {
+      img {
+        height: 50px;
+      }
+    }
+  }
+  .login-box-outer {
+    margin: auto 0;
+    padding: 30px 0 260px;
+    .login-box {
+      position: relative;
+      z-index: 1;
+      padding: 47px 42px;
+      min-width: 484px;
+      max-width: 484px;
+      margin: 0 auto;
+      border-radius: 15px;
+      background: #fff;
+      box-shadow: 0px 0px 20px 0px rgba(0, 0, 0, 0.19);
+      text-align: center;
+      .welcome-text {
+        margin-bottom: 30px;
+        .title {
+          font-size: 42px;
+          font-weight: 600;
+          line-height: 37px; /* 76.19% */
+          letter-spacing: 0.2px;
+          color: #51545f;
+        }
+        .description {
+          font-size: 20px;
+          font-weight: 400;
+          line-height: 32px;
+          letter-spacing: 0.2px;
+          color: #8d92a2;
+        }
+      }
+    }
+  }
+  .login-footer {
+    margin-top: auto;
+    padding-bottom: 30px;
+    text-align: center;
+    p {
+      color: #6a6a6a;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 18px;
+      letter-spacing: 0.7px;
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .login-wrapper {
+    .login-box-outer {
+      margin: 0 0 auto;
+      padding: 30px 0;
+      .login-box {
+        padding: 40px 30px 30px;
+        min-width: 430px;
+        max-width: 430px;
+        .welcome-text {
+          .title {
+            font-size: 32px;
+            line-height: 44px;
+          }
+          .description{
+            font-size: 16px;
+            line-height: 24px;
+          }
+        }
+      }
+    }
+    .login-footer {
+      padding-bottom: 0;
+    }
+  }
+}
+
+@media (max-width: 575px) {
+  .login-wrapper {
+    padding: 30px 20px;
+    .login-box-outer {
+      margin: 0 0 auto;
+      padding: 30px 0 40px;
+      .login-box {
+        padding: 30px 20px 24px;
+        min-width: auto;
+        max-width: 410px;
+        .welcome-text {
+          .title {
+            font-size: 32px;
+            line-height: 44px;
+          }
+          .description{
+            font-size: 16px;
+            line-height: 24px;
+          }
+        }
+      }
+    }
+    .login-footer {
+      padding-bottom: 0;
+    }
+  }
+}

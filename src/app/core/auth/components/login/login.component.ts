@@ -16,6 +16,7 @@ import { Navigation } from 'src/app/shared/common/enum';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
+  public passwordHide: boolean = true;
 
   form!: FormGroup;
   submitted = false;
