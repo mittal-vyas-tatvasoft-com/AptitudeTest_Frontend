@@ -21,11 +21,22 @@
 
 <mat-dialog-content class="dialog-body">
   <mat-icon class="confirmation-icon">
-    <img src="./assets/images/delete-primary.svg" alt="Delete">
+    <img src="./assets/images/delete-primary.svg" alt="Delete" />
   </mat-icon>
-  <p class="confirmation-message">Are you sure you want to delete this record?</p>
+  <p class="confirmation-message">
+    Are you sure you want to delete this record?
+  </p>
 </mat-dialog-content>
 <mat-dialog-actions align="center" class="dialog-footer">
-  <button mat-flat-button mat-dialog-close color="primary">Delete</button>
-  <button mat-stroked-button color="primary" [mat-dialog-close]="true">Cancel</button>
+  <button
+    mat-flat-button
+    mat-dialog-close
+    color="primary"
+    [mat-dialog-close]="true"
+  >
+    Delete
+  </button>
+  <button mat-stroked-button color="primary" [mat-dialog-close]="false">
+    Cancel
+  </button>
 </mat-dialog-actions>

@@ -1,15 +1,55 @@
-import { Component } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { ProfileService } from '../../services/profile.service';
+import { formControls } from '../../config/profile.config';
+import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 
 @Component({
   selector: 'app-add-profile',
   templateUrl: './add-profile.component.html',
-  styleUrls: ['./add-profile.component.scss']
+  styleUrls: ['./add-profile.component.scss'],
 })
-export class AddProfileComponent {
-  optionsList: string[] = ['Option 1', 'Option 2', 'Option 3'];
+export class AddProfileComponent implements OnInit, AfterViewInit {
+  form!: FormGroup;
+  formControl = formControls;
+  optionsList: any[] = [
+    { key: 'Active', value: true },
+    { key: 'InActive', value: false },
+  ];
 
-  constructor(public dialogRef: MatDialogRef<AddProfileComponent>) { }
+  constructor(
+    public dialogRef: MatDialogRef<AddProfileComponent>,
+    public formBuilder: FormBuilder,
+    @Inject(MAT_DIALOG_DATA) public data: number,
+    private profileService: ProfileService,
+    public _formValidators: ValidationService
+  ) {}
+
+  ngOnInit(): void {
+    this.createForm();
+  }
+  ngAfterViewInit(): void {
+    if (this.data != 0) {
+      this.profileService.GetProfileById(this.data).subscribe({
+        next: (res: any) => {
+          this.form.setValue({
+            name: res.data.name,
+            id: res.data.id,
+            status: res.data.status,
+          });
+        },
+      });
+    }
+  }
+
+  createForm() {
+    this.form = this.formBuilder.group({
+      id: [0],
+      name: ['', [Validators.required, Validators.maxLength(500)]],
+      status: [true, [Validators.required]],
+    });
+  }
 
   closeModal() {
     this.dialogRef.close();

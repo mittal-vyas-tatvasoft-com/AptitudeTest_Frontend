@@ -1,45 +1,92 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddProfileComponent } from '../add-profile/add-profile.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-
-export interface ProfileData {
-  name: string;
-  status: string;
-  action: string;
-}
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.scss']
+  styleUrls: ['./profile.component.scss'],
 })
-export class ProfileComponent {
+export class ProfileComponent implements OnInit {
   displayedColumns: string[] = ['name', 'status', 'action'];
-  dataSource: MatTableDataSource<ProfileData>;
+  dataSource!: MatTableDataSource<any>;
+  constructor(
+    public dialog: MatDialog,
+    private profileService: ProfileService
+  ) {}
 
-  constructor(public dialog: MatDialog) {
-    this.dataSource = new MatTableDataSource([
-      { name: "Programming", status: "Active", action: "" },
-      { name: "Programming / QA", status: "Active", action: "" },
-      { name: "SEO/BA/BD/HR", status: "Active", action: "" },
-      { name: ".NET", status: "Active", action: "" },
-    ]);
+  ngOnInit(): void {
+    this.getAllProfileData();
   }
 
-  handleAddProfileDialog() {
+  getAllProfileData() {
+    this.profileService.GetAllProfiles().subscribe({
+      next: (res: any) => {
+        this.dataSource = new MatTableDataSource(res.data.entityList);
+      },
+    });
+  }
+
+  handleAddProfileDialog(id: number) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["primary-dialog"];
+    dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
-    this.dialog.open(AddProfileComponent, dialogConfig);
+    dialogConfig.data = id;
+
+    this.dialog
+      .open(AddProfileComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((res) => {
+        if (res) {
+          if (res.id == 0) {
+            this.profileService.AddNewProfile(res).subscribe({
+              next: (res: any) => {
+                if (res.statusCode == 200) {
+                  this.getAllProfileData();
+                }
+              },
+            });
+          } else {
+            this.profileService.UpdateProfile(res).subscribe({
+              next: (res: any) => {
+                if (res.statusCode == 200) {
+                  this.getAllProfileData();
+                }
+              },
+            });
+          }
+        }
+      });
   }
 
-  handleDeleteProfileDialog() {
+  handleDeleteProfileDialog(id: number) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["confirmation-dialog"];
+    dialogConfig.panelClass = ['confirmation-dialog'];
     dialogConfig.autoFocus = false;
-    this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
+    this.dialog
+      .open(DeleteConfirmationDialogComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((res) => {
+        if (res == true) {
+          this.profileService.DeleteProfile(id).subscribe({
+            next: (res: any) => {
+              this.getAllProfileData();
+            },
+          });
+        }
+      });
   }
 
+  changeSingleProfileStatus(id: number, status: boolean) {
+    this.profileService.ChangeSingleProfileStatus(id, status).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == 200) {
+          this.getAllProfileData();
+        }
+      },
+    });
+  }
 }
