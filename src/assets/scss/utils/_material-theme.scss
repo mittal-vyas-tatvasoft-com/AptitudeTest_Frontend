@@ -361,6 +361,9 @@ $color676D79: #676d79;
       width: 20px;
       height: 20px;
       border-radius: 3px;
+      .mdc-checkbox__mixedmark{
+        width: 10px;
+      }
     }
     &:hover
       .mdc-checkbox__native-control:enabled:not(:checked):not(
@@ -553,6 +556,13 @@ $color676D79: #676d79;
         width: 50px;
         text-align: center;
       }
+      &.mat-column-select {
+        width: 10px;
+        .mat-mdc-checkbox{
+          margin-left: 0;
+          margin-right: -10px;
+        }
+      }
     }
   }
   .mdc-data-table__content {
@@ -575,12 +585,19 @@ $color676D79: #676d79;
           height: 40px;
           padding: 8px;
         }
-      }
-      .mat-mdc-cell.mat-column-action {
-        padding-top: 6px;
-        padding-bottom: 6px;
-        min-width: auto;
-        text-align: center;
+        &.mat-column-action {
+          padding-top: 6px;
+          padding-bottom: 6px;
+          min-width: auto;
+          text-align: center;
+        }
+        &.mat-column-select {
+          width: 10px;
+          .mat-mdc-checkbox{
+            margin-left: 0;
+            margin-right: -10px;
+          }
+        }
       }
     }
   }
