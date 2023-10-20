@@ -101,12 +101,12 @@
             </a>
         </li>
         <li class="nav-link">
-            <a href="javascript:void(0)" routerLink="/candidates" class="nav-item" routerLinkActive="active"
-                title="Candidates" (click)="onClick()">
+            <a href="javascript:void(0)" [routerLink]="routeConfig.Candidates.path" class="nav-item"
+                routerLinkActive="active" title="Candidates" (click)="onClick()">
                 <mat-icon class="nav-icon">
                     <img src="./assets/images/candidates-grey.svg" alt="Candidates">
                 </mat-icon>
-                Candidates
+                {{ routeConfig.Candidates.label }}
             </a>
         </li>
         <li class="nav-link">

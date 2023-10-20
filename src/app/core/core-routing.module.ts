@@ -18,6 +18,13 @@ const routes: Routes = [
             '../modules/masters/masters.module'
           ).then((m) => m.MastersModule),
       },
+      {
+        path: `${Navigation.Candidate}`,
+        loadChildren: () =>
+          import(
+            '../modules/candidate/candidate.module'
+          ).then((m) => m.CandidateModule),
+      },
     ],
   },
 ];

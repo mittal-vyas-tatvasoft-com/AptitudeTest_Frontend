@@ -18,6 +18,12 @@ export const navBarRoutes = {
     icon: 'supervisor_account',
   },
 
+  Candidates: {
+    label: 'Candidates',
+    path: `./${Navigation.Candidate}}`,
+    icon: 'perm_data_setting',
+  },
+
   Masters: {
     Components: [
       {
@@ -75,4 +81,5 @@ export const navBarRoutes = {
     label: 'Utilities',
     icon: 'perm_data_setting',
   },
+
 };
