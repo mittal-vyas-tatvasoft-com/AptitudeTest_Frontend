@@ -16,11 +16,7 @@ import { Navigation } from 'src/app/shared/common/enum';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent {
-  public passwordHide: boolean = true;
-
   form!: FormGroup;
-  submitted = false;
-  loginFailed = false;
   loginModel = loginControl;
   private ngUnsubscribe$ = new Subject<void>();
   
@@ -40,39 +36,35 @@ export class LoginComponent {
   }
 
   login() {
-    // this.loginFailed = false;
-
-    // if (this.form.valid) {
-    //   const payload = {
-    //     email: this.form.value.userName,
-    //     password: this.form.value.password,
-    //   };
-    //   this.loginService
-    //     .login(payload)
-    //     .pipe(takeUntil(this.ngUnsubscribe$))
-    //     .subscribe({
-    //       next: (res: ResponseModel<string>) => {
-    //         console.log("result",res)
-    //         if (res.result) {
-    //             this.router.navigate([
-    //               `${Navigation.Admin}`,
-    //             ]);
-    //         } else {
-    //           this.loginFailed = true;
-    //           this.snackbarService.error(res.message);
-    //         }
-    //       },
-    //       error: (error: { message: string; }) => {
-    //         this.loginFailed = true;
-    //         this.snackbarService.error(error.message);
-    //       },
-    //     });
-    // } else {
-    //   this.form.markAllAsTouched();
-    // }
-    this.router.navigate([
-                   `${Navigation.Admin}`,
-                 ]);
+    if (this.form.valid) {
+      const payload = {
+        email: this.form.value.userName,
+        password: this.form.value.password,
+      };
+      this.loginService
+        .login(payload)
+        .pipe(takeUntil(this.ngUnsubscribe$))
+        .subscribe({
+          next: (res: ResponseModel<string>) => {
+            console.log("result",res)
+            if (res.result) {
+                this.router.navigate([
+                  `${Navigation.Admin}`,
+                ]);
+            } else {
+              this.snackbarService.error(res.message);
+            }
+          },
+          error: (error: { message: string; }) => {
+            this.snackbarService.error(error.message);
+          },
+        });
+    } else {
+      this.form.markAllAsTouched();
+    }
+    // this.router.navigate([
+    //                `${Navigation.Admin}`,
+    //              ]);
   }
 
   onIconClick(event: any) {

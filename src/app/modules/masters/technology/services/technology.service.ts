@@ -42,7 +42,6 @@ export class TechnologyService {
     .put<ResponseModel<string>>(`${environment.baseURL}Technologies/Update`, element)
     .pipe(
       map((res: any) => {
-          console.log("Updateres",res)
         return res;
       }),
     );

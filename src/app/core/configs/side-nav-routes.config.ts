@@ -20,7 +20,7 @@ export const navBarRoutes = {
 
   Candidates: {
     label: 'Candidates',
-    path: `./${Navigation.Candidate}}`,
+    path: `./${Navigation.Candidate}`,
     icon: 'perm_data_setting',
   },
 

@@ -9,6 +9,9 @@ import { LoginService } from '../../auth/services/login.service';
 export class HeaderComponent {
   isAuthenticated: boolean = false;
   public mobileScreen: boolean = (window.innerWidth < 575)
+  currentTime!: Date;
+  userName!: string;
+
   constructor(private loginService: LoginService) { }
 
   @HostListener('window:resize', ['$event'])
@@ -18,6 +21,12 @@ export class HeaderComponent {
 
   ngOnInit(): void {
     this.isAuthenticated = this.loginService.isLoggedIn();
+    this.isSidebarOpen = this.loginService.getStateFromLocalStorage();
+    this.getUserData();
+    this.updateTime(); 
+    setInterval(() => {
+      this.updateTime(); 
+    }, 1000);
   }
 
   @Input() isHandset: boolean | null | undefined;
@@ -27,14 +36,38 @@ export class HeaderComponent {
     this.loginService.logout();
     this.isAuthenticated = false;
   }
+
   onClick() {
     this.onMenuIconClick.emit();
   }
 
-  getInitials(firstName: string, lastName: string): string {
+  updateTime() {
+    this.currentTime = new Date();
+  }
+
+  getUserData(){
+    const token = this.loginService.getToken();
+    if (token) {
+      const userData = this.loginService.decodeToken();
+      this.userName = userData ? userData.FirstName : '';
+      this.getInitials(this.userName)
+    }
+  }
+
+  getInitials(firstName: string): string {
     const firstInitial = firstName ? firstName.charAt(0).toUpperCase() : '';
-    const lastInitial = lastName ? lastName.charAt(0).toUpperCase() : '';
-    return `${firstInitial}${lastInitial}`;
+    //const lastInitial = lastName ? lastName.charAt(0).toUpperCase() : '';
+    //return `${firstInitial}${lastInitial}`;
+    return `${firstInitial}`;
+  }
+
+  isSidebarOpen!: boolean;
+
+
+  toggleSidebar() {
+    this.onMenuIconClick.emit();
+    this.isSidebarOpen = !this.isSidebarOpen;
+    this.loginService.saveStateToLocalStorage(this.isSidebarOpen);
   }
 
 }

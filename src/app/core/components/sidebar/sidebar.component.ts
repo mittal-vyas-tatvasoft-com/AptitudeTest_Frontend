@@ -1,5 +1,5 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -21,16 +21,16 @@ export class SidebarComponent {
   isLoggedIn!: boolean;
   temp!: number;
   collapse!: -1;
+  @Output() onMenuIconClick = new EventEmitter();
   constructor(
     private breakpointObserver: BreakpointObserver,
     private loginService: LoginService,
     private router: Router,
   ) { }
-  
-  @Output() onMenuIconClick = new EventEmitter();
 
   ngOnInit(): void {
     this.isLoggedIn = this.loginService.isLoggedIn();
+     this.isSidebarOpen = this.loginService.getStateFromLocalStorage();
   }
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(Breakpoints.Handset)
@@ -39,25 +39,13 @@ export class SidebarComponent {
       shareReplay(),
     );
 
-  logout() {
-    this.loginService.logout();
-  }
-
-  // edit(event: FlatNode) {
-  //   event.level == Website.Client
-  //     ? this.router.navigate([
-  //         `${Navigation.Admin}/${Navigation.Portal}/${Navigation.clients}/${Navigation.Edit}/${event.id}`,
-  //       ])
-  //     : this.router.navigate([
-  //         `${Navigation.Admin}/${Navigation.Portal}/${Navigation.Edit}/${event.id}`,
-  //       ]);
-  // }
 
   ngOnDestroy() {
     this.ngUnsubscribe$.next();
     this.ngUnsubscribe$.complete();
   }
 
+  @Input() isSidebarOpen!: boolean;
   currentlyOpenAccordion: number | null = null;
 
   // Function to toggle the open state of a mat-accordion

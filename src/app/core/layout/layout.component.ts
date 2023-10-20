@@ -1,6 +1,7 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
 import { Component } from '@angular/core';
 import { map, Observable, shareReplay } from 'rxjs';
+import { LoginService } from '../auth/services/login.service';
 
 @Component({
   selector: 'app-layout',
@@ -8,7 +9,12 @@ import { map, Observable, shareReplay } from 'rxjs';
   styleUrls: ['./layout.component.scss']
 })
 export class LayoutComponent {
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  isSidebarOpen!: boolean;
+
+  constructor(private breakpointObserver: BreakpointObserver,
+    private loginService: LoginService) {   
+   this.isSidebarOpen = this.loginService.getStateFromLocalStorage();
+   }
 
   isHandset$: Observable<boolean> = this.breakpointObserver
     .observe(['(max-width: 1199px)'])

@@ -4,8 +4,9 @@
         
         
         <mat-sidenav #drawer [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="(isHandset$ | async) === false">
-        <app-sidebar></app-sidebar>
+        [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="isSidebarOpen && (isHandset$ | async) === false">
+
+        <app-sidebar [isSidebarOpen]="isSidebarOpen"></app-sidebar>
     </mat-sidenav>
     <mat-sidenav-content>
             <!-- Start Header -->
@@ -18,7 +19,8 @@
 
             <!-- Main Content -->
             <main class="main-content">
-                <router-outlet></router-outlet>
+                <router-outlet>
+                </router-outlet>
             </main>
             <!-- End Main Content -->
 
