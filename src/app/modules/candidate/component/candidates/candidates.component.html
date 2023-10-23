@@ -11,7 +11,7 @@
         ><img src="./assets/images/add-white-full.svg" alt="Add"
       /></mat-icon>
     </button>
-    <button mat-flat-button color="primary" class="btn-with-icon">
+    <button mat-flat-button color="primary" class="btn-with-icon" (click)="importCandidates()">
       <mat-icon
         ><img src="./assets/images/import-white.svg" alt="Import"
       /></mat-icon>
@@ -191,7 +191,7 @@
               </mat-icon>
             </button>
             <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item (click)="handleAddCollegeDialog()">
+              <button mat-menu-item (click)="handleEditCandidate()">
                 <mat-icon>
                   <img src="./assets/images/edit.svg" alt="Edit" />
                 </mat-icon>

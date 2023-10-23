@@ -7,13 +7,15 @@ import { AddCandidateComponent } from './component/add-candidate/add-candidate.c
 import { CandidateService } from './services/candidate.service';
 import { CandidatesComponent } from './component/candidates/candidates.component';
 import { ImportCandidateComponent } from './component/import-candidate/import-candidate.component';
+import { EditCandidateComponent } from './component/edit-candidate/edit-candidate.component';
 
 
 @NgModule({
   declarations: [
     AddCandidateComponent,
     ImportCandidateComponent,
-    CandidatesComponent
+    CandidatesComponent,
+    EditCandidateComponent
   ],
   imports: [
     CommonModule,
