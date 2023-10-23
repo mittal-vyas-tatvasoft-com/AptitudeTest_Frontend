@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddCollegeComponent } from 'src/app/modules/masters/college/components/add-college/add-college.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { AddCandidateComponent } from '../add-candidate/add-candidate.component';
+import { Router } from '@angular/router';
 
 export interface CandidateData {
   name: string;
@@ -29,7 +30,7 @@ export class CandidatesComponent {
   dataSource: MatTableDataSource<CandidateData>;
   selection = new SelectionModel<CandidateData>(true, []);
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog,private router: Router) {
     this.dataSource = new MatTableDataSource([
       { name: "Ralph Edwards", college: "Columbia University", group: 'Ahmedabad University', email: 'tanya.hill@example.com', contact: '755 539 6587', status: "Active", action: "" },
       { name: "Savannah Nguyen", college: "Harvard University", group: 'Gujarat University', email: 'dolores.chambers@example.com', contact: '755 539 6587', status: "Active", action: "" },
@@ -86,5 +87,13 @@ export class CandidatesComponent {
     dialogConfig.panelClass = ["confirmation-dialog"];
     dialogConfig.autoFocus = false;
     this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
+  }
+
+  importCandidates() {
+    this.router.navigate(['admin/candidate/import-candidate']);
+  }
+
+  handleEditCandidate(){
+    this.router.navigate(['admin/candidate/edit']);
   }
 }

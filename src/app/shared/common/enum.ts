@@ -29,6 +29,9 @@ export enum Navigation {
   Technology = 'technology',
   Profile = 'profile',
 
+  //candidate navigation 
+  ImportCandidate = 'import-candidate',
+  
   //Utilities Navigation
   Utilities = 'utilities',
   Lookups = 'lookups',
