@@ -216,6 +216,10 @@
     justify-content: space-between;
     flex-wrap: wrap;
     // margin: -6px -6px -6px 0;
+    .mat-mdc-button-base {
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
     .mat-mdc-button-base + .mat-mdc-button-base {
       margin: 6px 0 6px 12px;
     }
@@ -253,7 +257,42 @@
     }
   }
   .mdc-notched-outline__trailing {
-    border-radius: 0!important;
+    border-radius: 0 !important;
+  }
+}
+
+.card-header {
+  padding: 12px;
+  .card-header-title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+  .card-header-btn {
+    padding: 12px;
+    padding: 12px;
+    margin-left: 12px;
+    .mat-icon {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+    }
+  }
+}
+
+.card-form {
+  background-color: #f7f8fd;
+  border-radius: 6px;
+  margin: 0 12px;
+  padding: 12px 12px 0;
+  .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
+    line-height: 12px;
+  }
+}
+
+.mat-datepicker-toggle{
+  .mat-mdc-icon-button{
+    display: flex;
   }
 }
 
@@ -321,5 +360,12 @@
     .mdc-button__label {
       display: none;
     }
+  }
+}
+
+@media (min-width: 1200px) {
+  .w-xl-20 {
+    flex: 0 0 auto;
+    width: 20%;
   }
 }
