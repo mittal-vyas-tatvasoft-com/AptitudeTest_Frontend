@@ -208,7 +208,7 @@
       color: $primary500;
     }
   }
-  
+
   .action-list {
     flex-shrink: 0;
     display: flex;
@@ -234,8 +234,26 @@
   }
 }
 .form-block {
-  .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper{
+  .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
     line-height: 12px;
+  }
+}
+.form-group {
+  .form-group-btn {
+    padding: 12px;
+    border-color: #b8bfcb !important;
+    background: #f7f8fd;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    .mat-icon {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+    }
+  }
+  .mdc-notched-outline__trailing {
+    border-radius: 0!important;
   }
 }
 

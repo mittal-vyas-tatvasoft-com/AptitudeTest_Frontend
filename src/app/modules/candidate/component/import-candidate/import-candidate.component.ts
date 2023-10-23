@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./import-candidate.component.scss']
 })
 export class ImportCandidateComponent {
-
+  optionsList: string[] = ['Option 1', 'Option 2', 'Option 3'];
 }
