@@ -8,6 +8,7 @@ export const FormControls = {
     minLengthErrMsg: 'Min 2 characters required',
     inputType: 'text',
     maxLength: 50,
+    minLength: 2,
   },
   status: {
     value: true,
@@ -26,5 +27,7 @@ export const FormControls = {
     key: 'streams',
     label: 'Streams',
     requiredErrMsg: 'Stream  is required',
+    maxLength: 10,
+    maxLengthErrMsg: 'Max 10 streams allowed',
   },
 };

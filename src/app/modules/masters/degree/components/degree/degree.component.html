@@ -74,13 +74,21 @@
                 </mat-icon>
                 Edit
               </button>
-              <button mat-menu-item (click)="onActiveClick(row.id)">
+              <button
+                *ngIf="!row.status"
+                mat-menu-item
+                (click)="onActiveClick(row.id)"
+              >
                 <mat-icon>
                   <img src="./assets/images/active.svg" alt="Active" />
                 </mat-icon>
                 Active
               </button>
-              <button mat-menu-item (click)="onInactiveClick(row.id)">
+              <button
+                *ngIf="row.status"
+                mat-menu-item
+                (click)="onInactiveClick(row.id)"
+              >
                 <mat-icon>
                   <img src="./assets/images/inactive.svg" alt="Inactive" />
                 </mat-icon>

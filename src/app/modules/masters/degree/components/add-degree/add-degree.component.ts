@@ -61,10 +61,23 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.form = this.fb.group({
       id: [0, [Validators.required]],
-      name: [FormControls.name.value, [Validators.required]],
+      name: [
+        FormControls.name.value,
+        [
+          Validators.required,
+          Validators.maxLength(FormControls.name.maxLength),
+          Validators.minLength(FormControls.name.minLength),
+        ],
+      ],
       status: [FormControls.status.value, [Validators.required]],
       level: [FormControls.level.value, [Validators.required]],
-      streams: ['', [Validators.required]],
+      streams: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(FormControls.streams.maxLength),
+        ],
+      ],
     });
   }
 
@@ -94,9 +107,10 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
 
     // Add our fruit
     if (value) {
-      this.streams.push(value);
+      if (!this.streams.includes(value) && value.length < 25) {
+        this.streams.push(value);
+      }
     }
-
     // Clear the input value
     event.chipInput!.clear();
   }
@@ -138,6 +152,8 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
   }
 
   onAddClick() {
-    this.dialogRef.close(this.form.value);
+    if (this.form.valid) {
+      this.dialogRef.close(this.form.value);
+    }
   }
 }

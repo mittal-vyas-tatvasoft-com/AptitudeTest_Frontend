@@ -39,8 +39,8 @@ export class DegreeComponent implements OnInit {
       this.degreeData = response.data.entityList;
     });
   }
+
   handleAddDegreeDialog(id: number) {
-    this.degreeData.filter((data: any) => data.id == id);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
@@ -50,7 +50,6 @@ export class DegreeComponent implements OnInit {
       .afterClosed()
       .subscribe((data) => {
         if (data.id == 0) {
-          debugger;
           this.degreeService.create(data).subscribe({
             next: (res: any) => {
               if (res.statusCode == 200) {
