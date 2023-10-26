@@ -1,23 +1,47 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent } from '@angular/common/http';
+import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { Observable, catchError, switchMap, throwError } from 'rxjs';
 import { LoginService } from '../../auth/services/login.service';
 
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
-  constructor(private loginService: LoginService){}
-  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+  constructor(private loginService: LoginService) {}
 
-    const token = this.loginService.getToken(); 
+  intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
+    const token = this.loginService.getToken();
 
     if (token) {
-      request = request.clone({
+      req = req.clone({
         setHeaders: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
     }
 
-    return next.handle(request);
+    return next.handle(req).pipe(
+      catchError((error) => {
+        if (error instanceof HttpErrorResponse && error.status === 401) {
+          // Token is invalid or expired, try refreshing the token
+          return this.loginService.refreshToken().pipe(
+            switchMap((result) => {
+              if (result.result) {
+                // Retry the original request with the new token
+                req = req.clone({
+                  setHeaders: {
+                    Authorization: `Bearer ${this.loginService.getToken()}`,
+                  },
+                });
+                return next.handle(req);
+              } else {
+                // Refresh token failed, perform logout
+                this.loginService.logout();
+                return throwError('Token refresh failed.');
+              }
+            })
+          );
+        }
+        return throwError(error);
+      })
+    );
   }
 }

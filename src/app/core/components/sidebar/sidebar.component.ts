@@ -1,19 +1,56 @@
-import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component } from '@angular/core';
-import { map, Observable, shareReplay } from 'rxjs';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Router } from '@angular/router';
+import { Observable, Subject } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
+import { LoginService } from '../../auth/services/login.service';
+import { navBarRoutes } from '../../configs/side-nav-routes.config';
 
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  styleUrls: ['./sidebar.component.scss']
 })
-export class SidebarComponent {
-  constructor(private breakpointObserver: BreakpointObserver) {}
 
+export class SidebarComponent implements OnInit,OnDestroy{
+  ngUnsubscribe$ = new Subject<void>();
+  expandBtn = '+';
+  collapseBtn = '-';
+  routeConfig = navBarRoutes;
+  isLoggedIn!: boolean;
+  temp!: number;
+  collapse!: -1;
+  currentlyOpenAccordion: number | null = null;
+  @Input() isSidebarOpen!: boolean;
+  @Output() onMenuIconClick = new EventEmitter();
   isHandset$: Observable<boolean> = this.breakpointObserver
-    .observe(['(max-width: 991px)'])
-    .pipe(
-      map((result) => result.matches),
-      shareReplay(),
-    );
+  .observe(Breakpoints.Handset)
+  .pipe(
+    map((result) => result.matches),
+    shareReplay(),
+  );
+
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private loginService: LoginService,
+    private router: Router,
+  ) { }
+
+  ngOnInit(): void {
+    this.isLoggedIn = this.loginService.isLoggedIn();
+     this.isSidebarOpen = this.loginService.getStateFromLocalStorage();
+  }
+
+  toggleAccordion(index: number) {
+    this.currentlyOpenAccordion = this.currentlyOpenAccordion === index ? null : index;
+  }
+
+  onClick() {
+    this.onMenuIconClick.emit();
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
+  }
 }

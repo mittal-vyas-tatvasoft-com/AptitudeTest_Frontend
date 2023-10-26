@@ -2,6 +2,6 @@ import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-core',
-  template: '<app-sidebar></app-sidebar>',
+  template: '<app-layout></app-layout>',
 })
 export class CoreComponent {}

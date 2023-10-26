@@ -27,12 +27,14 @@ export enum Navigation {
   Degree = 'degree',
   Stream = 'stream',
   Technology = 'technology',
-
+  Profile = 'profile',
 
   //Utilities Navigation
   Utilities = 'utilities',
   Lookups = 'lookups',
   Languages = 'languages',
+
+  Candidate = 'candidate',
 }
 
 export enum Type {

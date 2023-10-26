@@ -6,37 +6,27 @@ const routes: Routes = [
         path: '',
         redirectTo: 'technology',
         pathMatch: 'full',
-      },
-    {
-        path:'college',
-        loadChildren: () =>
-        import('./college/college.module').then((m) => m.CollegeModule)
     },
     {
-        path:'degree',
+        path: 'college',
         loadChildren: () =>
-        import('./degree/degree.module').then((m) => m.DegreeModule)
+            import('./college/college.module').then((m) => m.CollegeModule)
     },
     {
-        path:'location',
+        path: 'degree',
         loadChildren: () =>
-        import('./location/location.module').then((m) => m.LocationModule)
+            import('./degree/degree.module').then((m) => m.DegreeModule)
     },
     {
-        path:'stream',
+        path: 'profile',
         loadChildren: () =>
-        import('./stream/stream.module').then((m) => m.StreamModule)
-    },
-    {
-        path:'technology',
-        loadChildren: () =>
-        import('./technology/technology.module').then((m) => m.TechnologyModule)
+            import('./profile/profile.module').then((m) => m.ProfileModule)
     }
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+    imports: [RouterModule.forChild(routes)],
+    exports: [RouterModule]
 })
 
 export class MastersRoutingModule { }

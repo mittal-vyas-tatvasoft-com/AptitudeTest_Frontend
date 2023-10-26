@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -42,6 +43,8 @@ import { MatMenuModule } from '@angular/material/menu';
     MatSelectModule,
     MatSlideToggleModule,
     MatTabsModule,
+    MatIconModule,
+    FormsModule,
   ],
   exports: [
     MatChipsModule,
@@ -71,6 +74,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatExpansionModule,
     MatTabsModule,
     MatMenuModule,
+    FormsModule,
   ],
   providers: [MatDatepickerModule],
 })
