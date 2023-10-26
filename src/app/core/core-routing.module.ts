@@ -45,6 +45,13 @@ const routes: Routes = [
           import(
             '../modules/results/results.module'
           ).then((m) => m.ResultsModule),
+      },
+      {
+        path: `${Navigation.Questions}`,
+        loadChildren: () =>
+          import(
+            '../modules/questions/questions.module'
+          ).then((m) => m.QuestionsModule),
       }
     ],
   },

@@ -2,12 +2,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
-import { AddCandidateComponent } from '../add-candidate/add-candidate.component';
 import { AddGroupComponent } from '../add-group/add-group.component';
 import {Location} from '@angular/common';
-
-
 
 export interface CandidateData {
   candidatesName: string;
@@ -32,7 +28,7 @@ export class ImportCandidateComponent {
   dataSource: MatTableDataSource<CandidateData>;
   selection = new SelectionModel<CandidateData>(true, []);
  
-  constructor(public dialog: MatDialog,private router: Router, private _location: Location) {
+  constructor(public dialog: MatDialog, private _location: Location) {
     this.dataSource = new MatTableDataSource([
       { candidatesName: "Theresa Webb", group: 'Ahmedabad University', collegeName: "Dartmouth College", email: 'theresa.webb@gmail.com', contact: '987 654 3210', status: "Active", action: "" },
       { candidatesName: "Marvin McKinney", group: 'Gujarat University', collegeName: "Duke University", email: 'marvin.mcKinney@gmail.com', contact: '987 654 3210', status: "Active", action: "" },

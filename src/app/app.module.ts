@@ -11,9 +11,9 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthTokenInterceptor } from './core/interceptors/auth/auth-token.interceptor';
 import { CandidateModule } from './modules/candidate/candidate.module';
 import { GroupsModule } from './modules/groups/groups.module';
-import { ResultsModule } from './modules/results/results.module';
 import { TestModule } from './modules/test/test.module';
-
+import { QuestionsModule } from './modules/questions/questions.module';
+import { ResultsModule } from './modules/results/results.module';
 
 @NgModule({
   declarations: [
@@ -31,6 +31,7 @@ import { TestModule } from './modules/test/test.module';
     TestModule,
     GroupsModule,
     ResultsModule,
+    QuestionsModule,
   ],
   providers: [
     {

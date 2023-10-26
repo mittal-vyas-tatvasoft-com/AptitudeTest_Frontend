@@ -35,6 +35,7 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { DropzoneModule } from 'ngx-dropzone-wrapper';
 import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { CKEditorModule } from 'ng2-ckeditor';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -42,6 +43,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   maxFilesize: 50,
   acceptedFiles: 'image/*'
 };
+
 @NgModule({
   declarations: [],
   imports: [
@@ -93,7 +95,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     MatDatepickerModule,
     MatStepperModule,
     NgxMaterialTimepickerModule,
-    DropzoneModule
+    DropzoneModule,
+    CKEditorModule
   ],
   providers: [
     MatDatepickerModule,

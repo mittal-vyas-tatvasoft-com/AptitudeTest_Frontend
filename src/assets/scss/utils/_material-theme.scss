@@ -988,7 +988,7 @@ div.mat-mdc-select-panel {
             th {
               font-size: 14px;
               font-weight: 300;
-              color: #51545f;
+              color: $color51545F;
             }
           }
           .mat-calendar-body {
@@ -1026,7 +1026,7 @@ div.mat-mdc-select-panel {
   }
 }
 
-// Mat Datepicker
+// Mat Datepicker/Timepicker
 .mat-datepicker-toggle {
   .mat-mdc-icon-button {
     display: flex;
@@ -1056,7 +1056,6 @@ div.mat-mdc-select-panel {
     }
   }
 }
-
 ngx-material-timepicker-container {
   .timepicker-overlay {
     ngx-material-timepicker-content {
@@ -1183,8 +1182,6 @@ ngx-material-timepicker-container {
           .mat-step-icon-state-number {
             color: $white;
             background-color: $primary500;
-            .mat-step-icon-content {
-            }
             &.mat-step-icon-selected {
               background-color: $white;
               color: $primary500;
@@ -1209,8 +1206,6 @@ ngx-material-timepicker-container {
     .mat-horizontal-content-container {
       padding: 30px 0 0;
       overflow: visible;
-      .mat-horizontal-stepper-content {
-      }
     }
   }
 
@@ -1286,6 +1281,51 @@ ngx-material-timepicker-container {
   }
 }
 
+// selectable-chips-wrapper
+.mat-mdc-chip-listbox.selectable-chips-wrapper {
+  .mat-mdc-chip.mat-mdc-chip-option:not(.mdc-evolution-chip--disabled) {
+    border-radius: 50px;
+    border: 1px solid #b8bfcb;
+    background: #fff;
+    min-height: 40px;
+    .mat-mdc-chip-action {
+      padding: 0 20px;
+      .mat-mdc-chip-graphic {
+        display: none;
+      }
+      .mat-mdc-chip-action-label {
+        color: rgba($color: $color51545F, $alpha: 0.5);
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16px;
+        text-transform: capitalize;
+        .result {
+          margin-left: 5px;
+          color: $color51545F;
+          font-weight: 500;
+          letter-spacing: 0.14px;
+        }
+      }
+    }
+    &.mdc-evolution-chip--selected{
+      background: $primary500!important;
+      border-color: $primary500;
+      .mat-mdc-chip-action{
+        .mat-mdc-chip-action-label{
+          color: rgba($color: $white, $alpha: 0.5);
+          .result{
+            color: $white;
+          }
+        }
+      }
+    }
+    &:hover{
+      background: rgba(45, 97, 172, 0.08);
+    }
+  }
+}
+
 /* Responsive Media Queries
 -------------------------------------------------------------------------------------------------*/
 @media (max-width: 991px) {
@@ -1352,7 +1392,7 @@ ngx-material-timepicker-container {
           border: 0;
           .mat-horizontal-stepper-header {
             padding: 12px 16px;
-            .mat-step-icon-state-number{
+            .mat-step-icon-state-number {
               margin-right: 0;
               &.mat-step-icon-selected {
                 margin-right: 8px;

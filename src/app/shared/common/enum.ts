@@ -49,6 +49,11 @@ export enum Navigation {
   // Results navigation
   Results = 'results',
   ResultsDetails = 'result-details',
+
+  // Questions navigation
+  Questions = 'questions',
+  AddQuestion = 'add-question',
+  ImportQuestion = 'import-question',
 }
 
 export enum Type {

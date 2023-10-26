@@ -1,0 +1,43 @@
+<div class="page-header">
+    <div class="title-wrap">
+        <mat-icon class="page-icon">
+            <img src="./assets/images/question-primary.svg" alt="Question" />
+        </mat-icon>
+        <h4 class="title">Question</h4>
+    </div>
+    <div class="action-list">
+        <button mat-fab color="primary" routerLink="/admin/questions/add-question">
+            <mat-icon><img src="./assets/images/add-white-full.svg" alt="Add" /></mat-icon>
+        </button>
+        <button mat-flat-button color="primary" class="btn-with-icon" routerLink="/admin/questions/import-question">
+            <mat-icon><img src="./assets/images/import-white.svg" alt="Import" /></mat-icon>
+            Import
+        </button>
+    </div>
+</div>
+
+<mat-card class="form-block mb-3">
+    <mat-card-content class="pb-0">
+        <div class="row">
+            <div class="col-auto">
+                <mat-chip-listbox class="selectable-chips-wrapper">
+                    <mat-chip-option color="primary" selected>All<span class="result">200</span></mat-chip-option>
+                    <mat-chip-option color="primary">Maths<span class="result">50</span></mat-chip-option>
+                    <mat-chip-option color="primary">Reasoning<span class="result">50</span></mat-chip-option>
+                    <mat-chip-option color="primary">Programing<span class="result">50</span></mat-chip-option>
+                    <mat-chip-option color="primary">technical <span class="result">50</span></mat-chip-option>
+                </mat-chip-listbox>
+            </div>
+            <div class="col-auto">
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select>
+                        <mat-option *ngFor="let item of optionsList" [value]="item">
+                            {{ item }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </mat-card-content>
+</mat-card>

@@ -42,6 +42,12 @@ export const navBarRoutes = {
     icon: 'perm_data_setting',
   },
 
+  Questions: {
+    label: 'Questions',
+    path: `./${Navigation.Questions}`,
+    icon: 'perm_data_setting',
+  },
+
   Masters: {
     Components: [
       {
