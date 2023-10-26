@@ -1,41 +1,41 @@
 
-<app-header></app-header>
-<div class="body">
-    <div class="content admin-pages-wrapper">
-        <a name="topofdoc" id="topofdoc"></a>
-        <div class="heading-wrapper">
-            <h1>Authentication</h1>
-        </div>
-        <div class="container">
-            <div class="login-page-wrapper">
-                <form [formGroup]="form" (ngSubmit)="login()">
-                    <div class="error-message" *ngIf="loginFailed">
-                        Incorrect username or password. Please try again.
-                    </div>
-                    <div class="row login-row tc-login-row">
-                        <p class="sub">UserName:</p>
-                    <app-text-control [formControlModel]="loginModel.userNameField" [form]="form"
-                            class="w-100"></app-text-control>
-                    </div>
-                    <div class="row login-row tc-login-row">
-                        <p class="sub">Password:</p>
-                        <app-text-control [formControlModel]="loginModel.passwordField" [form]="form"
-                            (iconClick)="onIconClick(input)" class="w-100" #input></app-text-control>
-                    </div>
-                    <div class="row forgot-pass-link">
-                        <a routerLink="/forgot" title="reset the password" style="font-size: 90%; margin-left: 18%;">I
-                            forgot my password</a>
-                    </div>
-                    <div class="row login-row tc-login-row">
-                        <app-button type="submit"  class="forgot-btn"
-                            label="Login"> </app-button>
-                    </div>
-                </form>
-
+<div class="login-wrapper">
+    <div class="login-header">
+        <a class="logo" href="javascript:void(0)" routerLink="/" title="Tatvasoft">
+            <img src="./assets/images/tatvasoft-white.svg" alt="Tatvasoft">
+        </a>
+    </div>
+    <div class="login-box-outer">
+        <div class="login-box">
+            <div class="welcome-text">
+                <h2 class="title">Welcome</h2>
+                <p class="description">Sign in to your account to continue</p>
             </div>
-            <div class="pagehelp">In order to access the different sections of TCExam you must log in using the name and
-                password provided to you by the system administrator</div>
+            <form [formGroup]="form" (ngSubmit)="login()">
+                <div class="row">
+                    <div class="col-12">
+                        <app-text-control [formControlModel]="loginModel.userNameField" [form]="form"
+                        class="w-100"></app-text-control>
+                    </div>
+                    <div class="col-12">
+                        <app-text-control [formControlModel]="loginModel.passwordField" [form]="form"
+                        (iconClick)="onIconClick(input)" class="w-100" #input></app-text-control>
+                    </div>
+                    <div class="col-12 animation-target">
+                        <div class="d-flex justify-content-between align-items-center mt-n1 mb-md-3 mb-2">
+                            <mat-checkbox color="primary" class="font14">Remeber me</mat-checkbox>
+                        </div>
+                    </div>
+                    <div class="col-12 animation-target">
+                        <button mat-flat-button color="primary" class="w-100">
+                            Login
+                        </button>
+                    </div> 
+                </div>     
+            </form>
         </div>
     </div>
+    <div class="login-footer">
+        <p>&copy; 2023 All Rights Reserved. Tatvasoft</p>
+    </div>
 </div>
-<app-footer></app-footer>

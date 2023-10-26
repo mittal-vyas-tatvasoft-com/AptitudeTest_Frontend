@@ -33,6 +33,8 @@ export enum Navigation {
   Utilities = 'utilities',
   Lookups = 'lookups',
   Languages = 'languages',
+
+  Candidate = 'candidate',
 }
 
 export enum Type {

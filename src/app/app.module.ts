@@ -9,6 +9,7 @@ import { UsersModule } from './modules/users/users.module';
 import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthTokenInterceptor } from './core/interceptors/auth/auth-token.interceptor';
+import { CandidateModule } from './modules/candidate/candidate.module';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { AuthTokenInterceptor } from './core/interceptors/auth/auth-token.interc
     MastersModule,
     UsersModule,
     CoreModule,
-    HttpClientModule
+    HttpClientModule,
+    CandidateModule,
   ],
   providers: [
     {
@@ -32,4 +34,4 @@ import { AuthTokenInterceptor } from './core/interceptors/auth/auth-token.interc
   ],
   bootstrap: [AppComponent],
 })
-export class AppModule {}
+export class AppModule { }

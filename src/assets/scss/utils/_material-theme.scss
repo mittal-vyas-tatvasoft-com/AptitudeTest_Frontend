@@ -131,6 +131,11 @@ $color30343C: #30343c;
 $color666870: #666870;
 $color676D79: #676d79;
 
+:root {
+  --mdc-checkbox-state-layer-size: 36px !important;
+  --mdc-radio-state-layer-size: 36px !important;
+}
+
 // Mat Button
 .mdc-button.mat-mdc-button-base,
 .mat-mdc-unelevated-button.mat-mdc-button-base {
@@ -173,7 +178,6 @@ $color676D79: #676d79;
   &.mat-form-field-appearance-outline {
     .mat-mdc-text-field-wrapper {
       background: $white;
-      padding-right: 10px;
       &.mdc-text-field--outlined {
         --mdc-outlined-text-field-outline-width: 1px;
         --mdc-outlined-text-field-focus-outline-width: 1px;
@@ -342,6 +346,73 @@ $color676D79: #676d79;
   }
   .mat-mdc-form-field-subscript-wrapper {
     line-height: 27px;
+  }
+}
+
+// Mat Checkbox
+.mat-mdc-checkbox {
+  margin-left: -9px;
+  .mdc-checkbox {
+    flex: 0 0 20px;
+    width: 20px;
+    height: 20px;
+    .mdc-checkbox__background {
+      border: 1px solid;
+      width: 20px;
+      height: 20px;
+      border-radius: 3px;
+    }
+    &:hover
+      .mdc-checkbox__native-control:enabled:not(:checked):not(
+        :indeterminate
+      ):not([data-indeterminate="true"])
+      ~ .mdc-checkbox__background,
+    .mdc-checkbox__native-control:enabled:focus:focus:not(:checked):not(
+        :indeterminate
+      )
+      ~ .mdc-checkbox__background {
+      border-color: $primary500;
+    }
+
+    .mdc-checkbox__ripple,
+    .mat-mdc-checkbox-ripple,
+    .mdc-checkbox__native-control {
+      top: 0;
+      left: 0;
+    }
+
+    .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
+        [data-indeterminate="true"]
+      )
+      ~ .mdc-checkbox__background {
+      border-color: #b8bfcb;
+    }
+
+    .mdc-checkbox__native-control:enabled
+      ~ .mdc-checkbox__background
+      .mdc-checkbox__checkmark {
+      background: url("./../../images/check-white.svg") no-repeat center center;
+      background-size: 20px 20px;
+    }
+
+    .mdc-checkbox__native-control:enabled
+      ~ .mdc-checkbox__background
+      .mdc-checkbox__checkmark
+      .mdc-checkbox__checkmark-path {
+      display: none;
+    }
+
+    + .mdc-label {
+      font-family: "Poppins", sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      letter-spacing: 0.2px;
+      color: $color51545F;
+      position: relative;
+      top: 0;
+      padding-left: 0;
+    }
   }
 }
 
@@ -788,7 +859,7 @@ div.mat-mdc-select-panel {
   }
 }
 
-// Mat Dialog
+// Mat Confirmation Dialog
 .confirmation-dialog.cdk-overlay-pane {
   width: 452px;
   max-width: 452px !important;
