@@ -5,8 +5,14 @@
 @import "./utils/material-theme";
 
 // Spacing CSS goes here
+.text-left{
+  text-align: left!important;
+}
 .text-center{
   text-align: center!important;
+}
+.text-right{
+  text-align: right!important;
 }
 .flex-wrap {
   flex-wrap: wrap;
@@ -31,4 +37,7 @@
 }
 .mb-15p{
   margin-bottom: 15px;
+}
+.overflow-hidden{
+  overflow: hidden!important;
 }

@@ -57,7 +57,7 @@
                     <mat-form-field appearance="outline">
                         <mat-label>Username</mat-label>
                         <input matInput placeholder="Enter your username" />
-                        <mat-icon matSuffix class="material-icons-outlined">
+                        <mat-icon matSuffix>
                             <img src="./assets/images/person-dark.svg" alt="User">
                         </mat-icon>
                     </mat-form-field>
@@ -68,7 +68,7 @@
                         <input matInput [type]="passwordHide ? 'password' : 'text'" placeholder="Enter your password" />
                         <button mat-icon-button matSuffix (click)="passwordHide = !passwordHide"
                             [attr.aria-label]="'Hide password'" [attr.aria-pressed]="passwordHide">
-                            <mat-icon class="material-icons-outlined">
+                            <mat-icon>
                                 <img [src]="passwordHide ? './assets/images/password-visibility-hide-dark.svg' : './assets/images/password-visibility-show-dark.svg'"
                                     alt="Password">
                             </mat-icon>

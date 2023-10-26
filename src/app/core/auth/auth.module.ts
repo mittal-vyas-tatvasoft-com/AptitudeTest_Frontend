@@ -23,7 +23,7 @@ import { CoreModule } from '../core.module';
     FormsModule,
     ReactiveFormsModule,
     FormControlModule,
-  CoreModule
+    CoreModule
   ],
 })
-export class AuthModule {}
+export class AuthModule { }

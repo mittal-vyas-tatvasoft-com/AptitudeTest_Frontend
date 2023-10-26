@@ -1,0 +1,505 @@
+<div class="page-header">
+    <div class="title-wrap">
+        <mat-icon class="page-icon">
+            <img src="./assets/images/test-primary.svg" alt="Test" />
+        </mat-icon>
+        <h4 class="title">Test</h4>
+    </div>
+    <div class="action-list">
+        <button mat-stroked-button class="btn-stroked-default" routerLink="/admin/test">
+            <mat-icon>
+                <img src="./assets/images/back-arrow.svg" alt="Action" />
+            </mat-icon>
+        </button>
+    </div>
+</div>
+
+<mat-card class="default-card overflow-hidden">
+    <mat-card-content>
+
+        <mat-stepper [linear]="false" #stepper class="primary-stepper">
+            <mat-step [completed]="false" label="Test Details">
+                <div class="container-900">
+                    <div class="row">
+                        <div class="col-lg col-sm-8">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Test Name</mat-label>
+                                <input matInput />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3 col-sm-4">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Status</mat-label>
+                                <mat-select>
+                                    <mat-option *ngFor="let item of optionsList" [value]="item">
+                                        {{ item }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-3 col-sm-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Test time</mat-label>
+                                <input matInput />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <mat-form-field appearance="outline" class="mat-time-picker">
+                                <mat-label>Start time</mat-label>
+                                <input matInput [ngxTimepicker]="startPicker" readonly>
+                                <ngx-material-timepicker #startPicker></ngx-material-timepicker>
+                                <button mat-icon-button matSuffix (click)="startPicker.open()">
+                                    <mat-icon>
+                                        <img src="./assets/images/datepicker-grey.svg" alt="Time">
+                                    </mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <mat-form-field appearance="outline" class="mat-time-picker">
+                                <mat-label>End time</mat-label>
+                                <input matInput [ngxTimepicker]="endPicker" readonly>
+                                <ngx-material-timepicker #endPicker></ngx-material-timepicker>
+                                <button mat-icon-button matSuffix (click)="endPicker.open()">
+                                    <mat-icon>
+                                        <img src="./assets/images/datepicker-grey.svg" alt="Time">
+                                    </mat-icon>
+                                </button>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-lg-3 col-sm-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Basic points</mat-label>
+                                <input matInput />
+                            </mat-form-field>
+                        </div>
+                        <div class="col-12">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Description</mat-label>
+                                <input matInput />
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Message at the start of the test</mat-label>
+                                <textarea matInput rows="3"></textarea>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Message at the end of the test</mat-label>
+                                <textarea matInput rows="3"></textarea>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="switch-block-wrapper">
+                                <mat-slide-toggle color="primary" hideIcon labelPosition="before"
+                                    [checked]="true">Random questions</mat-slide-toggle>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="switch-block-wrapper">
+                                <mat-slide-toggle color="primary" hideIcon labelPosition="before"
+                                    [checked]="true">Random questions</mat-slide-toggle>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="switch-block-wrapper">
+                                <mat-slide-toggle color="primary" hideIcon labelPosition="before"
+                                    [checked]="true">Logout when time expires</mat-slide-toggle>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="switch-block-wrapper">
+                                <mat-slide-toggle color="primary" hideIcon labelPosition="before"
+                                    [checked]="true">Questigns menu</mat-slide-toggle>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-list mt-lg-4 mt-md-3 mt-1 mb-lg-2">
+                        <button mat-flat-button matStepperNext color="primary">Save</button>
+                        <button mat-stroked-button color="primary" routerLink="/admin/test">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </mat-step>
+            <mat-step [completed]="false" label="Candidates">
+
+                <div class="text-center">
+                    <mat-form-field appearance="outline" style="max-width: 400px;">
+                        <mat-label>Select Group</mat-label>
+                        <mat-select>
+                            <mat-option *ngFor="let item of optionsList" [value]="item">
+                                {{ item }}
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <div class="row back-bg-card mb-1">
+                        <div class="col-sm">
+                            <div class="row">
+                                <div class="col-lg col-sm-6">
+                                    <mat-form-field appearance="outline" class="remove-hint">
+                                        <input matInput placeholder="Search candidate.." />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-lg-3 col-sm-6">
+                                    <mat-form-field appearance="outline" class="remove-hint">
+                                        <mat-label>College</mat-label>
+                                        <mat-select>
+                                            <mat-option *ngFor="let item of optionsList" [value]="item">
+                                                {{ item }}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-auto pb-md-2 pb-0 text-left">
+                            <button mat-stroked-button color="primary">clear</button>
+                        </div>
+                    </div>
+                    <div style="margin: 0 -24px -24px;">
+                        <div class="mat-table-wrapper">
+                            <table mat-table matSort [dataSource]="dataSource">
+
+                                <!-- Candidate Name Column -->
+                                <ng-container matColumnDef="candidate">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Candidates name </th>
+                                    <td mat-cell *matCellDef="let row" (click)="handleNextClick()"> {{row.candidate}}
+                                    </td>
+                                </ng-container>
+
+                                <!-- College Name Column -->
+                                <ng-container matColumnDef="college">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> College name </th>
+                                    <td mat-cell *matCellDef="let row" (click)="handleNextClick()"> {{row.college}}
+                                    </td>
+                                </ng-container>
+
+                                <!-- Email Column -->
+                                <ng-container matColumnDef="email">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Email
+                                    </th>
+                                    <td mat-cell *matCellDef="let row" (click)="handleNextClick()"> {{row.email}} </td>
+                                </ng-container>
+
+                                <!-- Contact Column -->
+                                <ng-container matColumnDef="contact">
+                                    <th mat-header-cell *matHeaderCellDef mat-sort-header> Contact No. </th>
+                                    <td mat-cell *matCellDef="let row" (click)="handleNextClick()"> {{row.contact}}
+                                    </td>
+                                </ng-container>
+
+                                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                            </table>
+                        </div>
+                        <div class="mat-custom-pagination">
+                            <div class="pagination-left">
+                                <mat-form-field appearance="outline" class="pagination-select remove-hint">
+                                    <mat-label>Page</mat-label>
+                                    <mat-select [(ngModel)]="selectedOption">
+                                        <mat-option *ngFor="let item of paginationOptionsList" [value]="item">
+                                            {{ item }}
+                                        </mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <span class="page-info">Showing 10 - 20 of 50 entries</span>
+                            </div>
+                            <ul class="pagination-right">
+                                <li>
+                                    <a mat-stroked-button href="javascript:void(0)" disabled>
+                                        <img src="./assets/images/chevron-backward.svg" alt="Prev">
+                                    </a>
+                                </li>
+                                <li>
+                                    <a mat-stroked-button href="javascript:void(0)" class="active">
+                                        1
+                                    </a>
+                                </li>
+                                <li>
+                                    <a mat-stroked-button href="javascript:void(0)">
+                                        2
+                                    </a>
+                                </li>
+                                <li>
+                                    <a mat-stroked-button href="javascript:void(0)">
+                                        3
+                                    </a>
+                                </li>
+                                <li>
+                                    <a mat-stroked-button href="javascript:void(0)">
+                                        4
+                                    </a>
+                                </li>
+                                <li>
+                                    <a mat-stroked-button href="javascript:void(0)">
+                                        5
+                                    </a>
+                                </li>
+                                <li>
+                                    <a mat-stroked-button href="javascript:void(0)">
+                                        <img src="./assets/images/chevron-forward.svg" alt="Prev">
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </mat-step>
+            <mat-step [completed]="false" label="Questions">
+                <div class="container-900">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <mat-form-field appearance="outline">
+                                <mat-label>Topics</mat-label>
+                                <mat-select>
+                                    <mat-option *ngFor="let item of optionsList" [value]="item">
+                                        {{ item }}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Number of question</mat-label>
+                                        <input matInput />
+                                    </mat-form-field>
+                                </div>
+                                <div class="col-sm-6">
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Weightage</mat-label>
+                                        <input matInput />
+                                        <mat-icon matSuffix style="width: 18px;height: 18px;">
+                                            <img src="./assets/images/percentage-grey.svg" alt="User">
+                                        </mat-icon>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="imported-question-wrapper">
+                        <div class="row">
+                            <div class="col-md-auto d-flex align-items-center justify-content-between mb-sm-0 mb-1">
+                                <h4 class="title">Questions imported</h4>
+                                <button mat-stroked-button color="primary" class="d-md-none d-block">
+                                    Delete All
+                                </button>
+                            </div>
+                            <div class="col-md d-md-block d-none">
+                                <div class="title-action">
+                                    <p class="question-marks">
+                                        Total Questions: <span>30</span>
+                                    </p>
+                                    <p class="question-marks">
+                                        Total Marks: <span>90</span>
+                                    </p>
+                                    <button mat-stroked-button color="primary">
+                                        Delete All
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="col-12 d-md-none d-block">
+                                <div class="title-action">
+                                    <p class="question-marks">
+                                        Total Questions: <span>30</span>
+                                    </p>
+                                    <p class="question-marks">
+                                        Total Marks: <span>90</span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <ul class="imported-question-listing">
+                            <li class="imported-question">
+                                <div class="card-header">
+                                    <div class="left">
+                                        <h6 class="title">Maths</h6>
+                                        <p class="question-marks">
+                                            10 <span>Questions</span>
+                                        </p>
+                                        <p class="question-marks">
+                                            30 <span>Marks</span>
+                                        </p>
+                                    </div>
+                                    <div class="right">
+                                        <button mat-fab class="btn-sm">
+                                            <mat-icon>
+                                                <img src="./assets/images/edit.svg" alt="Edit">
+                                            </mat-icon>
+                                        </button>
+                                        <button mat-fab class="btn-sm">
+                                            <mat-icon>
+                                                <img src="./assets/images/delete.svg" alt="Delete">
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="questions-meta">
+                                                <p class="title">Single Answer (6)</p>
+                                                <div class="question-weightage-chips">
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        1 Mark<span class="mark">03</span>
+                                                    </mat-chip>
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        2 Mark<span class="mark">02</span>
+                                                    </mat-chip>
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        5 Mark<span class="mark">01</span>
+                                                    </mat-chip>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="questions-meta">
+                                                <p class="title">Multiple Answer (6)</p>
+                                                <div class="question-weightage-chips">
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        3 Mark<span class="mark">01</span>
+                                                    </mat-chip>
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        5 Mark<span class="mark">03</span>
+                                                    </mat-chip>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="imported-question">
+                                <div class="card-header">
+                                    <div class="left">
+                                        <h6 class="title">Reasoning</h6>
+                                        <p class="question-marks">
+                                            10 <span>Questions</span>
+                                        </p>
+                                        <p class="question-marks">
+                                            30 <span>Marks</span>
+                                        </p>
+                                    </div>
+                                    <div class="right">
+                                        <button mat-fab class="btn-sm">
+                                            <mat-icon>
+                                                <img src="./assets/images/edit.svg" alt="Edit">
+                                            </mat-icon>
+                                        </button>
+                                        <button mat-fab class="btn-sm">
+                                            <mat-icon>
+                                                <img src="./assets/images/delete.svg" alt="Delete">
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="questions-meta">
+                                                <p class="title">Single Answer (6)</p>
+                                                <div class="question-weightage-chips">
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        1 Mark<span class="mark">03</span>
+                                                    </mat-chip>
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        2 Mark<span class="mark">02</span>
+                                                    </mat-chip>
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        5 Mark<span class="mark">01</span>
+                                                    </mat-chip>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="questions-meta">
+                                                <p class="title">Multiple Answer (6)</p>
+                                                <div class="question-weightage-chips">
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        3 Mark<span class="mark">01</span>
+                                                    </mat-chip>
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        5 Mark<span class="mark">03</span>
+                                                    </mat-chip>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="imported-question">
+                                <div class="card-header">
+                                    <div class="left">
+                                        <h6 class="title">Programing</h6>
+                                        <p class="question-marks">
+                                            10 <span>Questions</span>
+                                        </p>
+                                        <p class="question-marks">
+                                            30 <span>Marks</span>
+                                        </p>
+                                    </div>
+                                    <div class="right">
+                                        <button mat-fab class="btn-sm">
+                                            <mat-icon>
+                                                <img src="./assets/images/edit.svg" alt="Edit">
+                                            </mat-icon>
+                                        </button>
+                                        <button mat-fab class="btn-sm">
+                                            <mat-icon>
+                                                <img src="./assets/images/delete.svg" alt="Delete">
+                                            </mat-icon>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm">
+                                            <div class="questions-meta">
+                                                <p class="title">Single Answer (6)</p>
+                                                <div class="question-weightage-chips">
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        1 Mark<span class="mark">03</span>
+                                                    </mat-chip>
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        2 Mark<span class="mark">02</span>
+                                                    </mat-chip>
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        5 Mark<span class="mark">01</span>
+                                                    </mat-chip>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-sm">
+                                            <div class="questions-meta">
+                                                <p class="title">Multiple Answer (6)</p>
+                                                <div class="question-weightage-chips">
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        3 Mark<span class="mark">01</span>
+                                                    </mat-chip>
+                                                    <mat-chip class="weightage-chip" disableRipple>
+                                                        5 Mark<span class="mark">03</span>
+                                                    </mat-chip>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </mat-step>
+        </mat-stepper>
+    </mat-card-content>
+</mat-card>

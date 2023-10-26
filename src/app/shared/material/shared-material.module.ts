@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
@@ -12,6 +13,7 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatIconModule } from '@angular/material/icon';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatSortModule } from '@angular/material/sort';
 import { MatChipsModule } from '@angular/material/chips';
@@ -28,6 +30,8 @@ import { MatListModule } from '@angular/material/list';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
+import { MatStepperModule } from '@angular/material/stepper';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [],
@@ -45,6 +49,7 @@ import { MatMenuModule } from '@angular/material/menu';
     MatTabsModule,
     MatIconModule,
     FormsModule,
+    ReactiveFormsModule,
   ],
   exports: [
     MatChipsModule,
@@ -75,7 +80,11 @@ import { MatMenuModule } from '@angular/material/menu';
     MatTabsModule,
     MatMenuModule,
     FormsModule,
+    MatNativeDateModule,
+    MatDatepickerModule,
+    MatStepperModule,
+    NgxMaterialTimepickerModule,
   ],
   providers: [MatDatepickerModule],
 })
-export class SharedMaterialModule {}
+export class SharedMaterialModule { }

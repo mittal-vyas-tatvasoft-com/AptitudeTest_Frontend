@@ -130,15 +130,16 @@
     <li class="nav-link">
       <a
         href="javascript:void(0)"
-        routerLink="/test"
+        [routerLink]="routeConfig.Test.path"
         class="nav-item"
         routerLinkActive="active"
         title="Test"
+        (click)="onClick()"
       >
-        <mat-icon class="nav-icon" (click)="onClick()">
+        <mat-icon class="nav-icon">
           <img src="./assets/images/test-grey.svg" alt="Test" />
         </mat-icon>
-        Test
+        {{ routeConfig.Test.label }}
       </a>
     </li>
     <li class="nav-link">

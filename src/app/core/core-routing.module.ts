@@ -25,6 +25,13 @@ const routes: Routes = [
             '../modules/candidate/candidate.module'
           ).then((m) => m.CandidateModule),
       },
+      {
+        path: `${Navigation.Test}`,
+        loadChildren: () =>
+          import(
+            '../modules/test/test.module'
+          ).then((m) => m.TestModule),
+      },
     ],
   },
 ];

@@ -10,6 +10,7 @@ import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthTokenInterceptor } from './core/interceptors/auth/auth-token.interceptor';
 import { CandidateModule } from './modules/candidate/candidate.module';
+import { TestModule } from './modules/test/test.module';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CandidateModule } from './modules/candidate/candidate.module';
     CoreModule,
     HttpClientModule,
     CandidateModule,
+    TestModule,
   ],
   providers: [
     {

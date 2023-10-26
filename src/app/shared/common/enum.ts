@@ -28,16 +28,20 @@ export enum Navigation {
   Stream = 'stream',
   Technology = 'technology',
   Profile = 'profile',
-
-  //candidate navigation 
-  ImportCandidate = 'import-candidate',
+  
   
   //Utilities Navigation
   Utilities = 'utilities',
   Lookups = 'lookups',
   Languages = 'languages',
 
+  //candidate navigation 
   Candidate = 'candidate',
+  ImportCandidate = 'import-candidate',
+  
+  // Test Navigation
+  Test = 'test',
+  CreateTest = 'create-test',
 }
 
 export enum Type {

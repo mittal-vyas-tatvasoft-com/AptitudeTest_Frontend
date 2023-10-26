@@ -18,6 +18,12 @@ export const navBarRoutes = {
     icon: 'supervisor_account',
   },
 
+  Test: {
+    label: 'Test',
+    path: `./${Navigation.Test}`,
+    icon: 'perm_data_setting',
+  },
+
   Candidates: {
     label: 'Candidates',
     path: `./${Navigation.Candidate}`,
