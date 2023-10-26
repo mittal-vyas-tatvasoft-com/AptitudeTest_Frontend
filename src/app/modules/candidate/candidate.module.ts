@@ -11,7 +11,16 @@ import { EditCandidateComponent } from './component/edit-candidate/edit-candidat
 import { AddGroupComponent } from './component/add-group/add-group.component';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+   url: 'https://httpbin.org/post',
+   maxFilesize: 50,
+   acceptedFiles: 'image/*'
+ };
 
 @NgModule({
   declarations: [
@@ -26,10 +35,15 @@ import { MatNativeDateModule } from '@angular/material/core';
     CandidateRoutingModule,
     SharedMaterialModule,
     MatNativeDateModule,
-    MatDatepickerModule
+    MatDatepickerModule,
+    DropzoneModule
   ],
   providers: [
-    CandidateService,
+    {
+      provide: DROPZONE_CONFIG,
+      useValue: DEFAULT_DROPZONE_CONFIG
+    },
+    CandidateService
   ]
 })
 export class CandidateModule { }

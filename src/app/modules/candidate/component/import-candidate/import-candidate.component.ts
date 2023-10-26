@@ -5,6 +5,9 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { AddCandidateComponent } from '../add-candidate/add-candidate.component';
 import { AddGroupComponent } from '../add-group/add-group.component';
+import {Location} from '@angular/common';
+
+
 
 export interface CandidateData {
   candidatesName: string;
@@ -29,7 +32,7 @@ export class ImportCandidateComponent {
   dataSource: MatTableDataSource<CandidateData>;
   selection = new SelectionModel<CandidateData>(true, []);
  
-  constructor(public dialog: MatDialog,private router: Router) {
+  constructor(public dialog: MatDialog,private router: Router, private _location: Location) {
     this.dataSource = new MatTableDataSource([
       { candidatesName: "Theresa Webb", group: 'Ahmedabad University', collegeName: "Dartmouth College", email: 'theresa.webb@gmail.com', contact: '987 654 3210', status: "Active", action: "" },
       { candidatesName: "Marvin McKinney", group: 'Gujarat University', collegeName: "Duke University", email: 'marvin.mcKinney@gmail.com', contact: '987 654 3210', status: "Active", action: "" },
@@ -71,4 +74,10 @@ export class ImportCandidateComponent {
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.candidatesName + 1}`;
   }
+
+  handleBackBtn(){
+    this._location.back();
+  }
+
+  // const myGreatDropzone = Dropzone();
 }

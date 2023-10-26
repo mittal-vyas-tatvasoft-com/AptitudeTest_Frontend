@@ -37,7 +37,9 @@ export enum Navigation {
   Lookups = 'lookups',
   Languages = 'languages',
 
+  Groups = 'groups',
   Candidate = 'candidate',
+
 }
 
 export enum Type {

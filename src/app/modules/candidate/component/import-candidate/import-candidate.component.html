@@ -9,7 +9,7 @@
     <button
       mat-stroked-button
       class="more-action-btn"
-      routerLink="/admin/candidate"
+      (click)="handleBackBtn()"
     >
       <mat-icon>
         <img src="./assets/images/back-arrow.svg" alt="Action" />
@@ -36,7 +36,11 @@
                 </mat-form-field>
               </div>
               <div class="col-auto ps-0">
-                <button mat-stroked-button class="form-group-btn" (click)="handleAddGroupDialog()">
+                <button
+                  mat-stroked-button
+                  class="form-group-btn"
+                  (click)="handleAddGroupDialog()"
+                >
                   <mat-icon>
                     <img src="./assets/images/add-grey.svg" alt="Back" />
                   </mat-icon>
@@ -57,11 +61,7 @@
         </div>
         <div class="row align-items-end">
           <div class="col-sm mb-2">
-            <img
-              src="./assets/images/file-uploader.jpg"
-              alt="Upload"
-              class="d-block w-100"
-            />
+            <dropzone [message]="'Drag & Drop or Browse'"></dropzone>
           </div>
           <div class="col-sm-auto mb-2">
             <button mat-flat-button color="primary">Import</button>
