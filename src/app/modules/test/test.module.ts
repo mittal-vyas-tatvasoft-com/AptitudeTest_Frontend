@@ -7,11 +7,13 @@ import { CreateTestComponent } from './component/create-test/create-test.compone
 import { CoreModule } from 'src/app/core/core.module';
 import { TestComponent } from './component/test/test.component';
 import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
+import { EditQuestionComponent } from './component/edit-question/edit-question.component';
 
 @NgModule({
   declarations: [
     TestComponent,
     CreateTestComponent,
+    EditQuestionComponent,
   ],
   imports: [
     CommonModule,

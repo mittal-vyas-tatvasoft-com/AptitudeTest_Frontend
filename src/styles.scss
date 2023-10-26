@@ -317,6 +317,78 @@
   }
 }
 
+.mark-distribution-block {
+  border-radius: 6px;
+  background: #f7f8fd;
+  overflow: hidden;
+  .mark-distribution-table {
+    min-height: 100%;
+    overflow: auto;
+    table {
+      width: 100%;
+      margin-bottom: 8px;
+      thead {
+        th {
+          font-size: 14px;
+          font-style: normal;
+          font-weight: 500;
+          line-height: 24px;
+          color: #51545f;
+          padding: 11px 10px;
+          vertical-align: middle;
+          text-align: left;
+          white-space: nowrap;
+        }
+      }
+      tbody {
+        td {
+          font-size: 14px;
+          font-weight: 600;
+          line-height: 24px;
+          text-transform: capitalize;
+          color: #51545f;
+          padding: 6px 10px;
+          vertical-align: middle;
+          text-align: left;
+          .mat-mdc-form-field {
+            .mat-mdc-form-field-subscript-wrapper {
+              display: none;
+            }
+          }
+        }
+      }
+    }
+  }
+  .question-distribution {
+    padding: 8px 14px;
+    border-left: 1px solid #d9ddf0;
+    min-width: 196px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    .question-mark {
+      display: flex;
+      align-items: center;
+      color: #343838;
+      font-size: 18px;
+      font-style: normal;
+      font-weight: 600;
+      line-height: 24px;
+      text-transform: capitalize;
+      padding: 4px 0 2px;
+      span {
+        color: #51545f;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        margin-left: 8px;
+        margin-bottom: 2px;
+      }
+    }
+  }
+}
+
 .imported-question-wrapper {
   .title {
     font-size: 20px;
@@ -454,6 +526,7 @@
 
 /* Responsive Media Queries
 -------------------------------------------------------------------------------------------------*/
+
 @media (max-width: 1199px) {
   .wrapper {
     .layout-sidenav-container.mat-drawer-container {
@@ -476,6 +549,41 @@
       position: fixed;
       top: 0;
       bottom: 0;
+    }
+  }
+  .mark-distribution-block {
+    .mark-distribution-table {
+      table {
+        tbody {
+          td:first-child {
+            white-space: nowrap;
+          }
+        }
+      }
+    }
+    .question-distribution {
+      min-width: 210px;
+    }
+  }
+
+  .mat-mdc-dialog-content.dialog-body {
+    .mark-distribution-block {
+      .question-distribution {
+        border-left: 0;
+        border-top: 1px solid #d9ddf0;
+        flex-direction: row;
+        justify-content: space-between;
+      }
+    }
+  }
+}
+@media (max-width: 991px) {
+  .mark-distribution-block {
+    .question-distribution {
+      border-left: 0;
+      border-top: 1px solid #d9ddf0;
+      flex-direction: row;
+      justify-content: space-between;
     }
   }
 }
@@ -523,8 +631,8 @@
     }
   }
 
-  div[style="margin: 0 -24px -24px;"]{
-    .mat-table-wrapper{
+  div[style="margin: 0 -24px -24px;"] {
+    .mat-table-wrapper {
       padding: 0 4px;
     }
   }
@@ -565,6 +673,24 @@
       font-size: 18px;
     }
   }
+  .mark-distribution-block {
+    .question-distribution {
+      flex-direction: column;
+      div {
+        margin-bottom: 10px;
+      }
+    }
+  }
+  .mat-mdc-dialog-content.dialog-body {
+    .mark-distribution-block {
+      .question-distribution {
+        flex-direction: column;
+        div {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
 }
 
 @media (min-width: 1200px) {
@@ -576,6 +702,8 @@
     max-width: 900px;
     margin: 0 auto;
   }
+}
+@media (min-width: 992px) {
 }
 
 // Kinjan Styles
@@ -689,7 +817,7 @@
       font-weight: 400;
       position: relative;
       padding-left: 20px;
-      &::before{
+      &::before {
         content: "";
         position: absolute;
         left: 7px;
@@ -699,20 +827,20 @@
         border-radius: 4px;
         background-color: #838898;
       }
-      + li{
+      + li {
         margin-top: 6px;
       }
       b {
         font-weight: 600;
         margin-left: 4px;
-        color: #51545F;
+        color: #51545f;
       }
     }
   }
   .group-card-footer {
     margin-top: auto;
-    .default-group{
-      color: #46A746;
+    .default-group {
+      color: #46a746;
       font-size: 13px;
       line-height: 13px;
       line-height: 16px;

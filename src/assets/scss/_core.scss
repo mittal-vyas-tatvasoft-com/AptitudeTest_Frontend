@@ -41,3 +41,22 @@
 .overflow-hidden{
   overflow: hidden!important;
 }
+.mb-24p{
+  margin-bottom: 24px!important;
+}
+@media (min-width: 1200px) {
+  .flex-xl-nowrap{
+    flex-wrap: nowrap!important;
+  }
+  .w-xl-100 {
+    width: 100%;
+  }
+}
+@media (min-width: 992px) {
+  .flex-lg-nowrap{
+    flex-wrap: nowrap!important;
+  }
+  .w-lg-100 {
+    width: 100%;
+  }
+}
