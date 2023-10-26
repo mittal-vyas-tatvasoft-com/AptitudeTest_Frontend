@@ -1,32 +1,62 @@
 <div class="dialog-header">
-    <h2 mat-dialog-title>Add Profile</h2>
-    <button mat-icon-button class="dialog-close" (click)="closeModal()">
-        <mat-icon>
-            <img src="./assets/images/close-grey.svg" alt="Close">
-        </mat-icon>
-    </button>
+  <h2 mat-dialog-title>Add Profile</h2>
+  <button mat-icon-button class="dialog-close" (click)="closeModal()">
+    <mat-icon>
+      <img src="./assets/images/close-grey.svg" alt="Close" />
+    </mat-icon>
+  </button>
 </div>
 <mat-dialog-content class="dialog-body pb-0">
+  <form [formGroup]="form">
     <div class="row">
-        <div class="col-12">
-            <mat-form-field appearance="outline">
-                <mat-label>Technology Name</mat-label>
-                <input matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-12">
-            <mat-form-field appearance="outline">
-                <mat-label>Status</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let item of optionsList" [value]="item">
-                        {{ item }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ formControl.name.label }}</mat-label>
+          <input
+            matInput
+            type="{{ formControl.name.inputType }}"
+            [formControlName]="formControl.name.key"
+          />
+          <mat-error>{{
+            _formValidators.getError(
+              form,
+              formControl.name,
+              formControl.name.key
+            )
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>{{ formControl.status.label }}</mat-label>
+          <mat-select [formControlName]="formControl.status.key">
+            <mat-option *ngFor="let item of optionsList" [value]="item.value">
+              {{ item.key }}
+            </mat-option>
+          </mat-select>
+          <mat-error>{{
+            _formValidators.getError(
+              form,
+              formControl.status,
+              formControl.status.key
+            )
+          }}</mat-error>
+        </mat-form-field>
+      </div>
     </div>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="dialog-footer">
-    <button mat-flat-button mat-dialog-close color="primary">Add</button>
-    <button mat-stroked-button color="primary" [mat-dialog-close]="true">Cancel</button>
+  <button
+    mat-flat-button
+    mat-dialog-close
+    color="primary"
+    [mat-dialog-close]="form.value"
+    [disabled]="form.invalid"
+  >
+    Add
+  </button>
+  <button mat-stroked-button color="primary" [mat-dialog-close]="false">
+    Cancel
+  </button>
 </mat-dialog-actions>
