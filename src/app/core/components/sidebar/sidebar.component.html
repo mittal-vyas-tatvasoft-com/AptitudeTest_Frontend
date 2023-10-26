@@ -100,7 +100,7 @@
     <li class="nav-link">
       <a
         href="javascript:void(0)"
-        routerLink="/groups"
+        [routerLink]="routeConfig.Groups.path"
         class="nav-item"
         routerLinkActive="active"
         title="Groups"
@@ -109,7 +109,7 @@
         <mat-icon class="nav-icon">
           <img src="./assets/images/group-grey.svg" alt="Groups" />
         </mat-icon>
-        Groups
+        {{ routeConfig.Groups.label }}
       </a>
     </li>
     <li class="nav-link">

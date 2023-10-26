@@ -44,7 +44,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col col-sm-6  col-lg-3 w-xl-20">
+      <div class="col col-sm-6 col-lg-3 w-xl-20">
         <mat-form-field appearance="outline">
           <mat-label>Status</mat-label>
           <mat-select>
@@ -55,26 +55,28 @@
         </mat-form-field>
       </div>
     </div>
-    <div class="row row-cols-xs-1 row-cols-sm-2 row-cols-sm-3 row-cols-lg-4 row-cols-xl-5">
-      <div class="col">
+    <div
+      class="row row-cols-xl-5"
+    >
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>First Name</mat-label>
           <input matInput />
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Middle Name</mat-label>
           <input matInput />
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Last Name</mat-label>
           <input matInput />
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Gender</mat-label>
           <mat-select>
@@ -84,27 +86,30 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Date of Birth </mat-label>
-          <input matInput [matDatepicker]="picker">
-          <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+          <input matInput [matDatepicker]="picker" />
+          <mat-datepicker-toggle
+            matIconSuffix
+            [for]="picker"
+          ></mat-datepicker-toggle>
           <mat-datepicker #picker></mat-datepicker>
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Email Address</mat-label>
           <input matInput />
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Contact No.</mat-label>
           <input matInput />
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Level</mat-label>
           <mat-select>
@@ -114,7 +119,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Applied Through</mat-label>
           <mat-select>
@@ -124,7 +129,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Preferred Technology</mat-label>
           <mat-select>
@@ -134,25 +139,25 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Permanent Address</mat-label>
           <input matInput />
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Area, Street, Sector, Village</mat-label>
           <input matInput />
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Pincode</mat-label>
           <input matInput />
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>Town/City</mat-label>
           <mat-select>
@@ -162,7 +167,7 @@
           </mat-select>
         </mat-form-field>
       </div>
-      <div class="col">
+      <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
         <mat-form-field appearance="outline">
           <mat-label>State</mat-label>
           <mat-select>
@@ -175,3 +180,396 @@
     </div>
   </mat-card-content>
 </mat-card>
+
+<mat-card class="form-block-secondary mb-3">
+  <mat-card-content class="pb-0">
+    <div class="card-header px-0 pt-0">
+      <h5 class="card-header-title">Education details</h5>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <p>Degree Specialization</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Degree Specialization</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <p>School/College/University</p>
+        <mat-form-field appearance="outline">
+          <mat-label>School</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-2">
+        <p>Stream</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Stream</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <p>Grade %</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Grade %</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <p>Math's</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Math's</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <p>Physics</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Physics</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <hr class="hr-line d-lg-none" />
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Select HSC / Diploma </mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <mat-form-field appearance="outline">
+          <mat-label>School</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Stream</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Grade %</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Math's</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Physics</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <hr class="hr-line d-lg-none" />
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Select bachelor's degree</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <mat-form-field appearance="outline">
+          <mat-label>College</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Stream</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Grade %</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Math's</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Physics</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <hr class="hr-line d-lg-none" />
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Select masters degree</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <mat-form-field appearance="outline">
+          <mat-label>College</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Stream</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Grade %</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Math's</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Physics</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <hr class="hr-line d-lg-none" />
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Select other degree</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <mat-form-field appearance="outline">
+          <mat-label>College</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-2">
+        <mat-form-field appearance="outline">
+          <mat-label>Stream</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Grade %</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Math's</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-6 col-sm-3 col-lg-1">
+        <mat-form-field appearance="outline">
+          <mat-label>Physics</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="form-block mb-3">
+  <mat-card-content class="pb-0">
+    <div class="card-header px-0 pt-0">
+      <h5 class="card-header-title">Exam Score</h5>
+    </div>
+
+    <div class="row">
+      <div class="col-sm-6 col-lg-4">
+        <mat-form-field appearance="outline">
+          <mat-label>ACPC Merit Rank</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Gujcet Score (Out of 120)</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Jee Score (Percentile)</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="form-block-secondary mb-3">
+  <mat-card-content class="pb-0">
+    <div class="card-header px-0 pt-0">
+      <h5 class="card-header-title">Family Background</h5>
+    </div>
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <p>Relationship</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Relationship</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg">
+        <p>Qualification</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Qualification</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg">
+        <p>Occupation</p>
+        <mat-form-field appearance="outline">
+          <mat-label>Occupation</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <hr class="hr-line d-lg-none" />
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Relationship</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg">
+        <mat-form-field appearance="outline">
+          <mat-label>Qualification</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg">
+        <mat-form-field appearance="outline">
+          <mat-label>Occupation</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <hr class="hr-line d-lg-none" />
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Relationship</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg">
+        <mat-form-field appearance="outline">
+          <mat-label>Qualification</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg">
+        <mat-form-field appearance="outline">
+          <mat-label>Occupation</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+    <hr class="hr-line d-lg-none" />
+    <div class="row">
+      <div class="col-sm-6 col-lg-3">
+        <mat-form-field appearance="outline">
+          <mat-label>Relationship</mat-label>
+          <mat-select>
+            <mat-option *ngFor="let item of optionsList" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg">
+        <mat-form-field appearance="outline">
+          <mat-label>Qualification</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+      <div class="col-sm-6 col-lg">
+        <mat-form-field appearance="outline">
+          <mat-label>Occupation</mat-label>
+          <input matInput />
+        </mat-form-field>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<div class="page-action-buttons d-flex justify-content-end">
+  <button mat-flat-button mat-dialog-close color="primary">Save</button>
+  <button mat-stroked-button color="primary" class="ms-1">Cancel</button>
+</div>

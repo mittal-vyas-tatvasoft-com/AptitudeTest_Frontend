@@ -25,6 +25,13 @@ const routes: Routes = [
             '../modules/candidate/candidate.module'
           ).then((m) => m.CandidateModule),
       },
+      {
+        path: `${Navigation.Groups}`,
+        loadChildren: () =>
+          import(
+            '../modules/groups/groups.module'
+          ).then((m) => m.GroupsModule),
+      },
     ],
   },
 ];

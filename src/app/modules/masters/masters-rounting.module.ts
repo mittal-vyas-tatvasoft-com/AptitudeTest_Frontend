@@ -33,6 +33,11 @@ const routes: Routes = [
             import('./technology/technology.module').then((m) => m.TechnologyModule)
     },
     {
+        path: 'topics',
+        loadChildren: () =>
+            import('./topics/topics.module').then((m) => m.TopicsModule)
+    },
+    {
         path: 'profile',
         loadChildren: () =>
             import('./profile/profile.module').then((m) => m.ProfileModule)
