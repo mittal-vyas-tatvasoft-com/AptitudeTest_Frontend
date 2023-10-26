@@ -17,6 +17,7 @@ export const navBarRoutes = {
     label: 'Users',
     icon: 'supervisor_account',
   },
+
   Groups: {
     label: 'Groups',
     path: `./${Navigation.Groups}`,
@@ -32,6 +33,12 @@ export const navBarRoutes = {
   Candidates: {
     label: 'Candidates',
     path: `./${Navigation.Candidate}`,
+    icon: 'perm_data_setting',
+  },
+
+  Results: {
+    label: 'Results',
+    path: `./${Navigation.Results}`,
     icon: 'perm_data_setting',
   },
 

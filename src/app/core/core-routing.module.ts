@@ -38,6 +38,13 @@ const routes: Routes = [
           import(
             '../modules/groups/groups.module'
           ).then((m) => m.GroupsModule),
+      },
+      {
+        path: `${Navigation.Results}`,
+        loadChildren: () =>
+          import(
+            '../modules/results/results.module'
+          ).then((m) => m.ResultsModule),
       }
     ],
   },

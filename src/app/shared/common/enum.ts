@@ -45,6 +45,10 @@ export enum Navigation {
   
   // Groups navigation
   Groups = 'groups',
+
+  // Results navigation
+  Results = 'results',
+  ResultsDetails = 'result-details',
 }
 
 export enum Type {

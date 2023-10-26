@@ -10,9 +10,9 @@ import { CoreModule } from './core/core.module';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthTokenInterceptor } from './core/interceptors/auth/auth-token.interceptor';
 import { CandidateModule } from './modules/candidate/candidate.module';
-import { TestModule } from './modules/test/test.module';
 import { GroupsModule } from './modules/groups/groups.module';
-
+import { ResultsModule } from './modules/results/results.module';
+import { TestModule } from './modules/test/test.module';
 
 
 @NgModule({
@@ -29,7 +29,8 @@ import { GroupsModule } from './modules/groups/groups.module';
     HttpClientModule,
     CandidateModule,
     TestModule,
-    GroupsModule
+    GroupsModule,
+    ResultsModule,
   ],
   providers: [
     {
