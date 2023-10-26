@@ -9,7 +9,6 @@ import { CandidatesComponent } from './component/candidates/candidates.component
 import { ImportCandidateComponent } from './component/import-candidate/import-candidate.component';
 import { EditCandidateComponent } from './component/edit-candidate/edit-candidate.component';
 import { AddGroupComponent } from './component/add-group/add-group.component';
-import { DropzoneModule } from 'ngx-dropzone-wrapper';
 
 @NgModule({
   declarations: [
@@ -23,7 +22,6 @@ import { DropzoneModule } from 'ngx-dropzone-wrapper';
     CommonModule,
     CandidateRoutingModule,
     SharedMaterialModule,
-    DropzoneModule
   ],
   providers: [
     CandidateService

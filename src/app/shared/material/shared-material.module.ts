@@ -31,8 +31,17 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatStepperModule } from '@angular/material/stepper';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { DropzoneModule } from 'ngx-dropzone-wrapper';
+import { DROPZONE_CONFIG } from 'ngx-dropzone-wrapper';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
+const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
+  // Change this to your upload POST address:
+  url: 'https://httpbin.org/post',
+  maxFilesize: 50,
+  acceptedFiles: 'image/*'
+};
 @NgModule({
   declarations: [],
   imports: [
@@ -84,7 +93,14 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     MatDatepickerModule,
     MatStepperModule,
     NgxMaterialTimepickerModule,
+    DropzoneModule
   ],
-  providers: [MatDatepickerModule],
+  providers: [
+    MatDatepickerModule,
+    {
+      provide: DROPZONE_CONFIG,
+      useValue: DEFAULT_DROPZONE_CONFIG
+    },
+  ],
 })
 export class SharedMaterialModule { }
