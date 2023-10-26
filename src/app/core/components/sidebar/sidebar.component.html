@@ -1,86 +1,4 @@
 <aside class="sidebar">
-    <!-- <mat-accordion multi>
-        <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header routerLink="table">
-                <em class="icon"> <img src="assets/images/dashboard-white-ic.svg" alt="" /></em>
-                Dashboard
-            </mat-expansion-panel-header>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel hideToggle>
-            <mat-expansion-panel-header>
-                <mat-icon class="icon">
-                    {{ routeConfig.Websites.icon }}
-                </mat-icon>
-                {{ routeConfig.Websites.label }}
-            </mat-expansion-panel-header>
-
-            <mat-accordion multi class="sub-menu">
-                <mat-expansion-panel hideToggle>
-                    <div *ngFor="let item of routeConfig.Websites.Components">
-                        <a mat-list-item [routerLink]="item.path">{{ item.label }}</a>
-                    </div>
-                    <app-tree-view
-              *ngIf="navFacadeService.clientList$"
-              [data]="navFacadeService.clientList$ | async"
-              [expand]="expandBtn"
-              [collapse]="collapseBtn"
-              (btnClick)="edit($event)"
-              [visibility]="true"
-            ></app-tree-view>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-icon class="icon">
-                    {{ routeConfig.Masters.icon }}
-                </mat-icon>
-                {{ routeConfig.Masters.label }}
-            </mat-expansion-panel-header>
-            <mat-accordion multi class="sub-menu">
-                <mat-expansion-panel hideToggle>
-                    <mat-expansion-panel-header *ngFor="let item of routeConfig.Masters.Components">
-                        <a mat-list-item [routerLink]="item.path">{{ item.label }}</a>
-                    </mat-expansion-panel-header>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-icon class="icon">
-                    {{ routeConfig.UsersConfig.icon }}
-                </mat-icon>
-                {{ routeConfig.UsersConfig.label }}
-            </mat-expansion-panel-header>
-            <mat-accordion multi class="sub-menu">
-                <mat-expansion-panel hideToggle>
-                    <mat-expansion-panel-header *ngFor="let item of routeConfig.UsersConfig.Components">
-                        <a mat-list-item [routerLink]="item.path">{{ item.label }}</a>
-                    </mat-expansion-panel-header>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </mat-expansion-panel>
-
-        <mat-expansion-panel>
-            <mat-expansion-panel-header>
-                <mat-icon class="icon">
-                    {{ routeConfig.Utilities.icon }}
-                </mat-icon>
-                {{ routeConfig.Utilities.label }}
-            </mat-expansion-panel-header>
-            <mat-accordion multi class="sub-menu">
-                <mat-expansion-panel hideToggle>
-                    <mat-expansion-panel-header *ngFor="let item of routeConfig.Utilities.Components">
-                        <a mat-list-item [routerLink]="item.path">{{ item.label }}</a>
-                    </mat-expansion-panel-header>
-                </mat-expansion-panel>
-            </mat-accordion>
-        </mat-expansion-panel>
-    </mat-accordion> -->
-
     <ul class="main-navigation">
         <li class="nav-link">
             <a href="javascript:void(0)" routerLink="/dashboard" class="nav-item" routerLinkActive="active"
@@ -101,12 +19,12 @@
             </a>
         </li>
         <li class="nav-link">
-            <a href="javascript:void(0)" routerLink="/candidates" class="nav-item" routerLinkActive="active"
-                title="Candidates" (click)="onClick()">
+            <a href="javascript:void(0)" [routerLink]="routeConfig.Candidates.path" class="nav-item"
+                routerLinkActive="active" title="Candidates" (click)="onClick()">
                 <mat-icon class="nav-icon">
                     <img src="./assets/images/candidates-grey.svg" alt="Candidates">
                 </mat-icon>
-                Candidates
+                {{ routeConfig.Candidates.label }}
             </a>
         </li>
         <li class="nav-link">
@@ -138,6 +56,8 @@
                             Manage Master
                         </a>
                     </mat-expansion-panel-header>
+                    <mat-expansion-panel hideToggle>
+                    </mat-expansion-panel>
                     <ul class="sub-menu">
                         <li *ngFor="let item of routeConfig.Masters.Components">
                             <a href="javascript:void(0)" [routerLink]="item.path" class="nav-item"
@@ -145,6 +65,24 @@
                                 {{ item.label }}
                             </a>
                         </li>
+                        <!-- <li>
+                            <a href="javascript:void(0)" routerLink="/college" class="nav-item"
+                                routerLinkActive="active" title="College">
+                                College
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" routerLink="/profile" class="nav-item"
+                                routerLinkActive="active" title="Profile">
+                                Profile
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" routerLink="/stream" class="nav-item" routerLinkActive="active"
+                                title="Stream">
+                                Stream
+                            </a>
+                        </li> -->
                     </ul>
                 </mat-expansion-panel>
             </mat-accordion>

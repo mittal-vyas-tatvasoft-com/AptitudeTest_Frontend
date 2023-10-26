@@ -36,11 +36,11 @@
                     <th mat-header-cell *matHeaderCellDef class="text-center"> Status </th>
                     <td mat-cell *matCellDef="let row" class="text-center">
                         <ng-container [ngSwitch]="row.status">
-                            <mat-chip *ngSwitchCase="'Active'" [class.ChipSuccess]="row.status">
-                                {{row.status}}
+                            <mat-chip *ngSwitchCase="true" [class.ChipSuccess]="row.status">
+                                Active
                             </mat-chip>
-                            <mat-chip *ngSwitchCase="'Inactive'" [class.ChipInactive]="row.status">
-                                {{row.status}}
+                            <mat-chip *ngSwitchCase="false" [class.ChipInactive]="!row.status">
+                                Inactive
                             </mat-chip>
                         </ng-container>
                     </td>
@@ -56,25 +56,29 @@
                             </mat-icon>
                         </button>
                         <mat-menu #tableActionMenu="matMenu" xPosition="before">
-                            <button mat-menu-item (click)="handleAddCollegeDialog()">
+                            <button mat-menu-item (click)="handleEditCollegeDialog(row)">
                                 <mat-icon>
                                     <img src="./assets/images/edit.svg" alt="Edit">
                                 </mat-icon>
                                 Edit
                             </button>
-                            <button mat-menu-item>
+                            <button mat-menu-item *ngIf="!row.status; else activeButton"
+                                (click)="updateStatus(row,true)">
                                 <mat-icon>
                                     <img src="./assets/images/active.svg" alt="Active">
                                 </mat-icon>
                                 Active
                             </button>
-                            <button mat-menu-item>
-                                <mat-icon>
-                                    <img src="./assets/images/inactive.svg" alt="Inactive">
-                                </mat-icon>
-                                Inactive
-                            </button>
-                            <button mat-menu-item (click)="handleDeleteProfileDialog()">
+
+                            <ng-template #activeButton>
+                                <button mat-menu-item (click)="updateStatus(row,false)">
+                                    <mat-icon>
+                                        <img src="./assets/images/inactive.svg" alt="Inactive">
+                                    </mat-icon>
+                                    Inactive
+                                </button>
+                            </ng-template>
+                            <button mat-menu-item (click)="handleDeleteProfileDialog(row.id)">
                                 <mat-icon>
                                     <img src="./assets/images/delete.svg" alt="Delete">
                                 </mat-icon>
@@ -89,52 +93,35 @@
 
             </table>
         </div>
+
+
         <div class="mat-custom-pagination">
             <div class="pagination-left">
                 <mat-form-field appearance="outline" class="pagination-select remove-hint">
-                    <mat-label>Page</mat-label>
-                    <mat-select [(ngModel)]="selectedOption">
-                        <mat-option *ngFor="let item of paginationOptionsList" [value]="item">
-                            {{ item }}
-                        </mat-option>
+                    <mat-label>Page Size</mat-label>
+                    <mat-select [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange()">
+                        <mat-option *ngFor="let option of pageSizeOptions" [value]="option">{{ option }}</mat-option>
                     </mat-select>
                 </mat-form-field>
-                <span class="page-info">Showing 10 - 20 of 50 entries</span>
+                <span class="page-info">{{ getDisplayedRange() }}</span>
             </div>
             <ul class="pagination-right">
                 <li>
-                    <a mat-stroked-button href="javascript:void(0)" disabled>
+                    <a mat-stroked-button href="javascript:void(0)" (click)="onPageChange('prev')"
+                        [disabled]="isFirstPage()">
                         <img src="./assets/images/chevron-backward.svg" alt="Prev">
                     </a>
                 </li>
-                <li>
-                    <a mat-stroked-button href="javascript:void(0)" class="active">
-                        1
+                <li *ngFor="let page of pageNumbers; let i = index">
+                    <a mat-stroked-button href="javascript:void(0)" (click)="onPageChangeToPage(page)"
+                        [class.active]="currentPageIndex === i">
+                        {{ page }}
                     </a>
                 </li>
                 <li>
-                    <a mat-stroked-button href="javascript:void(0)">
-                        2
-                    </a>
-                </li>
-                <li>
-                    <a mat-stroked-button href="javascript:void(0)">
-                        3
-                    </a>
-                </li>
-                <li>
-                    <a mat-stroked-button href="javascript:void(0)">
-                        4
-                    </a>
-                </li>
-                <li>
-                    <a mat-stroked-button href="javascript:void(0)">
-                        5
-                    </a>
-                </li>
-                <li>
-                    <a mat-stroked-button href="javascript:void(0)">
-                        <img src="./assets/images/chevron-forward.svg" alt="Prev">
+                    <a mat-stroked-button href="javascript:void(0)" (click)="onPageChange('next')"
+                        [disabled]="isLastPage()">
+                        <img src="./assets/images/chevron-forward.svg" alt="Next">
                     </a>
                 </li>
             </ul>

@@ -18,21 +18,6 @@ const routes: Routes = [
             import('./degree/degree.module').then((m) => m.DegreeModule)
     },
     {
-        path: 'location',
-        loadChildren: () =>
-            import('./location/location.module').then((m) => m.LocationModule)
-    },
-    {
-        path: 'stream',
-        loadChildren: () =>
-            import('./stream/stream.module').then((m) => m.StreamModule)
-    },
-    {
-        path: 'technology',
-        loadChildren: () =>
-            import('./technology/technology.module').then((m) => m.TechnologyModule)
-    },
-    {
         path: 'profile',
         loadChildren: () =>
             import('./profile/profile.module').then((m) => m.ProfileModule)
