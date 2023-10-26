@@ -7,17 +7,15 @@ import { LoginService } from '../../auth/services/login.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  isAuthenticated: boolean = false;
-  public mobileScreen: boolean = (window.innerWidth < 575)
   currentTime!: Date;
   userName!: string;
+  isSidebarOpen!: boolean;
+  isAuthenticated: boolean = false;
+  public mobileScreen: boolean = (window.innerWidth < 575)
+  @Input() isHandset: boolean | null | undefined;
+  @Output() onMenuIconClick = new EventEmitter();
 
   constructor(private loginService: LoginService) { }
-
-  @HostListener('window:resize', ['$event'])
-  onResize(event: Event) {
-    this.mobileScreen = window.innerWidth < 575;
-  }
 
   ngOnInit(): void {
     this.isAuthenticated = this.loginService.isLoggedIn();
@@ -29,8 +27,10 @@ export class HeaderComponent {
     }, 1000);
   }
 
-  @Input() isHandset: boolean | null | undefined;
-  @Output() onMenuIconClick = new EventEmitter();
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    this.mobileScreen = window.innerWidth < 575;
+  }
 
   logout(): void {
     this.loginService.logout();
@@ -61,13 +61,9 @@ export class HeaderComponent {
     return `${firstInitial}`;
   }
 
-  isSidebarOpen!: boolean;
-
-
   toggleSidebar() {
     this.onMenuIconClick.emit();
     this.isSidebarOpen = !this.isSidebarOpen;
     this.loginService.saveStateToLocalStorage(this.isSidebarOpen);
   }
-
 }

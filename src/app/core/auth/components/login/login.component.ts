@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { LoginModel } from '../../interfaces/login.interface';
@@ -15,7 +15,7 @@ import { Navigation } from 'src/app/shared/common/enum';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit , OnDestroy {
   form!: FormGroup;
   loginModel = loginControl;
   private ngUnsubscribe$ = new Subject<void>();
@@ -25,7 +25,9 @@ export class LoginComponent {
     private loginService: LoginService,
     private router: Router,
     private snackbarService :SnackbarService
-  ) {
+  ) {}
+
+  ngOnInit(){
     this.form = this.formBuilder.group({
       userName: ['', [
         Validators.required,
@@ -62,9 +64,6 @@ export class LoginComponent {
     } else {
       this.form.markAllAsTouched();
     }
-    // this.router.navigate([
-    //                `${Navigation.Admin}`,
-    //              ]);
   }
 
   onIconClick(event: any) {

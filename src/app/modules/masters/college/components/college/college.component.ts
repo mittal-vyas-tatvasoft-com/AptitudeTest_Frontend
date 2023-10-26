@@ -15,7 +15,6 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
     styleUrls: ['./college.component.scss']
   })
   export class CollegeComponent {
-
     pageSizeOptions: number[] = [10, 25, 50];
     pageSize = 10;
     currentPageIndex = 0;
@@ -25,14 +24,12 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
     pageNumbers: number[] = [];
     private ngUnsubscribe$: Subject<void> = new Subject(); 
 
-    constructor(public dialog: MatDialog, private collegeService: CollegeService,private snackbarService: SnackbarService) {
-      this.dataSource = new MatTableDataSource<CollegeModel>([]);
-    }
+    constructor(public dialog: MatDialog, private collegeService: CollegeService,private snackbarService: SnackbarService) {}
 
     ngOnInit() {
+      this.dataSource = new MatTableDataSource<CollegeModel>([]);
       this.fetchColleges();
     }
-
 
     fetchColleges() {
       this.collegeService
@@ -69,7 +66,6 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
         }
       });
     }
-
 
     handleEditCollegeDialog(college: CollegeModel) {
       const dialogConfig = new MatDialogConfig();
@@ -155,7 +151,6 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
       const lastEntry = this.getLastEntryIndex();
       return `Showing ${firstEntry} - ${lastEntry} of ${this.totalItemsCount} entries`;
     }
-
   }
 
 

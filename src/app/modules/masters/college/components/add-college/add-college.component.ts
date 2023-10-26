@@ -1,4 +1,4 @@
-import { Component, Inject, ViewChild } from '@angular/core';
+import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CollegeService } from '../../services/college.service';
 import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
@@ -8,7 +8,7 @@ import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
   templateUrl: './add-college.component.html',
   styleUrls: ['./add-college.component.scss']
 })
-export class AddCollegeComponent {
+export class AddCollegeComponent implements OnInit{
   optionsList: string[] = ['Active', 'Inactive'];
   isEditMode: boolean = false;
   form: FormGroup; 
@@ -16,21 +16,23 @@ export class AddCollegeComponent {
   constructor(public dialogRef: MatDialogRef<AddCollegeComponent>,
     private collegeService: CollegeService,
     private formBuilder: FormBuilder, 
-     @Inject(MAT_DIALOG_DATA) public data: any) {
-      this.form = this.formBuilder.group({
-        name: ['', Validators.required], 
-        abbreviation: ['', Validators.required],
-        status: [true]
-      });
-  
-      if (data && data.college) {
-        this.isEditMode = true;
-        const college = data.college;
-      this.form.patchValue({
-        ...college,
-        status: college.status? 'Active' : 'Inactive', 
-      });
-      }
+     @Inject(MAT_DIALOG_DATA) public data: any) {}
+     
+  ngOnInit(): void {
+    this.form = this.formBuilder.group({
+      name: ['', Validators.required], 
+      abbreviation: ['', Validators.required],
+      status: [true]
+    });
+
+    if (this.data && this.data.college) {
+      this.isEditMode = true;
+      const college = this.data.college;
+    this.form.patchValue({
+      ...college,
+      status: college.status? 'Active' : 'Inactive', 
+    });
+    }
   }
 
   closeModal() {
