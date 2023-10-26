@@ -179,6 +179,8 @@
     }
     .main-content {
       padding: 24px;
+      z-index: 1;
+      position: relative;
     }
   }
 }
@@ -573,5 +575,155 @@
   .container-900 {
     max-width: 900px;
     margin: 0 auto;
+  }
+}
+
+// Kinjan Styles
+.main-content {
+  dropzone {
+    .dropzone.dz-wrapper {
+      min-height: 136px;
+      .dz-message {
+        margin: 0;
+        display: block !important;
+        width: 100%;
+        min-width: auto;
+        border-radius: 6px;
+        border: 1px dashed #dde1e1;
+        background: #f7f8fd;
+        color: #b4b8c5;
+        position: absolute;
+        height: 100%;
+        max-width: 100%;
+        .dz-text {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &:before {
+            content: "";
+            width: 30px;
+            height: 30px;
+            background: url(assets/images/excel-icon.svg) center center
+              no-repeat;
+            display: block;
+            margin-right: 10px;
+          }
+        }
+        &:hover {
+          border-style: solid;
+        }
+      }
+      .dz-preview .dz-filename span:hover {
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
+.form-block-secondary {
+  p {
+    font-size: 14px;
+    margin: 17px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+  }
+  .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
+    line-height: 10px;
+  }
+  .hr-line {
+    margin: 0 -12px 16px;
+  }
+}
+
+.group-card {
+  color: #51545f;
+  min-height: 100%;
+  display: flex;
+  .group-card-header {
+    margin-bottom: 12px;
+    .group-card-heading {
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: 400;
+      b {
+        font-weight: 600;
+      }
+    }
+  }
+  .mat-mdc-card-content {
+    padding: 12px !important;
+    min-height: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    .btn-small {
+      padding: 0;
+      height: 24px;
+      width: 24px;
+      display: block;
+      background-color: #f6f7fc;
+      .mat-mdc-button-touch-target {
+        width: 24px;
+        height: 24px;
+      }
+    }
+    .btn-sm {
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 13px;
+      line-height: 16px;
+      .mat-mdc-button-touch-target {
+        height: 28px;
+      }
+    }
+  }
+  .group-card-listing {
+    margin-bottom: 12px;
+    li {
+      font-size: 13px;
+      line-height: 18px;
+      color: #838898;
+      font-weight: 400;
+      position: relative;
+      padding-left: 20px;
+      &::before{
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 7px;
+        width: 4px;
+        height: 4px;
+        border-radius: 4px;
+        background-color: #838898;
+      }
+      + li{
+        margin-top: 6px;
+      }
+      b {
+        font-weight: 600;
+        margin-left: 4px;
+        color: #51545F;
+      }
+    }
+  }
+  .group-card-footer {
+    margin-top: auto;
+    .default-group{
+      color: #46A746;
+      font-size: 13px;
+      line-height: 13px;
+      line-height: 16px;
+      padding: 6px 0;
+    }
+  }
+}
+@media (max-width: 991px) {
+  .form-block-secondary {
+    p {
+      display: none;
+    }
   }
 }

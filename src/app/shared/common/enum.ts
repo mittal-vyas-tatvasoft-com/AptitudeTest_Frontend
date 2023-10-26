@@ -28,7 +28,7 @@ export enum Navigation {
   Stream = 'stream',
   Technology = 'technology',
   Profile = 'profile',
-  
+  Topics = 'topics',
   
   //Utilities Navigation
   Utilities = 'utilities',
@@ -42,6 +42,9 @@ export enum Navigation {
   // Test Navigation
   Test = 'test',
   CreateTest = 'create-test',
+  
+  // Groups navigation
+  Groups = 'groups',
 }
 
 export enum Type {
