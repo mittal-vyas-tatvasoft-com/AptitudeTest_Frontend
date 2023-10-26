@@ -43,6 +43,10 @@ export const navBarRoutes = {
         label: 'Profile',
         path: `./${Navigation.Masters}/${Navigation.Profile}`,
       },
+      {
+        label: 'Topics',
+        path: `./${Navigation.Masters}/${Navigation.Topics}`,
+      },
       // {
       //   label: 'Location',
       //   path: `./${Navigation.Masters}/${Navigation.Location}`,

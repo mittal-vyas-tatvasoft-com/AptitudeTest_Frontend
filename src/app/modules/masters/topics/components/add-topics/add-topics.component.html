@@ -1,0 +1,32 @@
+<div class="dialog-header">
+    <h2 mat-dialog-title>Add Topics</h2>
+    <button mat-icon-button class="dialog-close" (click)="closeModal()">
+        <mat-icon>
+            <img src="./assets/images/close-grey.svg" alt="Close">
+        </mat-icon>
+    </button>
+</div>
+<mat-dialog-content class="dialog-body pb-0">
+    <div class="row">
+        <div class="col-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Topics Name</mat-label>
+                <input matInput>
+            </mat-form-field>
+        </div>
+        <div class="col-12">
+            <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select>
+                    <mat-option *ngFor="let item of optionsList" [value]="item">
+                        {{ item }}
+                    </mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="dialog-footer">
+    <button mat-flat-button mat-dialog-close color="primary">Add</button>
+    <button mat-stroked-button color="primary" [mat-dialog-close]="true">Cancel</button>
+</mat-dialog-actions>

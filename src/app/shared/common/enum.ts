@@ -28,6 +28,7 @@ export enum Navigation {
   Stream = 'stream',
   Technology = 'technology',
   Profile = 'profile',
+  Topics = 'topics',
 
   //candidate navigation 
   ImportCandidate = 'import-candidate',
