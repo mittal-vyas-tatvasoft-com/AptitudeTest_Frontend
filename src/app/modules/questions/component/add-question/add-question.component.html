@@ -1,67 +1,87 @@
 <div class="page-header">
-    <div class="title-wrap">
-        <mat-icon class="page-icon">
-            <img src="./assets/images/question-primary.svg" alt="Question" />
-        </mat-icon>
-        <h4 class="title">Add Question</h4>
-    </div>
-    <div class="action-list">
-        <button mat-flat-button color="primary" class="btn-with-icon" routerLink="/admin/questions/import-question">
-            <mat-icon><img src="./assets/images/import-white.svg" alt="Import" /></mat-icon>
-            Import
-        </button>
-        <button mat-stroked-button class="btn-stroked-default" (click)="handleBackBtn()">
-            <mat-icon>
-                <img src="./assets/images/back-arrow.svg" alt="Action" />
-            </mat-icon>
-        </button>
-    </div>
+  <div class="title-wrap">
+    <mat-icon class="page-icon">
+      <img src="./assets/images/question-primary.svg" alt="Question" />
+    </mat-icon>
+    <h4 class="title">Add Question</h4>
+  </div>
+  <div class="action-list">
+    <button
+      mat-flat-button
+      color="primary"
+      class="btn-with-icon"
+      routerLink="/admin/questions/import-question"
+    >
+      <mat-icon
+        ><img src="./assets/images/import-white.svg" alt="Import"
+      /></mat-icon>
+      Import
+    </button>
+    <button
+      mat-stroked-button
+      class="btn-stroked-default"
+      (click)="handleBackBtn()"
+    >
+      <mat-icon>
+        <img src="./assets/images/back-arrow.svg" alt="Action" />
+      </mat-icon>
+    </button>
+  </div>
 </div>
 
-
 <mat-card class="default-card">
-    <mat-card-content>
-        <div class="container-900">
-            <div class="form-block-wrapper">
-                <h5 class="form-title">Questions</h5>
-                <div class="row">
-                    <div class="col-lg-4">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Topic</mat-label>
-                            <mat-select>
-                                <mat-option *ngFor="let item of optionsList" [value]="item">
-                                    {{ item }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-4">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Difficulty</mat-label>
-                            <mat-select>
-                                <mat-option *ngFor="let item of optionsList" [value]="item">
-                                    {{ item }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-lg-4">
-                        <mat-form-field appearance="outline">
-                            <mat-label>Status</mat-label>
-                            <mat-select>
-                                <mat-option *ngFor="let item of optionsList" [value]="item">
-                                    {{ item }}
-                                </mat-option>
-                            </mat-select>
-                        </mat-form-field>
-                    </div>
-                    <div class="col-12">
-                        <ckeditor [(ngModel)]="editorContent" [config]="editorConfig"></ckeditor>
-                    </div>
-                </div>
-            </div>
+  <mat-card-content>
+    <div class="container-900">
+      <div class="form-block-wrapper">
+        <h5 class="form-title">Questions</h5>
+        <div class="row">
+          <div class="col-lg-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Topic</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let item of optionsList" [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Difficulty</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let item of optionsList" [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-lg-4">
+            <mat-form-field appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let item of optionsList" [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="col-12 mb-3">
+            <ckeditor [editor]="Editor" data="<p>Hello, world!</p>"></ckeditor>
+          </div>
+          <div class="col-lg-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let item of optionsList" [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
         </div>
-        <!-- <div class="row">
+      </div>
+    </div>
+    <!-- <div class="row">
             <div class="col-auto">
                 <mat-chip-listbox class="selectable-chips-wrapper">
                     <mat-chip-option color="primary" selected>All<span class="result">200</span></mat-chip-option>
@@ -82,5 +102,5 @@
                 </mat-form-field>
             </div>
         </div> -->
-    </mat-card-content>
+  </mat-card-content>
 </mat-card>

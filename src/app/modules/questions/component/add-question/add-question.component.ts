@@ -1,5 +1,6 @@
 import { Location } from '@angular/common';
 import { Component } from '@angular/core';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 @Component({
   selector: 'app-add-question',
@@ -8,10 +9,8 @@ import { Component } from '@angular/core';
 })
 export class AddQuestionComponent {
   optionsList: string[] = ['Option 1', 'Option 2', 'Option 3'];
-  editorContent: string = '';
-  editorConfig: any = {
-    // CKEditor configuration options
-  };
+  public Editor = ClassicEditor;
+
   
   constructor(private location: Location) { }
 
