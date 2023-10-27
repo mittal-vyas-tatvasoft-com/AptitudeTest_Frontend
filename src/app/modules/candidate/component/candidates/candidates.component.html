@@ -7,14 +7,28 @@
   </div>
   <div class="action-list">
     <button mat-fab color="primary" (click)="handleAddCandidateDialog()">
-      <mat-icon><img src="./assets/images/add-white-full.svg" alt="Add" /></mat-icon>
+      <mat-icon
+        ><img src="./assets/images/add-white-full.svg" alt="Add"
+      /></mat-icon>
     </button>
-    <button mat-flat-button color="primary" class="btn-with-icon" routerLink="/admin/candidate/import-candidate">
-      <mat-icon><img src="./assets/images/import-white.svg" alt="Import" /></mat-icon>
+    <button
+      mat-flat-button
+      color="primary"
+      class="btn-with-icon"
+      routerLink="/admin/candidate/import-candidate"
+    >
+      <mat-icon
+        ><img src="./assets/images/import-white.svg" alt="Import"
+      /></mat-icon>
       Import
     </button>
-    <button mat-stroked-button [matMenuTriggerFor]="actionMenu" class="btn-stroked-default" style="padding: 10px">
-      <mat-icon style="width: 24px;height: 24px;">
+    <button
+      mat-stroked-button
+      [matMenuTriggerFor]="actionMenu"
+      class="btn-stroked-default"
+      style="padding: 10px"
+    >
+      <mat-icon style="width: 24px; height: 24px">
         <img src="./assets/images/more-black.svg" alt="Action" />
       </mat-icon>
     </button>
@@ -74,7 +88,7 @@
           </div>
           <div class="col-lg-3 col-sm-6">
             <mat-form-field appearance="outline">
-              <mat-label>Status</mat-label>
+              <mat-label>Year Added</mat-label>
               <mat-select>
                 <mat-option *ngFor="let item of optionsList" [value]="item">
                   {{ item }}
@@ -85,7 +99,9 @@
         </div>
       </div>
       <div class="col-sm-auto pb-12p d-flex">
-        <button mat-stroked-button color="primary" class="mt-auto">clear</button>
+        <button mat-stroked-button color="primary" class="mt-auto">
+          clear
+        </button>
       </div>
     </div>
   </mat-card-content>
@@ -98,15 +114,23 @@
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox color="primary" (change)="$event ? toggleAllRows() : null"
+            <mat-checkbox
+              color="primary"
+              (change)="$event ? toggleAllRows() : null"
               [checked]="selection.hasValue() && isAllSelected()"
-              [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              [aria-label]="checkboxLabel()"
+            >
             </mat-checkbox>
           </th>
           <td mat-cell *matCellDef="let row">
-            <mat-checkbox color="primary" (click)="$event.stopPropagation()"
-              (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
-              [aria-label]="checkboxLabel(row)">
+            <mat-checkbox
+              color="primary"
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)"
+              [aria-label]="checkboxLabel(row)"
+            >
             </mat-checkbox>
           </td>
         </ng-container>
@@ -141,15 +165,27 @@
           <td mat-cell *matCellDef="let row">{{ row.contact }}</td>
         </ng-container>
 
+        <!-- Year Added Column -->
+        <ng-container matColumnDef="yearAdded">
+          <th mat-header-cell *matHeaderCellDef>Year Added</th>
+          <td mat-cell *matCellDef="let row">{{ row.yearAdded }}</td>
+        </ng-container>
+
         <!-- Status Column -->
         <ng-container matColumnDef="status">
           <th mat-header-cell *matHeaderCellDef class="text-center">Status</th>
           <td mat-cell *matCellDef="let row" class="text-center">
             <ng-container [ngSwitch]="row.status">
-              <mat-chip *ngSwitchCase="'Active'" [class.ChipSuccess]="row.status">
+              <mat-chip
+                *ngSwitchCase="'Active'"
+                [class.ChipSuccess]="row.status"
+              >
                 {{ row.status }}
               </mat-chip>
-              <mat-chip *ngSwitchCase="'Inactive'" [class.ChipInactive]="row.status">
+              <mat-chip
+                *ngSwitchCase="'Inactive'"
+                [class.ChipInactive]="row.status"
+              >
                 {{ row.status }}
               </mat-chip>
             </ng-container>
@@ -160,7 +196,11 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
           <td mat-cell *matCellDef="let row" class="text-center">
-            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="tableActionMenu"
+              class="btn-small"
+            >
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
@@ -195,15 +235,25 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="selection.toggle(row)"
+        ></tr>
       </table>
     </div>
     <div class="mat-custom-pagination">
       <div class="pagination-left">
-        <mat-form-field appearance="outline" class="pagination-select remove-hint">
+        <mat-form-field
+          appearance="outline"
+          class="pagination-select remove-hint"
+        >
           <mat-label>Page</mat-label>
           <mat-select [(ngModel)]="selectedOption">
-            <mat-option *ngFor="let item of paginationOptionsList" [value]="item">
+            <mat-option
+              *ngFor="let item of paginationOptionsList"
+              [value]="item"
+            >
               {{ item }}
             </mat-option>
           </mat-select>

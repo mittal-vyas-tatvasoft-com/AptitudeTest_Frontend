@@ -692,6 +692,14 @@
               line-height: 16px;
               letter-spacing: 0.2px;
               margin-right: 8px;
+              &.bg-success {
+                background: #46a746;
+                color: #fff;
+              }
+              &.bg-error {
+                background: #DD4949;
+                color: #fff;
+              }
             }
           }
         }
@@ -1057,6 +1065,10 @@
     flex: 0 0 auto;
     width: 20%;
   }
+  .w-xl-40 {
+    flex: 0 0 auto;
+    width: 40%;
+  }
   .container-900 {
     max-width: 900px;
     margin: 0 auto;
@@ -1238,6 +1250,13 @@
 .mdc-switch.mdc-switch--selected:enabled .mdc-switch__handle::after {
   background-color: #244e8a !important;
 }
+.result-candidate-name {
+  font-size: 20px;
+  line-height: 30px;
+  color: #51545f;
+  font-weight: 500;
+}
+
 @media (max-width: 991px) {
   .form-block-secondary {
     p {

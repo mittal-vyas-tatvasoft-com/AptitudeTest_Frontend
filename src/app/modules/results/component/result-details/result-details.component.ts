@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-result-details',
@@ -6,5 +7,8 @@ import { Component } from '@angular/core';
   styleUrls: ['./result-details.component.scss']
 })
 export class ResultDetailsComponent {
-
+  constructor(private _location: Location) {}
+  handleBackBtn(){
+    this._location.back();
+  }
 }
