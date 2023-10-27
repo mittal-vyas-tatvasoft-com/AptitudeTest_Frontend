@@ -599,6 +599,23 @@ $color676D79: #676d79;
         padding: 15px 10px;
         border-bottom: 1px solid #d7e0ef;
         color: $color51545F;
+        &.green {
+          color: #29aa29;
+        }
+        &.red {
+          color: #c21616;
+        }
+        b {
+          color: #313131;
+          display: block;
+          font-weight: 500;
+        }
+        strong {
+          font-weight: 600;
+        }
+        small {
+          font-size: 13px;
+        }
         .mat-mdc-chip {
           margin: -6px 0;
         }
@@ -1352,7 +1369,7 @@ ngx-material-timepicker-container {
           border: 0;
           .mat-horizontal-stepper-header {
             padding: 12px 16px;
-            .mat-step-icon-state-number{
+            .mat-step-icon-state-number {
               margin-right: 0;
               &.mat-step-icon-selected {
                 margin-right: 8px;
