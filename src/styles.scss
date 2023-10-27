@@ -576,19 +576,26 @@
   }
 }
 
+.qa-card-listing {
+  li + li {
+    margin-top: 12px;
+  }
+}
+
 .qa-card {
   border-radius: 8px;
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
-  padding: 12px 12px 18px 12px;
+  padding: 12px 12px 14px 12px;
   .qa-head {
     display: flex;
-    align-items: center;
-    padding-bottom: 14px;
+    align-items: flex-start;
+    padding-bottom: 12px;
     .qa-left {
       display: flex;
       align-items: flex-start;
       flex-grow: 1;
+      margin-right: 20px;
       .qa-sequence {
         font-size: 16px;
         font-style: normal;
@@ -603,7 +610,7 @@
         font-size: 15px;
         font-style: normal;
         font-weight: 400;
-        line-height: 24px;
+        line-height: 26px;
         color: $color51545F;
       }
     }
@@ -612,10 +619,26 @@
       align-items: center;
       justify-content: flex-end;
       flex-shrink: 0;
+      margin-top: 2px;
+      .mat-mdc-chip {
+        margin-right: 8px;
+        &.question-mark {
+          .mat-mdc-chip-action {
+            padding: 0 6px;
+          }
+        }
+      }
       .mat-mdc-mini-fab.btn-sm {
+        background: #f6f7fc;
+        border-radius: 50%;
         margin: -8px -4px -8px 0;
-        width: 30px;
-        height: 30px;
+        width: 24px;
+        height: 24px;
+        padding: 0;
+        .mat-icon {
+          width: 24px;
+          height: 24px;
+        }
       }
     }
   }
@@ -677,6 +700,24 @@
             opacity: 0;
           }
           background: $white;
+        }
+      }
+      &.image-options {
+        .mat-mdc-chip-option {
+          .mat-mdc-chip-action {
+            display: inline-flex;
+            align-items: flex-start;
+            .mat-mdc-chip-action-label {
+              display: inline-flex;
+              align-items: flex-start;
+              padding: 4px 0;
+              .option-img{
+                max-width: 100%;
+                padding: 14px;
+                margin: 0 8px;
+              }
+            }
+          }
         }
       }
     }
@@ -814,6 +855,30 @@
       }
     }
   }
+
+  .qa-card {
+    .qa-head {
+      flex-direction: column-reverse;
+      align-items: stretch;
+      padding-bottom: 8px;
+      .qa-left {
+        margin-right: 0;
+      }
+      .qa-right {
+        margin-bottom: 10px;
+        .mat-mdc-mini-fab.btn-sm {
+          margin-left: auto;
+        }
+      }
+    }
+    .qa-body {
+      .mat-mdc-chip-listbox.mcq-chips-wrapper {
+        .mat-mdc-chip.mat-mdc-chip-option:not(.mdc-evolution-chip--disabled) {
+          margin: 6px 12px 6px 0;
+        }
+      }
+    }
+  }
 }
 @media (max-width: 575px) {
   .wrapper {
@@ -865,8 +930,6 @@
     max-width: 900px;
     margin: 0 auto;
   }
-}
-@media (min-width: 992px) {
 }
 
 // Kinjan Styles
