@@ -49,7 +49,7 @@ export class CandidatesComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ["primary-dialog"];
     dialogConfig.autoFocus = false;
-    dialogConfig.width="800px";
+    dialogConfig.width="767px";
     this.dialog.open(AddCandidateComponent, dialogConfig);
   }
 
@@ -73,13 +73,6 @@ export class CandidatesComponent {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
     return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.name + 1}`;
-  }
-
-  handleAddCollegeDialog() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["primary-dialog"];
-    dialogConfig.autoFocus = false;
-    this.dialog.open(AddCollegeComponent, dialogConfig);
   }
 
   handleDeleteProfileDialog() {

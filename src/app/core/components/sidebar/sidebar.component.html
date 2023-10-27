@@ -128,6 +128,15 @@
       </a>
     </li>
     <li class="nav-link">
+      <a href="javascript:void(0)" [routerLink]="routeConfig.Questions.path" class="nav-item" routerLinkActive="active"
+        title="Results" (click)="onClick()">
+        <mat-icon class="nav-icon">
+          <img src="./assets/images/question-grey.svg" alt="Results" />
+        </mat-icon>
+        {{routeConfig.Questions.label}}
+      </a>
+    </li>
+    <li class="nav-link">
       <mat-accordion class="nested-navigation" [multi]="false">
         <mat-expansion-panel class="nested-navigation" [expanded]="currentlyOpenAccordion === 1">
           <mat-expansion-panel-header (click)="toggleAccordion(1)">
@@ -149,15 +158,7 @@
         </mat-expansion-panel>
       </mat-accordion>
     </li>
-    <li class="nav-link">
-      <a href="javascript:void(0)" [routerLink]="routeConfig.Questions.path" class="nav-item" routerLinkActive="active"
-        title="Results" (click)="onClick()">
-        <mat-icon class="nav-icon">
-          <img src="./assets/images/question-grey.svg" alt="Results" />
-        </mat-icon>
-        {{routeConfig.Questions.label}}
-      </a>
-    </li>
+
     <!-- <li class="nav-link">
       <mat-accordion class="nested-navigation" [multi]="false">
         <mat-expansion-panel class="nested-navigation" [expanded]="currentlyOpenAccordion === 2">

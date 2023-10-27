@@ -50,7 +50,7 @@
                             </mat-icon>
                         </button>
                         <mat-menu #tableActionMenu="matMenu" xPosition="before">
-                            <button mat-menu-item>
+                            <button mat-menu-item (click)="handleAddTopicsDialog()">
                                 <mat-icon>
                                     <img src="./assets/images/edit.svg" alt="Edit">
                                 </mat-icon>
@@ -68,7 +68,7 @@
                                 </mat-icon>
                                 Inactive
                             </button>
-                            <button mat-menu-item>
+                            <button mat-menu-item (click)="handleDeleteProfileDialog()">
                                 <mat-icon>
                                     <img src="./assets/images/delete.svg" alt="Delete">
                                 </mat-icon>
