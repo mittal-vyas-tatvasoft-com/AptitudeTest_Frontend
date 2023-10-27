@@ -478,6 +478,7 @@ $color676D79: #676d79;
   box-shadow: none !important;
   width: 46px;
   height: 46px;
+  overflow: hidden;
   .mat-icon {
     width: 20px;
     height: 20px;
@@ -496,6 +497,7 @@ $color676D79: #676d79;
   box-shadow: none !important;
   width: 40px;
   height: 40px;
+  overflow: hidden;
   .mat-icon {
     width: 18px;
     height: 18px;
@@ -796,6 +798,16 @@ $color676D79: #676d79;
   .mdc-evolution-chip__action {
     .mat-mdc-chip-action-label {
       color: #fca119;
+    }
+  }
+}
+.ChipDefault.mat-mdc-chip.mat-mdc-standard-chip:not(
+    .mdc-evolution-chip--disabled
+  ) {
+  background-color: #ececec;
+  .mdc-evolution-chip__action {
+    .mat-mdc-chip-action-label {
+      color: $color51545F;
     }
   }
 }
