@@ -49,22 +49,24 @@ export class DegreeComponent implements OnInit {
       .open(AddDegreeComponent, dialogConfig)
       .afterClosed()
       .subscribe((data) => {
-        if (data.id == 0) {
-          this.degreeService.create(data).subscribe({
-            next: (res: any) => {
-              if (res.statusCode == 200) {
-                this.getAllDegrees();
-              }
-            },
-          });
-        } else {
-          this.degreeService.update(data).subscribe({
-            next: (res: any) => {
-              if (res.statusCode == 200) {
-                this.getAllDegrees();
-              }
-            },
-          });
+        if (data != null) {
+          if (data.id == 0) {
+            this.degreeService.create(data).subscribe({
+              next: (res: any) => {
+                if (res.statusCode == 200) {
+                  this.getAllDegrees();
+                }
+              },
+            });
+          } else {
+            this.degreeService.update(data).subscribe({
+              next: (res: any) => {
+                if (res.statusCode == 200) {
+                  this.getAllDegrees();
+                }
+              },
+            });
+          }
         }
       });
   }
