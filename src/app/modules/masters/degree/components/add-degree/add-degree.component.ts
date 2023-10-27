@@ -85,8 +85,11 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
     if (this.id != 0) {
       this.degreeService.get(this.id).subscribe({
         next: (res: any) => {
-          this.data = res.data;
-          this.setFormValues();
+          if (res.statusCode == 200) {
+            this.data = res.data;
+            this.setFormValues();
+          } else {
+          }
         },
       });
     }

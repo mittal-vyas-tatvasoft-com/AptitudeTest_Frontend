@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddProfileComponent } from '../add-profile/add-profile.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { ProfileService } from '../../services/profile.service';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 
 @Component({
   selector: 'app-profile',
@@ -15,7 +16,8 @@ export class ProfileComponent implements OnInit {
   dataSource!: MatTableDataSource<any>;
   constructor(
     public dialog: MatDialog,
-    private profileService: ProfileService
+    private profileService: ProfileService,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -46,6 +48,9 @@ export class ProfileComponent implements OnInit {
               next: (res: any) => {
                 if (res.statusCode == 200) {
                   this.getAllProfileData();
+                  this.snackbarService.success(res.message);
+                } else {
+                  this.snackbarService.error(res.message);
                 }
               },
             });
@@ -54,6 +59,9 @@ export class ProfileComponent implements OnInit {
               next: (res: any) => {
                 if (res.statusCode == 200) {
                   this.getAllProfileData();
+                  this.snackbarService.success(res.message);
+                } else {
+                  this.snackbarService.error(res.message);
                 }
               },
             });
@@ -73,7 +81,12 @@ export class ProfileComponent implements OnInit {
         if (res == true) {
           this.profileService.DeleteProfile(id).subscribe({
             next: (res: any) => {
-              this.getAllProfileData();
+              if (res.statusCode == 200) {
+                this.getAllProfileData();
+                this.snackbarService.success(res.message);
+              } else {
+                this.snackbarService.error(res.message);
+              }
             },
           });
         }
@@ -85,6 +98,9 @@ export class ProfileComponent implements OnInit {
       next: (res: any) => {
         if (res.statusCode == 200) {
           this.getAllProfileData();
+          this.snackbarService.success(res.message);
+        } else {
+          this.snackbarService.error(res.message);
         }
       },
     });
