@@ -16,7 +16,7 @@ export class GroupComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ["primary-dialog"];
     dialogConfig.autoFocus = false;
-    dialogConfig.width="550px";
+    dialogConfig.width="556px";
     this.dialog.open(AddGroupComponent, dialogConfig);
   }
 }

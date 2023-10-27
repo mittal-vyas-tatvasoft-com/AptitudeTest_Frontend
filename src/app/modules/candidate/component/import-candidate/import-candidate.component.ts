@@ -5,6 +5,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddGroupComponent } from '../add-group/add-group.component';
 import {Location} from '@angular/common';
 import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 export interface CandidateData {
   candidatesName: string;
@@ -50,6 +51,13 @@ export class ImportCandidateComponent {
     dialogConfig.autoFocus = false;
     dialogConfig.width="550px";
     this.dialog.open(AddGroupComponent, dialogConfig);
+  }
+
+  handleDeleteProfileDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = ["confirmation-dialog"];
+    dialogConfig.autoFocus = false;
+    this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
   }
 
   isAllSelected() {

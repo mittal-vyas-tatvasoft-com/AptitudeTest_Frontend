@@ -85,7 +85,7 @@
               <img src="./assets/images/inactive.svg" alt="Inactive" />
             </mat-icon>
           </button>
-          <button mat-stroked-button class="card-header-btn">
+          <button mat-stroked-button class="card-header-btn" (click)="handleDeleteProfileDialog()">
             <mat-icon>
               <img src="./assets/images/delete.svg" alt="Delete" />
             </mat-icon>
@@ -223,7 +223,7 @@
                 </mat-icon>
                 Inactive
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleDeleteProfileDialog()">
                 <mat-icon>
                   <img src="./assets/images/delete.svg" alt="Delete" />
                 </mat-icon>

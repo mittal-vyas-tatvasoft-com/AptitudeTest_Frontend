@@ -41,6 +41,7 @@ export class CollegeComponent {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ["primary-dialog"];
     dialogConfig.autoFocus = false;
+    dialogConfig.width = '556px';
     this.dialog.open(AddCollegeComponent, dialogConfig);
   }
 

@@ -241,7 +241,7 @@
     .title {
       font-size: 24px;
       font-weight: 500;
-      line-height: 24px;
+      line-height: 28px;
       color: $primary500;
       flex-grow: 1;
       max-width: calc(100% - 30px);
@@ -584,21 +584,48 @@
   .qa-head {
     display: flex;
     align-items: center;
+    padding-bottom: 14px;
     .qa-left {
       display: flex;
       align-items: flex-start;
       flex-grow: 1;
+      .qa-sequence {
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 24px;
+        color: $color51545F;
+        display: inline-block;
+        vertical-align: middle;
+        margin-right: 6px;
+      }
+      .question-text {
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 24px;
+        color: $color51545F;
+      }
     }
     .qa-right {
       display: flex;
       align-items: center;
       justify-content: flex-end;
       flex-shrink: 0;
+      .mat-mdc-mini-fab.btn-sm {
+        margin: -8px -4px -8px 0;
+        width: 30px;
+        height: 30px;
+      }
     }
   }
   .qa-body {
     padding: 0 24px;
     .mat-mdc-chip-listbox.mcq-chips-wrapper {
+      pointer-events: none;
+      .mdc-evolution-chip-set__chips {
+        margin-left: 0;
+      }
       .mat-mdc-chip.mat-mdc-chip-option:not(.mdc-evolution-chip--disabled) {
         border-radius: 15px;
         border: 1px solid #e5e7e9;
@@ -613,33 +640,43 @@
               path {
                 display: none;
               }
-              background: #000;
+              background: url("./assets/images/success-check.svg") center center
+                no-repeat;
+              background-size: 22px 22px;
+              width: 22px;
+              height: 22px;
             }
           }
           .mat-mdc-chip-action-label {
-            color: rgba($color: $color51545F, $alpha: 0.5);
-            font-family: "Poppins", sans-serif;
+            color: $color51545F;
             font-size: 14px;
-            font-weight: 400;
+            font-style: normal;
+            font-weight: 600;
             line-height: 16px;
-            text-transform: capitalize;
+            letter-spacing: 0.2px;
             .mcq-option {
+              display: inline-flex;
+              align-items: center;
+              justify-content: center;
+              width: 22px;
+              height: 22px;
               border-radius: 18px;
               background: #f2f2f2;
-              padding: 3px 6px 3px 7px;
-              color: 51545F;
-              text-align: center;
-              font-family: Poppins;
+              color: #51545f;
               font-size: 14px;
               font-style: normal;
               font-weight: 500;
-              line-height: 16px; /* 114.286% */
+              line-height: 16px;
               letter-spacing: 0.2px;
+              margin-right: 8px;
             }
           }
         }
         &:hover {
-          background: rgba(45, 97, 172, 0.08);
+          .mat-mdc-chip-focus-overlay {
+            opacity: 0;
+          }
+          background: $white;
         }
       }
     }
