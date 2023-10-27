@@ -1040,6 +1040,9 @@
     color: #2d61ac!important;
   }
 }
+.mdc-switch.mdc-switch--selected:enabled .mdc-switch__handle::after{
+  background-color: #244e8a!important;
+}
 @media (max-width: 991px) {
   .form-block-secondary {
     p {
