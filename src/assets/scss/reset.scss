@@ -86,12 +86,12 @@ time,
 mark,
 audio,
 video {
-    margin: 0;
-    padding: 0;
-    border: 0;
-    font-size: 100%;
-    font: inherit;
-    vertical-align: baseline;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  font-size: 100%;
+  font: inherit;
+  vertical-align: baseline;
 }
 
 /* HTML5 display-role reset for older browsers */
@@ -106,74 +106,129 @@ hgroup,
 menu,
 nav,
 section {
-    display: block;
+  display: block;
 }
 
 html,
 body {
-    font-family: 'Poppins', sans-serif !important;
-    font-size: 16px;
-    line-height: 22px;
-    min-width: 375px;
-    color: #51545F;
-    -ms-overflow-style: scrollbar;
-    -webkit-font-smoothing: subpixel-antialiased;
-    min-height: 100vh;
+  font-family: "Poppins", sans-serif !important;
+  font-size: 16px;
+  line-height: 22px;
+  min-width: 375px;
+  color: #51545f;
+  -ms-overflow-style: scrollbar;
+  -webkit-font-smoothing: subpixel-antialiased;
+  min-height: 100vh;
 }
 
 ol,
 ul {
-    list-style: none;
+  list-style: none;
 }
 
 blockquote,
 q {
-    quotes: none;
+  quotes: none;
 }
 
 blockquote:before,
 blockquote:after,
 q:before,
 q:after {
-    content: "";
-    content: none;
+  content: "";
+  content: none;
 }
 
 table {
-    border-collapse: collapse;
-    border-spacing: 0;
+  border-collapse: collapse;
+  border-spacing: 0;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 hr {
-    border: 0 !important;
-    border-bottom: 1px solid #d3d3d3 !important;
+  border: 0 !important;
+  border-bottom: 1px solid #d3d3d3 !important;
 }
 
 * {
-    outline: none !important;
-    box-sizing: border-box;
+  outline: none !important;
+  box-sizing: border-box;
 }
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px #FFFFFF inset !important;
-    -webkit-text-fill-color: #333333;
+  -webkit-box-shadow: 0 0 0 30px #ffffff inset !important;
+  -webkit-text-fill-color: #333333;
 }
 
 ::-webkit-scrollbar {
-    width: 8px !important;
-    height: 8px !important;
-    background: #ededed !important;
+  width: 8px !important;
+  height: 8px !important;
+  background: #ededed !important;
 }
 
 ::-webkit-scrollbar-thumb {
-    border: 0 !important;
-    background-color: #c9c9c9 !important;
-    border-radius: 12px !important;
+  border: 0 !important;
+  background-color: #c9c9c9 !important;
+  border-radius: 12px !important;
+}
+
+// CkEditor CSS
+.main-content {
+  .ck.ck-toolbar .ck.ck-toolbar__separator {
+    display: none;
+  }
+  .ck.ck-editor__editable.ck-focused:not(.ck-editor__nested-editable) {
+    box-shadow: none;
+  }
+}
+
+/* HTML Editor */
+.html-editor {
+  font-family: "MaderaRegular", sans-serif;
+  font-weight: 400;
+}
+.html-editor u {
+  display: block;
+  text-decoration: underline;
+}
+.html-editor strong,
+.html-editor b {
+  font-family: "MaderaBold", sans-serif;
+  font-weight: 700;
+}
+.html-editor p,
+.html-editor span {
+  font-size: 14px;
+  line-height: 20px;
+  font-family: "MaderaRegular", sans-serif;
+  font-weight: 400;
+}
+.html-editor h6 {
+  font-size: 20px;
+  line-height: 26px;
+}
+.html-editor .subtitle1 {
+  font-size: 18px;
+  line-height: 24px;
+}
+.html-editor ul li {
+  display: flex;
+  align-items: flex-start;
+}
+.html-editor ul li > span,
+.html-editor ul li p {
+  display: inline-block;
+  vertical-align: top;
+}
+.html-editor ul li > span {
+  margin-right: 4px;
+}
+.html-editor ul li + li {
+  margin-top: 8px;
 }

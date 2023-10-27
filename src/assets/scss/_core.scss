@@ -50,12 +50,19 @@
 .ml-4p{
   margin-left: 4px!important;
 }
+.mt-6p{
+  margin-top: 6px!important;
+}
 @media (min-width: 1200px) {
   .flex-xl-nowrap{
     flex-wrap: nowrap!important;
   }
   .w-xl-100 {
     width: 100%;
+  }
+  .container-xl-900{
+    max-width: 900px;
+    margin: 0 auto;
   }
 }
 @media (min-width: 992px) {

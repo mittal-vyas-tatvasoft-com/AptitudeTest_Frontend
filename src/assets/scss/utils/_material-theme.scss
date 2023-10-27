@@ -426,6 +426,94 @@ $color676D79: #676d79;
   }
 }
 
+// Mat Radio Button
+.mat-mdc-radio-button {
+  margin-left: -8px;
+  display: inline-block;
+  cursor: pointer;
+  .mdc-form-field {
+    cursor: pointer;
+    .mdc-radio {
+      width: 18px;
+      height: 18px;
+      --mdc-radio-state-layer-size: 34px;
+      .mdc-radio__background {
+        width: 18px;
+        height: 18px;
+        &::before {
+          top: calc(-1 * (var(--mdc-radio-state-layer-size) - 18px) / 2);
+          left: calc(-1 * (var(--mdc-radio-state-layer-size) - 18px) / 2);
+          width: var(--mdc-radio-state-layer-size - 2px);
+          height: var(--mdc-radio-state-layer-size - 2px);
+        }
+        .mdc-radio__outer-circle {
+          border-width: 1px;
+          border-color: #b8bfcb;
+        }
+        .mdc-radio__inner-circle {
+          width: 12px;
+          height: 12px;
+          border-width: 12px;
+          top: -3px;
+          left: -3px;
+        }
+      }
+      .mdc-radio__native-control:enabled:not(:checked)
+        + .mdc-radio__background
+        .mdc-radio__outer-circle {
+        border-width: 1px;
+        border-color: #b8bfcb;
+      }
+
+      .mdc-radio__ripple,
+      .mat-mdc-radio-ripple,
+      .mdc-radio__native-control {
+        top: 0;
+        left: 0;
+        width: 34px;
+        height: 34px;
+      }
+
+      + .mdc-label {
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        color: $color51545F;
+        letter-spacing: 0.2px;
+        padding-left: 0;
+        position: relative;
+        cursor: pointer;
+      }
+
+      &:hover .mat-radio-ripple {
+        background-color: rgba($color: $black, $alpha: 0.07);
+      }
+
+      &:hover
+        .mdc-radio__native-control:enabled:not(:checked)
+        + .mdc-radio__background
+        .mdc-radio__outer-circle,
+      .mdc-radio__native-control:enabled
+        + .mdc-radio__background
+        .mdc-radio__inner-circle,
+      .mdc-radio__native-control:enabled:checked
+        + .mdc-radio__background
+        .mdc-radio__outer-circle,
+      .mat-mdc-radio-button
+        .mdc-radio:not(.mdc-ripple-upgraded):focus
+        .mdc-radio__native-control:enabled:checked
+        + .mdc-radio__background
+        .mdc-radio__outer-circle {
+        border-color: $primary500 !important;
+      }
+    }
+  }
+  &.mat-mdc-radio-checked .mdc-radio__background::before {
+    background-color: $primary500 !important;
+  }
+}
+
 // Mat Icon
 .mat-icon.material-icons {
   display: flex;
@@ -1336,19 +1424,19 @@ ngx-material-timepicker-container {
         }
       }
     }
-    &.mdc-evolution-chip--selected{
-      background: $primary500!important;
+    &.mdc-evolution-chip--selected {
+      background: $primary500 !important;
       border-color: $primary500;
-      .mat-mdc-chip-action{
-        .mat-mdc-chip-action-label{
+      .mat-mdc-chip-action {
+        .mat-mdc-chip-action-label {
           color: rgba($color: $white, $alpha: 0.5);
-          .result{
+          .result {
             color: $white;
           }
         }
       }
     }
-    &:hover{
+    &:hover {
       background: rgba(45, 97, 172, 0.08);
     }
   }
