@@ -109,6 +109,7 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
     if (value) {
       if (!this.streams.includes(value) && value.length < 25) {
         this.streams.push(value);
+        this.form.get('streams')?.setValue(this.streams);
       }
     }
     // Clear the input value
@@ -121,6 +122,7 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
     if (index >= 0) {
       this.streams.splice(index, 1);
       this.announcer.announce(`Removed ${fruit}`);
+      this.form.get('streams')?.setValue(this.streams);
     }
   }
 
@@ -130,6 +132,7 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
     // Remove fruit if it no longer has a name
     if (!value) {
       this.remove(fruit);
+      this.form.get('streams')?.setValue(this.streams);
       return;
     }
 
@@ -137,6 +140,7 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
     const index = this.streams.indexOf(fruit);
     if (index >= 0) {
       this.streams[index] = value;
+      this.form.get('streams')?.setValue(this.streams);
     }
   }
 
