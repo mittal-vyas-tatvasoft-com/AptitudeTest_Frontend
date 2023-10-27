@@ -4,6 +4,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddGroupComponent } from '../add-group/add-group.component';
 import {Location} from '@angular/common';
+import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 
 export interface CandidateData {
   candidatesName: string;
@@ -27,6 +28,7 @@ export class ImportCandidateComponent {
   displayedColumns: string[] = ['select', 'candidatesName', 'group', 'collegeName', 'email', 'contact', 'status', 'action'];
   dataSource: MatTableDataSource<CandidateData>;
   selection = new SelectionModel<CandidateData>(true, []);
+  public message: string = 'Drag & Drop or <span class="link-primary ml-4p">Browse</span>';
  
   constructor(public dialog: MatDialog, private _location: Location) {
     this.dataSource = new MatTableDataSource([
@@ -75,5 +77,4 @@ export class ImportCandidateComponent {
     this._location.back();
   }
 
-  // const myGreatDropzone = Dropzone();
 }

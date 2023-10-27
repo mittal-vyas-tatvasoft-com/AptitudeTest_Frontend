@@ -17,6 +17,38 @@
   }
 }
 
+// Link Primary
+.link-primary {
+  position: relative;
+  display: inline-block;
+  vertical-align: middle;
+  font-size: 16px;
+  line-height: 20px;
+  padding: 2px;
+  color: $primary500;
+  text-decoration: none;
+  transition: all 0.2s ease-in-out;
+  &:hover,
+  &:active,
+  &:focus {
+    color: $primary600;
+  }
+  &::before {
+    content: "";
+    position: absolute;
+    top: 100%;
+    border-bottom: 1px solid $primary600;
+    left: 50%;
+    right: 50%;
+    transition: all 0.2s ease-in-out;
+    transition-delay: 0.1s;
+  }
+  &:hover::before {
+    left: 0;
+    right: 0;
+  }
+}
+
 // Profile Menu
 .mat-mdc-menu-panel.profile-menu {
   min-width: 180px;
@@ -191,7 +223,7 @@
   justify-content: space-between;
   margin-bottom: 24px;
   .title-wrap {
-    display: flex;
+    display: inline-flex;
     align-items: center;
     flex-grow: 1;
     .page-icon.mat-icon {
@@ -211,6 +243,11 @@
       font-weight: 500;
       line-height: 24px;
       color: $primary500;
+      flex-grow: 1;
+      max-width: calc(100% - 30px);
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
   }
 
@@ -243,15 +280,19 @@
   }
 }
 .form-block {
+  &.mat-mdc-card.mdc-card .mat-mdc-card-content {
+    padding: 12px;
+  }
   .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
     line-height: 12px;
+    height: 12px;
   }
 }
 .form-group {
   .form-group-btn {
     padding: 12px;
     border-color: #b8bfcb !important;
-    background: #f7f8fd;
+    background: #f7f8fd !important;
     border-left: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -683,16 +724,20 @@
       .title {
         font-size: 20px;
         line-height: 26px;
-        max-width: calc(100vw - 260px);
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
       }
       .page-icon.mat-icon {
         width: 38px;
         height: 38px;
         margin-right: 10px;
       }
+    }
+  }
+
+  .card-header {
+    .card-header-title {
+      font-size: 18px;
+      line-height: 24px;
+      padding: 6px 0;
     }
   }
 
@@ -791,7 +836,7 @@
 .main-content {
   dropzone {
     .dropzone.dz-wrapper {
-      min-height: 136px;
+      min-height: 80px;
       .dz-message {
         margin: 0;
         display: block !important;
@@ -822,11 +867,18 @@
           border-style: solid;
         }
       }
-      .dz-preview .dz-filename span:hover {
-        white-space: nowrap;
-        overflow: hidden;
+      .dz-preview {
+        display: none;
       }
     }
+  }
+  .message-success {
+    text-align: center;
+    color: #46a746;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
   }
 }
 

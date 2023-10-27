@@ -633,8 +633,7 @@ $color676D79: #676d79;
         &.mat-column-select {
           width: 10px;
           .mat-mdc-checkbox {
-            margin-left: 0;
-            margin-right: -10px;
+            margin: -10px -10px -10px 0;
           }
         }
       }
