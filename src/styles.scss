@@ -692,6 +692,14 @@
               line-height: 16px;
               letter-spacing: 0.2px;
               margin-right: 8px;
+              &.bg-success {
+                background: #46a746;
+                color: #fff;
+              }
+              &.bg-error {
+                background: #DD4949;
+                color: #fff;
+              }
             }
           }
         }
@@ -711,7 +719,7 @@
               display: inline-flex;
               align-items: flex-start;
               padding: 4px 0;
-              .option-img{
+              .option-img {
                 max-width: 100%;
                 padding: 14px;
                 margin: 0 8px;
@@ -1086,29 +1094,36 @@
   }
 }
 
-.ck-editor{
-  .ck-editor__top .ck-sticky-panel .ck-toolbar{
-    background: #F7F8FD;
-    border-radius: 6px 6px 0 0!important;
+.ck-editor {
+  .ck-editor__top .ck-sticky-panel .ck-toolbar {
+    background: #f7f8fd;
+    border-radius: 6px 6px 0 0 !important;
   }
-  .ck-content.ck-editor__editable{
+  .ck-content.ck-editor__editable {
     min-height: 85px;
     max-height: 300px;
-    border-radius: 0 0 6px 6px!important;
-    &.ck-focused{
-      border-color: #2d61ac!important;
+    border-radius: 0 0 6px 6px !important;
+    &.ck-focused {
+      border-color: #2d61ac !important;
     }
   }
-  .ck.ck-list__item .ck-button.ck-on{
-    background: #2d61ac!important;
-    color: #ffffff!important;
+  .ck.ck-list__item .ck-button.ck-on {
+    background: #2d61ac !important;
+    color: #ffffff !important;
   }
-  .ck.ck-button.ck-on, a.ck.ck-button.ck-on{
-    color: #2d61ac!important;
+  .ck.ck-button.ck-on,
+  a.ck.ck-button.ck-on {
+    color: #2d61ac !important;
   }
 }
-.mdc-switch.mdc-switch--selected:enabled .mdc-switch__handle::after{
-  background-color: #244e8a!important;
+.mdc-switch.mdc-switch--selected:enabled .mdc-switch__handle::after {
+  background-color: #244e8a !important;
+}
+.result-candidate-name {
+  font-size: 20px;
+  line-height: 30px;
+  color: #51545f;
+  font-weight: 500;
 }
 @media (max-width: 991px) {
   .form-block-secondary {
@@ -1117,6 +1132,3 @@
     }
   }
 }
-
-
-
