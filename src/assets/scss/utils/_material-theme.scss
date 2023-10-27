@@ -1286,7 +1286,7 @@ ngx-material-timepicker-container {
   .mat-mdc-chip.mat-mdc-chip-option:not(.mdc-evolution-chip--disabled) {
     border-radius: 50px;
     border: 1px solid #b8bfcb;
-    background: #fff;
+    background: $white;
     min-height: 40px;
     .mat-mdc-chip-action {
       padding: 0 20px;
