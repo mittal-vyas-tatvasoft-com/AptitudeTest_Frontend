@@ -346,8 +346,4 @@ body,
     --mdc-snackbar-supporting-text-color: var(--color-white);
   }
 
-  &.warning {
-    --mdc-snackbar-container-color: var(--color-error);
-    --mdc-snackbar-supporting-text-color: var(--color-white);
-  }
 }
