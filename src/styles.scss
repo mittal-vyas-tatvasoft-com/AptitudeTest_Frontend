@@ -11,6 +11,7 @@
   }
 }
 
+// Remove Hint
 .remove-hint.mat-mdc-form-field {
   .mat-mdc-form-field-subscript-wrapper {
     display: none;
@@ -217,6 +218,7 @@
   }
 }
 
+// Page Header
 .page-header {
   display: flex;
   align-items: center;
@@ -279,6 +281,7 @@
     }
   }
 }
+// Form Block Card
 .form-block {
   &.mat-mdc-card.mdc-card .mat-mdc-card-content {
     padding: 12px;
@@ -288,6 +291,8 @@
     height: 12px;
   }
 }
+
+// Form group
 .form-group {
   .form-group-btn {
     padding: 12px;
@@ -307,6 +312,7 @@
   }
 }
 
+// Card header
 .card-header {
   padding: 12px;
   .card-header-title {
@@ -326,6 +332,7 @@
   }
 }
 
+// Card Form
 .card-form {
   background-color: #f7f8fd;
   border-radius: 6px;
@@ -336,6 +343,7 @@
   }
 }
 
+// Radio Back background cards
 .back-bg-card {
   padding: 12px 0;
   background: #f7f8fd;
@@ -343,6 +351,7 @@
   margin-right: -24px;
 }
 
+// Switch Block
 .switch-block-wrapper {
   border-radius: 6px;
   background: #eef0f6;
@@ -358,6 +367,7 @@
   }
 }
 
+// Mark Distribution
 .mark-distribution-block {
   border-radius: 6px;
   background: #f7f8fd;
@@ -430,6 +440,7 @@
   }
 }
 
+// Imported Questions
 .imported-question-wrapper {
   .title {
     font-size: 20px;
@@ -535,6 +546,7 @@
   }
 }
 
+// Weight distribution
 .question-weightage-chips {
   margin: -4px;
   .weightage-chip.mat-mdc-chip {
@@ -565,6 +577,7 @@
   }
 }
 
+// Form Block wrap
 .form-block-wrapper {
   .form-title {
     font-size: 18px;
@@ -576,6 +589,159 @@
   }
 }
 
+// From Block secondary
+.form-block-secondary {
+  p {
+    font-size: 14px;
+    margin: 17px 0;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 500;
+  }
+  .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
+    line-height: 10px;
+  }
+  .hr-line {
+    margin: 0 -12px 16px;
+  }
+}
+
+// Group Cards
+.group-card {
+  color: $color51545F;
+  min-height: 100%;
+  display: flex;
+  .group-card-header {
+    margin-bottom: 12px;
+    .group-card-heading {
+      font-size: 18px;
+      line-height: 24px;
+      font-weight: 400;
+      b {
+        font-weight: 600;
+      }
+    }
+  }
+  .mat-mdc-card-content {
+    padding: 12px !important;
+    min-height: 100%;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    .btn-small {
+      padding: 0;
+      height: 24px;
+      width: 24px;
+      display: block;
+      background-color: #f6f7fc;
+      .mat-mdc-button-touch-target {
+        width: 24px;
+        height: 24px;
+      }
+    }
+    .btn-sm {
+      padding: 5px 11px;
+      border-radius: 20px;
+      font-size: 13px;
+      line-height: 16px;
+      .mat-mdc-button-touch-target {
+        height: 28px;
+      }
+    }
+  }
+  .group-card-listing {
+    margin-bottom: 12px;
+    li {
+      font-size: 13px;
+      line-height: 18px;
+      color: #838898;
+      font-weight: 400;
+      position: relative;
+      padding-left: 20px;
+      &::before {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 7px;
+        width: 4px;
+        height: 4px;
+        border-radius: 4px;
+        background-color: #838898;
+      }
+      + li {
+        margin-top: 6px;
+      }
+      b {
+        font-weight: 600;
+        margin-left: 4px;
+        color: $color51545F;
+      }
+    }
+  }
+  .group-card-footer {
+    margin-top: auto;
+    .default-group {
+      color: #46a746;
+      font-size: 13px;
+      line-height: 13px;
+      line-height: 16px;
+      padding: 6px 0;
+    }
+  }
+}
+
+// Dropzone
+.main-content {
+  dropzone {
+    .dropzone.dz-wrapper {
+      min-height: 80px;
+      .dz-message {
+        margin: 0;
+        display: block !important;
+        width: 100%;
+        min-width: auto;
+        border-radius: 6px;
+        border: 1px dashed #dde1e1;
+        background: #f7f8fd;
+        color: #b4b8c5;
+        position: absolute;
+        height: 100%;
+        max-width: 100%;
+        .dz-text {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          &:before {
+            content: "";
+            width: 30px;
+            height: 30px;
+            background: url(assets/images/excel-icon.svg) center center
+              no-repeat;
+            display: block;
+            margin-right: 10px;
+          }
+        }
+        &:hover {
+          border-style: solid;
+        }
+      }
+      .dz-preview {
+        display: none;
+      }
+    }
+  }
+  .message-success {
+    text-align: center;
+    color: #46a746;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px;
+  }
+}
+
+// Question Answer cards
 .qa-card-listing {
   li + li {
     margin-top: 12px;
@@ -732,11 +898,13 @@
   }
 }
 
+// Check and Radio Group
 .checkbox-group .mat-mdc-checkbox,
 .mat-mdc-radio-group .mat-mdc-radio-button {
   margin-right: 12px;
 }
 
+// Select Answer Type
 .answer-type-text-option {
   display: flex;
   align-items: center;
@@ -851,8 +1019,8 @@
       border: 1px solid #b8bfcb;
       background: rgba(255, 255, 255, 0.8);
       transition: all 0.2s ease-in-out;
-      .mdc-fab__ripple{
-        border-radius: 4px;  
+      .mdc-fab__ripple {
+        border-radius: 4px;
       }
     }
     &:hover {
@@ -898,9 +1066,16 @@
   }
 }
 
-/* Responsive Media Queries
--------------------------------------------------------------------------------------------------*/
+// Result
+.result-candidate-name {
+  font-size: 20px;
+  line-height: 30px;
+  color: #51545f;
+  font-weight: 500;
+}
 
+/* Responsive Media Queries of MaxWidth
+-------------------------------------------------------------------------------------------------*/
 @media (max-width: 1199px) {
   .wrapper {
     .layout-sidenav-container.mat-drawer-container {
@@ -958,6 +1133,12 @@
       border-top: 1px solid #d9ddf0;
       flex-direction: row;
       justify-content: space-between;
+    }
+  }
+
+  .form-block-secondary {
+    p {
+      display: none;
     }
   }
 }
@@ -1095,6 +1276,8 @@
   }
 }
 
+/* Responsive Media Queries of MinWidth
+-------------------------------------------------------------------------------------------------*/
 @media (min-width: 1200px) {
   .w-xl-20 {
     flex: 0 0 auto;
@@ -1107,174 +1290,5 @@
   .container-900 {
     max-width: 900px;
     margin: 0 auto;
-  }
-}
-
-// Kinjan Styles
-.main-content {
-  dropzone {
-    .dropzone.dz-wrapper {
-      min-height: 80px;
-      .dz-message {
-        margin: 0;
-        display: block !important;
-        width: 100%;
-        min-width: auto;
-        border-radius: 6px;
-        border: 1px dashed #dde1e1;
-        background: #f7f8fd;
-        color: #b4b8c5;
-        position: absolute;
-        height: 100%;
-        max-width: 100%;
-        .dz-text {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          &:before {
-            content: "";
-            width: 30px;
-            height: 30px;
-            background: url(assets/images/excel-icon.svg) center center
-              no-repeat;
-            display: block;
-            margin-right: 10px;
-          }
-        }
-        &:hover {
-          border-style: solid;
-        }
-      }
-      .dz-preview {
-        display: none;
-      }
-    }
-  }
-  .message-success {
-    text-align: center;
-    color: #46a746;
-    font-size: 18px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 24px;
-  }
-}
-
-.form-block-secondary {
-  p {
-    font-size: 14px;
-    margin: 17px 0;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    font-weight: 500;
-  }
-  .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
-    line-height: 10px;
-  }
-  .hr-line {
-    margin: 0 -12px 16px;
-  }
-}
-
-.group-card {
-  color: $color51545F;
-  min-height: 100%;
-  display: flex;
-  .group-card-header {
-    margin-bottom: 12px;
-    .group-card-heading {
-      font-size: 18px;
-      line-height: 24px;
-      font-weight: 400;
-      b {
-        font-weight: 600;
-      }
-    }
-  }
-  .mat-mdc-card-content {
-    padding: 12px !important;
-    min-height: 100%;
-    flex-grow: 1;
-    display: flex;
-    flex-direction: column;
-    .btn-small {
-      padding: 0;
-      height: 24px;
-      width: 24px;
-      display: block;
-      background-color: #f6f7fc;
-      .mat-mdc-button-touch-target {
-        width: 24px;
-        height: 24px;
-      }
-    }
-    .btn-sm {
-      padding: 5px 11px;
-      border-radius: 20px;
-      font-size: 13px;
-      line-height: 16px;
-      .mat-mdc-button-touch-target {
-        height: 28px;
-      }
-    }
-  }
-  .group-card-listing {
-    margin-bottom: 12px;
-    li {
-      font-size: 13px;
-      line-height: 18px;
-      color: #838898;
-      font-weight: 400;
-      position: relative;
-      padding-left: 20px;
-      &::before {
-        content: "";
-        position: absolute;
-        left: 7px;
-        top: 7px;
-        width: 4px;
-        height: 4px;
-        border-radius: 4px;
-        background-color: #838898;
-      }
-      + li {
-        margin-top: 6px;
-      }
-      b {
-        font-weight: 600;
-        margin-left: 4px;
-        color: $color51545F;
-      }
-    }
-  }
-  .group-card-footer {
-    margin-top: auto;
-    .default-group {
-      color: #46a746;
-      font-size: 13px;
-      line-height: 13px;
-      line-height: 16px;
-      padding: 6px 0;
-    }
-  }
-}
-
-
-// .mdc-switch.mdc-switch--selected:enabled .mdc-switch__handle::after {
-//   background-color: #244e8a !important;
-// }
-.result-candidate-name {
-  font-size: 20px;
-  line-height: 30px;
-  color: #51545f;
-  font-weight: 500;
-}
-
-@media (max-width: 991px) {
-  .form-block-secondary {
-    p {
-      display: none;
-    }
   }
 }
