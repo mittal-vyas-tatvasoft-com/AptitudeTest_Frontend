@@ -6,7 +6,11 @@
     <h4 class="title">Import Candidates</h4>
   </div>
   <div class="action-list">
-    <button mat-stroked-button class="btn-stroked-default" (click)="handleBackBtn()">
+    <button
+      mat-stroked-button
+      class="btn-stroked-default"
+      (click)="handleBackBtn()"
+    >
       <mat-icon>
         <img src="./assets/images/back-arrow.svg" alt="Action" />
       </mat-icon>
@@ -32,7 +36,11 @@
                 </mat-form-field>
               </div>
               <div class="col-auto ps-0">
-                <button mat-stroked-button class="form-group-btn" (click)="handleAddGroupDialog()">
+                <button
+                  mat-stroked-button
+                  class="form-group-btn"
+                  (click)="handleAddGroupDialog()"
+                >
                   <mat-icon>
                     <img src="./assets/images/add-grey.svg" alt="Back" />
                   </mat-icon>
@@ -59,7 +67,9 @@
             <button mat-flat-button color="primary">Import</button>
           </div>
           <div class="col-12">
-            <p class="message-success pb-1">Successfully imported 8 question.</p>
+            <p class="message-success pb-1">
+              Successfully imported 8 question.
+            </p>
           </div>
         </div>
       </div>
@@ -85,7 +95,11 @@
               <img src="./assets/images/inactive.svg" alt="Inactive" />
             </mat-icon>
           </button>
-          <button mat-stroked-button class="card-header-btn" (click)="handleDeleteProfileDialog()">
+          <button
+            mat-stroked-button
+            class="card-header-btn"
+            (click)="handleDeleteProfileDialog()"
+          >
             <mat-icon>
               <img src="./assets/images/delete.svg" alt="Delete" />
             </mat-icon>
@@ -137,15 +151,23 @@
         <!-- Checkbox Column -->
         <ng-container matColumnDef="select">
           <th mat-header-cell *matHeaderCellDef>
-            <mat-checkbox color="primary" (change)="$event ? toggleAllRows() : null"
+            <mat-checkbox
+              color="primary"
+              (change)="$event ? toggleAllRows() : null"
               [checked]="selection.hasValue() && isAllSelected()"
-              [indeterminate]="selection.hasValue() && !isAllSelected()" [aria-label]="checkboxLabel()">
+              [indeterminate]="selection.hasValue() && !isAllSelected()"
+              [aria-label]="checkboxLabel()"
+            >
             </mat-checkbox>
           </th>
           <td mat-cell *matCellDef="let row">
-            <mat-checkbox color="primary" (click)="$event.stopPropagation()"
-              (change)="$event ? selection.toggle(row) : null" [checked]="selection.isSelected(row)"
-              [aria-label]="checkboxLabel(row)">
+            <mat-checkbox
+              color="primary"
+              (click)="$event.stopPropagation()"
+              (change)="$event ? selection.toggle(row) : null"
+              [checked]="selection.isSelected(row)"
+              [aria-label]="checkboxLabel(row)"
+            >
             </mat-checkbox>
           </td>
         </ng-container>
@@ -185,10 +207,16 @@
           <th mat-header-cell *matHeaderCellDef class="text-center">Status</th>
           <td mat-cell *matCellDef="let row" class="text-center">
             <ng-container [ngSwitch]="row.status">
-              <mat-chip *ngSwitchCase="'Active'" [class.ChipSuccess]="row.status">
+              <mat-chip
+                *ngSwitchCase="'Active'"
+                [class.ChipSuccess]="row.status"
+              >
                 {{ row.status }}
               </mat-chip>
-              <mat-chip *ngSwitchCase="'Inactive'" [class.ChipInactive]="row.status">
+              <mat-chip
+                *ngSwitchCase="'Inactive'"
+                [class.ChipInactive]="row.status"
+              >
                 {{ row.status }}
               </mat-chip>
             </ng-container>
@@ -199,7 +227,12 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
           <td mat-cell *matCellDef="let row" class="text-center">
-            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="tableActionMenu"
+              class="btn-small"
+              (click)="$event.stopPropagation()"
+            >
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
@@ -234,15 +267,25 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns" (click)="selection.toggle(row)"></tr>
+        <tr
+          mat-row
+          *matRowDef="let row; columns: displayedColumns"
+          (click)="selection.toggle(row)"
+        ></tr>
       </table>
     </div>
     <div class="mat-custom-pagination">
       <div class="pagination-left">
-        <mat-form-field appearance="outline" class="pagination-select remove-hint">
+        <mat-form-field
+          appearance="outline"
+          class="pagination-select remove-hint"
+        >
           <mat-label>Page</mat-label>
           <mat-select [(ngModel)]="selectedOption">
-            <mat-option *ngFor="let item of paginationOptionsList" [value]="item">
+            <mat-option
+              *ngFor="let item of paginationOptionsList"
+              [value]="item"
+            >
               {{ item }}
             </mat-option>
           </mat-select>

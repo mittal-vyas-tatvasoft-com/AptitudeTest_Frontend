@@ -90,4 +90,5 @@ export class CandidatesComponent {
   handleEditCandidate(){
     this.router.navigate(['admin/candidate/edit']);
   }
+  
 }
