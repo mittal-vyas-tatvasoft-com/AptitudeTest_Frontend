@@ -27,6 +27,7 @@
       [matMenuTriggerFor]="actionMenu"
       class="btn-stroked-default"
       style="padding: 10px"
+      (click)="$event.stopPropagation()"
     >
       <mat-icon style="width: 24px; height: 24px">
         <img src="./assets/images/more-black.svg" alt="Action" />
@@ -200,6 +201,7 @@
               mat-icon-button
               [matMenuTriggerFor]="tableActionMenu"
               class="btn-small"
+              (click)="$event.stopPropagation()"
             >
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
