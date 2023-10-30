@@ -4,7 +4,6 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddGroupComponent } from '../add-group/add-group.component';
 import {Location} from '@angular/common';
-import { DropzoneConfigInterface } from 'ngx-dropzone-wrapper';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 export interface CandidateData {
