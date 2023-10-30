@@ -697,7 +697,7 @@
                 color: #fff;
               }
               &.bg-error {
-                background: #DD4949;
+                background: #dd4949;
                 color: #fff;
               }
             }
@@ -781,6 +781,15 @@
     ~ .mdc-checkbox__background,
   .mdc-checkbox:not(:disabled):active
     .mdc-checkbox__native-control:enabled:checked
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox:hover
+    .mdc-checkbox__native-control:enabled:checked
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox:hover
+    .mdc-checkbox__native-control:enabled:indeterminate
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox:hover
+    .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
     ~ .mdc-checkbox__background {
     border-color: #46a746;
     background-color: #46a746;
@@ -812,7 +821,7 @@
     border-radius: 50%;
   }
 
-  .uploaded-img {
+  .uploaded-box {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -822,9 +831,35 @@
     flex-grow: 1;
     margin: 0 12px;
     min-height: 100px;
+    position: relative;
+    transition: all 0.2s ease-in-out;
     img {
       display: block;
       max-width: 100%;
+    }
+    .btn-remove {
+      position: absolute;
+      top: -1px;
+      bottom: -1px;
+      left: -1px;
+      right: -1px;
+      opacity: 0;
+      visibility: hidden;
+      width: calc(100% + 2px);
+      height: calc(100% + 2px);
+      border-radius: 5px;
+      border: 1px solid #b8bfcb;
+      background: rgba(255, 255, 255, 0.8);
+      transition: all 0.2s ease-in-out;
+      .mdc-fab__ripple{
+        border-radius: 4px;  
+      }
+    }
+    &:hover {
+      .btn-remove {
+        opacity: 1;
+        visibility: visible;
+      }
     }
   }
 
@@ -1225,31 +1260,10 @@
   }
 }
 
-.ck-editor {
-  .ck-editor__top .ck-sticky-panel .ck-toolbar {
-    background: #f7f8fd;
-    border-radius: 6px 6px 0 0 !important;
-  }
-  .ck-content.ck-editor__editable {
-    min-height: 85px;
-    max-height: 300px;
-    border-radius: 0 0 6px 6px !important;
-    &.ck-focused {
-      border-color: #2d61ac !important;
-    }
-  }
-  .ck.ck-list__item .ck-button.ck-on {
-    background: #2d61ac !important;
-    color: #ffffff !important;
-  }
-  .ck.ck-button.ck-on,
-  a.ck.ck-button.ck-on {
-    color: #2d61ac !important;
-  }
-}
-.mdc-switch.mdc-switch--selected:enabled .mdc-switch__handle::after {
-  background-color: #244e8a !important;
-}
+
+// .mdc-switch.mdc-switch--selected:enabled .mdc-switch__handle::after {
+//   background-color: #244e8a !important;
+// }
 .result-candidate-name {
   font-size: 20px;
   line-height: 30px;

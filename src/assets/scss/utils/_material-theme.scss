@@ -1350,6 +1350,9 @@ ngx-material-timepicker-container {
       --mdc-switch-selected-hover-track-color: #aeb7be;
       --mdc-switch-unselected-track-color: #aeb7be;
       --mdc-switch-selected-track-color: #aeb7be;
+      &.mdc-switch--selected:enabled .mdc-switch__handle::after {
+        background-color: #244e8a !important;
+      }
       .mdc-switch__track {
         &::before {
           background: #aeb7be;
