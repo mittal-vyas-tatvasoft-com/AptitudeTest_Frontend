@@ -1225,6 +1225,10 @@
           margin-left: auto;
         }
       }
+      &.no-wrap-md{
+        flex-direction: row;
+        align-items: flex-start;
+      }
     }
     .qa-body {
       .mat-mdc-chip-listbox.mcq-chips-wrapper {
