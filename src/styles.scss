@@ -6,6 +6,7 @@
 .logo {
   display: inline-block;
   vertical-align: middle;
+
   img {
     display: block;
   }
@@ -30,9 +31,11 @@
   z-index: 3;
   transition: all 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
   overflow-y: auto;
+
   .sidebar-head {
     padding: 20px 70px;
     text-align: center;
+
     .logo {
       img {
         display: block;
@@ -41,10 +44,13 @@
       }
     }
   }
+
   .main-navigation {
     margin: 10px;
+
     .nav-link {
       margin-bottom: 1px;
+
       .nav-item {
         position: relative;
         display: flex;
@@ -58,34 +64,42 @@
         border-radius: 6px;
         transition: all 0.2s cubic-bezier(0.215, 0.61, 0.355, 1);
         z-index: 0;
+
         .mat-icon {
           width: 20px;
           height: 20px;
           margin-right: 12px;
           flex-shrink: 0;
+
           img {
             display: block;
           }
         }
+
         &.active,
         &:hover {
           background: #f0f3f8;
         }
       }
+
       .nested-navigation.mat-accordion {
         .mat-expansion-panel {
           background: transparent;
           box-shadow: none;
+
           &:first-of-type {
             border-top-right-radius: 6px;
             border-top-left-radius: 6px;
           }
+
           &:last-of-type {
             border-bottom-right-radius: 6px;
             border-bottom-left-radius: 6px;
           }
+
           &.mat-expanded {
             background: #f0f3f8;
+
             .nav-item {
               &:hover {
                 background: transparent;
@@ -97,12 +111,15 @@
           .mat-expansion-panel-header {
             padding: 0;
             height: auto;
+
             .mat-content {
               display: block;
+
               .nav-item {
                 outline: none !important;
               }
             }
+
             .mat-expansion-indicator {
               position: absolute;
               right: 12px;
@@ -110,30 +127,34 @@
               vertical-align: middle;
               width: 16px;
               height: 16px;
-              background: url("./assets/images/chevron-down-grey.svg") no-repeat
-                center center;
+              background: url("./assets/images/chevron-down-grey.svg") no-repeat center center;
               background-size: 16px 16px;
               z-index: 0;
               pointer-events: none;
+
               &:after {
                 display: none;
               }
             }
           }
         }
+
         .mat-expansion-panel-content {
           .mat-expansion-panel-body {
             padding: 0 0 5px;
-            ul li > .nav-item {
+
+            ul li>.nav-item {
               padding: 6.5px 20px 6.5px 28px;
               font-size: 14px;
               line-height: 20px;
               position: relative;
               color: $color666870;
+
               &:hover,
               &.active {
                 color: $primary500;
               }
+
               &::before {
                 content: "";
                 position: relative;
@@ -145,6 +166,7 @@
                 background: $color666870;
                 margin-right: 10px;
               }
+
               &:hover::before,
               &.active::before {
                 background: $primary500;
@@ -155,6 +177,7 @@
       }
     }
   }
+
   &.open {
     margin-left: 0;
   }
@@ -163,8 +186,10 @@
 // Wrapper
 .wrapper {
   min-height: 100dvh;
+
   .layout-sidenav-container.mat-drawer-container {
     padding: 80px 0 0;
+
     .mat-drawer {
       position: fixed;
       top: 80px;
@@ -174,6 +199,7 @@
       box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.1);
       border-right: 0;
     }
+
     .main-content {
       padding: 24px;
       //min-height: 100dvh;
@@ -182,7 +208,12 @@
     }
   }
 }
-html, body, .wrapper, .layout-sidenav-container, .mat-sidenav-content {
+
+html,
+body,
+.wrapper,
+.layout-sidenav-container,
+.mat-sidenav-content {
   height: 100%;
 }
 
@@ -191,10 +222,12 @@ html, body, .wrapper, .layout-sidenav-container, .mat-sidenav-content {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 24px;
+
   .title-wrap {
     display: flex;
     align-items: center;
     flex-grow: 1;
+
     .page-icon.mat-icon {
       background: $white;
       width: 44px;
@@ -202,11 +235,13 @@ html, body, .wrapper, .layout-sidenav-container, .mat-sidenav-content {
       border-radius: 6px;
       border: 1px solid #dcebfa;
       margin-right: 12px;
+
       img {
         width: 24px;
         height: 24px;
       }
     }
+
     .title {
       font-size: 24px;
       font-weight: 500;
@@ -214,14 +249,16 @@ html, body, .wrapper, .layout-sidenav-container, .mat-sidenav-content {
       color: $primary500;
     }
   }
+
   .action-list {
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
+
     // margin: -6px -6px -6px 0;
-    .mat-mdc-button-base + .mat-mdc-button-base {
+    .mat-mdc-button-base+.mat-mdc-button-base {
       margin: 6px;
     }
   }
@@ -233,21 +270,25 @@ html, body, .wrapper, .layout-sidenav-container, .mat-sidenav-content {
   .wrapper {
     .layout-sidenav-container.mat-drawer-container {
       padding: 72px 0 0;
+
       .mat-drawer {
         top: 0;
         width: 260px;
         min-width: 260px;
       }
+
       .main-content {
         padding: 20px 16px;
         overflow-y: auto;
         height: 100%;
       }
     }
+
     .mat-drawer-backdrop {
       z-index: 2;
     }
   }
+
   .layout-sidenav-container.mat-drawer-container {
     .mat-drawer {
       position: fixed;
@@ -256,10 +297,12 @@ html, body, .wrapper, .layout-sidenav-container, .mat-sidenav-content {
     }
   }
 }
+
 @media (max-width: 767px) {
   .wrapper {
     .layout-sidenav-container.mat-drawer-container {
       padding: 68px 0 0;
+
       .main-content {
         padding: 16px;
         overflow-y: auto;
@@ -277,10 +320,30 @@ html, body, .wrapper, .layout-sidenav-container, .mat-sidenav-content {
     }
   }
 }
+
 @media (max-width: 575px) {
   .wrapper {
     .layout-sidenav-container.mat-drawer-container {
       padding: 64px 0 0;
     }
   }
+}
+
+
+
+
+// toaster styles
+
+
+.mat-mdc-snack-bar-container {
+  &.success {
+    --mdc-snackbar-container-color: var(--color-success);
+    --mdc-snackbar-supporting-text-color: var(--color-white);
+  }
+
+  &.error {
+    --mdc-snackbar-container-color: var(--color-error);
+    --mdc-snackbar-supporting-text-color: var(--color-white);
+  }
+
 }
