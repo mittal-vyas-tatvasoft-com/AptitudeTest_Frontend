@@ -4,6 +4,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddDegreeComponent } from '../add-degree/add-degree.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { DegreeService } from '../../services/degree.service';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 
 export interface DegreeData {
   name: string;
@@ -27,7 +28,11 @@ export class DegreeComponent implements OnInit {
   displayedColumns: string[] = ['name', 'level', 'stream', 'status', 'action'];
   dataSource!: MatTableDataSource<DegreeData>;
   degreeData: any;
-  constructor(public dialog: MatDialog, private degreeService: DegreeService) {}
+  constructor(
+    public dialog: MatDialog,
+    private degreeService: DegreeService,
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit(): void {
     this.getAllDegrees();
@@ -35,8 +40,8 @@ export class DegreeComponent implements OnInit {
 
   getAllDegrees() {
     this.degreeService.degrees().subscribe((response: any) => {
-      this.dataSource = new MatTableDataSource(response.data.entityList);
-      this.degreeData = response.data.entityList;
+      this.dataSource = new MatTableDataSource(response.data);
+      this.degreeData = response.data;
     });
   }
 
@@ -55,6 +60,9 @@ export class DegreeComponent implements OnInit {
               next: (res: any) => {
                 if (res.statusCode == 200) {
                   this.getAllDegrees();
+                  this.snackbarService.success(res.message);
+                } else {
+                  this.snackbarService.error(res.message);
                 }
               },
             });
@@ -62,7 +70,10 @@ export class DegreeComponent implements OnInit {
             this.degreeService.update(data).subscribe({
               next: (res: any) => {
                 if (res.statusCode == 200) {
+                  this.snackbarService.success(res.message);
                   this.getAllDegrees();
+                } else {
+                  this.snackbarService.error(res.message);
                 }
               },
             });
@@ -71,7 +82,7 @@ export class DegreeComponent implements OnInit {
       });
   }
 
-  handleDeleteProfileDialog(id: number) {
+  handleDeleteDegreeDialog(id: number) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ['confirmation-dialog'];
     dialogConfig.autoFocus = false;
@@ -81,7 +92,14 @@ export class DegreeComponent implements OnInit {
       .subscribe((res: boolean) => {
         if (res) {
           this.degreeService.delete(id).subscribe({
-            next: (res) => {},
+            next: (res: any) => {
+              if (res.statusCode == 200) {
+                this.snackbarService.success(res.message);
+                this.getAllDegrees();
+              } else {
+                this.snackbarService.error(res.message);
+              }
+            },
           });
           this.degreeData = this.degreeData.filter(
             (data: any) => data.id != id
@@ -96,14 +114,20 @@ export class DegreeComponent implements OnInit {
       id: id,
       status: true,
     };
-    this.degreeService.updateStatus(status).subscribe((res) => {});
-    this.degreeData = this.degreeData.map((data: any) => {
-      if (data.id == id) {
-        data.status = true;
+    this.degreeService.updateStatus(status).subscribe((res: any) => {
+      if (res.statusCode == 200) {
+        this.degreeData = this.degreeData.map((data: any) => {
+          if (data.id == id) {
+            data.status = true;
+          }
+          return data;
+        });
+        this.dataSource = new MatTableDataSource(this.degreeData);
+        this.snackbarService.success(res.message);
+      } else {
+        this.snackbarService.error(res.message);
       }
-      return data;
     });
-    this.dataSource = new MatTableDataSource(this.degreeData);
   }
 
   onInactiveClick(id: number) {
@@ -111,13 +135,19 @@ export class DegreeComponent implements OnInit {
       id: id,
       status: false,
     };
-    this.degreeService.updateStatus(status).subscribe((res) => {});
-    this.degreeData = this.degreeData.map((data: any) => {
-      if (data.id == id) {
-        data.status = false;
+    this.degreeService.updateStatus(status).subscribe((res: any) => {
+      if (res.statusCode == 200) {
+        this.degreeData = this.degreeData.map((data: any) => {
+          if (data.id == id) {
+            data.status = false;
+          }
+          return data;
+        });
+        this.dataSource = new MatTableDataSource(this.degreeData);
+        this.snackbarService.success(res.message);
+      } else {
+        this.snackbarService.error(res.message);
       }
-      return data;
     });
-    this.dataSource = new MatTableDataSource(this.degreeData);
   }
 }

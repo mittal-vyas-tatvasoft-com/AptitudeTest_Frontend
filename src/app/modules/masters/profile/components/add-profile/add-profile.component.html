@@ -54,7 +54,7 @@
     [mat-dialog-close]="form.value"
     [disabled]="form.invalid"
   >
-    Add
+    {{ this.data == 0 ? "Add" : "Save" }}
   </button>
   <button mat-stroked-button color="primary" [mat-dialog-close]="false">
     Cancel

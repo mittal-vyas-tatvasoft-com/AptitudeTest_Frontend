@@ -27,7 +27,7 @@ export class ProfileComponent implements OnInit {
   getAllProfileData() {
     this.profileService.GetAllProfiles().subscribe({
       next: (res: any) => {
-        this.dataSource = new MatTableDataSource(res.data.entityList);
+        this.dataSource = new MatTableDataSource(res.data);
       },
     });
   }
