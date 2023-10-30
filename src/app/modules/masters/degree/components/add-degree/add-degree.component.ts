@@ -17,6 +17,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormControls } from '../../config/degree.config';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { DegreeService } from '../../services/degree.service';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 
 export interface Stream {
   name: string;
@@ -55,7 +56,8 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
     public validation: ValidationService,
     private degreeService: DegreeService,
-    @Inject(MAT_DIALOG_DATA) public id: number
+    @Inject(MAT_DIALOG_DATA) public id: number,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -110,7 +112,11 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
 
     // Add our fruit
     if (value) {
-      if (!this.streams.includes(value) && value.length < 25) {
+      if (value.length > 25) {
+        this.snackbarService.error('Max 25 Characters Allowed');
+      } else if (this.streams.includes(value)) {
+        this.snackbarService.error('Duplicates Not Allowed');
+      } else {
         this.streams.push(value);
         this.form.get('streams')?.setValue(this.streams);
       }
@@ -138,12 +144,17 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
       this.form.get('streams')?.setValue(this.streams);
       return;
     }
-
-    // Edit existing fruit
-    const index = this.streams.indexOf(fruit);
-    if (index >= 0) {
-      this.streams[index] = value;
-      this.form.get('streams')?.setValue(this.streams);
+    if (value.length > 25) {
+      this.snackbarService.error('Max 25 Characters Allowed');
+    } else if (this.streams.includes(value)) {
+      this.snackbarService.error('Duplicates Not Allowed');
+    } else {
+      // Edit existing fruit
+      const index = this.streams.indexOf(fruit);
+      if (index >= 0) {
+        this.streams[index] = value;
+        this.form.get('streams')?.setValue(this.streams);
+      }
     }
   }
 
