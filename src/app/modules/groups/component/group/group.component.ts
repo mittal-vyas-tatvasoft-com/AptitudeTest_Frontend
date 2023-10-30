@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AddGroupComponent } from '../add-group/add-group.component';
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 
 @Component({
   selector: 'app-group',
@@ -18,5 +19,12 @@ export class GroupComponent {
     dialogConfig.autoFocus = false;
     dialogConfig.width="556px";
     this.dialog.open(AddGroupComponent, dialogConfig);
+  }
+
+  handleDeleteProfileDialog() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = ["confirmation-dialog"];
+    dialogConfig.autoFocus = false;
+    this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
   }
 }

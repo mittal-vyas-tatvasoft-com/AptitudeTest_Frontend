@@ -7,15 +7,12 @@
   </div>
   <div class="action-list">
     <button mat-fab color="primary" (click)="handleAddGroupDialog()">
-      <mat-icon
-        ><img src="./assets/images/add-white-full.svg" alt="Add"
-      /></mat-icon>
+      <mat-icon><img src="./assets/images/add-white-full.svg" alt="Add" /></mat-icon>
     </button>
   </div>
 </div>
 
-<mat-card class="form-block mb-3"
-  ><mat-card-content class="pb-0">
+<mat-card class="form-block mb-3"><mat-card-content class="pb-0">
     <div class="row">
       <div class="col-lg-3 col-sm-6">
         <mat-form-field appearance="outline">
@@ -37,13 +34,11 @@
         <button mat-stroked-button color="primary">clear</button>
       </div>
     </div>
-  </mat-card-content></mat-card
->
+  </mat-card-content></mat-card>
 
 <div class="row">
   <div class="col-md-6 col-xxl-4 mb-2">
-    <mat-card class="group-card"
-      ><mat-card-content>
+    <mat-card class="group-card"><mat-card-content>
         <div class="row align-items-center group-card-header">
           <div class="col">
             <h3 class="group-card-heading">
@@ -54,12 +49,7 @@
 
         <div class="row justify-content-between group-card-footer g-0">
           <div class="col-auto">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="btn-sm"
-              routerLink="/admin/candidate/import-candidate"
-            >
+            <button mat-stroked-button color="primary" class="btn-sm" routerLink="/admin/candidate/import-candidate">
               Manage Candidates
             </button>
           </div>
@@ -69,12 +59,10 @@
             </button>
           </div>
         </div>
-      </mat-card-content></mat-card
-    >
+      </mat-card-content></mat-card>
   </div>
   <div class="col-md-6 col-xxl-4 mb-2">
-    <mat-card class="group-card"
-      ><mat-card-content>
+    <mat-card class="group-card"><mat-card-content>
         <div class="row align-items-center group-card-header">
           <div class="col">
             <h3 class="group-card-heading">
@@ -82,24 +70,20 @@
             </h3>
           </div>
           <div class="col-auto">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-              (click)="$event.stopPropagation()"
-            >
+            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small"
+              (click)="$event.stopPropagation()">
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
             </button>
             <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleAddGroupDialog()">
                 <mat-icon>
                   <img src="./assets/images/edit.svg" alt="Rename" />
                 </mat-icon>
                 Rename
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleDeleteProfileDialog()">
                 <mat-icon>
                   <img src="./assets/images/delete.svg" alt="Delete" />
                 </mat-icon>
@@ -115,12 +99,7 @@
         </ul>
         <div class="row justify-content-between group-card-footer g-0">
           <div class="col-auto">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="btn-sm"
-              routerLink="/admin/candidate/import-candidate"
-            >
+            <button mat-stroked-button color="primary" class="btn-sm" routerLink="/admin/candidate/import-candidate">
               Manage Candidates
             </button>
           </div>
@@ -130,35 +109,29 @@
             </button>
           </div>
         </div>
-      </mat-card-content></mat-card
-    >
+      </mat-card-content></mat-card>
   </div>
   <div class="col-md-6 col-xxl-4 mb-2">
-    <mat-card class="group-card"
-      ><mat-card-content>
+    <mat-card class="group-card"><mat-card-content>
         <div class="row align-items-center group-card-header">
           <div class="col">
             <h3 class="group-card-heading">Indian Institute : <b>200</b></h3>
           </div>
           <div class="col-auto">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-              (click)="$event.stopPropagation()"
-            >
+            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small"
+              (click)="$event.stopPropagation()">
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
             </button>
             <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleAddGroupDialog()">
                 <mat-icon>
                   <img src="./assets/images/edit.svg" alt="Rename" />
                 </mat-icon>
                 Rename
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleDeleteProfileDialog()">
                 <mat-icon>
                   <img src="./assets/images/delete.svg" alt="Delete" />
                 </mat-icon>
@@ -173,12 +146,7 @@
         </ul>
         <div class="row justify-content-between group-card-footer g-0">
           <div class="col-auto">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="btn-sm"
-              routerLink="/admin/candidate/import-candidate"
-            >
+            <button mat-stroked-button color="primary" class="btn-sm" routerLink="/admin/candidate/import-candidate">
               Manage Candidates
             </button>
           </div>
@@ -186,12 +154,10 @@
             <p class="default-group">Default Group</p>
           </div>
         </div>
-      </mat-card-content></mat-card
-    >
+      </mat-card-content></mat-card>
   </div>
   <div class="col-md-6 col-xxl-4 mb-2">
-    <mat-card class="group-card"
-      ><mat-card-content>
+    <mat-card class="group-card"><mat-card-content>
         <div class="row align-items-center group-card-header">
           <div class="col">
             <h3 class="group-card-heading">
@@ -199,24 +165,20 @@
             </h3>
           </div>
           <div class="col-auto">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-              (click)="$event.stopPropagation()"
-            >
+            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small"
+              (click)="$event.stopPropagation()">
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
             </button>
             <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleAddGroupDialog()">
                 <mat-icon>
                   <img src="./assets/images/edit.svg" alt="Rename" />
                 </mat-icon>
                 Rename
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleDeleteProfileDialog()">
                 <mat-icon>
                   <img src="./assets/images/delete.svg" alt="Delete" />
                 </mat-icon>
@@ -230,12 +192,7 @@
         </ul>
         <div class="row justify-content-between group-card-footer g-0">
           <div class="col-auto">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="btn-sm"
-              routerLink="/admin/candidate/import-candidate"
-            >
+            <button mat-stroked-button color="primary" class="btn-sm" routerLink="/admin/candidate/import-candidate">
               Manage Candidates
             </button>
           </div>
@@ -245,12 +202,10 @@
             </button>
           </div>
         </div>
-      </mat-card-content></mat-card
-    >
+      </mat-card-content></mat-card>
   </div>
   <div class="col-md-6 col-xxl-4 mb-2">
-    <mat-card class="group-card"
-      ><mat-card-content>
+    <mat-card class="group-card"><mat-card-content>
         <div class="row align-items-center group-card-header">
           <div class="col">
             <h3 class="group-card-heading">
@@ -258,24 +213,20 @@
             </h3>
           </div>
           <div class="col-auto">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-              (click)="$event.stopPropagation()"
-            >
+            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small"
+              (click)="$event.stopPropagation()">
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
             </button>
             <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleAddGroupDialog()">
                 <mat-icon>
                   <img src="./assets/images/edit.svg" alt="Rename" />
                 </mat-icon>
                 Rename
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleDeleteProfileDialog()">
                 <mat-icon>
                   <img src="./assets/images/delete.svg" alt="Delete" />
                 </mat-icon>
@@ -290,12 +241,7 @@
         </ul>
         <div class="row justify-content-between group-card-footer g-0">
           <div class="col-auto">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="btn-sm"
-              routerLink="/admin/candidate/import-candidate"
-            >
+            <button mat-stroked-button color="primary" class="btn-sm" routerLink="/admin/candidate/import-candidate">
               Manage Candidates
             </button>
           </div>
@@ -305,12 +251,10 @@
             </button>
           </div>
         </div>
-      </mat-card-content></mat-card
-    >
+      </mat-card-content></mat-card>
   </div>
   <div class="col-md-6 col-xxl-4 mb-2">
-    <mat-card class="group-card"
-      ><mat-card-content>
+    <mat-card class="group-card"><mat-card-content>
         <div class="row align-items-center group-card-header">
           <div class="col">
             <h3 class="group-card-heading">
@@ -318,24 +262,20 @@
             </h3>
           </div>
           <div class="col-auto">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-              (click)="$event.stopPropagation()"
-            >
+            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small"
+              (click)="$event.stopPropagation()">
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
             </button>
             <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleAddGroupDialog()">
                 <mat-icon>
                   <img src="./assets/images/edit.svg" alt="Rename" />
                 </mat-icon>
                 Rename
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleDeleteProfileDialog()">
                 <mat-icon>
                   <img src="./assets/images/delete.svg" alt="Delete" />
                 </mat-icon>
@@ -351,12 +291,7 @@
         </ul>
         <div class="row justify-content-between group-card-footer g-0">
           <div class="col-auto">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="btn-sm"
-              routerLink="/admin/candidate/import-candidate"
-            >
+            <button mat-stroked-button color="primary" class="btn-sm" routerLink="/admin/candidate/import-candidate">
               Manage Candidates
             </button>
           </div>
@@ -366,12 +301,10 @@
             </button>
           </div>
         </div>
-      </mat-card-content></mat-card
-    >
+      </mat-card-content></mat-card>
   </div>
   <div class="col-md-6 col-xxl-4 mb-2">
-    <mat-card class="group-card"
-      ><mat-card-content>
+    <mat-card class="group-card"><mat-card-content>
         <div class="row align-items-center group-card-header">
           <div class="col">
             <h3 class="group-card-heading">
@@ -379,24 +312,20 @@
             </h3>
           </div>
           <div class="col-auto">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-              (click)="$event.stopPropagation()"
-            >
+            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small"
+              (click)="$event.stopPropagation()">
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
             </button>
             <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleAddGroupDialog()">
                 <mat-icon>
                   <img src="./assets/images/edit.svg" alt="Rename" />
                 </mat-icon>
                 Rename
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleDeleteProfileDialog()">
                 <mat-icon>
                   <img src="./assets/images/delete.svg" alt="Delete" />
                 </mat-icon>
@@ -411,12 +340,7 @@
         </ul>
         <div class="row justify-content-between group-card-footer g-0">
           <div class="col-auto">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="btn-sm"
-              routerLink="/admin/candidate/import-candidate"
-            >
+            <button mat-stroked-button color="primary" class="btn-sm" routerLink="/admin/candidate/import-candidate">
               Manage Candidates
             </button>
           </div>
@@ -426,12 +350,10 @@
             </button>
           </div>
         </div>
-      </mat-card-content></mat-card
-    >
+      </mat-card-content></mat-card>
   </div>
   <div class="col-md-6 col-xxl-4 mb-2">
-    <mat-card class="group-card"
-      ><mat-card-content>
+    <mat-card class="group-card"><mat-card-content>
         <div class="row align-items-center group-card-header">
           <div class="col">
             <h3 class="group-card-heading">
@@ -439,24 +361,20 @@
             </h3>
           </div>
           <div class="col-auto">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-              (click)="$event.stopPropagation()"
-            >
+            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small"
+              (click)="$event.stopPropagation()">
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
             </button>
             <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleAddGroupDialog()">
                 <mat-icon>
                   <img src="./assets/images/edit.svg" alt="Rename" />
                 </mat-icon>
                 Rename
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleDeleteProfileDialog()">
                 <mat-icon>
                   <img src="./assets/images/delete.svg" alt="Delete" />
                 </mat-icon>
@@ -472,12 +390,7 @@
         </ul>
         <div class="row justify-content-between group-card-footer g-0">
           <div class="col-auto">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="btn-sm"
-              routerLink="/admin/candidate/import-candidate"
-            >
+            <button mat-stroked-button color="primary" class="btn-sm" routerLink="/admin/candidate/import-candidate">
               Manage Candidates
             </button>
           </div>
@@ -487,12 +400,10 @@
             </button>
           </div>
         </div>
-      </mat-card-content></mat-card
-    >
+      </mat-card-content></mat-card>
   </div>
   <div class="col-md-6 col-xxl-4 mb-2">
-    <mat-card class="group-card"
-      ><mat-card-content>
+    <mat-card class="group-card"><mat-card-content>
         <div class="row align-items-center group-card-header">
           <div class="col">
             <h3 class="group-card-heading">
@@ -500,24 +411,20 @@
             </h3>
           </div>
           <div class="col-auto">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-              (click)="$event.stopPropagation()"
-            >
+            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small"
+              (click)="$event.stopPropagation()">
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
             </button>
             <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleAddGroupDialog()">
                 <mat-icon>
                   <img src="./assets/images/edit.svg" alt="Rename" />
                 </mat-icon>
                 Rename
               </button>
-              <button mat-menu-item>
+              <button mat-menu-item (click)="handleDeleteProfileDialog()">
                 <mat-icon>
                   <img src="./assets/images/delete.svg" alt="Delete" />
                 </mat-icon>
@@ -531,12 +438,7 @@
         </ul>
         <div class="row justify-content-between group-card-footer g-0">
           <div class="col-auto">
-            <button
-              mat-stroked-button
-              color="primary"
-              class="btn-sm"
-              routerLink="/admin/candidate/import-candidate"
-            >
+            <button mat-stroked-button color="primary" class="btn-sm" routerLink="/admin/candidate/import-candidate">
               Manage Candidates
             </button>
           </div>
@@ -546,7 +448,6 @@
             </button>
           </div>
         </div>
-      </mat-card-content></mat-card
-    >
+      </mat-card-content></mat-card>
   </div>
 </div>

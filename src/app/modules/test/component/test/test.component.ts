@@ -3,6 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Sort, MatSortModule, MatSort } from '@angular/material/sort';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { Router } from '@angular/router';
 
 export interface TestData {
   test: string;
@@ -28,7 +29,7 @@ export class TestComponent {
   dataSource: MatTableDataSource<TestData>;
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
 
-  constructor(public dialog: MatDialog) {
+  constructor(public dialog: MatDialog, private router: Router) {
     this.dataSource = new MatTableDataSource([
       { test: "Ralph Edwards", group: "Columbia University", testTime: "60m", startTime: "17 Jun, 2020 02:57 pm", endTime: "17 Jun, 2020 02:57 pm", NoOfCandidates: "470", status: "Active", action: "" },
       { test: "Savannah Nguyen", group: "Harvard University", testTime: "60m", startTime: "23 Jun, 2020 01:17 pm", endTime: "23 Jun, 2020 01:17 pm", NoOfCandidates: "854", status: "Completed", action: "" },
@@ -51,5 +52,9 @@ export class TestComponent {
     dialogConfig.panelClass = ["confirmation-dialog"];
     dialogConfig.autoFocus = false;
     this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
+  }
+
+  handleTestDetailRow() {
+    this.router.navigate(['/admin/test/create-test'])
   }
 }

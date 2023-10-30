@@ -695,6 +695,13 @@ $color676D79: #676d79;
         &.red {
           color: #c21616;
         }
+        a.default-bold-link {
+          text-decoration: none !important;
+          &:hover,
+          &:hover b {
+            color: $primary500;
+          }
+        }
         b {
           color: #313131;
           display: block;
@@ -1424,8 +1431,8 @@ ngx-material-timepicker-container {
           color: $color51545F;
           font-weight: 500;
           letter-spacing: 0.14px;
-          em{
-            color: #46A746;
+          em {
+            color: #46a746;
           }
         }
       }

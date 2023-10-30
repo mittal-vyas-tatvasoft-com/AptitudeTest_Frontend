@@ -7,9 +7,7 @@
   </div>
   <div class="action-list">
     <button mat-flat-button color="primary" class="btn-with-icon">
-      <mat-icon
-        ><img src="./assets/images/export-white.svg" alt="Export"
-      /></mat-icon>
+      <mat-icon><img src="./assets/images/export-white.svg" alt="Export" /></mat-icon>
       Export
     </button>
   </div>
@@ -73,7 +71,9 @@
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef>Name</th>
           <td mat-cell *matCellDef="let row">
-            <b>{{ row.name }}</b> <small> {{ row.universityName }}</small>
+            <a class="default-bold-link" href="javascript:void(0)" routerLink="/admin/candidate/edit"
+              [title]="row.name"><b>{{ row.name }}</b></a> <small> {{
+              row.universityName }}</small>
           </td>
         </ng-container>
 
@@ -120,10 +120,7 @@
           <th mat-header-cell *matHeaderCellDef class="text-center">Status</th>
           <td mat-cell *matCellDef="let row" class="text-center">
             <ng-container [ngSwitch]="row.status">
-              <mat-chip
-                *ngSwitchCase="'Active'"
-                [class.ChipSuccess]="row.status"
-              >
+              <mat-chip *ngSwitchCase="'Active'" [class.ChipSuccess]="row.status">
                 {{ row.status }}
               </mat-chip>
               <mat-chip *ngSwitchCase="'Pending'" [class.ChipWarn]="row.status">
@@ -140,12 +137,8 @@
         <ng-container matColumnDef="action">
           <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
           <td mat-cell *matCellDef="let row" class="text-center">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-              (click)="$event.stopPropagation()"
-            >
+            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small"
+              (click)="$event.stopPropagation()">
               <mat-icon>
                 <img src="./assets/images/more-black.svg" alt="Action" />
               </mat-icon>
@@ -168,16 +161,10 @@
 
     <div class="mat-custom-pagination">
       <div class="pagination-left">
-        <mat-form-field
-          appearance="outline"
-          class="pagination-select remove-hint"
-        >
+        <mat-form-field appearance="outline" class="pagination-select remove-hint">
           <mat-label>Page</mat-label>
           <mat-select [(ngModel)]="selectedOption">
-            <mat-option
-              *ngFor="let item of paginationOptionsList"
-              [value]="item"
-            >
+            <mat-option *ngFor="let item of paginationOptionsList" [value]="item">
               {{ item }}
             </mat-option>
           </mat-select>
@@ -249,12 +236,7 @@
         <!-- Points Column -->
         <ng-container matColumnDef="points">
           <th mat-header-cell *matHeaderCellDef class="text-center">Points</th>
-          <td
-            mat-cell
-            *matCellDef="let row"
-            class="text-center"
-            [class]="row.pointsColor"
-          >
+          <td mat-cell *matCellDef="let row" class="text-center" [class]="row.pointsColor">
             {{ row.points }}
           </td>
         </ng-container>
@@ -296,10 +278,7 @@
         </ng-container>
 
         <tr mat-header-row *matHeaderRowDef="displayedStatisticsColumns"></tr>
-        <tr
-          mat-row
-          *matRowDef="let row; columns: displayedStatisticsColumns"
-        ></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedStatisticsColumns"></tr>
       </table>
     </div>
   </mat-card-content>
