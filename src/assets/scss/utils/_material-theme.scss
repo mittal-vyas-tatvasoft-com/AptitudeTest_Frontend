@@ -1445,6 +1445,9 @@ ngx-material-timepicker-container {
           color: rgba($color: $white, $alpha: 0.5);
           .result {
             color: $white;
+            em {
+              color: $white;
+            }
           }
         }
       }

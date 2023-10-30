@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {Location} from '@angular/common';
 
 
 @Component({
@@ -9,5 +10,9 @@ import { Component } from '@angular/core';
 export class EditCandidateComponent {
   optionsList: string[] = ['Option 1', 'Option 2', 'Option 3'];
 
+  constructor(private _location: Location) {}
 
+  handleBackBtn(){
+    this._location.back();
+  }
 }
