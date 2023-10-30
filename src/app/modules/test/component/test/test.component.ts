@@ -31,15 +31,15 @@ export class TestComponent {
 
   constructor(public dialog: MatDialog, private router: Router) {
     this.dataSource = new MatTableDataSource([
-      { test: "Ralph Edwards", group: "Columbia University", testTime: "60m", startTime: "17 Jun, 2020 02:57 pm", endTime: "17 Jun, 2020 02:57 pm", NoOfCandidates: "470", status: "Active", action: "" },
-      { test: "Savannah Nguyen", group: "Harvard University", testTime: "60m", startTime: "23 Jun, 2020 01:17 pm", endTime: "23 Jun, 2020 01:17 pm", NoOfCandidates: "854", status: "Completed", action: "" },
-      { test: "Manufacturing And Packing", group: "Duke University", testTime: "60m", startTime: "26 Jun, 2020 12:30 am", endTime: "26 Jun, 2020 12:30 am", NoOfCandidates: "478", status: "Draft", action: "" },
-      { test: "Leslie Alexander", group: "Villanova University", testTime: "60m", startTime: "29 Jun, 2020 07:40 am", endTime: "29 Jun, 2020 07:40 am", NoOfCandidates: "605", status: "Completed", action: "" },
-      { test: "Bessie Cooper", group: "Massachusetts Institute of Technology", testTime: "60m", startTime: "04 Jun, 2020 04:51 am", endTime: "04 Jun, 2020 04:51 am", NoOfCandidates: "800", status: "Completed", action: "" },
-      { test: "Manufacturing And Packing", group: "University of North Carolina, Chapel Hill", testTime: "60m", startTime: "24 Jun, 2020 09:20 am", endTime: "24 Jun, 2020 09:20 am", NoOfCandidates: "758", status: "Draft", action: "" },
-      { test: "Savannah Nguyen", group: "Standford University", testTime: "60m", startTime: "01 Jun, 2020 05:05 pm", endTime: "01 Jun, 2020 05:05 pm", NoOfCandidates: "900", status: "Completed", action: "" },
-      { test: "Ralph Edwards", group: "St. John's College", testTime: "60m", startTime: "17 Jun, 2020 06:49 am", endTime: "17 Jun, 2020 06:49 am", NoOfCandidates: "244", status: "Draft", action: "" },
-      { test: "Bessie Cooper", group: "Brigham Young University", testTime: "60m", startTime: "04 Jun, 2020 07:00 am", endTime: "04 Jun, 2020 07:00 am", NoOfCandidates: "488", status: "Completed", action: "" },
+      { test: "Maths Test", group: "Columbia University", testTime: "60m", startTime: "17 Jun, 2020 02:57 pm", endTime: "17 Jun, 2020 02:57 pm", NoOfCandidates: "470", status: "Active", action: "" },
+      { test: "Grammer Test", group: "Harvard University", testTime: "60m", startTime: "23 Jun, 2020 01:17 pm", endTime: "23 Jun, 2020 01:17 pm", NoOfCandidates: "854", status: "Completed", action: "" },
+      { test: "Practical Test", group: "Duke University", testTime: "60m", startTime: "26 Jun, 2020 12:30 am", endTime: "26 Jun, 2020 12:30 am", NoOfCandidates: "478", status: "Draft", action: "" },
+      { test: "Reasoning Test", group: "Villanova University", testTime: "60m", startTime: "29 Jun, 2020 07:40 am", endTime: "29 Jun, 2020 07:40 am", NoOfCandidates: "605", status: "Completed", action: "" },
+      { test: "English Test", group: "Massachusetts Institute of Technology", testTime: "60m", startTime: "04 Jun, 2020 04:51 am", endTime: "04 Jun, 2020 04:51 am", NoOfCandidates: "800", status: "Completed", action: "" },
+      { test: "Aptitude Test", group: "University of North Carolina, Chapel Hill", testTime: "60m", startTime: "24 Jun, 2020 09:20 am", endTime: "24 Jun, 2020 09:20 am", NoOfCandidates: "758", status: "Draft", action: "" },
+      { test: "Technical Test", group: "Standford University", testTime: "60m", startTime: "01 Jun, 2020 05:05 pm", endTime: "01 Jun, 2020 05:05 pm", NoOfCandidates: "900", status: "Completed", action: "" },
+      { test: "Programming Test", group: "St. John's College", testTime: "60m", startTime: "17 Jun, 2020 06:49 am", endTime: "17 Jun, 2020 06:49 am", NoOfCandidates: "244", status: "Draft", action: "" },
+      { test: "Maths Test", group: "Brigham Young University", testTime: "60m", startTime: "04 Jun, 2020 07:00 am", endTime: "04 Jun, 2020 07:00 am", NoOfCandidates: "488", status: "Completed", action: "" },
     ]);
   }
 

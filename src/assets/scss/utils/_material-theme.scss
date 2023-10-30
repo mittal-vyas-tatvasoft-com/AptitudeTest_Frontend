@@ -696,6 +696,9 @@ $color676D79: #676d79;
           color: #c21616;
         }
         a.default-bold-link {
+          color: inherit;
+          font-size: inherit;
+          line-height: inherit;
           text-decoration: none !important;
           &:hover,
           &:hover b {
