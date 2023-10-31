@@ -15,9 +15,10 @@ import { TestModule } from './modules/test/test.module';
 import { QuestionsModule } from './modules/questions/questions.module';
 import { ResultsModule } from './modules/results/results.module';
 
+
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,

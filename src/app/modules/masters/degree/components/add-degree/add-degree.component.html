@@ -1,59 +1,108 @@
 <div class="dialog-header">
-    <h2 mat-dialog-title>Add Degree</h2>
-    <button mat-icon-button class="dialog-close" (click)="closeModal()">
-        <mat-icon>
-            <img src="./assets/images/close-grey.svg" alt="Close">
-        </mat-icon>
-    </button>
+  <h2 mat-dialog-title>Add Degree</h2>
+  <button mat-icon-button class="dialog-close" (click)="closeModal()">
+    <mat-icon>
+      <img src="./assets/images/close-grey.svg" alt="Close" />
+    </mat-icon>
+  </button>
 </div>
 <mat-dialog-content class="dialog-body pb-0">
+  <form [formGroup]="form">
     <div class="row">
-        <div class="col-md-8">
-            <mat-form-field appearance="outline">
-                <mat-label>Name of Degree</mat-label>
-                <input matInput>
-            </mat-form-field>
-        </div>
-        <div class="col-md-4">
-            <mat-form-field appearance="outline">
-                <mat-label>Status</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let item of optionsList" [value]="item">
-                        {{ item }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-12">
-            <mat-form-field appearance="outline">
-                <mat-label>Degree Level</mat-label>
-                <mat-select>
-                    <mat-option *ngFor="let item of optionsList" [value]="item">
-                        {{ item }}
-                    </mat-option>
-                </mat-select>
-            </mat-form-field>
-        </div>
-        <div class="col-12">
-            <mat-form-field class="multi-chips-select" appearance="outline">
-                <mat-label>Stream</mat-label>
-                <mat-chip-grid #chipGrid aria-label="Enter fruits">
-                    <mat-chip-row *ngFor="let stream of streams" (removed)="remove(stream)">
-                        {{stream.name}}
-                        <button matChipRemove>
-                            <mat-icon>
-                                <img src="./assets/images/close-dark.svg" alt="Remove">
-                            </mat-icon>
-                        </button>
-                    </mat-chip-row>
-                    <input placeholder="New stream..." [matChipInputFor]="chipGrid"
-                        [matChipInputSeparatorKeyCodes]="separatorKeysCodes" (matChipInputTokenEnd)="add($event)" />
-                </mat-chip-grid>
-            </mat-form-field>
-        </div>
+      <div class="col-md-8">
+        <mat-form-field appearance="outline">
+          <mat-label>Name of Degree</mat-label>
+          <input formControlName="name" matInput />
+          <mat-error>{{
+            validation.getError(form, fromControls.name, fromControls.name.key)
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-md-4">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let item of statusList" [value]="item.value">
+              {{ item.key }}
+            </mat-option>
+          </mat-select>
+          <mat-error>{{
+            validation.getError(
+              form,
+              fromControls.status,
+              fromControls.status.key
+            )
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field appearance="outline">
+          <mat-label>Degree Level</mat-label>
+          <mat-select formControlName="level">
+            <mat-option *ngFor="let item of LevelList" [value]="item.value">
+              {{ item.value }}
+            </mat-option>
+          </mat-select>
+          <mat-error>{{
+            validation.getError(
+              form,
+              fromControls.level,
+              fromControls.level.key
+            )
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-12">
+        <mat-form-field class="multi-chips-select" appearance="outline">
+          <mat-label>Stream</mat-label>
+          <mat-chip-grid
+            #chipGrid
+            aria-label="Enter fruits"
+            formControlName="streams"
+          >
+            <mat-chip-row
+              *ngFor="let stream of streams"
+              (removed)="remove(stream)"
+            >
+              {{ stream }}
+              <button matChipRemove>
+                <mat-icon>
+                  <img src="./assets/images/close-dark.svg" alt="Remove" />
+                </mat-icon>
+              </button>
+            </mat-chip-row>
+            <input
+              placeholder="New stream..."
+              [matChipInputFor]="chipGrid"
+              [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+              (matChipInputTokenEnd)="add($event)"
+            />
+          </mat-chip-grid>
+          <mat-error>
+            {{
+              validation.getError(
+                form,
+                fromControls.streams,
+                fromControls.streams.key
+              )
+            }}</mat-error
+          >
+        </mat-form-field>
+      </div>
     </div>
+  </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="dialog-footer">
-    <button mat-flat-button mat-dialog-close color="primary">Add</button>
-    <button mat-stroked-button color="primary" [mat-dialog-close]="true">Cancel</button>
+  <button
+    mat-flat-button
+    mat-dialog-close
+    color="primary"
+    [disabled]="!form.valid"
+    (click)="onAddClick()"
+  >
+    {{ id == 0 ? "Add" : "Save" }}
+  </button>
+  <button mat-stroked-button color="primary" [mat-dialog-close]="null">
+    Cancel
+  </button>
 </mat-dialog-actions>
