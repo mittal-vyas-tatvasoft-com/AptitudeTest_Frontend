@@ -5,7 +5,7 @@ import { AddProfileComponent } from '../add-profile/add-profile.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { ProfileService } from '../../services/profile.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { StatusCode } from 'src/app/shared/common/enum';
+import { StatusCode } from 'src/app/shared/common/enums';
 
 @Component({
   selector: 'app-profile',

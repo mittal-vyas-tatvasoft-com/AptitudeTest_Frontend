@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { QuestionsComponent } from './component/questions/questions.component';
-import { Navigation } from 'src/app/shared/common/enum';
+import { Navigation } from 'src/app/shared/common/enums';
 import { AddQuestionComponent } from './component/add-question/add-question.component';
 import { ImportQuestionComponent } from './component/import-question/import-question.component';
 

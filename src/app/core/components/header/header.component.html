@@ -1,8 +1,20 @@
 <header>
   <mat-toolbar color="primary">
     <div class="header-left">
-      <a class="logo" href="javascript:void(0)" routerLink="/" title="Tatvasoft">
-        <img [src]="mobileScreen ? './assets/images/tatvasoft-abstract.svg' : './assets/images/tatvasoft-white.svg'" alt="Tatvasoft">
+      <a
+        class="logo"
+        href="javascript:void(0)"
+        routerLink="/"
+        title="Tatvasoft"
+      >
+        <img
+          [src]="
+            mobileScreen
+              ? './assets/images/tatvasoft-abstract.svg'
+              : './assets/images/tatvasoft-white.svg'
+          "
+          alt="Tatvasoft"
+        />
       </a>
       <button mat-icon-button class="btn-menu" (click)="toggleSidebar()">
         <mat-icon>
@@ -14,26 +26,39 @@
       <ul class="top-actions">
         <li>
           <span class="logged-time">
-            {{ currentTime | date:'dd-MM-yyyy' }}<em class="time">{{ currentTime | date:'HH:mm:ss' }}</em>
+            {{ currentTime | date : "dd-MM-yyyy"
+            }}<em class="time">{{ currentTime | date : "HH:mm:ss" }}</em>
           </span>
         </li>
         <li>
           <!-- Profile Menu -->
-          <button class="btn-user-profile" mat-icon-button [matMenuTriggerFor]="ProfileMenu">
+          <button
+            class="btn-user-profile"
+            mat-icon-button
+            [matMenuTriggerFor]="ProfileMenu"
+          >
             <mat-icon class="letter-avatar">
-              {{ getInitials('Tatva') }}
+              {{ getInitials("Tatva") }}
             </mat-icon>
-            <p class="text-block">{{ userName }}
+            <p class="text-block">
+              {{ userName }}
               <span class="username">Admin</span>
             </p>
             <mat-icon class="arrow">
               <img src="./assets/images/chevron-down-white.svg" alt="Chevron" />
             </mat-icon>
           </button>
-          <mat-menu #ProfileMenu="matMenu" class="profile-menu" xPosition="before">
-            <button mat-menu-item routerLink="/change-password">
+          <mat-menu
+            #ProfileMenu="matMenu"
+            class="profile-menu"
+            xPosition="before"
+          >
+            <button mat-menu-item (click)="chanegPasswordDialog()">
               <mat-icon>
-                <img src="./assets/images/change-password-grey.svg" alt="Change Password" />
+                <img
+                  src="./assets/images/change-password-grey.svg"
+                  alt="Change Password"
+                />
               </mat-icon>
               <span>Change Password</span>
             </button>

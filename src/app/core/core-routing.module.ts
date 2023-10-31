@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Navigation } from '../shared/common/enum';
+import { Navigation } from '../shared/common/enums';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { CoreComponent } from './core.component';
 

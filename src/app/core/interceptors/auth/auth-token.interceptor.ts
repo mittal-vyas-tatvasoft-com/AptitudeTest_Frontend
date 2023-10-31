@@ -1,11 +1,23 @@
-import { HttpInterceptor, HttpRequest, HttpHandler, HttpEvent, HttpErrorResponse } from '@angular/common/http';
+import {
+  HttpInterceptor,
+  HttpRequest,
+  HttpHandler,
+  HttpEvent,
+  HttpErrorResponse,
+} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, catchError, switchMap, throwError } from 'rxjs';
 import { LoginService } from '../../auth/services/login.service';
+import { StatusCode } from 'src/app/shared/common/enums';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { Messages } from 'src/app/shared/messages/messages.static';
 
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
-  constructor(private loginService: LoginService) {}
+  constructor(
+    private loginService: LoginService,
+    public snackbar: SnackbarService
+  ) {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     const token = this.loginService.getToken();
@@ -20,7 +32,10 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
     return next.handle(req).pipe(
       catchError((error) => {
-        if (error instanceof HttpErrorResponse && error.status === 401) {
+        if (
+          error instanceof HttpErrorResponse &&
+          error.status === StatusCode.Unauthorized
+        ) {
           // Token is invalid or expired, try refreshing the token
           return this.loginService.refreshToken().pipe(
             switchMap((result) => {
@@ -39,6 +54,8 @@ export class AuthTokenInterceptor implements HttpInterceptor {
               }
             })
           );
+        } else {
+          this.snackbar.error(Messages.internalServerError);
         }
         return throwError(error);
       })
