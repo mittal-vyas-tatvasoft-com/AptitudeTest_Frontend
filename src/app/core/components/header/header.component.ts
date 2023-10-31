@@ -7,10 +7,8 @@ import { LoginService } from '../../auth/services/login.service';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  currentTime: Date;
-  userName: string;
-  firstName: string;
-  lastName: string;
+  currentTime!: Date;
+  userName!: string;
   isSidebarOpen!: boolean;
   isAuthenticated: boolean = false;
   public mobileScreen: boolean = (window.innerWidth < 575)
@@ -23,9 +21,9 @@ export class HeaderComponent {
     this.isAuthenticated = this.loginService.isLoggedIn();
     this.isSidebarOpen = this.loginService.getStateFromLocalStorage();
     this.getUserData();
-    this.updateTime();
+    this.updateTime(); 
     setInterval(() => {
-      this.updateTime();
+      this.updateTime(); 
     }, 1000);
   }
 
@@ -47,22 +45,20 @@ export class HeaderComponent {
     this.currentTime = new Date();
   }
 
-  getUserData() {
+  getUserData(){
     const token = this.loginService.getToken();
     if (token) {
       const userData = this.loginService.decodeToken();
-      console.log(userData)
-      this.userName = userData ? userData.FirstName + ' ' + userData.LastName : '';
-      this.firstName = userData ? userData.FirstName : '';
-      this.lastName = userData ? userData.LastName : '';
-      this.getInitials(this.firstName, this.lastName)
+      this.userName = userData ? userData.FirstName : '';
+      this.getInitials(this.userName)
     }
   }
 
-  getInitials(firstName: string, lastName: string): string {
+  getInitials(firstName: string): string {
     const firstInitial = firstName ? firstName.charAt(0).toUpperCase() : '';
-    const lastInitial = lastName ? lastName.charAt(0).toUpperCase() : '';
-    return `${firstInitial}${lastInitial}`;
+    //const lastInitial = lastName ? lastName.charAt(0).toUpperCase() : '';
+    //return `${firstInitial}${lastInitial}`;
+    return `${firstInitial}`;
   }
 
   toggleSidebar() {

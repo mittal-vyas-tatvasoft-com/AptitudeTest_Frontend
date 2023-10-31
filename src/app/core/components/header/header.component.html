@@ -2,8 +2,7 @@
   <mat-toolbar color="primary">
     <div class="header-left">
       <a class="logo" href="javascript:void(0)" routerLink="/" title="Tatvasoft">
-        <img [src]="mobileScreen ? './assets/images/tatvasoft-abstract.svg' : './assets/images/tatvasoft-white.svg'"
-          alt="Tatvasoft">
+        <img [src]="mobileScreen ? './assets/images/tatvasoft-abstract.svg' : './assets/images/tatvasoft-white.svg'" alt="Tatvasoft">
       </a>
       <button mat-icon-button class="btn-menu" (click)="toggleSidebar()">
         <mat-icon>
@@ -22,7 +21,7 @@
           <!-- Profile Menu -->
           <button class="btn-user-profile" mat-icon-button [matMenuTriggerFor]="ProfileMenu">
             <mat-icon class="letter-avatar">
-              {{ getInitials(firstName,lastName) }}
+              {{ getInitials('Tatva') }}
             </mat-icon>
             <p class="text-block">{{ userName }}
               <span class="username">Admin</span>

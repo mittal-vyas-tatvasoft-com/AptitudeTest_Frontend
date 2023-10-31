@@ -13,7 +13,7 @@ import { CandidatesComponent } from './component/candidates/candidates.component
   declarations: [
     AddCandidateComponent,
     ImportCandidateComponent,
-    CandidatesComponent,
+    CandidatesComponent
   ],
   imports: [
     CommonModule,
