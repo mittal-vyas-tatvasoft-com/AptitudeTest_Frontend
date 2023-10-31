@@ -11,9 +11,10 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthTokenInterceptor } from './core/interceptors/auth/auth-token.interceptor';
 import { CandidateModule } from './modules/candidate/candidate.module';
 
+
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent
   ],
   imports: [
     BrowserModule,
