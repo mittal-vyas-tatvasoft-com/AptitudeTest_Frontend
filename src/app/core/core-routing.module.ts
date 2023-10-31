@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { Navigation } from '../shared/common/enum';
+import { Navigation } from '../shared/common/enums';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { CoreComponent } from './core.component';
 
@@ -14,16 +14,16 @@ const routes: Routes = [
       {
         path: `${Navigation.Masters}`,
         loadChildren: () =>
-          import(
-            '../modules/masters/masters.module'
-          ).then((m) => m.MastersModule),
+          import('../modules/masters/masters.module').then(
+            (m) => m.MastersModule
+          ),
       },
       {
         path: `${Navigation.Candidate}`,
         loadChildren: () =>
-          import(
-            '../modules/candidate/candidate.module'
-          ).then((m) => m.CandidateModule),
+          import('../modules/candidate/candidate.module').then(
+            (m) => m.CandidateModule
+          ),
       },
     ],
   },
@@ -31,7 +31,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class CoreRoutingModule { }
+export class CoreRoutingModule {}

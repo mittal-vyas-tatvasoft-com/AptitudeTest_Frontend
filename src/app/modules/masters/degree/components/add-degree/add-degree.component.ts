@@ -19,7 +19,7 @@ import { ValidationService } from 'src/app/shared/modules/form-control/services/
 import { DegreeService } from '../../services/degree.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { Messages } from 'src/app/shared/messages/messages.static';
-import { StatusCode } from 'src/app/shared/common/enum';
+import { StatusCode } from 'src/app/shared/common/enums';
 
 export interface Stream {
   name: string;

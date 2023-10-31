@@ -1,8 +1,6 @@
-import { Navigation } from "src/app/shared/common/enum";
-
+import { Navigation } from 'src/app/shared/common/enums';
 
 export const navBarRoutes = {
-
   Candidates: {
     label: 'Candidates',
     path: `./${Navigation.Candidate}`,
@@ -27,5 +25,4 @@ export const navBarRoutes = {
     label: 'Manage Master',
     icon: '	manage_accounts',
   },
-
 };

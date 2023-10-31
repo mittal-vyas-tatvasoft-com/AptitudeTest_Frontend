@@ -9,12 +9,15 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
 // import { FooterComponent } from '../components/footer/footer.component';
 import { CoreModule } from '../core.module';
+import { SharedMaterialModule } from '../../shared/material/shared-material.module';
+import { ChangePasswordComponent } from './components/change-password/change-password.component';
 
 @NgModule({
   declarations: [
     LoginComponent,
     ForgotPasswordComponent,
     ResetPasswordComponent,
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,
@@ -23,7 +26,8 @@ import { CoreModule } from '../core.module';
     FormsModule,
     ReactiveFormsModule,
     FormControlModule,
-  CoreModule
+    SharedMaterialModule,
+    CoreModule,
   ],
 })
 export class AuthModule {}
