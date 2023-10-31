@@ -1,5 +1,6 @@
 import { Component, Input, Output, EventEmitter, HostListener } from '@angular/core';
 import { LoginService } from '../../auth/services/login.service';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ export class HeaderComponent {
   public mobileScreen: boolean = (window.innerWidth < 575)
   @Input() isHandset: boolean | null | undefined;
   @Output() onMenuIconClick = new EventEmitter();
+  isCandidateTestRoute: boolean = false;
 
   constructor(private loginService: LoginService) { }
 
@@ -21,10 +23,11 @@ export class HeaderComponent {
     this.isAuthenticated = this.loginService.isLoggedIn();
     this.isSidebarOpen = this.loginService.getStateFromLocalStorage();
     this.getUserData();
-    this.updateTime(); 
+    this.updateTime();
     setInterval(() => {
-      this.updateTime(); 
+      this.updateTime();
     }, 1000);
+
   }
 
   @HostListener('window:resize', ['$event'])
@@ -45,7 +48,7 @@ export class HeaderComponent {
     this.currentTime = new Date();
   }
 
-  getUserData(){
+  getUserData() {
     const token = this.loginService.getToken();
     if (token) {
       const userData = this.loginService.decodeToken();
@@ -66,4 +69,5 @@ export class HeaderComponent {
     this.isSidebarOpen = !this.isSidebarOpen;
     this.loginService.saveStateToLocalStorage(this.isSidebarOpen);
   }
+
 }

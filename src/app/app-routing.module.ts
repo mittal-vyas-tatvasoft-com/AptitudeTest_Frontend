@@ -11,9 +11,8 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./core/core.module').then((m) => m.CoreModule),
   },
-
   {
-    path: 'test',
+    path: 'candidate-test',
     loadChildren: () =>
       import('./candidate-test/candidate-test.module').then((m) => m.CandidateTestModule),
   },

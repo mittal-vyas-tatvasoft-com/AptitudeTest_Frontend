@@ -1,12 +1,21 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { DashboardComponent } from './containers/dashboard/dashboard.component';
-
+import { LayoutComponent } from './containers/layout/layout.component';
+import { CandidateInstructionsComponent } from './containers/candidate-instructions/candidate-instructions.component';
+import { CandidateWelcomeComponent } from './containers/candidate-welcome/candidate-welcome.component';
+import { CandidateTestComponent } from './containers/candidate-test/components/candidate-test/candidate-test.component';
+import { TestSubmittedComponent } from './containers/test-submitted/test-submitted.component';
 
 const routes: Routes = [
     {
         path: '',
-        component: DashboardComponent
+        component: LayoutComponent,
+        children: [
+            { path: 'welcome', component: CandidateWelcomeComponent },
+            { path: 'instruction', component: CandidateInstructionsComponent },
+            { path: 'test', component: CandidateTestComponent },
+            { path: 'submitted', component: TestSubmittedComponent },
+        ]
     }
 ];
 
