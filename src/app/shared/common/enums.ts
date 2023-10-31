@@ -88,7 +88,6 @@ export enum StatusCode {
   NotFound = 404,
   AlreadyExist = 409,
   BadRequest = 400,
-  RequestFailed = 400,
   InternalServerError = 500,
   Unauthorized = 401,
   Forbidden = 403,

@@ -8,7 +8,8 @@ import { ResponseModel } from 'src/app/shared/common/interfaces/response.interfa
 import { ResetPasswordModel } from '../interfaces/reset-password.interface';
 import { HttpClient } from '@angular/common/http';
 import jwtDecode from 'jwt-decode';
-
+import { ChangePasswordModel } from '../interfaces/change-password.interface';
+import { Messages } from 'src/app/shared/messages/messages.static';
 
 @Injectable({
   providedIn: 'root',
@@ -52,7 +53,6 @@ export class LoginService {
     return !!token;
   }
 
-
   logout(): void {
     localStorage.removeItem(this.storageToken);
     localStorage.removeItem(this.storageRefreshToken);
@@ -62,7 +62,10 @@ export class LoginService {
 
   login(payload: LoginModel): Observable<ResponseModel<string>> {
     return this.http
-      .post<ResponseModel<string>>(`${environment.baseURL}UserAuthentication/Login`, payload)
+      .post<ResponseModel<string>>(
+        `${environment.baseURL}UserAuthentication/Login`,
+        payload
+      )
       .pipe(
         map((res: any) => {
           if (res.result) {
@@ -71,24 +74,32 @@ export class LoginService {
             this.setTokenExpiry(new Date(res.data.refreshTokenExpiryTime));
           }
           return res;
-        }),
+        })
       );
   }
 
-
   forgotPassword(
-    userName: ForgotPasswordModel,
+    userName: ForgotPasswordModel
   ): Observable<ResponseModel<string>> {
     const url = `${environment.baseURL}UserAuthentication/ForgetPassword?email=${userName.Email}`;
     return this.http.post<ResponseModel<string>>(url, null);
   }
 
   resetPassword(
-    payload: ResetPasswordModel,
+    payload: ResetPasswordModel
   ): Observable<ResponseModel<string>> {
     return this.http.post<ResponseModel<string>>(
       `${environment.baseURL}UserAuthentication/ResetPassword`,
-      payload,
+      payload
+    );
+  }
+
+  changePassword(
+    payload: ChangePasswordModel
+  ): Observable<ResponseModel<string>> {
+    return this.http.post<ResponseModel<string>>(
+      `${environment.baseURL}UserAuthentication/ChangePassword`,
+      payload
     );
   }
 
@@ -107,13 +118,13 @@ export class LoginService {
     const tokenExpiry = this.getTokenExpiry();
 
     if (!refreshToken || !token || !tokenExpiry) {
-      return throwError(new Error('Missing refresh token, token, or token expiry.'));
+      return throwError(new Error(Messages.missingToken));
     }
 
     const payload = {
       refreshToken: refreshToken,
       accessToken: token,
-      refreshTokenExpiryTime: tokenExpiry.toISOString()
+      refreshTokenExpiryTime: tokenExpiry.toISOString(),
     };
 
     return this.http
@@ -144,6 +155,4 @@ export class LoginService {
     }
     return null;
   }
-
-
 }

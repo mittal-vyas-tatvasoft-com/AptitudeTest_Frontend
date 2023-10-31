@@ -24,6 +24,9 @@ export class ValidationService {
         if (formControl.errors['minlength']) {
           return formControlModel.minLengthErrMsg;
         }
+        if (formControl.errors['confirmPassword']) {
+          return formControlModel.patternErrMsg;
+        }
       }
     }
     return null;
