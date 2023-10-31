@@ -1,4 +1,4 @@
-import { Navigation } from 'src/app/shared/common/enum';
+import { Navigation } from 'src/app/shared/common/enums';
 
 export const navBarRoutes = {
   Candidates: {

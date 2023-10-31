@@ -8,7 +8,8 @@ import { ResponseModel } from 'src/app/shared/common/interfaces/response.interfa
 import { ResetPasswordModel } from '../interfaces/reset-password.interface';
 import { HttpClient } from '@angular/common/http';
 import jwtDecode from 'jwt-decode';
-
+import { ChangePasswordModel } from '../interfaces/change-password.interface';
+import { Messages } from 'src/app/shared/messages/messages.static';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +21,7 @@ export class LoginService {
   private sidebarStateKey = 'sidebarState';
   private userData: any;
   private sessionTimeoutInMinutes = 20; // Adjust as needed
-  constructor(private http: HttpClient,private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   setToken(token: string): void {
     localStorage.setItem(this.storageToken, token);
@@ -51,7 +52,6 @@ export class LoginService {
     const token = this.getToken();
     return !!token;
   }
-  
 
   logout(): void {
     localStorage.removeItem(this.storageToken);
@@ -62,34 +62,45 @@ export class LoginService {
 
   login(payload: LoginModel): Observable<ResponseModel<string>> {
     return this.http
-    .post<ResponseModel<string>>(`${environment.baseURL}UserAuthentication/Login`, payload)
-    .pipe(
-      map((res: any) => {
-        if (res.result) {
-          console.log(res.result)
-          this.setToken(res.data.accessToken);
-          this.setRefreshToken(res.data.refreshToken);
-          this.setTokenExpiry(new Date(res.data.refreshTokenExpiryTime));
-        }
-        return res;
-      }),
-    );
+      .post<ResponseModel<string>>(
+        `${environment.baseURL}UserAuthentication/Login`,
+        payload
+      )
+      .pipe(
+        map((res: any) => {
+          if (res.result) {
+            console.log(res.result);
+            this.setToken(res.data.accessToken);
+            this.setRefreshToken(res.data.refreshToken);
+            this.setTokenExpiry(new Date(res.data.refreshTokenExpiryTime));
+          }
+          return res;
+        })
+      );
   }
 
-
   forgotPassword(
-    userName: ForgotPasswordModel,
+    userName: ForgotPasswordModel
   ): Observable<ResponseModel<string>> {
     const url = `${environment.baseURL}UserAuthentication/ForgetPassword?email=${userName.Email}`;
-    return this.http.post<ResponseModel<string>>(url,null);
+    return this.http.post<ResponseModel<string>>(url, null);
   }
 
   resetPassword(
-    payload: ResetPasswordModel,
+    payload: ResetPasswordModel
   ): Observable<ResponseModel<string>> {
     return this.http.post<ResponseModel<string>>(
       `${environment.baseURL}UserAuthentication/ResetPassword`,
-      payload,
+      payload
+    );
+  }
+
+  changePassword(
+    payload: ChangePasswordModel
+  ): Observable<ResponseModel<string>> {
+    return this.http.post<ResponseModel<string>>(
+      `${environment.baseURL}UserAuthentication/ChangePassword`,
+      payload
     );
   }
 
@@ -106,21 +117,21 @@ export class LoginService {
     const refreshToken = this.getRefreshToken();
     const token = this.getToken();
     const tokenExpiry = this.getTokenExpiry();
-  
+
     if (!refreshToken || !token || !tokenExpiry) {
-      return throwError(new Error('Missing refresh token, token, or token expiry.'));
+      return throwError(new Error(Messages.missingToken));
     }
-  
+
     const payload = {
       refreshToken: refreshToken,
       accessToken: token,
-      refreshTokenExpiryTime: tokenExpiry.toISOString() 
+      refreshTokenExpiryTime: tokenExpiry.toISOString(),
     };
-  
+
     return this.http
       .post<ResponseModel<string>>(
         `${environment.baseURL}UserAuthentication/RefreshToken`,
-        payload 
+        payload
       )
       .pipe(
         map((res: any) => {
@@ -146,7 +157,7 @@ export class LoginService {
     }
     return null;
   }
-  
+
   // isSessionExpired(): boolean {
   //   const expiry = this.getTokenExpiry();
   //   console.log("new date",new Date());
@@ -158,7 +169,6 @@ export class LoginService {
   //     if (this.isSessionExpired()) {
   //       this.logout();
   //     }
-  //   }, this.sessionTimeoutInMinutes * 60 * 1000); 
+  //   }, this.sessionTimeoutInMinutes * 60 * 1000);
   // }
-
 }

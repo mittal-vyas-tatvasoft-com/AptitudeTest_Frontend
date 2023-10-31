@@ -1,0 +1,36 @@
+export const changePasswordControl = {
+  newPasswordField: {
+    value: '',
+    key: 'newPasswordField',
+    label: 'New Password',
+    required: true,
+    requiredErrMsg: 'Password is required',
+    patternErrMsg:
+      'Password length should be 8 characters and it should contain one uppercase, lowercase, special character, and digit.',
+    inputType: 'password',
+    displayIcon: true,
+    iconName: 'visibility',
+  },
+  currentPasswordField: {
+    value: '',
+    key: 'currentPasswordField',
+    label: 'Current Password',
+    required: true,
+    requiredErrMsg: 'Current Password is required',
+    patternErrMsg: 'Current Password is not valid',
+    inputType: 'password',
+    displayIcon: true,
+    iconName: 'visibility',
+  },
+  confirmPasswordField: {
+    value: '',
+    key: 'confirmPasswordField',
+    label: 'Password',
+    required: true,
+    requiredErrMsg: 'Password is required',
+    patternErrMsg: `Confirm Password Doesn't match with new password !`,
+    inputType: 'password',
+    displayIcon: true,
+    iconName: 'visibility',
+  },
+};

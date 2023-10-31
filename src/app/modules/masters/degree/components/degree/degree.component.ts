@@ -5,7 +5,7 @@ import { AddDegreeComponent } from '../add-degree/add-degree.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { DegreeService } from '../../services/degree.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { StatusCode } from 'src/app/shared/common/enum';
+import { StatusCode } from 'src/app/shared/common/enums';
 
 export interface DegreeData {
   name: string;
