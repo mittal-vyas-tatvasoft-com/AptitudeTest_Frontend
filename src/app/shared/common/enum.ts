@@ -35,6 +35,11 @@ export enum Navigation {
   Languages = 'languages',
 
   Candidate = 'candidate',
+
+  // Questions navigation
+  Questions = 'questions',
+  AddQuestion = 'add-question',
+  ImportQuestion = 'import-question',
 }
 
 export enum Type {
