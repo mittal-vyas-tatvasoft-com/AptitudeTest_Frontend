@@ -3,9 +3,27 @@ import { Navigation } from "src/app/shared/common/enum";
 
 export const navBarRoutes = {
 
+  Groups: {
+    label: 'Groups',
+    path: `./${Navigation.Groups}`,
+    icon: 'perm_data_setting',
+  },
+
+  Test: {
+    label: 'Test',
+    path: `./${Navigation.Test}`,
+    icon: 'perm_data_setting',
+  },
+
   Candidates: {
     label: 'Candidates',
     path: `./${Navigation.Candidate}`,
+    icon: 'perm_data_setting',
+  },
+
+  Results: {
+    label: 'Results',
+    path: `./${Navigation.Results}`,
     icon: 'perm_data_setting',
   },
 

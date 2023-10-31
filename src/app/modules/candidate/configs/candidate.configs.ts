@@ -1,0 +1,42 @@
+export const CandidateControl = {
+    firstName: {
+        value: '',
+        key: 'firstName',
+        label: 'First Name',
+        required: true,
+        requiredErrMsg: 'First Name is required',
+        patternErrMsg: 'First Name is not valid',
+        inputType: 'text',
+        displayIcon: false,
+    },
+    lastName: {
+        value: '',
+        key: 'lastName',
+        label: 'Last Name',
+        required: true,
+        requiredErrMsg: 'Last Name is required',
+        patternErrMsg: 'Last Name is not valid',
+        inputType: 'text',
+        displayIcon: false,
+    },
+    fatherName: {
+        value: '',
+        key: 'fatherName',
+        label: 'Father Name',
+        required: true,
+        requiredErrMsg: 'Father Name is required',
+        patternErrMsg: 'Father Name is not valid',
+        inputType: 'text',
+        displayIcon: false,
+    },
+    email: {
+        value: '',
+        key: 'email',
+        label: 'Email',
+        required: true,
+        requiredErrMsg: 'Email is required',
+        patternErrMsg: 'Email is not valid',
+        inputType: 'email',
+        displayIcon: false,
+    }
+}

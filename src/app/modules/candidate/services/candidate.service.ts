@@ -1,9 +1,102 @@
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable, catchError, map, throwError } from 'rxjs';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { environment } from 'src/environments/environment';
+import { CandidateModel, DropdownItem } from '../interfaces/candidate.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CandidateService {
 
-  constructor() { }
+  constructor(private http: HttpClient) { }
+
+  getCandidate(
+    currentPageIndex: number,
+    pageSize: number,
+    searchQuery?: string,
+    collegeId?: number,
+    groupId?: number,
+    status?: boolean
+  ): Observable<CandidateModel[]> {
+    let params = new HttpParams()
+      .set('currentPageIndex', currentPageIndex.toString())
+      .set('pageSize', pageSize.toString());
+
+    if (searchQuery !== undefined) {
+      params = params.set('searchQuery', searchQuery);
+    }
+
+    if (collegeId !== undefined) {
+      params = params.set('CollegeId', collegeId.toString());
+    }
+
+    if (groupId !== undefined) {
+      params = params.set('GroupId', groupId.toString());
+    }
+
+    if (status !== undefined) {
+      params = params.set('Status', status.toString());
+    }
+    return this.http.get<ResponseModel<string>>(`${environment.baseURL}User/${currentPageIndex}/${pageSize}`, { params })
+      .pipe(map((response: any) => response.data));
+  }
+
+  addCandidate(element: CandidateModel): Observable<ResponseModel<string>> {
+    return this.http.post<ResponseModel<string>>(`${environment.baseURL}User/Create`, element)
+      .pipe(
+        map((res: ResponseModel<string>) => {
+          return res;
+        })
+      )
+  }
+
+  deleteCandidate(userIds: any): Observable<ResponseModel<string>> {
+    if (!Array.isArray(userIds)) {
+      userIds = [userIds];
+    }
+    const payload = userIds;
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+    });
+    return this.http
+      .put<ResponseModel<string>>(
+        `${environment.baseURL}User/DeleteUsers`,
+        payload,
+        { headers }
+      )
+      .pipe(
+        catchError((error: any) => {
+          return throwError(error);
+        })
+      );
+  }
+
+  updateStatus(id: number[], status: boolean) {
+    if (!Array.isArray(id)) {
+      id = [id];
+    }
+    const payload = {
+      userIds: id,
+      status: status
+    };
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}User/ActiveInActiveUsers`, payload).pipe(
+        map((res: ResponseModel<string>) => {
+          return res;
+        }),
+      );;
+  }
+
+  getCollegesForDropDown(): Observable<DropdownItem[]> {
+    return this.http.get<DropdownItem[]>(`${environment.baseURL}Colleges/GetCollegesForDropDown`)
+      .pipe(map((response: any) => response.data));;
+  }
+
+  getGroupsForDropDown(): Observable<DropdownItem[]> {
+    return this.http.get<DropdownItem[]>(`${environment.baseURL}Groups/GetGroupsForDropDown`)
+      .pipe(map((response: any) => response.data));;
+  }
+
 }

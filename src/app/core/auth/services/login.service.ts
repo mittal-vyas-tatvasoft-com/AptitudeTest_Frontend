@@ -66,7 +66,6 @@ export class LoginService {
     .pipe(
       map((res: any) => {
         if (res.result) {
-          console.log(res.result)
           this.setToken(res.data.accessToken);
           this.setRefreshToken(res.data.refreshToken);
           this.setTokenExpiry(new Date(res.data.refreshTokenExpiryTime));
@@ -140,7 +139,6 @@ export class LoginService {
       try {
         return jwtDecode(token);
       } catch (error) {
-        console.error('Token decoding error', error);
         return null;
       }
     }
@@ -149,7 +147,6 @@ export class LoginService {
   
   // isSessionExpired(): boolean {
   //   const expiry = this.getTokenExpiry();
-  //   console.log("new date",new Date());
   //   return !!expiry && expiry <= new Date();
   // }
 

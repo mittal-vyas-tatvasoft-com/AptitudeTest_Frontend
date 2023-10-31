@@ -1,0 +1,24 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>Add Group</h2>
+  <button mat-icon-button class="dialog-close" (click)="closeModal()">
+    <mat-icon>
+      <img src="./assets/images/close-grey.svg" alt="Close" />
+    </mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content class="dialog-body pb-0">
+  <mat-form-field appearance="outline">
+    <mat-label>Group Name</mat-label>
+    <input matInput />
+  </mat-form-field>
+  <div class="d-flex justify-content-between align-items-center mt-n1 mb-1">
+    <mat-checkbox color="primary" class="font14">Set as default group</mat-checkbox>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="dialog-footer">
+  <button mat-flat-button mat-dialog-close color="primary">Save</button>
+  <button mat-stroked-button color="primary" [mat-dialog-close]="true">
+    Cancel
+  </button>
+</mat-dialog-actions>

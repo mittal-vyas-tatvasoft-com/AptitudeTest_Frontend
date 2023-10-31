@@ -7,21 +7,32 @@ import { AddCandidateComponent } from './component/add-candidate/add-candidate.c
 import { ImportCandidateComponent } from './component/import-candidate/import-candidate.component';
 import { CandidateService } from './services/candidate.service';
 import { CandidatesComponent } from './component/candidates/candidates.component';
+import { EditCandidateComponent } from './component/edit-candidate/edit-candidate.component';
+import { AddGroupComponent } from './component/add-group/add-group.component';
+import { TablesModule } from 'src/app/shared/modules/tables/tables.module';
+import { FormControlModule } from "../../shared/modules/form-control/form-control.module";
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     AddCandidateComponent,
     ImportCandidateComponent,
-    CandidatesComponent
+    CandidatesComponent,
+    EditCandidateComponent,
+    AddGroupComponent
+  ],
+  providers: [
+    CandidateService,
   ],
   imports: [
     CommonModule,
     CandidateRoutingModule,
-    SharedMaterialModule
-  ],
-  providers: [
-    CandidateService,
+    SharedMaterialModule,
+    TablesModule,
+    FormControlModule,
+    ReactiveFormsModule,
+    FormsModule
   ]
 })
 export class CandidateModule { }

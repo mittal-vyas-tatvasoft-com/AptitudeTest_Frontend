@@ -19,8 +19,6 @@ export class CheckboxGroupComponent {
 
   checkboxChanged(event: any) {
     this.form.get(this.formControlModel.key)?.markAsTouched();
-    console.log(event.checked);
-    console.log(event.source.value);
     if (event.checked) {
       this.checkboxValues.push(Number(event.source.value));
     } else {

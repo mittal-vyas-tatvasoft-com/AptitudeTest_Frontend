@@ -1,1 +1,109 @@
-<p>add-candidate works!</p>
+<div class="dialog-header">
+    <h2 mat-dialog-title>Candidate Details</h2>
+    <button mat-icon-button class="dialog-close" (click)="closeModal()">
+        <mat-icon>
+            <img src="./assets/images/close-grey.svg" alt="Close" />
+        </mat-icon>
+    </button>
+</div>
+<mat-dialog-content class="dialog-body pb-0">
+    <form [formGroup]="form" (ngSubmit)="onSaveClick()">
+        <div class="row">
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>First Name</mat-label>
+                    <input matInput formControlName="firstName" />
+                    <mat-error *ngIf="form?.get('firstName')?.hasError('required')">Required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Middle Name</mat-label>
+                    <input matInput formControlName="fatherName" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-4">
+                <mat-form-field appearance="outline">
+                    <mat-label>Last Name</mat-label>
+                    <input matInput formControlName="lastName" />
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Group</mat-label>
+                    <mat-select formControlName="groupId">
+                        <mat-option *ngFor="let item of groups" [value]="item.id">
+                            {{ item.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('groupId')?.hasError('required')">
+                        Group is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>College</mat-label>
+                    <mat-select formControlName="collegeId">
+                        <mat-option *ngFor="let item of colleges" [value]="item.id">
+                            {{ item.name }}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="form.get('collegeId')?.hasError('required')">
+                        College is required
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Email Address</mat-label>
+                    <input matInput formControlName="email" />
+                    <mat-error *ngIf="form.get('email')?.hasError('required')">
+                        Email is required
+                    </mat-error>
+                    <mat-error *ngIf="form.get('email')?.hasError('pattern')">
+                        Invalid email format
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Contact No.</mat-label>
+                    <input type="number" matInput formControlName="phoneNumber" />
+                    <mat-error *ngIf="form.get('phoneNumber')?.hasError('required')">
+                        Contact No. is required
+                    </mat-error>
+                    <mat-error *ngIf="form.get('phoneNumber')?.hasError('pattern')">
+                        Invalid phone number.
+                    </mat-error>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Gender</mat-label>
+                    <mat-select formControlName="gender">
+                        <mat-option *ngFor="let item of optionsListForGender" [value]="item">
+                            {{ item }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <div class="col-md-6">
+                <mat-form-field appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status">
+                        <mat-option *ngFor="let item of optionsListForStatus" [value]="item">
+                            {{ item }}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="dialog-footer">
+    <button type="submit" (click)="onSaveClick()" mat-flat-button color="primary">Add</button>
+    <button mat-stroked-button color="primary" [mat-dialog-close]="true">
+        Cancel
+    </button>
+</mat-dialog-actions>
