@@ -15,19 +15,19 @@ import { Navigation } from 'src/app/shared/common/enum';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit , OnDestroy {
+export class LoginComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   loginModel = loginControl;
   private ngUnsubscribe$ = new Subject<void>();
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private router: Router,
-    private snackbarService :SnackbarService
-  ) {}
+    private snackbarService: SnackbarService
+  ) { }
 
-  ngOnInit(){
+  ngOnInit() {
     this.form = this.formBuilder.group({
       userName: ['', [
         Validators.required,
@@ -48,11 +48,10 @@ export class LoginComponent implements OnInit , OnDestroy {
         .pipe(takeUntil(this.ngUnsubscribe$))
         .subscribe({
           next: (res: ResponseModel<string>) => {
-            console.log("result",res)
             if (res.result) {
-                this.router.navigate([
-                  `${Navigation.Admin}`,
-                ]);
+              this.router.navigate([
+                `${Navigation.Admin}`,
+              ]);
             } else {
               this.snackbarService.error(res.message);
             }

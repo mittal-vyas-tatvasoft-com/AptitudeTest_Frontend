@@ -34,12 +34,15 @@ export enum Navigation {
   Lookups = 'lookups',
   Languages = 'languages',
 
+  //Candidate
   Candidate = 'candidate',
+  ImportCandidate = "ImportCandidate",
 
   // Questions navigation
   Questions = 'questions',
   AddQuestion = 'add-question',
   ImportQuestion = 'import-question',
+
 }
 
 export enum Type {
