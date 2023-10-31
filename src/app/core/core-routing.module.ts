@@ -14,16 +14,23 @@ const routes: Routes = [
       {
         path: `${Navigation.Masters}`,
         loadChildren: () =>
-          import(
-            '../modules/masters/masters.module'
-          ).then((m) => m.MastersModule),
+          import('../modules/masters/masters.module').then(
+            (m) => m.MastersModule
+          ),
       },
       {
         path: `${Navigation.Candidate}`,
         loadChildren: () =>
-          import(
-            '../modules/candidate/candidate.module'
-          ).then((m) => m.CandidateModule),
+          import('../modules/candidate/candidate.module').then(
+            (m) => m.CandidateModule
+          ),
+      },
+      {
+        path: `${Navigation.Questions}`,
+        loadChildren: () =>
+          import('../modules/questions/questions.module').then(
+            (m) => m.QuestionsModule
+          ),
       },
     ],
   },
@@ -31,7 +38,6 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-
-export class CoreRoutingModule { }
+export class CoreRoutingModule {}

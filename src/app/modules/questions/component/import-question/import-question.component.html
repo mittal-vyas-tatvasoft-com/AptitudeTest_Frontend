@@ -1,0 +1,719 @@
+<div class="page-header">
+  <div class="title-wrap">
+    <mat-icon class="page-icon">
+      <img src="./assets/images/question-primary.svg" alt="Question" />
+    </mat-icon>
+    <h4 class="title">Import Question</h4>
+  </div>
+  <div class="action-list">
+    <button
+      mat-stroked-button
+      class="btn-stroked-default"
+      (click)="handleBackBtn()"
+    >
+      <mat-icon>
+        <img src="./assets/images/back-arrow.svg" alt="Action" />
+      </mat-icon>
+    </button>
+  </div>
+</div>
+
+<mat-card class="form-block mb-3">
+  <mat-card-content>
+    <div class="row justify-content-center">
+      <div class="col-lg-8">
+        <div class="row">
+          <div class="col-sm-4 mx-auto">
+            <mat-form-field appearance="outline">
+              <mat-label>Topic</mat-label>
+              <mat-select>
+                <mat-option *ngFor="let item of optionsList" [value]="item">
+                  {{ item }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+        <div class="row align-items-end">
+          <div class="col-sm mb-2">
+            <dropzone [message]="message"></dropzone>
+          </div>
+          <div class="col-sm-auto mb-2">
+            <button mat-flat-button color="primary">Import</button>
+          </div>
+          <div class="col-12">
+            <p class="message-success pb-1">
+              Successfully imported 8 question.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+
+<ul class="qa-card-listing">
+  <li>
+    <div class="qa-card">
+      <div class="qa-head">
+        <div class="qa-left">
+          <span class="qa-sequence">01.</span>
+          <p class="question-text">
+            Look at this series: 2, 1, (1/2), (1/4), … What number should come
+            next?
+          </p>
+        </div>
+        <div class="qa-right">
+          <mat-chip class="ChipDefault">Maths</mat-chip>
+          <mat-chip class="ChipSuccess"> Active </mat-chip>
+          <mat-chip class="ChipInfo question-mark"> 01 </mat-chip>
+          <button
+            mat-mini-fab
+            class="btn-sm"
+            [matMenuTriggerFor]="questionActionMenu"
+          >
+            <mat-icon>
+              <img src="./assets/images/more-black.svg" alt="Action" />
+            </mat-icon>
+          </button>
+          <mat-menu #questionActionMenu="matMenu" xPosition="before">
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/duplicate-grey.svg" alt="Duplicate" />
+              </mat-icon>
+              Duplicate
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/edit.svg" alt="Edit" />
+              </mat-icon>
+              Edit
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/active.svg" alt="Active" />
+              </mat-icon>
+              Active
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/inactive.svg" alt="Inactive" />
+              </mat-icon>
+              Inactive
+            </button>
+            <button mat-menu-item (click)="handleDeleteProfileDialog()">
+              <mat-icon>
+                <img src="./assets/images/delete.svg" alt="Delete" />
+              </mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="qa-body">
+        <mat-chip-listbox class="mcq-chips-wrapper">
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option
+            color="primary"
+            [selectable]="false"
+            disableRipple
+            selected
+            ><span class="mcq-option">B</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
+          >
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="qa-card">
+      <div class="qa-head">
+        <div class="qa-left">
+          <span class="qa-sequence">02.</span>
+          <p class="question-text">
+            Occaecat in sint nulla cillum exercitation culpa aliquip enim
+            consequat quis adipisicing do dolor qui reprehenderit excepteur.
+          </p>
+        </div>
+        <div class="qa-right">
+          <mat-chip class="ChipDefault">Maths</mat-chip>
+          <mat-chip class="ChipSuccess"> Active </mat-chip>
+          <mat-chip class="ChipInfo question-mark"> 03 </mat-chip>
+          <button
+            mat-mini-fab
+            class="btn-sm"
+            [matMenuTriggerFor]="questionActionMenu"
+          >
+            <mat-icon>
+              <img src="./assets/images/more-black.svg" alt="Action" />
+            </mat-icon>
+          </button>
+          <mat-menu #questionActionMenu="matMenu" xPosition="before">
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/duplicate-grey.svg" alt="Duplicate" />
+              </mat-icon>
+              Duplicate
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/edit.svg" alt="Edit" />
+              </mat-icon>
+              Edit
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/active.svg" alt="Active" />
+              </mat-icon>
+              Active
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/inactive.svg" alt="Inactive" />
+              </mat-icon>
+              Inactive
+            </button>
+            <button mat-menu-item (click)="handleDeleteProfileDialog()">
+              <mat-icon>
+                <img src="./assets/images/delete.svg" alt="Delete" />
+              </mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="qa-body">
+        <mat-chip-listbox class="mcq-chips-wrapper">
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option
+            color="primary"
+            [selectable]="false"
+            disableRipple
+            selected
+            ><span class="mcq-option">B</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
+          >
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="qa-card">
+      <div class="qa-head">
+        <div class="qa-left">
+          <span class="qa-sequence">03.</span>
+          <p class="question-text">
+            Occaecat in sint nulla cillum exercitation culpa aliquip enim
+            consequat quis adipisicing do dolor qui reprehenderit excepteur.
+          </p>
+        </div>
+        <div class="qa-right">
+          <mat-chip class="ChipDefault">Maths</mat-chip>
+          <mat-chip class="ChipSuccess"> Active </mat-chip>
+          <mat-chip class="ChipInfo question-mark"> 02 </mat-chip>
+          <button
+            mat-mini-fab
+            class="btn-sm"
+            [matMenuTriggerFor]="questionActionMenu"
+          >
+            <mat-icon>
+              <img src="./assets/images/more-black.svg" alt="Action" />
+            </mat-icon>
+          </button>
+          <mat-menu #questionActionMenu="matMenu" xPosition="before">
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/duplicate-grey.svg" alt="Duplicate" />
+              </mat-icon>
+              Duplicate
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/edit.svg" alt="Edit" />
+              </mat-icon>
+              Edit
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/active.svg" alt="Active" />
+              </mat-icon>
+              Active
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/inactive.svg" alt="Inactive" />
+              </mat-icon>
+              Inactive
+            </button>
+            <button mat-menu-item (click)="handleDeleteProfileDialog()">
+              <mat-icon>
+                <img src="./assets/images/delete.svg" alt="Delete" />
+              </mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="qa-body">
+        <mat-chip-listbox class="mcq-chips-wrapper image-options">
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">A</span
+            ><img
+              class="option-img"
+              src="./assets/images/triangle-grey.svg"
+              alt="Triangle"
+          /></mat-chip-option>
+          <mat-chip-option
+            color="primary"
+            [selectable]="false"
+            disableRipple
+            selected
+            ><span class="mcq-option">B</span
+            ><img
+              class="option-img"
+              src="./assets/images/hexagon-grey.svg"
+              alt="Hexagon"
+          /></mat-chip-option>
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">C</span
+            ><img
+              class="option-img"
+              src="./assets/images/square-grey.svg"
+              alt="Square"
+          /></mat-chip-option>
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">D</span
+            ><img
+              class="option-img"
+              src="./assets/images/circle-grey.svg"
+              alt="Circle"
+          /></mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="qa-card">
+      <div class="qa-head">
+        <div class="qa-left">
+          <span class="qa-sequence">04.</span>
+          <p class="question-text">
+            Occaecat in sint nulla cillum exercitation culpa aliquip enim
+            consequat quis adipisicing do dolor qui reprehenderit excepteur.
+          </p>
+        </div>
+        <div class="qa-right">
+          <mat-chip class="ChipDefault">Maths</mat-chip>
+          <mat-chip class="ChipSuccess"> Active </mat-chip>
+          <mat-chip class="ChipInfo question-mark"> 05 </mat-chip>
+          <button
+            mat-mini-fab
+            class="btn-sm"
+            [matMenuTriggerFor]="questionActionMenu"
+          >
+            <mat-icon>
+              <img src="./assets/images/more-black.svg" alt="Action" />
+            </mat-icon>
+          </button>
+          <mat-menu #questionActionMenu="matMenu" xPosition="before">
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/duplicate-grey.svg" alt="Duplicate" />
+              </mat-icon>
+              Duplicate
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/edit.svg" alt="Edit" />
+              </mat-icon>
+              Edit
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/active.svg" alt="Active" />
+              </mat-icon>
+              Active
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/inactive.svg" alt="Inactive" />
+              </mat-icon>
+              Inactive
+            </button>
+            <button mat-menu-item (click)="handleDeleteProfileDialog()">
+              <mat-icon>
+                <img src="./assets/images/delete.svg" alt="Delete" />
+              </mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="qa-body">
+        <mat-chip-listbox class="mcq-chips-wrapper">
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option
+            color="primary"
+            [selectable]="false"
+            disableRipple
+            selected
+            ><span class="mcq-option">B</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
+          >
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="qa-card">
+      <div class="qa-head">
+        <div class="qa-left">
+          <span class="qa-sequence">05.</span>
+          <p class="question-text">
+            The Sharks and the Bears each finished with 34 points, and they are
+            now battling it out in a five-minute overtime.
+          </p>
+        </div>
+        <div class="qa-right">
+          <mat-chip class="ChipDefault">Maths</mat-chip>
+          <mat-chip class="ChipSuccess"> Active </mat-chip>
+          <mat-chip class="ChipInfo question-mark"> 01 </mat-chip>
+          <button
+            mat-mini-fab
+            class="btn-sm"
+            [matMenuTriggerFor]="questionActionMenu"
+          >
+            <mat-icon>
+              <img src="./assets/images/more-black.svg" alt="Action" />
+            </mat-icon>
+          </button>
+          <mat-menu #questionActionMenu="matMenu" xPosition="before">
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/duplicate-grey.svg" alt="Duplicate" />
+              </mat-icon>
+              Duplicate
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/edit.svg" alt="Edit" />
+              </mat-icon>
+              Edit
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/active.svg" alt="Active" />
+              </mat-icon>
+              Active
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/inactive.svg" alt="Inactive" />
+              </mat-icon>
+              Inactive
+            </button>
+            <button mat-menu-item (click)="handleDeleteProfileDialog()">
+              <mat-icon>
+                <img src="./assets/images/delete.svg" alt="Delete" />
+              </mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="qa-body">
+        <mat-chip-listbox class="mcq-chips-wrapper">
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option
+            color="primary"
+            [selectable]="false"
+            disableRipple
+            selected
+            ><span class="mcq-option">B</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
+          >
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="qa-card">
+      <div class="qa-head">
+        <div class="qa-left">
+          <span class="qa-sequence">06.</span>
+          <p class="question-text">
+            Which word does NOT belong with the others?
+          </p>
+        </div>
+        <div class="qa-right">
+          <mat-chip class="ChipDefault">Maths</mat-chip>
+          <mat-chip class="ChipSuccess"> Active </mat-chip>
+          <mat-chip class="ChipInfo question-mark"> 03 </mat-chip>
+          <button
+            mat-mini-fab
+            class="btn-sm"
+            [matMenuTriggerFor]="questionActionMenu"
+          >
+            <mat-icon>
+              <img src="./assets/images/more-black.svg" alt="Action" />
+            </mat-icon>
+          </button>
+          <mat-menu #questionActionMenu="matMenu" xPosition="before">
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/duplicate-grey.svg" alt="Duplicate" />
+              </mat-icon>
+              Duplicate
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/edit.svg" alt="Edit" />
+              </mat-icon>
+              Edit
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/active.svg" alt="Active" />
+              </mat-icon>
+              Active
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/inactive.svg" alt="Inactive" />
+              </mat-icon>
+              Inactive
+            </button>
+            <button mat-menu-item (click)="handleDeleteProfileDialog()">
+              <mat-icon>
+                <img src="./assets/images/delete.svg" alt="Delete" />
+              </mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="qa-body">
+        <mat-chip-listbox class="mcq-chips-wrapper">
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option
+            color="primary"
+            [selectable]="false"
+            disableRipple
+            selected
+            ><span class="mcq-option">B</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
+          >
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="qa-card">
+      <div class="qa-head">
+        <div class="qa-left">
+          <span class="qa-sequence">07.</span>
+          <p class="question-text">
+            Look at this series: 12, 11, 13, 12, 14, 13, … What number should
+            come next?r
+          </p>
+        </div>
+        <div class="qa-right">
+          <mat-chip class="ChipDefault">Maths</mat-chip>
+          <mat-chip class="ChipSuccess"> Active </mat-chip>
+          <mat-chip class="ChipInfo question-mark"> 02 </mat-chip>
+          <button
+            mat-mini-fab
+            class="btn-sm"
+            [matMenuTriggerFor]="questionActionMenu"
+          >
+            <mat-icon>
+              <img src="./assets/images/more-black.svg" alt="Action" />
+            </mat-icon>
+          </button>
+          <mat-menu #questionActionMenu="matMenu" xPosition="before">
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/duplicate-grey.svg" alt="Duplicate" />
+              </mat-icon>
+              Duplicate
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/edit.svg" alt="Edit" />
+              </mat-icon>
+              Edit
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/active.svg" alt="Active" />
+              </mat-icon>
+              Active
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/inactive.svg" alt="Inactive" />
+              </mat-icon>
+              Inactive
+            </button>
+            <button mat-menu-item (click)="handleDeleteProfileDialog()">
+              <mat-icon>
+                <img src="./assets/images/delete.svg" alt="Delete" />
+              </mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="qa-body">
+        <mat-chip-listbox class="mcq-chips-wrapper image-options">
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">A</span
+            ><img
+              class="option-img"
+              src="./assets/images/triangle-grey.svg"
+              alt="Triangle"
+          /></mat-chip-option>
+          <mat-chip-option
+            color="primary"
+            [selectable]="false"
+            disableRipple
+            selected
+            ><span class="mcq-option">B</span
+            ><img
+              class="option-img"
+              src="./assets/images/hexagon-grey.svg"
+              alt="Hexagon"
+          /></mat-chip-option>
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">C</span
+            ><img
+              class="option-img"
+              src="./assets/images/square-grey.svg"
+              alt="Square"
+          /></mat-chip-option>
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">D</span
+            ><img
+              class="option-img"
+              src="./assets/images/circle-grey.svg"
+              alt="Circle"
+          /></mat-chip-option>
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </li>
+  <li>
+    <div class="qa-card">
+      <div class="qa-head">
+        <div class="qa-left">
+          <span class="qa-sequence">08.</span>
+          <p class="question-text">
+            Occaecat in sint nulla cillum exercitation culpa aliquip enim
+            consequat quis adipisicing do dolor qui reprehenderit excepteur.
+          </p>
+        </div>
+        <div class="qa-right">
+          <mat-chip class="ChipDefault">Maths</mat-chip>
+          <mat-chip class="ChipSuccess"> Active </mat-chip>
+          <mat-chip class="ChipInfo question-mark"> 05 </mat-chip>
+          <button
+            mat-mini-fab
+            class="btn-sm"
+            [matMenuTriggerFor]="questionActionMenu"
+          >
+            <mat-icon>
+              <img src="./assets/images/more-black.svg" alt="Action" />
+            </mat-icon>
+          </button>
+          <mat-menu #questionActionMenu="matMenu" xPosition="before">
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/duplicate-grey.svg" alt="Duplicate" />
+              </mat-icon>
+              Duplicate
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/edit.svg" alt="Edit" />
+              </mat-icon>
+              Edit
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/active.svg" alt="Active" />
+              </mat-icon>
+              Active
+            </button>
+            <button mat-menu-item>
+              <mat-icon>
+                <img src="./assets/images/inactive.svg" alt="Inactive" />
+              </mat-icon>
+              Inactive
+            </button>
+            <button mat-menu-item (click)="handleDeleteProfileDialog()">
+              <mat-icon>
+                <img src="./assets/images/delete.svg" alt="Delete" />
+              </mat-icon>
+              Delete
+            </button>
+          </mat-menu>
+        </div>
+      </div>
+      <div class="qa-body">
+        <mat-chip-listbox class="mcq-chips-wrapper">
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option
+            color="primary"
+            [selectable]="false"
+            disableRipple
+            selected
+            ><span class="mcq-option">B</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
+          >
+          <mat-chip-option color="primary" [selectable]="false" disableRipple
+            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
+          >
+        </mat-chip-listbox>
+      </div>
+    </div>
+  </li>
+</ul>
