@@ -5,6 +5,7 @@ import { AddProfileComponent } from '../add-profile/add-profile.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { ProfileService } from '../../services/profile.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { StatusCode } from 'src/app/shared/common/enum';
 
 @Component({
   selector: 'app-profile',
@@ -46,7 +47,7 @@ export class ProfileComponent implements OnInit {
           if (res.id == 0) {
             this.profileService.AddNewProfile(res).subscribe({
               next: (res: any) => {
-                if (res.statusCode == 200) {
+                if (res.statusCode == StatusCode.Success) {
                   this.getAllProfileData();
                   this.snackbarService.success(res.message);
                 } else {
@@ -57,7 +58,7 @@ export class ProfileComponent implements OnInit {
           } else {
             this.profileService.UpdateProfile(res).subscribe({
               next: (res: any) => {
-                if (res.statusCode == 200) {
+                if (res.statusCode == StatusCode.Success) {
                   this.getAllProfileData();
                   this.snackbarService.success(res.message);
                 } else {
@@ -81,7 +82,7 @@ export class ProfileComponent implements OnInit {
         if (res == true) {
           this.profileService.DeleteProfile(id).subscribe({
             next: (res: any) => {
-              if (res.statusCode == 200) {
+              if (res.statusCode == StatusCode.Success) {
                 this.getAllProfileData();
                 this.snackbarService.success(res.message);
               } else {
@@ -96,7 +97,7 @@ export class ProfileComponent implements OnInit {
   changeSingleProfileStatus(id: number, status: boolean) {
     this.profileService.ChangeSingleProfileStatus(id, status).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
+        if (res.statusCode == StatusCode.Success) {
           this.getAllProfileData();
           this.snackbarService.success(res.message);
         } else {

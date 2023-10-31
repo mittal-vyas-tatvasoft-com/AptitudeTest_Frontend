@@ -74,3 +74,18 @@ export enum DynamicFieldTypes {
   SERVICE_FIELDS = 1,
   BOOKING_FIELDS = 2,
 }
+
+export enum StatusCode {
+  Success = 200,
+  NotFound = 404,
+  AlreadyExist = 409,
+  BadRequest = 400,
+  RequestFailed = 400,
+  InternalServerError = 500,
+  Unauthorized = 401,
+  Forbidden = 403,
+  MethodNotAllowed = 405,
+  NotAcceptable = 406,
+  RequestTimeout = 408,
+  Conflict = 409,
+}
