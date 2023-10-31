@@ -9,17 +9,6 @@ export enum Navigation {
   ForgotPassword = 'forgot-password',
   ResetPassword = 'reset-password',
 
-  //User Navigation
-  User = 'users',
-
-  //Role Navigation
-  Role = 'roles',
-
-  //Website Navigation
-  Portal = 'portal',
-  clients = 'clients',
-  EditPortal = 'edit',
-
   //Manage Masters Navigation
   Masters = 'masters',
   College = 'college',
@@ -29,12 +18,20 @@ export enum Navigation {
   Technology = 'technology',
   Profile = 'profile',
 
-  //Utilities Navigation
-  Utilities = 'utilities',
-  Lookups = 'lookups',
-  Languages = 'languages',
-
+  //candidate navigation 
   Candidate = 'candidate',
+  ImportCandidate = 'import-candidate',
+
+  // Test Navigation
+  Test = 'test',
+  CreateTest = 'create-test',
+
+  // Groups navigation
+  Groups = 'groups',
+
+  // Results navigation
+  Results = 'results',
+  ResultsDetails = 'result-details',
 }
 
 export enum Type {
