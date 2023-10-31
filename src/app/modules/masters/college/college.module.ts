@@ -5,6 +5,7 @@ import { AddCollegeComponent } from './components/add-college/add-college.compon
 import { CollegeRountingModule } from './college-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedMaterialModule } from 'src/app/shared/material/shared-material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -17,6 +18,7 @@ import { SharedMaterialModule } from 'src/app/shared/material/shared-material.mo
     CommonModule,
     CollegeRountingModule,
     CoreModule,
+    ReactiveFormsModule,
     SharedMaterialModule
   ]
 })

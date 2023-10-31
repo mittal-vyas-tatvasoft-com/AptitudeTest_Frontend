@@ -3,20 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 
 const routes: Routes = [
-  // {
-  //   path:'',
-  //   component: AppComponent
-  // },
-  // {
-  //   path: '',
-  //   redirectTo: 'users',
-  //   pathMatch: 'full',
-  // },
-  // {
-  //   path: ``,
-  //   loadChildren: () =>
-  //     import('./core/auth/auth.module').then((m) => m.AuthModule),
-  // },
   {
     path: ``,
     loadChildren: () =>
@@ -26,15 +12,11 @@ const routes: Routes = [
     path: 'admin',
     loadChildren: () => import('./core/core.module').then((m) => m.CoreModule),
   },
+
   {
-    path: 'masters',
+    path: 'test',
     loadChildren: () =>
-      import('./modules/masters/masters.module').then((m) => m.MastersModule),
-  },
-  {
-    path: 'users',
-    loadChildren: () =>
-      import('./modules/users/users.module').then((m) => m.UsersModule),
+      import('./candidate-test/candidate-test.module').then((m) => m.CandidateTestModule),
   },
 ];
 

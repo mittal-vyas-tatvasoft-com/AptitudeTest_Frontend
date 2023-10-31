@@ -9,6 +9,15 @@ import { ButtonText, DialogData, DialogStyleWidth } from '../../common/interface
 })
 export class DeleteConfirmationDialogComponent{
 
+  constructor(private dialogRef: MatDialogRef<DeleteConfirmationDialogComponent>) {}
+
+  deleteConfirmed(result: boolean) {
+    if (result) {
+      this.dialogRef.close(result);
+    } else {
+      this.dialogRef.close(false);
+    }
+  }
 }
 // export class DeleteConfirmationDialogComponent implements OnInit {
 //   // vars

@@ -5,17 +5,17 @@ import { AddProfileComponent } from './components/add-profile/add-profile.compon
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedMaterialModule } from 'src/app/shared/material/shared-material.module';
 import { ProfileRountingModule } from './profile-routing.module';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    AddProfileComponent,
-    ProfileComponent
-  ],
+  declarations: [AddProfileComponent, ProfileComponent],
   imports: [
     CommonModule,
     ProfileRountingModule,
     CoreModule,
-    SharedMaterialModule
-  ]
+    SharedMaterialModule,
+    ReactiveFormsModule,
+    FormsModule,
+  ],
 })
-export class ProfileModule { }
+export class ProfileModule {}

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { LoginModel } from '../../interfaces/login.interface';
@@ -15,13 +15,10 @@ import { Navigation } from 'src/app/shared/common/enum';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent {
-  public passwordHide: boolean = true;
-
+export class LoginComponent implements OnInit , OnDestroy {
   form!: FormGroup;
-  submitted = false;
-  loginFailed = false;
   loginModel = loginControl;
+  public passwordHide: boolean = false;
   private ngUnsubscribe$ = new Subject<void>();
   
   constructor(
@@ -29,7 +26,9 @@ export class LoginComponent {
     private loginService: LoginService,
     private router: Router,
     private snackbarService :SnackbarService
-  ) {
+  ) {}
+
+  ngOnInit(){
     this.form = this.formBuilder.group({
       userName: ['', [
         Validators.required,
@@ -40,39 +39,32 @@ export class LoginComponent {
   }
 
   login() {
-    // this.loginFailed = false;
-
-    // if (this.form.valid) {
-    //   const payload = {
-    //     email: this.form.value.userName,
-    //     password: this.form.value.password,
-    //   };
-    //   this.loginService
-    //     .login(payload)
-    //     .pipe(takeUntil(this.ngUnsubscribe$))
-    //     .subscribe({
-    //       next: (res: ResponseModel<string>) => {
-    //         console.log("result",res)
-    //         if (res.result) {
-    //             this.router.navigate([
-    //               `${Navigation.Admin}`,
-    //             ]);
-    //         } else {
-    //           this.loginFailed = true;
-    //           this.snackbarService.error(res.message);
-    //         }
-    //       },
-    //       error: (error: { message: string; }) => {
-    //         this.loginFailed = true;
-    //         this.snackbarService.error(error.message);
-    //       },
-    //     });
-    // } else {
-    //   this.form.markAllAsTouched();
-    // }
-    this.router.navigate([
-                   `${Navigation.Admin}`,
-                 ]);
+    if (this.form.valid) {
+      const payload = {
+        email: this.form.value.userName,
+        password: this.form.value.password,
+      };
+      this.loginService
+        .login(payload)
+        .pipe(takeUntil(this.ngUnsubscribe$))
+        .subscribe({
+          next: (res: ResponseModel<string>) => {
+            console.log("result",res)
+            if (res.result) {
+                this.router.navigate([
+                  `${Navigation.Admin}`,
+                ]);
+            } else {
+              this.snackbarService.error(res.message);
+            }
+          },
+          error: (error: { message: string; }) => {
+            this.snackbarService.error(error.message);
+          },
+        });
+    } else {
+      this.form.markAllAsTouched();
+    }
   }
 
   onIconClick(event: any) {

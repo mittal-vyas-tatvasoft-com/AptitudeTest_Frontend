@@ -4,7 +4,7 @@
       <a class="logo" href="javascript:void(0)" routerLink="/" title="Tatvasoft">
         <img [src]="mobileScreen ? './assets/images/tatvasoft-abstract.svg' : './assets/images/tatvasoft-white.svg'" alt="Tatvasoft">
       </a>
-      <button mat-icon-button class="btn-menu" (click)="onClick()">
+      <button mat-icon-button class="btn-menu" (click)="toggleSidebar()">
         <mat-icon>
           <img src="./assets/images/hamburg-white.svg" alt="Menu" />
         </mat-icon>
@@ -14,16 +14,16 @@
       <ul class="top-actions">
         <li>
           <span class="logged-time">
-            24-10-2023<em class="time">12:14:46</em>
+            {{ currentTime | date:'dd-MM-yyyy' }}<em class="time">{{ currentTime | date:'HH:mm:ss' }}</em>
           </span>
         </li>
         <li>
           <!-- Profile Menu -->
           <button class="btn-user-profile" mat-icon-button [matMenuTriggerFor]="ProfileMenu">
             <mat-icon class="letter-avatar">
-              {{ getInitials('Tatva', 'Soft') }}
+              {{ getInitials('Tatva') }}
             </mat-icon>
-            <p class="text-block">Tatvasoft
+            <p class="text-block">{{ userName }}
               <span class="username">Admin</span>
             </p>
             <mat-icon class="arrow">
@@ -37,7 +37,7 @@
               </mat-icon>
               <span>Change Password</span>
             </button>
-            <button mat-menu-item routerLink="/">
+            <button mat-menu-item routerLink="/" (click)="logout()">
               <mat-icon>
                 <img src="./assets/images/logout-grey.svg" alt="Logout" />
               </mat-icon>
