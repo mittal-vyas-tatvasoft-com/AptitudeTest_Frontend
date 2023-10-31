@@ -18,11 +18,6 @@ const routes: Routes = [
             import('./degree/degree.module').then((m) => m.DegreeModule)
     },
     {
-        path: 'technology',
-        loadChildren: () =>
-            import('./technology/technology.module').then((m) => m.TechnologyModule)
-    },
-    {
         path: 'topics',
         loadChildren: () =>
             import('./topics/topics.module').then((m) => m.TopicsModule)
