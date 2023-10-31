@@ -1317,3 +1317,106 @@
     margin: 0 auto;
   }
 }
+<<<<<<< Updated upstream
+=======
+
+// toaster styles
+
+.mat-mdc-snack-bar-container {
+  &.success {
+    --mdc-snackbar-container-color: var(--color-success);
+    --mdc-snackbar-supporting-text-color: var(--color-white);
+  }
+
+  &.error {
+    --mdc-snackbar-container-color: var(--color-error);
+    --mdc-snackbar-supporting-text-color: var(--color-white);
+  }
+}
+
+// Kinjan Styles
+.msg-block {
+  min-height: calc(100vh - 200px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  .msg-block-inner {
+    max-width: 722px;
+    text-align: center;
+  }
+  .msg-block-img {
+    margin-bottom: 32px;
+  }
+  h2 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 42px;
+    text-transform: capitalize;
+    margin-bottom: 9px;
+    color: #2d61ac;
+  }
+  p {
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; 
+    text-transform: capitalize;
+    color: #8d92a2;
+    margin-bottom: 32px;
+  }
+  .mdc-button {
+    padding-left: 40px;
+    padding-right: 40px;
+  }
+}
+
+.instructions-block {
+  .mat-mdc-card-content {
+    padding: 24px 24px 0 !important;
+    
+  }
+  h2 {
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 24px;
+    color: #2d61ac;
+    margin-bottom: 20px;
+  }
+  .instructions-listing {
+    li {
+      padding: 0 0 20px 20px;
+      font-size: 16px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 24px;
+      letter-spacing: 0.16px;
+      text-transform: capitalize;
+      color: #51545f;
+      position: relative;
+      &:before {
+        content: "";
+        position: absolute;
+        left: 7px;
+        top: 10px;
+        width: 4px;
+        height: 4px;
+        border-radius: 4px;
+        background: #51545f;
+      }
+    }
+  }
+}
+
+@media (max-width: 767px) {
+  .instructions-block {
+    .mat-mdc-card-content {
+      padding: 12px 12px 0 !important;      
+    }
+   .instructions-listing li{
+    padding-bottom: 12px;
+   }
+  }
+}
+>>>>>>> Stashed changes
