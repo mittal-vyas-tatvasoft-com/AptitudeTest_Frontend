@@ -1180,8 +1180,8 @@
       align-items: center;
       padding: 12px;
       border-radius: 8px;
-      border: 1px solid #f1f1f1;
-      background: #f7f8fd;
+      border: 1px solid #e2e8f0;
+      background: $white;
       margin-bottom: 12px;
       transition: all 0.2s ease-in-out;
       cursor: pointer;
@@ -1189,8 +1189,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        width: 22px;
-        height: 22px;
+        width: 26px;
+        height: 26px;
         border-radius: 4px;
         color: $color51545F;
         font-size: 14px;
@@ -1212,6 +1212,12 @@
         flex-grow: 1;
         margin: 0 12px;
         text-align: left;
+        img {
+          display: block;
+          height: 60px;
+          width: auto;
+          max-width: 100%;
+        }
       }
       .mat-mdc-checkbox {
         .mdc-checkbox {
@@ -1237,10 +1243,11 @@
         }
       }
       &:hover {
-        background: rgba(45, 97, 172, 0.09);
+        background: rgba(45, 97, 172, 0.06);
       }
       &.selected {
         border-color: $primary500;
+        background: #f7f8fd;
       }
     }
     .action-footer {
@@ -1603,16 +1610,16 @@
     .test-header {
       padding: 16px 12px;
       flex-direction: column;
-      .data-value{
+      .data-value {
         text-align: center;
       }
-      .right{
+      .right {
         margin-top: 10px;
-        .data-value{
+        .data-value {
           text-align: center;
         }
       }
-    } 
+    }
   }
 }
 

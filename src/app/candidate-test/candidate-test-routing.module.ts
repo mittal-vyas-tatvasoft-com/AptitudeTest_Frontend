@@ -13,7 +13,7 @@ const routes: Routes = [
         component: LayoutComponent,
         children: [
             { path: 'welcome', component: CandidateWelcomeComponent },
-            { path: 'instruction', component: CandidateInstructionsComponent },
+            { path: 'instructions', component: CandidateInstructionsComponent },
             { path: 'test', component: CandidateTestComponent },
             { path: 'register', component: CandidateRegisterComponent },
             { path: 'submitted', component: TestSubmittedComponent },

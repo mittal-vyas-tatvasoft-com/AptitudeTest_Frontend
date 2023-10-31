@@ -27,6 +27,7 @@
                                     (click)="toggleCheckbox(i)">
                                     <span class="answer-option">{{ option.optionLetter }}</span>
                                     <p class="answer-text">Answer</p>
+                                    <!-- <p class="answer-text"><img src="./assets/images/circle-grey.svg" /></p> -->
                                     <mat-checkbox class="rounded-check" color="primary" [(ngModel)]="option.isChecked"
                                         (change)="toggleCheckbox(i)">
                                     </mat-checkbox>
@@ -37,7 +38,8 @@
                             <button mat-stroked-button color="primary">
                                 Clear Answer
                             </button>
-                            <button mat-flat-button color="primary">Save &amp; Next</button>
+                            <button mat-flat-button color="primary" routerLink="/candidate-test/submitted">Save &amp;
+                                Next</button>
                         </div>
                     </div>
                 </mat-card-content>
