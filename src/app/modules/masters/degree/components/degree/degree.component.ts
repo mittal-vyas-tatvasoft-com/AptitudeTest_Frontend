@@ -5,6 +5,7 @@ import { AddDegreeComponent } from '../add-degree/add-degree.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { DegreeService } from '../../services/degree.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { StatusCode } from 'src/app/shared/common/enum';
 
 export interface DegreeData {
   name: string;
@@ -58,7 +59,7 @@ export class DegreeComponent implements OnInit {
           if (data.id == 0) {
             this.degreeService.create(data).subscribe({
               next: (res: any) => {
-                if (res.statusCode == 200) {
+                if (res.statusCode == StatusCode.Success) {
                   this.getAllDegrees();
                   this.snackbarService.success(res.message);
                 } else {
@@ -69,7 +70,7 @@ export class DegreeComponent implements OnInit {
           } else {
             this.degreeService.update(data).subscribe({
               next: (res: any) => {
-                if (res.statusCode == 200) {
+                if (res.statusCode == StatusCode.Success) {
                   this.snackbarService.success(res.message);
                   this.getAllDegrees();
                 } else {
@@ -93,7 +94,7 @@ export class DegreeComponent implements OnInit {
         if (res) {
           this.degreeService.delete(id).subscribe({
             next: (res: any) => {
-              if (res.statusCode == 200) {
+              if (res.statusCode == StatusCode.Success) {
                 this.snackbarService.success(res.message);
                 this.getAllDegrees();
               } else {
@@ -115,7 +116,7 @@ export class DegreeComponent implements OnInit {
       status: true,
     };
     this.degreeService.updateStatus(status).subscribe((res: any) => {
-      if (res.statusCode == 200) {
+      if (res.statusCode == StatusCode.Success) {
         this.degreeData = this.degreeData.map((data: any) => {
           if (data.id == id) {
             data.status = true;
@@ -136,7 +137,7 @@ export class DegreeComponent implements OnInit {
       status: false,
     };
     this.degreeService.updateStatus(status).subscribe((res: any) => {
-      if (res.statusCode == 200) {
+      if (res.statusCode == StatusCode.Success) {
         this.degreeData = this.degreeData.map((data: any) => {
           if (data.id == id) {
             data.status = false;

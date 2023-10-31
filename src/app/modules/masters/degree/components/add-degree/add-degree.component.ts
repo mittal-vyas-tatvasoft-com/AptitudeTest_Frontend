@@ -18,6 +18,8 @@ import { FormControls } from '../../config/degree.config';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { DegreeService } from '../../services/degree.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { Messages } from 'src/app/shared/messages/messages.static';
+import { StatusCode } from 'src/app/shared/common/enum';
 
 export interface Stream {
   name: string;
@@ -87,7 +89,7 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
     if (this.id != 0) {
       this.degreeService.get(this.id).subscribe({
         next: (res: any) => {
-          if (res.statusCode == 200) {
+          if (res.statusCode == StatusCode.Success) {
             this.data = res.data;
             this.setFormValues();
           } else {
@@ -113,9 +115,9 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
     // Add our fruit
     if (value) {
       if (value.length > 25) {
-        this.snackbarService.error('Max 25 Characters Allowed');
+        this.snackbarService.error(Messages.streamMaxLengthError);
       } else if (this.streams.includes(value)) {
-        this.snackbarService.error('Duplicates Not Allowed');
+        this.snackbarService.error(Messages.duplicateError);
       } else {
         this.streams.push(value);
         this.form.get('streams')?.setValue(this.streams);
@@ -145,9 +147,9 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
       return;
     }
     if (value.length > 25) {
-      this.snackbarService.error('Max 25 Characters Allowed');
+      this.snackbarService.error(Messages.streamMaxLengthError);
     } else if (this.streams.includes(value)) {
-      this.snackbarService.error('Duplicates Not Allowed');
+      this.snackbarService.error(Messages.duplicateError);
     } else {
       // Edit existing fruit
       const index = this.streams.indexOf(fruit);
