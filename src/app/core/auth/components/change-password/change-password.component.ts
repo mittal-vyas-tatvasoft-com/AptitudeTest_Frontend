@@ -1,13 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  AbstractControl,
-  AbstractControlOptions,
-  FormBuilder,
-  FormGroup,
-  ValidationErrors,
-  ValidatorFn,
-  Validators,
-} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { changePasswordControl } from '../../configs/change-password.config';
 import { MatDialogRef } from '@angular/material/dialog';
@@ -46,7 +38,7 @@ export class ChangePasswordComponent implements OnInit {
         ],
         confirmPasswordField: ['', [Validators.required]],
       },
-      { validators: [repeatPasswordValidator] } as AbstractControlOptions
+      { validator: this.checkPasswords }
     );
   }
 
@@ -61,23 +53,30 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   onIconClick(event: any) {
-    if (event.formControlModel.inputType == 'text') {
+    if (event.formControlModel.inputType === 'text') {
       event.formControlModel.inputType = 'password';
     } else {
       event.formControlModel.inputType = 'text';
     }
   }
-}
-export const repeatPasswordValidator: ValidatorFn = (
-  control: AbstractControl
-): ValidationErrors | null => {
-  const pwd = control.get('newPasswordField')?.value;
-  const cpwd = control.get('confirmPasswordField')?.value;
-  if (pwd === cpwd) {
-    control.get('confirmPasswordField')?.setErrors(null);
-    return null;
-  } else {
-    control.get('confirmPasswordField')?.setErrors({ confirmPassword: true });
-    return { confirmPassword: true };
+
+  checkPasswords(group: FormGroup) {
+    const currentPassword = group.controls['currentPasswordField'];
+    const newPassword = group.controls['newPasswordField'];
+    const confirmPassword = group.controls['confirmPasswordField'];
+    if (currentPassword.value !== '') {
+      if (currentPassword.value === newPassword.value) {
+        group.get('newPasswordField')?.setErrors({ newPassword: true });
+        return { newPassword: true };
+      }
+      if (newPassword.value === confirmPassword.value) {
+        return null;
+      } else {
+        group.get('confirmPasswordField')?.setErrors({ confirmPassword: true });
+        return { confirmPassword: true };
+      }
+    } else {
+      return null;
+    }
   }
-};
+}

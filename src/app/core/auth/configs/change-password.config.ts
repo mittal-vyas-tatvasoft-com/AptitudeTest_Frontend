@@ -4,7 +4,7 @@ export const changePasswordControl = {
     key: 'newPasswordField',
     label: 'New Password',
     required: true,
-    requiredErrMsg: 'Password is required',
+    requiredErrMsg: 'New Password is required',
     patternErrMsg:
       'Password length should be 8 characters and it should contain one uppercase, lowercase, special character, and digit.',
     inputType: 'password',
@@ -25,9 +25,9 @@ export const changePasswordControl = {
   confirmPasswordField: {
     value: '',
     key: 'confirmPasswordField',
-    label: 'Password',
+    label: 'Confirm Password',
     required: true,
-    requiredErrMsg: 'Password is required',
+    requiredErrMsg: 'Confirm Password is required',
     patternErrMsg: `Confirm Password Doesn't match with new password !`,
     inputType: 'password',
     displayIcon: true,
