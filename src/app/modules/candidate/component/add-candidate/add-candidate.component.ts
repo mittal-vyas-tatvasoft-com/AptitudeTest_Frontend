@@ -5,6 +5,8 @@ import { CandidateService } from '../../services/candidate.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { DropdownItem, CandidateModel } from '../../interfaces/candidate.interface';
+import { CandidateFormControl } from '../../configs/candidate.configs';
+import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 
 @Component({
   selector: 'app-add-candidate',
@@ -14,6 +16,7 @@ import { DropdownItem, CandidateModel } from '../../interfaces/candidate.interfa
 export class AddCandidateComponent {
   optionsListForStatus: string[] = ['Active', 'Inactive'];
   optionsListForGender: string[] = ['Male', 'Female'];
+  fromControls = CandidateFormControl;
   colleges: DropdownItem[] = [];
   groups: DropdownItem[] = []
   form: FormGroup;
@@ -24,11 +27,13 @@ export class AddCandidateComponent {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private formBuilder: FormBuilder,
     private candidateService: CandidateService,
-    private loginService: LoginService) { }
+    private loginService: LoginService,
+    public _formValidators: ValidationService) { }
 
   ngOnInit(): void {
     this.getDropdowns();
     this.createForm();
+    this.getUserData();
   }
 
   closeModal() {
@@ -69,7 +74,7 @@ export class AddCandidateComponent {
     const token = this.loginService.getToken();
     if (token) {
       const userData = this.loginService.decodeToken();
-      this.userId = userData ? userData.id : '';
+      this.userId = userData ? userData.Id : '';
     }
   }
 
@@ -78,6 +83,7 @@ export class AddCandidateComponent {
       const candidateData: CandidateModel = this.form.value;
       candidateData.status = this.form.value.status === 'Active' ? true : false;
       candidateData.gender = this.form.value.gender === 'Male' ? 1 : 2;
+      candidateData.createdBy = this.userId;
       this.candidateService.addCandidate(candidateData).subscribe(
         (response) => {
           this.dialogRef.close({ refreshTable: true });

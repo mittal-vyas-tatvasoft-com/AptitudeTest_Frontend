@@ -10,6 +10,7 @@ export interface CandidateModel {
     gender: number;
     status: boolean;
     createdYear: number;
+    createdBy: number;
 }
 
 export interface DropdownItem {

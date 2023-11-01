@@ -11,56 +11,58 @@
         <div class="row">
             <div class="col-md-4">
                 <mat-form-field appearance="outline">
-                    <mat-label>First Name</mat-label>
-                    <input matInput formControlName="firstName" />
-                    <mat-error *ngIf="form?.get('firstName')?.hasError('required')">Required</mat-error>
+                    <mat-label>{{fromControls.firstName.label}}</mat-label>
+                    <input matInput [formControlName]="fromControls.firstName.key" />
+                    <mat-error>{{
+                        _formValidators.getError(form, fromControls.firstName, fromControls.firstName.key)
+                        }}</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline">
-                    <mat-label>Middle Name</mat-label>
-                    <input matInput formControlName="fatherName" />
+                    <mat-label>{{fromControls.fatherName.label}}</mat-label>
+                    <input matInput [formControlName]="fromControls.fatherName.key" />
                 </mat-form-field>
             </div>
             <div class="col-md-4">
                 <mat-form-field appearance="outline">
-                    <mat-label>Last Name</mat-label>
-                    <input matInput formControlName="lastName" />
+                    <mat-label>{{fromControls.lastName.label}}</mat-label>
+                    <input matInput [formControlName]="fromControls.lastName.key" />
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
-                    <mat-label>Group</mat-label>
-                    <mat-select formControlName="groupId">
+                    <mat-label>{{fromControls.group.label}}</mat-label>
+                    <mat-select [formControlName]="fromControls.group.key">
                         <mat-option *ngFor="let item of groups" [value]="item.id">
                             {{ item.name }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="form.get('groupId')?.hasError('required')">
-                        Group is required
-                    </mat-error>
+                    <mat-error>{{
+                        _formValidators.getError(form, fromControls.group, fromControls.group.key)
+                        }}</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
-                    <mat-label>College</mat-label>
-                    <mat-select formControlName="collegeId">
+                    <mat-label>{{fromControls.college.label}}</mat-label>
+                    <mat-select [formControlName]="fromControls.college.key">
                         <mat-option *ngFor="let item of colleges" [value]="item.id">
                             {{ item.name }}
                         </mat-option>
                     </mat-select>
-                    <mat-error *ngIf="form.get('collegeId')?.hasError('required')">
-                        College is required
-                    </mat-error>
+                    <mat-error>{{
+                        _formValidators.getError(form, fromControls.college, fromControls.college.key)
+                        }}</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
-                    <mat-label>Email Address</mat-label>
-                    <input matInput formControlName="email" />
-                    <mat-error *ngIf="form.get('email')?.hasError('required')">
-                        Email is required
-                    </mat-error>
+                    <mat-label>{{fromControls.email.label}}</mat-label>
+                    <input matInput [formControlName]="fromControls.email.key" />
+                    <mat-error>{{
+                        _formValidators.getError(form, fromControls.email, fromControls.email.key)
+                        }}</mat-error>
                     <mat-error *ngIf="form.get('email')?.hasError('pattern')">
                         Invalid email format
                     </mat-error>
@@ -68,20 +70,17 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
-                    <mat-label>Contact No.</mat-label>
-                    <input type="number" matInput formControlName="phoneNumber" />
-                    <mat-error *ngIf="form.get('phoneNumber')?.hasError('required')">
-                        Contact No. is required
-                    </mat-error>
-                    <mat-error *ngIf="form.get('phoneNumber')?.hasError('pattern')">
-                        Invalid phone number.
-                    </mat-error>
+                    <mat-label>{{fromControls.phoneNumber.label}}</mat-label>
+                    <input type="number" matInput [formControlName]="fromControls.phoneNumber.key" />
+                    <mat-error>{{
+                        _formValidators.getError(form, fromControls.phoneNumber, fromControls.phoneNumber.key)
+                        }}</mat-error>
                 </mat-form-field>
             </div>
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
-                    <mat-label>Gender</mat-label>
-                    <mat-select formControlName="gender">
+                    <mat-label>{{fromControls.gender.label}}</mat-label>
+                    <mat-select [formControlName]="fromControls.gender.key">
                         <mat-option *ngFor="let item of optionsListForGender" [value]="item">
                             {{ item }}
                         </mat-option>
@@ -90,8 +89,8 @@
             </div>
             <div class="col-md-6">
                 <mat-form-field appearance="outline">
-                    <mat-label>Status</mat-label>
-                    <mat-select formControlName="status">
+                    <mat-label>{{fromControls.status.label}}</mat-label>
+                    <mat-select [formControlName]="fromControls.status.key">
                         <mat-option *ngFor="let item of optionsListForStatus" [value]="item">
                             {{ item }}
                         </mat-option>
