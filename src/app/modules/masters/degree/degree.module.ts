@@ -5,6 +5,7 @@ import { DegreeComponent } from './components/degree/degree.component';
 import { DegreeRoutingModule } from './degree-routing.module';
 import { SharedMaterialModule } from 'src/app/shared/material/shared-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TablesModule } from 'src/app/shared/modules/tables/tables.module';
 
 @NgModule({
   declarations: [AddDegreeComponent, DegreeComponent],
@@ -14,6 +15,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedMaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    TablesModule,
   ],
 })
 export class DegreeModule {}
