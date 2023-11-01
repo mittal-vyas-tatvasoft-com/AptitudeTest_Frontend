@@ -1,0 +1,97 @@
+<div class="page-header">
+  <div class="title-wrap">
+    <mat-icon class="page-icon">
+      <img
+        src="./assets/images/manage-master-primary.svg"
+        alt="Manage Master"
+      />
+    </mat-icon>
+    <h4 class="title">College</h4>
+  </div>
+  <div class="action-list">
+    <button
+      mat-fab
+      color="primary"
+      (click)="handleAddEditAdminDialog(addAdmin)"
+    >
+      <mat-icon
+        ><img src="./assets/images/add-white-full.svg" alt="Add"
+      /></mat-icon>
+    </button>
+  </div>
+</div>
+<mat-card class="form-block mb-3">
+  <mat-card-content class="pb-0">
+    <div class="row">
+      <div class="col-sm">
+        <form class="row" [formGroup]="form">
+          <div class="col-lg-3 col-sm-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Search candidate..</mat-label>
+              <input
+                matInput
+                #search
+                (keyup)="searchAdmin()"
+                formControlName="searchField"
+              />
+            </mat-form-field>
+          </div>
+          <div class="col-lg-3 col-sm-6">
+            <mat-form-field appearance="outline">
+              <mat-label>Status</mat-label>
+              <mat-select
+                #status
+                formControlName="statusField"
+                (selectionChange)="searchAdmin()"
+              >
+                <mat-option
+                  *ngFor="let item of optionsList"
+                  [value]="item.value"
+                >
+                  {{ item.key }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-auto pb-12p">
+        <button
+          mat-stroked-button
+          color="primary"
+          class="mt-auto"
+          (click)="resetForm()"
+        >
+          clear
+        </button>
+      </div>
+    </div>
+  </mat-card-content>
+</mat-card>
+<app-table
+  *ngIf="hasData"
+  [dataSource]="dataSource"
+  [columns]="columns"
+  [pagination]="true"
+  (editClicked)="handleAddEditAdminDialog($event)"
+  (deleteClicked)="handleDeleteAdminDialog($event)"
+  (actionClicked)="updateStatus($event.row, $event.action)"
+  [totalItemsCount]="totalItemsCount"
+  [pageSize]="pageSize"
+  (pageSizeChanged)="handlePageSizeChange($event)"
+  (pageToPage)="handlePageToPage($event)"
+  (pageChanged)="handlePageChange($event)"
+></app-table>
+<mat-card class="form-block mb-3" *ngIf="hasData == false">
+  <div class="row">
+    <div class="col">
+      <div class="col-12">
+        <mat-card>
+          <mat-card-content class="d-flex justify-content-center text-center"
+            ><h1>No Data Found!!</h1></mat-card-content
+          >
+        </mat-card>
+      </div>
+    </div>
+  </div>
+</mat-card>

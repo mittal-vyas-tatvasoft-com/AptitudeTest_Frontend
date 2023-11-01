@@ -270,6 +270,7 @@ body,
   dropzone {
     .dropzone.dz-wrapper {
       min-height: 80px;
+
       .dz-message {
         margin: 0;
         display: block !important;
@@ -282,24 +283,27 @@ body,
         position: absolute;
         height: 100%;
         max-width: 100%;
+
         .dz-text {
           display: flex;
           align-items: center;
           justify-content: center;
+
           &:before {
             content: "";
             width: 30px;
             height: 30px;
-            background: url(assets/images/excel-icon.svg) center center
-              no-repeat;
+            background: url(assets/images/excel-icon.svg) center center no-repeat;
             display: block;
             margin-right: 10px;
           }
         }
+
         &:hover {
           border-style: solid;
         }
       }
+
       .dz-preview {
         display: none;
       }
@@ -309,7 +313,7 @@ body,
 
 // Question Answer cards
 .qa-card-listing {
-  li + li {
+  li+li {
     margin-top: 12px;
   }
 }
@@ -319,15 +323,18 @@ body,
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
   padding: 12px 12px 14px 12px;
+
   .qa-head {
     display: flex;
     align-items: flex-start;
     padding-bottom: 12px;
+
     .qa-left {
       display: flex;
       align-items: flex-start;
       flex-grow: 1;
       margin-right: 20px;
+
       .qa-sequence {
         font-size: 16px;
         font-style: normal;
@@ -338,6 +345,7 @@ body,
         vertical-align: middle;
         margin-right: 6px;
       }
+
       .question-text {
         font-size: 15px;
         font-style: normal;
@@ -346,6 +354,7 @@ body,
         color: $color51545F;
       }
     }
+
     .qa-right {
       display: flex;
       align-items: center;
@@ -353,14 +362,17 @@ body,
       flex-shrink: 0;
       margin-top: 2px;
       padding-left: 10px;
+
       .mat-mdc-chip {
         margin-right: 8px;
+
         &.question-mark {
           .mat-mdc-chip-action {
             padding: 0 6px;
           }
         }
       }
+
       .mat-mdc-mini-fab.btn-sm {
         background: #f6f7fc;
         border-radius: 50%;
@@ -368,6 +380,7 @@ body,
         width: 24px;
         height: 24px;
         padding: 0;
+
         .mat-icon {
           width: 24px;
           height: 24px;
@@ -375,34 +388,41 @@ body,
       }
     }
   }
+
   .qa-body {
     padding: 0 24px;
+
     .mat-mdc-chip-listbox.mcq-chips-wrapper {
       pointer-events: none;
+
       .mdc-evolution-chip-set__chips {
         margin-left: 0;
       }
+
       .mat-mdc-chip.mat-mdc-chip-option:not(.mdc-evolution-chip--disabled) {
         border-radius: 15px;
         border: 1px solid #e5e7e9;
         background: $white;
         min-height: 30px;
         margin: 4px 24px 4px 0;
+
         .mat-mdc-chip-action {
           padding: 0 4px;
           flex-direction: row-reverse;
+
           .mat-mdc-chip-graphic {
             .mdc-evolution-chip__checkmark-svg {
               path {
                 display: none;
               }
-              background: url("./assets/images/success-check.svg") center center
-                no-repeat;
+
+              background: url("./assets/images/success-check.svg") center center no-repeat;
               background-size: 22px 22px;
               width: 22px;
               height: 22px;
             }
           }
+
           .mat-mdc-chip-action-label {
             color: $color51545F;
             font-size: 14px;
@@ -410,6 +430,7 @@ body,
             font-weight: 600;
             line-height: 16px;
             letter-spacing: 0.2px;
+
             .mcq-option {
               display: inline-flex;
               align-items: center;
@@ -425,10 +446,12 @@ body,
               line-height: 16px;
               letter-spacing: 0.2px;
               margin-right: 8px;
+
               &.bg-success {
                 background: #46a746;
                 color: #fff;
               }
+
               &.bg-error {
                 background: #dd4949;
                 color: #fff;
@@ -436,22 +459,27 @@ body,
             }
           }
         }
+
         &:hover {
           .mat-mdc-chip-focus-overlay {
             opacity: 0;
           }
+
           background: $white;
         }
       }
+
       &.image-options {
         .mat-mdc-chip-option {
           .mat-mdc-chip-action {
             display: inline-flex;
             align-items: flex-start;
+
             .mat-mdc-chip-action-label {
               display: inline-flex;
               align-items: flex-start;
               padding: 4px 0;
+
               .option-img {
                 max-width: 100%;
                 padding: 14px;
@@ -483,6 +511,7 @@ body,
   border: 1px solid #f1f1f1;
   background: #f7f8fd;
   margin-bottom: 20px;
+
   .answer-option {
     display: inline-flex;
     align-items: center;
@@ -505,56 +534,26 @@ body,
     margin: 0 12px;
   }
 
-  .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:checked
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:indeterminate
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox
-    .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:focus:checked
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:focus:indeterminate
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox:not(:disabled):active
-    .mdc-checkbox__native-control:enabled:checked
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox:hover
-    .mdc-checkbox__native-control:enabled:checked
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox:hover
-    .mdc-checkbox__native-control:enabled:indeterminate
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox:hover
-    .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
-    ~ .mdc-checkbox__background {
+  .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+  .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,
+  .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate="true"]:enabled~.mdc-checkbox__background,
+  .mdc-checkbox .mdc-checkbox__native-control:enabled:focus:checked~.mdc-checkbox__background,
+  .mdc-checkbox .mdc-checkbox__native-control:enabled:focus:indeterminate~.mdc-checkbox__background,
+  .mdc-checkbox:not(:disabled):active .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+  .mdc-checkbox:hover .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+  .mdc-checkbox:hover .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,
+  .mdc-checkbox:hover .mdc-checkbox__native-control[data-indeterminate="true"]:enabled~.mdc-checkbox__background {
     border-color: #46a746;
     background-color: #46a746;
   }
 
-  .mdc-checkbox
-    .mdc-checkbox__native-control:focus:checked
-    ~ .mdc-checkbox__ripple,
-  .mdc-checkbox .mdc-checkbox__native-control:focus ~ .mdc-checkbox__ripple {
+  .mdc-checkbox .mdc-checkbox__native-control:focus:checked~.mdc-checkbox__ripple,
+  .mdc-checkbox .mdc-checkbox__native-control:focus~.mdc-checkbox__ripple {
     background-color: #46a746;
   }
 
-  .mat-mdc-checkbox
-    .mdc-checkbox:hover
-    .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
-      [data-indeterminate="true"]
-    )
-    ~ .mdc-checkbox__background,
-  .mat-mdc-checkbox
-    .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:focus:focus:not(:checked):not(
-      :indeterminate
-    )
-    ~ .mdc-checkbox__background {
+  .mat-mdc-checkbox .mdc-checkbox:hover .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background,
+  .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:focus:focus:not(:checked):not( :indeterminate)~.mdc-checkbox__background {
     border-color: #46a746;
   }
 
@@ -574,10 +573,12 @@ body,
     min-height: 100px;
     position: relative;
     transition: all 0.2s ease-in-out;
+
     img {
       display: block;
       max-width: 100%;
     }
+
     .btn-remove {
       position: absolute;
       top: -1px;
@@ -592,10 +593,12 @@ body,
       border: 1px solid #b8bfcb;
       background: rgba(255, 255, 255, 0.8);
       transition: all 0.2s ease-in-out;
+
       .mdc-fab__ripple {
         border-radius: 4px;
       }
     }
+
     &:hover {
       .btn-remove {
         opacity: 1;
@@ -607,14 +610,17 @@ body,
   .inline-dropzone {
     flex-grow: 1;
     margin: 0 12px;
+
     .dz-wrapper.dropzone {
       min-height: 100px;
       overflow: hidden;
+
       .dz-message {
         border-radius: 6px;
         border: 1px dashed #bfc6c6;
         background: #fff;
         overflow: hidden;
+
         .dz-text {
           display: block;
           text-align: center;
@@ -624,20 +630,33 @@ body,
           font-family: "Poppins", sans-serif;
           color: #b4b8c5;
           padding: 8px 6px;
+
           .link-primary {
             font-size: 12px;
             line-height: 20px;
             padding: 0;
           }
+
           &::before {
             margin: 0 auto 4px;
-            background: url("./assets/images/add-photo-light.svg") no-repeat
-              center center;
+            background: url("./assets/images/add-photo-light.svg") no-repeat center center;
             background-size: 30px 30px;
           }
         }
       }
     }
+  }
+}
+
+// Form Block Card
+.form-block {
+  &.mat-mdc-card.mdc-card .mat-mdc-card-content {
+    padding: 12px;
+  }
+
+  .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
+    line-height: 12px;
+    height: 12px;
   }
 }
 

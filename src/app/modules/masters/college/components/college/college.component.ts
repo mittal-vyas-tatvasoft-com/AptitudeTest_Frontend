@@ -13,7 +13,7 @@ import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data
 @Component({
   selector: 'app-college',
   templateUrl: './college.component.html',
-  styleUrls: ['./college.component.scss']
+  styleUrls: ['./college.component.scss'],
 })
 export class CollegeComponent {
   pageSize = 10;
@@ -25,13 +25,20 @@ export class CollegeComponent {
     { columnDef: 'name', header: 'Name of College' },
     { columnDef: 'abbreviation', header: 'Abbreviation' },
     { columnDef: 'status', header: 'Status' },
-    { columnDef: 'editAction', header: 'Action', isAction: true, action: 'edit' },
+    {
+      columnDef: 'editAction',
+      header: 'Action',
+      isAction: true,
+      action: 'edit',
+    },
   ];
   private ngUnsubscribe$: Subject<void> = new Subject();
 
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private collegeService: CollegeService,
-    private snackbarService: SnackbarService) { }
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<CollegeModel>([]);
@@ -53,12 +60,11 @@ export class CollegeComponent {
         if (res.statusCode == 200) {
           this.snackbarService.success(res.message);
           this.fetchColleges();
-        }
-        else {
+        } else {
           this.snackbarService.error(res.message);
         }
       },
-    })
+    });
   }
 
   handleAddCollegeDialog() {
@@ -91,23 +97,25 @@ export class CollegeComponent {
 
   handleDeleteProfileDialog(id: number) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["primary-dialog"];
-    dialogConfig.panelClass = ["confirmation-dialog"];
+    dialogConfig.panelClass = ['primary-dialog'];
+    dialogConfig.panelClass = ['confirmation-dialog'];
     dialogConfig.autoFocus = false;
-    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      DeleteConfirmationDialogComponent,
+      dialogConfig
+    );
     dialogRef?.afterClosed().subscribe((result: any) => {
       if (result) {
-        this.collegeService.deleteCollege(id)
-          .subscribe({
-            next: (res: any) => {
-              if (res.statusCode == 200) {
-                this.fetchColleges();
-                this.snackbarService.success(res.message);
-              } else {
-                this.snackbarService.error(res.message);
-              }
-            },
-          });
+        this.collegeService.deleteCollege(id).subscribe({
+          next: (res: any) => {
+            if (res.statusCode == 200) {
+              this.fetchColleges();
+              this.snackbarService.success(res.message);
+            } else {
+              this.snackbarService.error(res.message);
+            }
+          },
+        });
       }
     });
   }
@@ -140,5 +148,4 @@ export class CollegeComponent {
     const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
     return this.currentPageIndex === totalPages - 1;
   }
-
 }

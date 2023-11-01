@@ -1,0 +1,79 @@
+<div class="dialog-header">
+  <h2 mat-dialog-title>{{ isEditMode ? "Edit Admin" : "Add Admin" }}</h2>
+  <button mat-icon-button class="dialog-close" (click)="closeModal()">
+    <mat-icon>
+      <img src="./assets/images/close-grey.svg" alt="Close" />
+    </mat-icon>
+  </button>
+</div>
+<mat-dialog-content class="dialog-body pb-0">
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-md-6">
+        <app-text-control
+          [formControlModel]="AdminModel.firstName"
+          [form]="form"
+          class="w-100"
+        ></app-text-control>
+      </div>
+      <div class="col-md-6">
+        <app-text-control
+          [formControlModel]="AdminModel.middleName"
+          [form]="form"
+          class="w-100"
+        ></app-text-control>
+      </div>
+      <div class="col-md-6">
+        <app-text-control
+          [formControlModel]="AdminModel.lastName"
+          [form]="form"
+          class="w-100"
+        ></app-text-control>
+      </div>
+      <div class="col-md-6">
+        <app-text-control
+          [formControlModel]="AdminModel.email"
+          [form]="form"
+          class="w-100"
+        ></app-text-control>
+      </div>
+      <div class="col-md-6">
+        <app-text-control-number
+          [formControlModel]="AdminModel.phoneNumber"
+          [form]="form"
+          class="w-100"
+        ></app-text-control-number>
+      </div>
+      <div class="col-md-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select formControlName="status">
+            <mat-option *ngFor="let item of optionsList" [value]="item.value">
+              {{ item.key }}
+            </mat-option>
+          </mat-select>
+          <mat-error
+            *ngIf="
+              form.get('status')!.hasError('required') &&
+              form.get('status')!.touched
+            "
+          >
+            Status is required.
+          </mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <mat-dialog-actions align="end" class="dialog-footer">
+      <button mat-flat-button [mat-dialog-close]="false" color="primary">
+        Cancel
+      </button>
+      <app-button
+        [color]="'primary'"
+        [type]="'submit'"
+        [label]="isEditMode ? 'Save' : 'Add'"
+        [isDisabled]="!form.valid"
+        [mat-dialog-close]="form.value"
+      ></app-button>
+    </mat-dialog-actions>
+  </form>
+</mat-dialog-content>

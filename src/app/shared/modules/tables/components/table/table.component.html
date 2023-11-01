@@ -4,18 +4,33 @@
       <table mat-table [dataSource]="dataSource">
         <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
         <tr mat-row *matRowDef="let row; columns: getDisplayedColumns()"></tr>
-        <ng-container *ngFor="let column of columns" [matColumnDef]="column.columnDef">
-          <th mat-header-cell *matHeaderCellDef
-            [ngClass]="{'text-center': column.columnDef === 'status' || column.isAction}">
+        <ng-container
+          *ngFor="let column of columns"
+          [matColumnDef]="column.columnDef"
+        >
+          <th
+            mat-header-cell
+            *matHeaderCellDef
+            [ngClass]="{
+              'text-center': column.columnDef === 'status' || column.isAction
+            }"
+          >
             {{ column.header }}
           </th>
-          <td mat-cell *matCellDef="let row"
-            [ngClass]="{'text-center': column.columnDef === 'status' || column.isAction}">
+          <td
+            mat-cell
+            *matCellDef="let row"
+            [ngClass]="{
+              'text-center': column.columnDef === 'status' || column.isAction
+            }"
+          >
             <ng-container *ngIf="!column.isAction; else actionTemplate">
               <ng-container [ngSwitch]="column.columnDef">
                 <ng-container *ngSwitchCase="'status'">
-                  <mat-chip [ngClass]="row.status ? 'ChipSuccess' : 'ChipInactive'">
-                    {{ row.status ? 'Active' : 'Inactive' }}
+                  <mat-chip
+                    [ngClass]="row.status ? 'ChipSuccess' : 'ChipInactive'"
+                  >
+                    {{ row.status ? "Active" : "Inactive" }}
                   </mat-chip>
                 </ng-container>
                 <ng-container *ngSwitchDefault>
@@ -24,35 +39,44 @@
               </ng-container>
             </ng-container>
             <ng-template #actionTemplate>
-              <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small">
+              <button
+                *ngIf="!row.isSuperAdmin"
+                mat-icon-button
+                [matMenuTriggerFor]="tableActionMenu"
+                class="btn-small"
+              >
                 <mat-icon>
-                  <img src="./assets/images/more-black.svg" alt="Action">
+                  <img src="./assets/images/more-black.svg" alt="Action" />
                 </mat-icon>
               </button>
               <mat-menu #tableActionMenu="matMenu" xPosition="before">
                 <button mat-menu-item (click)="handleEdit(row)">
                   <mat-icon>
-                    <img src="./assets/images/edit.svg" alt="Edit">
+                    <img src="./assets/images/edit.svg" alt="Edit" />
                   </mat-icon>
                   Edit
                 </button>
-                <button mat-menu-item *ngIf="!row.status; else activeButton" (click)="handleAction(row.id, true)">
+                <button
+                  mat-menu-item
+                  *ngIf="!row.status; else activeButton"
+                  (click)="handleAction(row.id, true)"
+                >
                   <mat-icon>
-                    <img src="./assets/images/active.svg" alt="Active">
+                    <img src="./assets/images/active.svg" alt="Active" />
                   </mat-icon>
                   Active
                 </button>
                 <ng-template #activeButton>
                   <button mat-menu-item (click)="handleAction(row.id, false)">
                     <mat-icon>
-                      <img src="./assets/images/inactive.svg" alt="Inactive">
+                      <img src="./assets/images/inactive.svg" alt="Inactive" />
                     </mat-icon>
                     Inactive
                   </button>
                 </ng-template>
                 <button mat-menu-item (click)="handleDelete(row.id)">
                   <mat-icon>
-                    <img src="./assets/images/delete.svg" alt="Delete">
+                    <img src="./assets/images/delete.svg" alt="Delete" />
                   </mat-icon>
                   Delete
                 </button>
@@ -64,29 +88,53 @@
     </div>
     <div class="mat-custom-pagination" *ngIf="pagination">
       <div class="pagination-left">
-        <mat-form-field appearance="outline" class="pagination-select remove-hint">
+        <mat-form-field
+          appearance="outline"
+          class="pagination-select remove-hint"
+        >
           <mat-label>Page Size</mat-label>
-          <mat-select [(ngModel)]="pageSize" (ngModelChange)="onPageSizeChange()">
-            <mat-option *ngFor="let option of pageSizeOptions" [value]="option">{{ option }}</mat-option>
+          <mat-select
+            [(ngModel)]="pageSize"
+            (ngModelChange)="onPageSizeChange()"
+          >
+            <mat-option
+              *ngFor="let option of pageSizeOptions"
+              [value]="option"
+              >{{ option }}</mat-option
+            >
           </mat-select>
         </mat-form-field>
         <span class="page-info">{{ getDisplayedRange() }}</span>
       </div>
       <ul class="pagination-right">
         <li>
-          <a mat-stroked-button href="javascript:void(0)" (click)="onPageChange('prev')" [disabled]="isFirstPage()">
-            <img src="./assets/images/chevron-backward.svg" alt="Prev">
+          <a
+            mat-stroked-button
+            href="javascript:void(0)"
+            (click)="onPageChange('prev')"
+            [disabled]="isFirstPage()"
+          >
+            <img src="./assets/images/chevron-backward.svg" alt="Prev" />
           </a>
         </li>
         <li *ngFor="let page of pageNumbers; let i = index">
-          <a mat-stroked-button href="javascript:void(0)" (click)="onPageChangeToPage(page)"
-            [class.active]="currentPageIndex === i">
+          <a
+            mat-stroked-button
+            href="javascript:void(0)"
+            (click)="onPageChangeToPage(page)"
+            [class.active]="currentPageIndex === i"
+          >
             {{ page }}
           </a>
         </li>
         <li>
-          <a mat-stroked-button href="javascript:void(0)" (click)="onPageChange('next')" [disabled]="isLastPage()">
-            <img src="./assets/images/chevron-forward.svg" alt="Next">
+          <a
+            mat-stroked-button
+            href="javascript:void(0)"
+            (click)="onPageChange('next')"
+            [disabled]="isLastPage()"
+          >
+            <img src="./assets/images/chevron-forward.svg" alt="Next" />
           </a>
         </li>
       </ul>
