@@ -31,7 +31,7 @@
   }
   .login-box-outer {
     margin: auto 0;
-    padding: 30px 0 200px;
+    padding: 30px 0;
     .login-box {
       position: relative;
       z-index: 1;
@@ -65,12 +65,15 @@
       }
       .sign-up {
         color: #77787d;
+        b{
+          font-weight: 600;
+        }
       }
     }
   }
   .login-footer {
     margin-top: auto;
-    padding-bottom: 30px;
+    padding-bottom: 10px;
     text-align: center;
     p {
       color: #6a6a6a;
