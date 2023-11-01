@@ -9,6 +9,7 @@ import { takeUntil, catchError, throwError, Subject } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { EventEmitter } from '@angular/core';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 
 @Component({
   selector: 'app-college',
@@ -16,8 +17,8 @@ import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data
   styleUrls: ['./college.component.scss'],
 })
 export class CollegeComponent {
-  pageSize = 10;
-  currentPageIndex = 0;
+  pageSize = Numbers.Ten;
+  currentPageIndex = Numbers.Zero;
   totalItemsCount: number;
   pageNumbers: number[] = [];
   dataSource: MatTableDataSource<CollegeModel>;
@@ -57,7 +58,7 @@ export class CollegeComponent {
   updateStatus(id: number, newStatus: boolean): void {
     this.collegeService.updateStatus(id, newStatus).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
+        if (res.statusCode == StatusCode.Success) {
           this.snackbarService.success(res.message);
           this.fetchColleges();
         } else {
@@ -108,7 +109,7 @@ export class CollegeComponent {
       if (result) {
         this.collegeService.deleteCollege(id).subscribe({
           next: (res: any) => {
-            if (res.statusCode == 200) {
+            if (res.statusCode == StatusCode.Success) {
               this.fetchColleges();
               this.snackbarService.success(res.message);
             } else {
@@ -122,7 +123,7 @@ export class CollegeComponent {
 
   handlePageSizeChange(pageSize: number) {
     this.pageSize = pageSize;
-    this.currentPageIndex = 0;
+    this.currentPageIndex = Numbers.Zero;
     this.fetchColleges();
   }
 
@@ -136,16 +137,16 @@ export class CollegeComponent {
   }
 
   handlePageToPage(page: number) {
-    this.currentPageIndex = page - 1;
+    this.currentPageIndex = page - Numbers.One;
     this.fetchColleges();
   }
 
   isFirstPage(): boolean {
-    return this.currentPageIndex === 0;
+    return this.currentPageIndex === Numbers.Zero;
   }
 
   isLastPage(): boolean {
     const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
-    return this.currentPageIndex === totalPages - 1;
+    return this.currentPageIndex === totalPages - Numbers.One;
   }
 }

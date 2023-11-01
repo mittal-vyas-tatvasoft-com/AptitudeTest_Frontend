@@ -69,7 +69,7 @@
   </mat-card-content>
 </mat-card>
 <app-table
-  *ngIf="hasData"
+  *ngIf="hasData; else noData"
   [dataSource]="dataSource"
   [columns]="columns"
   [pagination]="true"
@@ -82,7 +82,7 @@
   (pageToPage)="handlePageToPage($event)"
   (pageChanged)="handlePageChange($event)"
 ></app-table>
-<mat-card class="form-block mb-3" *ngIf="hasData == false">
+<ng-template class="form-block mb-3" #noData>
   <div class="row">
     <div class="col">
       <div class="col-12">
@@ -94,4 +94,4 @@
       </div>
     </div>
   </div>
-</mat-card>
+</ng-template>

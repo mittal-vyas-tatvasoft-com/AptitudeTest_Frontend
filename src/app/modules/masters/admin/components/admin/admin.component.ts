@@ -4,16 +4,12 @@ import { MatTableDataSource } from '@angular/material/table';
 import { AddAdminComponent } from '../add-admin/add-admin.component';
 import { AdminService } from '../../services/admin.service';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { AdminModel } from '../../interfaces/admin.interface';
+import { AdminModel, searchModel } from '../../interfaces/admin.interface';
 import { Subject, debounceTime } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
-export interface searchModel {
-  searchValue: string;
-  statusValue: boolean | null;
-}
+import { Numbers } from 'src/app/shared/common/enums';
 
 @Component({
   selector: 'app-master-admin',
@@ -21,8 +17,8 @@ export interface searchModel {
   styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit, AfterViewInit {
-  pageSize = 10;
-  currentPageIndex = 0;
+  pageSize = Numbers.Ten;
+  currentPageIndex = Numbers.Zero;
   totalItemsCount: number;
   pageNumbers: number[] = [];
   hasData: boolean;
@@ -33,12 +29,12 @@ export class AdminComponent implements OnInit, AfterViewInit {
   ];
   dataSource: MatTableDataSource<AdminModel>;
   addAdmin: AdminModel = {
-    adminId: 0,
+    adminId: Numbers.Zero,
     firstName: '',
     lastName: '',
     middleName: '',
     email: '',
-    phoneNumber: 0,
+    phoneNumber: Numbers.Zero,
     status: true,
   };
   columns: TableColumn<AdminModel>[] = [
@@ -102,13 +98,13 @@ export class AdminComponent implements OnInit, AfterViewInit {
       .getAdmins(this.currentPageIndex, this.pageSize, searchValue, status)
       .subscribe((res: any) => {
         // not possible to remove any type because it has sometime null and sometime object with data
-        if (res.data.length > 0) {
+        if (res.data.length > Numbers.Zero) {
           this.dataSource = new MatTableDataSource<AdminModel>(res.data);
-          this.totalItemsCount = res.data[0].totalRecords;
+          this.totalItemsCount = res.data[Numbers.Zero].totalRecords;
           this.hasData = true;
         } else {
           this.dataSource = new MatTableDataSource<AdminModel>(res.data);
-          this.totalItemsCount = 0;
+          this.totalItemsCount = Numbers.Zero;
           this.hasData = false;
         }
       });
@@ -129,7 +125,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
         console.log(res);
 
         if (res) {
-          if (res.id == 0) {
+          if (res.id == Numbers.Zero) {
           } else {
           }
         }
@@ -153,7 +149,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   handlePageSizeChange(pageSize: number) {
     this.pageSize = pageSize;
-    this.currentPageIndex = 0;
+    this.currentPageIndex = Numbers.Zero;
     this.fetchColleges('', null);
   }
 
@@ -167,25 +163,21 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   handlePageToPage(page: number) {
-    this.currentPageIndex = page - 1;
+    this.currentPageIndex = page - Numbers.One;
     this.fetchColleges('', null);
   }
 
   isFirstPage(): boolean {
-    return this.currentPageIndex === 0;
+    return this.currentPageIndex === Numbers.Zero;
   }
 
   isLastPage(): boolean {
     const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
-    return this.currentPageIndex === totalPages - 1;
+    return this.currentPageIndex === totalPages - Numbers.One;
   }
 
   resetForm() {
     this.form.reset();
-    const data: searchModel = {
-      searchValue: '',
-      statusValue: null,
-    };
-    this.searchInputValue.next(data);
+    this.fetchColleges('', null);
   }
 }

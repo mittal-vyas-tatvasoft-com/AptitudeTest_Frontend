@@ -12,3 +12,8 @@ export interface AdminModel {
   updatedBy?: number | null;
   isDeleted?: boolean;
 }
+
+export interface searchModel {
+  searchValue: string;
+  statusValue: boolean | null;
+}
