@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormControlModel } from '../interfaces/form-control-model';
+import { Messages } from 'src/app/shared/messages/messages.static';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,9 @@ export class ValidationService {
         }
         if (formControl.errors['confirmPassword']) {
           return formControlModel.patternErrMsg;
+        }
+        if (formControl.errors['newPassword']) {
+          return Messages.samePasswordError;
         }
       }
     }
