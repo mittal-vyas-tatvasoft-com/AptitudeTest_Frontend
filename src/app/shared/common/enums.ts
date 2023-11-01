@@ -95,6 +95,7 @@ export enum StatusCode {
 }
 
 export enum Numbers {
+  Debounce = 500,
   Zero = 0,
   One = 1,
   Two = 2,

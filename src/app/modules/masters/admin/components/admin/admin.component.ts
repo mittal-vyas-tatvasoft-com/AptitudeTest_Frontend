@@ -76,7 +76,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     this.searchInputValue
       .pipe(
-        debounceTime(500) // Adjust the debounce time as needed
+        debounceTime(Numbers.Debounce) // Adjust the debounce time as needed
       )
       .subscribe((value) => {
         this.fetchColleges(value.searchValue, value.statusValue);
