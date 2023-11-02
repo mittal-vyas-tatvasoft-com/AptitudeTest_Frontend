@@ -10,6 +10,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { ChangePasswordComponent } from '../../auth/components/change-password/change-password.component';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { StatusCode } from 'src/app/shared/common/enums';
+import { Subject, takeUntil } from 'rxjs';
 
 @Component({
   selector: 'app-header',
@@ -25,6 +26,7 @@ export class HeaderComponent {
   public mobileScreen: boolean = window.innerWidth < 575;
   @Input() isHandset: boolean | null | undefined;
   @Output() onMenuIconClick = new EventEmitter();
+  private ngUnsubscribe$ = new Subject<void>();
 
   constructor(
     private loginService: LoginService,
@@ -66,7 +68,6 @@ export class HeaderComponent {
     if (token) {
       const userData = this.loginService.decodeToken();
       this.userName = userData ? userData.FirstName : '';
-      this.getInitials(this.userName);
     }
   }
 
@@ -76,13 +77,6 @@ export class HeaderComponent {
       const userData = this.loginService.decodeToken();
       this.email = userData ? userData.Email : '';
     }
-  }
-
-  getInitials(firstName: string): string {
-    const firstInitial = firstName ? firstName.charAt(0).toUpperCase() : '';
-    //const lastInitial = lastName ? lastName.charAt(0).toUpperCase() : '';
-    //return `${firstInitial}${lastInitial}`;
-    return `${firstInitial}`;
   }
 
   toggleSidebar() {
@@ -98,23 +92,33 @@ export class HeaderComponent {
     this.dialog
       .open(ChangePasswordComponent, dialogConfig)
       .afterClosed()
-      .subscribe((data: any) => {
+      .subscribe((data) => {
         if (data != null) {
           const payload = {
             email: this.email,
             currentPassword: data.currentPasswordField,
             newPassword: data.newPasswordField,
+            confirmPassword: data.confirmPasswordField,
           };
-          this.loginService.changePassword(payload).subscribe({
-            next: (res: any) => {
-              if (res.statusCode === StatusCode.Success) {
-                this.snackbar.success(res.message);
-              } else {
-                this.snackbar.error('error');
-              }
-            },
-          });
+          this.loginService
+            .changePassword(payload)
+            .pipe(takeUntil(this.ngUnsubscribe$))
+            .subscribe({
+              next: (res) => {
+                debugger;
+                if (res.statusCode === StatusCode.Success) {
+                  this.snackbar.success(res.message);
+                } else {
+                  this.snackbar.error('error');
+                }
+              },
+            });
         }
       });
+  }
+
+  ngOnDestroy() {
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }
