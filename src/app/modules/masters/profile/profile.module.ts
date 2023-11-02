@@ -6,6 +6,7 @@ import { CoreModule } from 'src/app/core/core.module';
 import { SharedMaterialModule } from 'src/app/shared/material/shared-material.module';
 import { ProfileRountingModule } from './profile-routing.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { TablesModule } from 'src/app/shared/modules/tables/tables.module';
 
 @NgModule({
   declarations: [AddProfileComponent, ProfileComponent],
@@ -16,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     SharedMaterialModule,
     ReactiveFormsModule,
     FormsModule,
+    TablesModule,
   ],
 })
 export class ProfileModule {}

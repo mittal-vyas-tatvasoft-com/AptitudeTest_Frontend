@@ -6,6 +6,8 @@ import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete
 import { ProfileService } from '../../services/profile.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { StatusCode } from 'src/app/shared/common/enums';
+import { ProfileModel } from '../../interfaces/profile.interface';
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 
 @Component({
   selector: 'app-profile',
@@ -13,7 +15,21 @@ import { StatusCode } from 'src/app/shared/common/enums';
   styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'status', 'action'];
+  displayedColumns: TableColumn<ProfileModel>[] = [
+    { columnDef: 'name', header: 'Profile Name' },
+    { columnDef: 'status', header: 'Status' },
+    {
+      columnDef: 'editAction',
+      header: 'Action',
+      isAction: true,
+      action: 'edit',
+    },
+  ];
+  addProfile: ProfileModel = {
+    id: 0,
+    name: '',
+    status: true,
+  };
   dataSource!: MatTableDataSource<any>;
   constructor(
     public dialog: MatDialog,
@@ -33,11 +49,11 @@ export class ProfileComponent implements OnInit {
     });
   }
 
-  handleAddProfileDialog(id: number) {
+  handleAddProfileDialog(data: ProfileModel) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
-    dialogConfig.data = id;
+    dialogConfig.data = data.id;
 
     this.dialog
       .open(AddProfileComponent, dialogConfig)

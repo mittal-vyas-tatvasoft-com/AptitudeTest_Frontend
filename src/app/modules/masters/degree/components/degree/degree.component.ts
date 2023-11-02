@@ -6,14 +6,8 @@ import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete
 import { DegreeService } from '../../services/degree.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { StatusCode } from 'src/app/shared/common/enums';
-
-export interface DegreeData {
-  name: string;
-  level: string;
-  streams: string;
-  status: string;
-  action: string;
-}
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { DegreeModel } from '../../interfaces/degree.interface';
 
 export interface UpdateStatus {
   id: number;
@@ -26,8 +20,26 @@ export interface UpdateStatus {
   styleUrls: ['./degree.component.scss'],
 })
 export class DegreeComponent implements OnInit {
-  displayedColumns: string[] = ['name', 'level', 'stream', 'status', 'action'];
-  dataSource!: MatTableDataSource<DegreeData>;
+  displayedColumns: TableColumn<DegreeModel>[] = [
+    { columnDef: 'name', header: 'Degree Name' },
+    { columnDef: 'level', header: 'Degree Level' },
+    { columnDef: 'streams', header: 'Stream' },
+    { columnDef: 'status', header: 'Status' },
+    {
+      columnDef: 'editAction',
+      header: 'Action',
+      isAction: true,
+      action: 'edit',
+    },
+  ];
+  addDegree: DegreeModel = {
+    id: 0,
+    name: '',
+    status: true,
+    level: 0,
+    streams: [],
+  };
+  dataSource!: MatTableDataSource<DegreeModel>;
   degreeData: any;
   constructor(
     public dialog: MatDialog,
@@ -46,11 +58,11 @@ export class DegreeComponent implements OnInit {
     });
   }
 
-  handleAddDegreeDialog(id: number) {
+  handleAddDegreeDialog(data: DegreeModel) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
-    dialogConfig.data = id;
+    dialogConfig.data = data.id;
     this.dialog
       .open(AddDegreeComponent, dialogConfig)
       .afterClosed()
@@ -110,41 +122,15 @@ export class DegreeComponent implements OnInit {
       });
   }
 
-  onActiveClick(id: number) {
+  updateStatus(id: number, newStatus: boolean): void {
     let status: UpdateStatus = {
       id: id,
-      status: true,
+      status: newStatus,
     };
-    this.degreeService.updateStatus(status).subscribe((res: any) => {
-      if (res.statusCode == StatusCode.Success) {
-        this.degreeData = this.degreeData.map((data: any) => {
-          if (data.id == id) {
-            data.status = true;
-          }
-          return data;
-        });
-        this.dataSource = new MatTableDataSource(this.degreeData);
-        this.snackbarService.success(res.message);
-      } else {
-        this.snackbarService.error(res.message);
-      }
-    });
-  }
 
-  onInactiveClick(id: number) {
-    let status: UpdateStatus = {
-      id: id,
-      status: false,
-    };
     this.degreeService.updateStatus(status).subscribe((res: any) => {
       if (res.statusCode == StatusCode.Success) {
-        this.degreeData = this.degreeData.map((data: any) => {
-          if (data.id == id) {
-            data.status = false;
-          }
-          return data;
-        });
-        this.dataSource = new MatTableDataSource(this.degreeData);
+        this.getAllDegrees();
         this.snackbarService.success(res.message);
       } else {
         this.snackbarService.error(res.message);

@@ -9,7 +9,7 @@
     <h4 class="title">Degree</h4>
   </div>
   <div class="action-list">
-    <button mat-fab color="primary" (click)="handleAddDegreeDialog(0)">
+    <button mat-fab color="primary" (click)="handleAddDegreeDialog(addDegree)">
       <mat-icon
         ><img src="./assets/images/add-white-full.svg" alt="Add"
       /></mat-icon>
@@ -17,96 +17,11 @@
   </div>
 </div>
 
-<mat-card class="table-card">
-  <mat-card-content>
-    <div class="mat-table-wrapper">
-      <table mat-table [dataSource]="dataSource">
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Degree Name</th>
-          <td mat-cell *matCellDef="let row">{{ row.name }}</td>
-        </ng-container>
-
-        <!-- Degree Level Column -->
-        <ng-container matColumnDef="level">
-          <th mat-header-cell *matHeaderCellDef>Degree Level</th>
-          <td mat-cell *matCellDef="let row">{{ row.level }}</td>
-        </ng-container>
-
-        <!-- Stream Column -->
-        <ng-container matColumnDef="stream">
-          <th mat-header-cell *matHeaderCellDef>Stream</th>
-          <td mat-cell *matCellDef="let row">{{ row.streams.join(", ") }}</td>
-        </ng-container>
-
-        <!-- Status Column -->
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef class="text-center">Status</th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            <ng-container [ngSwitch]="row.status">
-              <mat-chip *ngSwitchCase="true" [class.ChipSuccess]="row.status">
-                Active
-              </mat-chip>
-              <mat-chip *ngSwitchCase="false" [class.ChipInactive]="row.status">
-                Inactive
-              </mat-chip>
-            </ng-container>
-          </td>
-        </ng-container>
-
-        <!-- Action Column -->
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-            >
-              <mat-icon>
-                <img src="./assets/images/more-black.svg" alt="Action" />
-              </mat-icon>
-            </button>
-            <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item (click)="handleAddDegreeDialog(row.id)">
-                <mat-icon>
-                  <img src="./assets/images/edit.svg" alt="Edit" />
-                </mat-icon>
-                Edit
-              </button>
-              <button
-                *ngIf="!row.status"
-                mat-menu-item
-                (click)="onActiveClick(row.id)"
-              >
-                <mat-icon>
-                  <img src="./assets/images/active.svg" alt="Active" />
-                </mat-icon>
-                Active
-              </button>
-              <button
-                *ngIf="row.status"
-                mat-menu-item
-                (click)="onInactiveClick(row.id)"
-              >
-                <mat-icon>
-                  <img src="./assets/images/inactive.svg" alt="Inactive" />
-                </mat-icon>
-                Inactive
-              </button>
-              <button mat-menu-item (click)="handleDeleteDegreeDialog(row.id)">
-                <mat-icon>
-                  <img src="./assets/images/delete.svg" alt="Delete" />
-                </mat-icon>
-                Delete
-              </button>
-            </mat-menu>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-  </mat-card-content>
-</mat-card>
+<app-table
+  [dataSource]="dataSource"
+  [columns]="displayedColumns"
+  [pagination]="false"
+  (editClicked)="handleAddDegreeDialog($event)"
+  (deleteClicked)="handleDeleteDegreeDialog($event)"
+  (actionClicked)="updateStatus($event.row, $event.action)"
+></app-table>

@@ -1,21 +1,32 @@
 <div class="page-header">
-    <div class="title-wrap">
-        <mat-icon class="page-icon">
-            <img src="./assets/images/manage-master-primary.svg" alt="Manage Master" />
-        </mat-icon>
-        <h4 class="title">
-            College
-        </h4>
-    </div>
-    <div class="action-list">
-        <button mat-fab color="primary" (click)="handleAddCollegeDialog()">
-            <mat-icon><img src="./assets/images/add-white-full.svg" alt="Add"></mat-icon>
-        </button>
-    </div>
+  <div class="title-wrap">
+    <mat-icon class="page-icon">
+      <img
+        src="./assets/images/manage-master-primary.svg"
+        alt="Manage Master"
+      />
+    </mat-icon>
+    <h4 class="title">College</h4>
+  </div>
+  <div class="action-list">
+    <button mat-fab color="primary" (click)="handleAddCollegeDialog()">
+      <mat-icon
+        ><img src="./assets/images/add-white-full.svg" alt="Add"
+      /></mat-icon>
+    </button>
+  </div>
 </div>
 
-<app-table [dataSource]="dataSource" [columns]="columns" [pagination]="true"
-    (editClicked)="handleEditCollegeDialog($event)" (deleteClicked)="handleDeleteProfileDialog($event)"
-    (actionClicked)="updateStatus($event.row, $event.action)" [totalItemsCount]="totalItemsCount" [pageSize]="pageSize"
-    (pageSizeChanged)="handlePageSizeChange($event)" (pageToPage)="handlePageToPage($event)"
-    (pageChanged)="handlePageChange($event)"></app-table>
+<app-table
+  [dataSource]="dataSource"
+  [columns]="columns"
+  [pagination]="true"
+  (editClicked)="handleEditCollegeDialog($event)"
+  (deleteClicked)="handleDeleteProfileDialog($event)"
+  (actionClicked)="updateStatus($event.row, $event.action)"
+  [totalItemsCount]="totalItemsCount"
+  [pageSize]="pageSize"
+  (pageSizeChanged)="handlePageSizeChange($event)"
+  (pageToPage)="handlePageToPage($event)"
+  (pageChanged)="handlePageChange($event)"
+></app-table>

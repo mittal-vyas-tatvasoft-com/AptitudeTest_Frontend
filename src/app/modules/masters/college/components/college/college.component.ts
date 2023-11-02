@@ -9,15 +9,16 @@ import { takeUntil, catchError, throwError, Subject } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { EventEmitter } from '@angular/core';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 
 @Component({
   selector: 'app-college',
   templateUrl: './college.component.html',
-  styleUrls: ['./college.component.scss']
+  styleUrls: ['./college.component.scss'],
 })
 export class CollegeComponent {
-  pageSize = 10;
-  currentPageIndex = 0;
+  pageSize = Numbers.Ten;
+  currentPageIndex = Numbers.Zero;
   totalItemsCount: number;
   pageNumbers: number[] = [];
   dataSource: MatTableDataSource<CollegeModel>;
@@ -25,13 +26,20 @@ export class CollegeComponent {
     { columnDef: 'name', header: 'Name of College' },
     { columnDef: 'abbreviation', header: 'Abbreviation' },
     { columnDef: 'status', header: 'Status' },
-    { columnDef: 'editAction', header: 'Action', isAction: true, action: 'edit' },
+    {
+      columnDef: 'editAction',
+      header: 'Action',
+      isAction: true,
+      action: 'edit',
+    },
   ];
   private ngUnsubscribe$: Subject<void> = new Subject();
 
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private collegeService: CollegeService,
-    private snackbarService: SnackbarService) { }
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<CollegeModel>([]);
@@ -50,15 +58,14 @@ export class CollegeComponent {
   updateStatus(id: number, newStatus: boolean): void {
     this.collegeService.updateStatus(id, newStatus).subscribe({
       next: (res: any) => {
-        if (res.statusCode == 200) {
+        if (res.statusCode == StatusCode.Success) {
           this.snackbarService.success(res.message);
           this.fetchColleges();
-        }
-        else {
+        } else {
           this.snackbarService.error(res.message);
         }
       },
-    })
+    });
   }
 
   handleAddCollegeDialog() {
@@ -91,30 +98,32 @@ export class CollegeComponent {
 
   handleDeleteProfileDialog(id: number) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["primary-dialog"];
-    dialogConfig.panelClass = ["confirmation-dialog"];
+    dialogConfig.panelClass = ['primary-dialog'];
+    dialogConfig.panelClass = ['confirmation-dialog'];
     dialogConfig.autoFocus = false;
-    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      DeleteConfirmationDialogComponent,
+      dialogConfig
+    );
     dialogRef?.afterClosed().subscribe((result: any) => {
       if (result) {
-        this.collegeService.deleteCollege(id)
-          .subscribe({
-            next: (res: any) => {
-              if (res.statusCode == 200) {
-                this.fetchColleges();
-                this.snackbarService.success(res.message);
-              } else {
-                this.snackbarService.error(res.message);
-              }
-            },
-          });
+        this.collegeService.deleteCollege(id).subscribe({
+          next: (res: any) => {
+            if (res.statusCode == StatusCode.Success) {
+              this.fetchColleges();
+              this.snackbarService.success(res.message);
+            } else {
+              this.snackbarService.error(res.message);
+            }
+          },
+        });
       }
     });
   }
 
   handlePageSizeChange(pageSize: number) {
     this.pageSize = pageSize;
-    this.currentPageIndex = 0;
+    this.currentPageIndex = Numbers.Zero;
     this.fetchColleges();
   }
 
@@ -128,17 +137,16 @@ export class CollegeComponent {
   }
 
   handlePageToPage(page: number) {
-    this.currentPageIndex = page - 1;
+    this.currentPageIndex = page - Numbers.One;
     this.fetchColleges();
   }
 
   isFirstPage(): boolean {
-    return this.currentPageIndex === 0;
+    return this.currentPageIndex === Numbers.Zero;
   }
 
   isLastPage(): boolean {
     const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
-    return this.currentPageIndex === totalPages - 1;
+    return this.currentPageIndex === totalPages - Numbers.One;
   }
-
 }

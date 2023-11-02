@@ -21,6 +21,10 @@ export const navBarRoutes = {
         label: 'Profile',
         path: `./${Navigation.Masters}/${Navigation.Profile}`,
       },
+      {
+        label: 'Admin',
+        path: `./${Navigation.Masters}/${Navigation.Admin}`,
+      },
     ],
     label: 'Manage Master',
     icon: '	manage_accounts',
