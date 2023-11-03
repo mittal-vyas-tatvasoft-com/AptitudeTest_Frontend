@@ -43,23 +43,20 @@
             </button>
             <button
               mat-menu-item
-              *ngIf="!question.status"
-              (click)="updateStatus({ id: question.id, status: true })"
+              (click)="
+                updateStatus({ id: question.id, status: !question.status })
+              "
             >
               <mat-icon>
-                <img src="./assets/images/active.svg" alt="Active" />
+                <img
+                  [src]="
+                    question.status != true
+                      ? './assets/images/active.svg'
+                      : './assets/images/inactive.svg'
+                  "
+                />
               </mat-icon>
-              Active
-            </button>
-            <button
-              mat-menu-item
-              *ngIf="question.status"
-              (click)="updateStatus({ id: question.id, status: false })"
-            >
-              <mat-icon>
-                <img src="./assets/images/inactive.svg" alt="Inactive" />
-              </mat-icon>
-              Inactive
+              {{ question.status != true ? "Active" : "InActive" }}
             </button>
             <button
               mat-menu-item
