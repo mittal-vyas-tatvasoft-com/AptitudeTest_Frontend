@@ -15,6 +15,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pagination } from 'src/app/shared/common/interfaces/pagination.interface';
 import { Question } from 'src/app/shared/common/interfaces/question.interface';
 import { Subject, debounceTime } from 'rxjs';
+import { Topics } from '../../static/topics.static';
 
 @Component({
   selector: 'app-questions',
@@ -33,20 +34,7 @@ export class QuestionsComponent implements OnInit {
   optionType = OptionType;
   questionTopic = QuestionTopic;
   questionType = QuestionType;
-  topics = [
-    {
-      id: 1,
-      name: 'Maths',
-    },
-    {
-      id: 2,
-      name: 'Reasoning',
-    },
-    {
-      id: 3,
-      name: 'Technical',
-    },
-  ];
+  topics = Topics;
   filterForm: FormGroup;
   response: Pagination<Question>;
   private scrollSubject = new Subject<number>();
