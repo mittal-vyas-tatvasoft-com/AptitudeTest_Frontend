@@ -94,6 +94,24 @@ export enum StatusCode {
   Conflict = 409,
 }
 
+//Questions
+
+export enum QuestionType {
+  SingleAnswer = 1,
+  MultiAnswer = 2,
+}
+
+export enum OptionType {
+  Text = 1,
+  Image = 2,
+}
+
+export enum QuestionTopic {
+  Maths = 1,
+  Reasoning = 2,
+  Technical = 3,
+}
+
 export enum Numbers {
   Debounce = 500,
   Zero = 0,
@@ -107,6 +125,11 @@ export enum Numbers {
   Eight = 8,
   Nine = 9,
   Ten = 10,
+}
+
+export enum PaginationDefaultValues {
+  DefaultIndex = 0,
+  DefaultPageSize = 10,
 }
 
 export enum StaticMessages {

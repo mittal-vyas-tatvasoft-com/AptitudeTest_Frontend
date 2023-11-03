@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { environment } from 'src/environments/environment';
+import { AdminModel } from '../interfaces/admin.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -25,12 +26,43 @@ export class AdminService {
     if (status != null) {
       params.Status = status;
     }
-    return this.http.get(`${environment.baseURL}Admin/GetAllAdmins`, {
+    return this.http.get(`${environment.baseURL}Admin/GetAllAdmin`, {
       params,
     });
   }
 
   getAdminById(id: number) {
     return this.http.get(`${environment.baseURL}Admin/GetAdminById/${id}`);
+  }
+
+  addNewAdmin(newAdmin: AdminModel) {
+    return this.http.post<ResponseModel<string>>(
+      `${environment.baseURL}Admin/Create`,
+      newAdmin
+    );
+  }
+
+  updateAdmin(updatedData: AdminModel) {
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}Admin/Update`,
+      updatedData
+    );
+  }
+
+  deleteAdmin(id: any) {
+    return this.http.delete<ResponseModel<string>>(
+      `${environment.baseURL}Admin/Delete/${id}`
+    );
+  }
+
+  updateStatus(id: number, status: boolean) {
+    const payload = {
+      id: id,
+      status: status,
+    };
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}Admin/ActiveInActiveAdmin`,
+      payload
+    );
   }
 }
