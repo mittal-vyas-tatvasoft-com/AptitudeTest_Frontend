@@ -85,6 +85,6 @@ export class AddAdminComponent implements OnInit, AfterViewInit {
   }
 
   closeModal() {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 }

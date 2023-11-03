@@ -9,7 +9,7 @@ import { Subject, debounceTime } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Numbers } from 'src/app/shared/common/enums';
+import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 
 @Component({
   selector: 'app-master-admin',
@@ -29,7 +29,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   ];
   dataSource: MatTableDataSource<AdminModel>;
   addAdmin: AdminModel = {
-    adminId: Numbers.Zero,
+    id: Numbers.Zero,
     firstName: '',
     lastName: '',
     middleName: '',
@@ -62,7 +62,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<AdminModel>([]);
-    this.fetchColleges('', null);
+    this.fetchAdmin('', null);
     this.createForm();
   }
 
@@ -79,7 +79,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
         debounceTime(Numbers.Debounce) // Adjust the debounce time as needed
       )
       .subscribe((value) => {
-        this.fetchColleges(value.searchValue, value.statusValue);
+        this.fetchAdmin(value.searchValue, value.statusValue);
       });
   }
 
@@ -93,7 +93,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.searchInputValue.next(data);
   }
 
-  fetchColleges(searchValue: string | null, status: boolean | null) {
+  fetchAdmin(searchValue: string | null, status: boolean | null) {
     this.adminService
       .getAdmins(this.currentPageIndex, this.pageSize, searchValue, status)
       .subscribe((res: any) => {
@@ -110,23 +110,61 @@ export class AdminComponent implements OnInit, AfterViewInit {
       });
   }
 
-  updateStatus(id: number, newStatus: boolean): void {}
+  updateStatus(id: number, newStatus: boolean): void {
+    this.adminService.updateStatus(id, newStatus).subscribe({
+      next: (res) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.resetForm();
+          this.snackbarService.success(res.message);
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+    });
+  }
 
   handleAddEditAdminDialog(data: AdminModel) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
-    dialogConfig.data = data.adminId;
+    dialogConfig.data = data.id;
 
     this.dialog
       .open(AddAdminComponent, dialogConfig)
       .afterClosed()
       .subscribe((res) => {
-        console.log(res);
-
+        const payload: AdminModel = {
+          id: res.id,
+          email: res.email,
+          firstName: res.firstName,
+          middleName: res.middleName,
+          lastName: res.lastName,
+          phoneNumber: res.phoneNumber,
+          status: res.status,
+        };
         if (res) {
           if (res.id == Numbers.Zero) {
+            this.adminService.addNewAdmin(payload).subscribe({
+              next: (res) => {
+                if (res.statusCode == StatusCode.Success) {
+                  this.resetForm();
+                  this.snackbarService.success(res.message);
+                } else {
+                  this.snackbarService.error(res.message);
+                }
+              },
+            });
           } else {
+            this.adminService.updateAdmin(payload).subscribe({
+              next: (res) => {
+                if (res.statusCode == StatusCode.Success) {
+                  this.resetForm();
+                  this.snackbarService.success(res.message);
+                } else {
+                  this.snackbarService.error(res.message);
+                }
+              },
+            });
           }
         }
       });
@@ -143,6 +181,16 @@ export class AdminComponent implements OnInit, AfterViewInit {
     );
     dialogRef?.afterClosed().subscribe((result) => {
       if (result) {
+        this.adminService.deleteAdmin(id).subscribe({
+          next: (res) => {
+            if (res.statusCode == StatusCode.Success) {
+              this.resetForm();
+              this.snackbarService.success(res.message);
+            } else {
+              this.snackbarService.error(res.message);
+            }
+          },
+        });
       }
     });
   }
@@ -150,7 +198,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   handlePageSizeChange(pageSize: number) {
     this.pageSize = pageSize;
     this.currentPageIndex = Numbers.Zero;
-    this.fetchColleges('', null);
+    this.fetchAdmin('', null);
   }
 
   handlePageChange(direction: 'prev' | 'next') {
@@ -159,12 +207,12 @@ export class AdminComponent implements OnInit, AfterViewInit {
     } else if (direction === 'next' && !this.isLastPage()) {
       this.currentPageIndex++;
     }
-    this.fetchColleges('', null);
+    this.fetchAdmin('', null);
   }
 
   handlePageToPage(page: number) {
     this.currentPageIndex = page - Numbers.One;
-    this.fetchColleges('', null);
+    this.fetchAdmin('', null);
   }
 
   isFirstPage(): boolean {
@@ -178,6 +226,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   resetForm() {
     this.form.reset();
-    this.fetchColleges('', null);
+    this.fetchAdmin('', null);
   }
 }
