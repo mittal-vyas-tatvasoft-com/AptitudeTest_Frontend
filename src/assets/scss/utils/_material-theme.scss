@@ -171,6 +171,12 @@ $color676D79: #676d79;
     background-color: rgba(76, 93, 222, 0.07);
   }
 }
+.mdc-button--outlined.mat-unthemed {
+  &:not(:disabled) {
+    border-color: #b8bfcb;
+    background: $white;
+  }
+}
 
 // Mat FormField
 .mat-mdc-form-field {
@@ -230,7 +236,7 @@ $color676D79: #676d79;
           .mdc-floating-label,
         &:not(.mdc-text-field--disabled).mdc-text-field--focused
           .mdc-floating-label--float-above {
-          color: $primary500;
+          color: $primary500 !important;
         }
       }
 
@@ -312,6 +318,7 @@ $color676D79: #676d79;
         }
         textarea.mat-mdc-form-field-input-control {
           height: auto;
+          resize: initial;
         }
         .mat-mdc-form-field-icon-suffix {
           .material-icons {
@@ -361,6 +368,9 @@ $color676D79: #676d79;
       width: 20px;
       height: 20px;
       border-radius: 3px;
+      .mdc-checkbox__mixedmark {
+        width: 10px;
+      }
     }
     &:hover
       .mdc-checkbox__native-control:enabled:not(:checked):not(
@@ -416,6 +426,94 @@ $color676D79: #676d79;
   }
 }
 
+// Mat Radio Button
+.mat-mdc-radio-button {
+  margin-left: -8px;
+  display: inline-block;
+  cursor: pointer;
+  .mdc-form-field {
+    cursor: pointer;
+    .mdc-radio {
+      width: 18px;
+      height: 18px;
+      --mdc-radio-state-layer-size: 34px;
+      .mdc-radio__background {
+        width: 18px;
+        height: 18px;
+        &::before {
+          top: calc(-1 * (var(--mdc-radio-state-layer-size) - 18px) / 2);
+          left: calc(-1 * (var(--mdc-radio-state-layer-size) - 18px) / 2);
+          width: var(--mdc-radio-state-layer-size - 2px);
+          height: var(--mdc-radio-state-layer-size - 2px);
+        }
+        .mdc-radio__outer-circle {
+          border-width: 1px;
+          border-color: #b8bfcb;
+        }
+        .mdc-radio__inner-circle {
+          width: 12px;
+          height: 12px;
+          border-width: 12px;
+          top: -3px;
+          left: -3px;
+        }
+      }
+      .mdc-radio__native-control:enabled:not(:checked)
+        + .mdc-radio__background
+        .mdc-radio__outer-circle {
+        border-width: 1px;
+        border-color: #b8bfcb;
+      }
+
+      .mdc-radio__ripple,
+      .mat-mdc-radio-ripple,
+      .mdc-radio__native-control {
+        top: 0;
+        left: 0;
+        width: 34px;
+        height: 34px;
+      }
+
+      + .mdc-label {
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        line-height: 20px;
+        font-weight: 400;
+        color: $color51545F;
+        letter-spacing: 0.2px;
+        padding-left: 0;
+        position: relative;
+        cursor: pointer;
+      }
+
+      &:hover .mat-radio-ripple {
+        background-color: rgba($color: $black, $alpha: 0.07);
+      }
+
+      &:hover
+        .mdc-radio__native-control:enabled:not(:checked)
+        + .mdc-radio__background
+        .mdc-radio__outer-circle,
+      .mdc-radio__native-control:enabled
+        + .mdc-radio__background
+        .mdc-radio__inner-circle,
+      .mdc-radio__native-control:enabled:checked
+        + .mdc-radio__background
+        .mdc-radio__outer-circle,
+      .mat-mdc-radio-button
+        .mdc-radio:not(.mdc-ripple-upgraded):focus
+        .mdc-radio__native-control:enabled:checked
+        + .mdc-radio__background
+        .mdc-radio__outer-circle {
+        border-color: $primary500 !important;
+      }
+    }
+  }
+  &.mat-mdc-radio-checked .mdc-radio__background::before {
+    background-color: $primary500 !important;
+  }
+}
+
 // Mat Icon
 .mat-icon.material-icons {
   display: flex;
@@ -468,6 +566,7 @@ $color676D79: #676d79;
   box-shadow: none !important;
   width: 46px;
   height: 46px;
+  overflow: hidden;
   .mat-icon {
     width: 20px;
     height: 20px;
@@ -486,6 +585,7 @@ $color676D79: #676d79;
   box-shadow: none !important;
   width: 40px;
   height: 40px;
+  overflow: hidden;
   .mat-icon {
     width: 18px;
     height: 18px;
@@ -525,6 +625,11 @@ $color676D79: #676d79;
       padding: 0;
     }
   }
+  &.default-card {
+    .mat-mdc-card-content {
+      padding: 24px;
+    }
+  }
 }
 
 // Mat Table
@@ -553,6 +658,23 @@ $color676D79: #676d79;
         width: 50px;
         text-align: center;
       }
+      &.mat-column-select {
+        width: 10px;
+        .mat-mdc-checkbox {
+          margin-left: 0;
+          margin-right: -10px;
+        }
+      }
+      &.mat-sort-header {
+        .mat-sort-header-arrow {
+          color: $color51545F;
+        }
+        &.text-center {
+          .mat-sort-header-container {
+            justify-content: center;
+          }
+        }
+      }
     }
   }
   .mdc-data-table__content {
@@ -567,6 +689,33 @@ $color676D79: #676d79;
         padding: 15px 10px;
         border-bottom: 1px solid #d7e0ef;
         color: $color51545F;
+        &.green {
+          color: #29aa29;
+        }
+        &.red {
+          color: #c21616;
+        }
+        a.default-bold-link {
+          color: inherit;
+          font-size: inherit;
+          line-height: inherit;
+          text-decoration: none !important;
+          &:hover,
+          &:hover b {
+            color: $primary500;
+          }
+        }
+        b {
+          color: #313131;
+          display: block;
+          font-weight: 500;
+        }
+        strong {
+          font-weight: 600;
+        }
+        small {
+          font-size: 13px;
+        }
         .mat-mdc-chip {
           margin: -6px 0;
         }
@@ -575,12 +724,18 @@ $color676D79: #676d79;
           height: 40px;
           padding: 8px;
         }
-      }
-      .mat-mdc-cell.mat-column-action {
-        padding-top: 6px;
-        padding-bottom: 6px;
-        min-width: auto;
-        text-align: center;
+        &.mat-column-action {
+          padding-top: 6px;
+          padding-bottom: 6px;
+          min-width: auto;
+          text-align: center;
+        }
+        &.mat-column-select {
+          width: 10px;
+          .mat-mdc-checkbox {
+            margin: -10px -10px -10px 0;
+          }
+        }
       }
     }
   }
@@ -724,6 +879,36 @@ $color676D79: #676d79;
     }
   }
 }
+.ChipInfo.mat-mdc-chip.mat-mdc-standard-chip:not(
+    .mdc-evolution-chip--disabled
+  ) {
+  background-color: #eaf2ff;
+  .mdc-evolution-chip__action {
+    .mat-mdc-chip-action-label {
+      color: $primary500;
+    }
+  }
+}
+.ChipWarn.mat-mdc-chip.mat-mdc-standard-chip:not(
+    .mdc-evolution-chip--disabled
+  ) {
+  background-color: #fff9dc;
+  .mdc-evolution-chip__action {
+    .mat-mdc-chip-action-label {
+      color: #fca119;
+    }
+  }
+}
+.ChipDefault.mat-mdc-chip.mat-mdc-standard-chip:not(
+    .mdc-evolution-chip--disabled
+  ) {
+  background-color: #ececec;
+  .mdc-evolution-chip__action {
+    .mat-mdc-chip-action-label {
+      color: $color51545F;
+    }
+  }
+}
 
 // Mat Select
 .mat-mdc-form-field {
@@ -788,14 +973,19 @@ div.mat-mdc-select-panel {
     .mat-mdc-option-pseudo-checkbox {
       display: none;
     }
+    &:hover {
+      background: #eef0f6;
+    }
     &:focus,
     &.mat-mdc-option-active {
-      background-color: #e3ecf9;
+      background-color: transparent;
+      color: $primary500;
     }
     &.mdc-list-item--selected:not(.mdc-list-item--disabled):not(
         .mat-mdc-option-multiple
       ) {
-      background-color: #e3ecf9;
+      background-color: transparent;
+      color: $primary500;
       .mdc-list-item__primary-text,
       .mdc-list-item__primary-text
         + .mat-pseudo-checkbox-checked.mat-pseudo-checkbox-minimal::after {
@@ -808,7 +998,7 @@ div.mat-mdc-select-panel {
 // Mat Dialog
 .primary-dialog.cdk-overlay-pane {
   width: 556px;
-  max-width: 556px !important;
+  // max-width: 556px !important;
   .mdc-dialog {
     box-shadow: none;
     .mdc-dialog__container {
@@ -902,8 +1092,389 @@ div.mat-mdc-select-panel {
   }
 }
 
+// Mat Datepicker Panel
+.mat-datepicker-popup {
+  .mat-datepicker-content {
+    box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    .mat-datepicker-content-container {
+      .mat-calendar {
+        height: auto;
+        .mat-calendar-header {
+          .mat-calendar-controls {
+            margin: 1% calc(4.7142857143% - 16px) 5%;
+            .mat-mdc-button:not(:disabled) {
+              padding: 8px;
+              color: #5a5a5a;
+            }
+          }
+        }
+        .mat-calendar-table {
+          .mat-calendar-table-header {
+            th {
+              font-size: 14px;
+              font-weight: 300;
+              color: $color51545F;
+            }
+          }
+          .mat-calendar-body {
+            .mat-calendar-body-label {
+              font-size: 16px;
+              line-height: 20px;
+              font-weight: 600;
+              padding: 10px !important;
+            }
+            .mat-calendar-body-cell-container {
+              .mat-calendar-body-cell {
+                .mat-calendar-body-cell-content {
+                  color: #6a6a6a;
+                  &.mat-calendar-body-today:not(
+                      .mat-calendar-body-selected
+                    ):not(.mat-calendar-body-comparison-identical) {
+                    border-color: $primary500;
+                  }
+                  &.mat-calendar-body-selected {
+                    color: $white;
+                  }
+                }
+                &:not(.mat-calendar-body-disabled):hover
+                  > .mat-calendar-body-cell-content:not(
+                    .mat-calendar-body-selected
+                  ):not(.mat-calendar-body-comparison-identical) {
+                  background: #eaeaea;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Mat Datepicker/Timepicker
+.mat-datepicker-toggle {
+  .mat-mdc-icon-button {
+    display: flex;
+    .mat-datepicker-toggle-default-icon {
+      path {
+        display: none;
+      }
+      background: url("./../../images/datepicker-grey.svg") no-repeat center
+        center;
+      background-size: 20px 20px;
+    }
+  }
+}
+.mat-time-picker.mat-mdc-form-field {
+  &.mat-form-field-appearance-outline {
+    .mat-mdc-text-field-wrapper
+      .mat-mdc-form-field-flex
+      .mat-mdc-form-field-icon-suffix {
+      .mat-mdc-icon-button.mat-mdc-button-base {
+        padding: 12px;
+        margin-right: 1px;
+        .mat-icon {
+          width: 20px;
+          height: 20px;
+        }
+      }
+    }
+  }
+}
+ngx-material-timepicker-container {
+  .timepicker-overlay {
+    ngx-material-timepicker-content {
+      .timepicker {
+        border-radius: 6px;
+        overflow: hidden;
+        box-shadow: 0px 3px 10px 0px rgba(0, 0, 0, 0.2);
+        width: 320px;
+        .timepicker__header {
+          background: $primary500;
+          .timepicker-dial__control {
+            font-family: "Poppins", sans-serif;
+          }
+          .timepicker-period {
+            .timepicker-period__btn {
+              padding: 3px 6px;
+              font-weight: 400;
+              border-radius: 4px;
+              font-family: "Poppins", sans-serif;
+            }
+          }
+        }
+        .timepicker__main-content {
+          .timepicker__body {
+            padding: 15px;
+            ngx-material-timepicker-face {
+              .clock-face {
+                background: rgba($color: $primary500, $alpha: 0.08);
+                .clock-face__container {
+                  .clock-face__number {
+                    span {
+                      width: 36px;
+                      height: 36px;
+                      font-size: 16px;
+                      line-height: 20px;
+                      font-weight: 500;
+                      color: $color51545F;
+                      font-family: "Poppins", sans-serif;
+                      &.active {
+                        background: $primary500;
+                        color: $white;
+                      }
+                    }
+                  }
+                  .clock-face__number--outer {
+                    height: calc(300px / 2 - 20px);
+                  }
+                }
+                .clock-face__clock-hand {
+                  background: $primary500;
+                  &::before {
+                    border-color: $primary500;
+                  }
+                  &::after {
+                    width: 8px;
+                    height: 8px;
+                    background: $primary500;
+                  }
+                }
+              }
+            }
+          }
+          .timepicker__actions {
+            .timepicker-button {
+              padding: 11.5px 20px;
+              border-radius: 4px;
+              height: auto;
+              min-width: 80px;
+              border: 1px solid $primary500;
+              margin: 0 4px;
+              line-height: 20px;
+              &:hover {
+                background: rgba($color: $primary500, $alpha: 0.07);
+              }
+              span {
+                font-size: 16px;
+                line-height: 20px;
+                font-weight: 500;
+                text-transform: capitalize;
+                font-family: "Poppins", sans-serif;
+                padding: 0;
+                color: $primary500;
+              }
+            }
+            & div:last-child {
+              .timepicker-button {
+                background: $primary500;
+                span {
+                  color: $white;
+                }
+                &:hover {
+                  background: $primary600;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// Mat Stepper
+.primary-stepper {
+  &.mat-stepper-horizontal {
+    .mat-horizontal-stepper-wrapper {
+      .mat-horizontal-stepper-header-container {
+        width: 752px;
+        max-width: 752px;
+        margin: 0 auto;
+        border-radius: 56px;
+        border: 1px solid #d8dcef;
+        background: #eef0f6;
+        justify-content: space-between;
+        .mat-horizontal-stepper-header {
+          height: auto;
+          padding: 10px 55px;
+          cursor: pointer;
+          border-radius: 50px;
+          &.mat-horizontal-stepper-header[aria-selected="true"] {
+            background: $primary500;
+            color: $white;
+          }
+          .mat-step-icon-state-number {
+            color: $white;
+            background-color: $primary500;
+            &.mat-step-icon-selected {
+              background-color: $white;
+              color: $primary500;
+            }
+          }
+          .mat-step-label {
+            color: $primary500;
+            font-family: "Poppins", sans-serif;
+            font-size: 16px;
+            font-weight: 500;
+            line-height: 22px;
+            &.mat-step-label-active.mat-step-label-selected {
+              color: $white;
+            }
+          }
+        }
+        .mat-stepper-horizontal-line {
+          display: none;
+        }
+      }
+    }
+    .mat-horizontal-content-container {
+      padding: 30px 0 0;
+      overflow: visible;
+    }
+  }
+
+  .action-list {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    .mat-mdc-button-base {
+      margin: 4px 0 4px 12px;
+    }
+  }
+}
+
+// Mat Switch
+.mat-mdc-slide-toggle {
+  .mdc-form-field {
+    .mdc-switch {
+      --mdc-switch-track-width: 34px;
+      --mdc-switch-unselected-focus-handle-color: $primary500;
+      --mdc-switch-unselected-pressed-handle-color: $primary500;
+      --mdc-switch-selected-focus-handle-color: $primary500;
+      --mdc-switch-selected-hover-handle-color: $primary500;
+      --mdc-switch-selected-pressed-handle-color: $primary500;
+      --mdc-switch-selected-focus-track-color: #aeb7be;
+      --mdc-switch-selected-hover-track-color: #aeb7be;
+      --mdc-switch-unselected-track-color: #aeb7be;
+      --mdc-switch-selected-track-color: #aeb7be;
+      &.mdc-switch--selected:enabled .mdc-switch__handle::after {
+        background-color: #244e8a !important;
+      }
+      .mdc-switch__track {
+        &::before {
+          background: #aeb7be;
+        }
+      }
+      &.mdc-switch:enabled {
+        &:hover:not(:focus):not(:active) .mdc-switch__track::before {
+          background: #aeb7be;
+        }
+        .mdc-switch__shadow {
+          box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.24),
+            0px 0px 2px rgba(0, 0, 0, 0.12);
+        }
+      }
+      &.mdc-switch--unselected:enabled {
+        .mdc-switch__handle::after,
+        &:hover:not(:focus):not(:active) .mdc-switch__handle::after {
+          background: $white;
+        }
+      }
+      &.mdc-switch.mdc-switch--selected:enabled:active {
+        .mdc-switch__handle::after {
+          background: $primary500;
+        }
+      }
+      &.mdc-switch.mdc-switch--selected:enabled:hover:not(:focus):not(:active)
+        .mdc-switch__handle::after {
+        background: $primary500;
+      }
+    }
+    .mdc-label {
+      color: $color51545F;
+      font-family: "Poppins", sans-serif;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 20px;
+      text-transform: capitalize;
+    }
+    &.mdc-form-field--align-end {
+      .mdc-label {
+        margin-left: 0;
+        margin-right: auto;
+      }
+    }
+  }
+}
+
+// selectable-chips-wrapper
+.mat-mdc-chip-listbox.selectable-chips-wrapper {
+  .mat-mdc-chip.mat-mdc-chip-option:not(.mdc-evolution-chip--disabled) {
+    border-radius: 50px;
+    border: 1px solid #b8bfcb;
+    background: $white;
+    min-height: 40px;
+    .mat-mdc-chip-action {
+      padding: 0 20px;
+      .mat-mdc-chip-graphic {
+        display: none;
+      }
+      .mat-mdc-chip-action-label {
+        color: rgba($color: $color51545F, $alpha: 0.5);
+        font-family: "Poppins", sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16px;
+        text-transform: capitalize;
+        .result {
+          margin-left: 5px;
+          color: $color51545F;
+          font-weight: 500;
+          letter-spacing: 0.14px;
+          em {
+            color: #46a746;
+          }
+        }
+      }
+    }
+    &.mdc-evolution-chip--selected {
+      background: $primary500 !important;
+      border-color: $primary500;
+      .mat-mdc-chip-action {
+        .mat-mdc-chip-action-label {
+          color: rgba($color: $white, $alpha: 0.5);
+          .result {
+            color: $white;
+            em {
+              color: $white;
+            }
+          }
+        }
+      }
+    }
+    &:hover {
+      background: rgba(45, 97, 172, 0.08);
+    }
+  }
+}
+
 /* Responsive Media Queries
 -------------------------------------------------------------------------------------------------*/
+@media (max-width: 991px) {
+  .primary-stepper.mat-stepper-horizontal {
+    .mat-horizontal-stepper-wrapper {
+      .mat-horizontal-stepper-header-container {
+        width: auto;
+        .mat-horizontal-stepper-header {
+          padding: 10px 30px;
+        }
+      }
+    }
+  }
+}
 @media (max-width: 767px) {
   .mat-custom-pagination {
     padding: 20px 16px;
@@ -946,6 +1517,83 @@ div.mat-mdc-select-panel {
   .mat-mdc-form-field {
     .mat-mdc-form-field-subscript-wrapper {
       line-height: 21px;
+    }
+  }
+
+  .primary-stepper {
+    &.mat-stepper-horizontal {
+      .mat-horizontal-stepper-wrapper {
+        .mat-horizontal-stepper-header-container {
+          border: 0;
+          .mat-horizontal-stepper-header {
+            padding: 12px 16px;
+            .mat-step-icon-state-number {
+              margin-right: 0;
+              &.mat-step-icon-selected {
+                margin-right: 8px;
+              }
+            }
+            .mat-step-label {
+              display: none;
+              &.mat-step-label-selected {
+                display: block;
+              }
+            }
+          }
+        }
+      }
+    }
+    &.mat-stepper-vertical {
+      margin: -24px;
+      .mat-step {
+        .mat-vertical-stepper-header {
+          height: auto;
+          padding: 16px;
+          .mat-step-icon-state-number {
+            width: 30px;
+            height: 30px;
+            background: #838898;
+            .mat-step-icon-content {
+              font-size: 14px;
+              line-height: 18px;
+              font-weight: 500;
+            }
+            &.mat-step-icon-selected {
+              background: $primary500;
+              .mat-step-icon-content {
+                color: $white;
+              }
+            }
+          }
+          .mat-step-label {
+            font-size: 16px;
+            line-height: 30px;
+            font-family: "Poppins", sans-serif;
+            font-weight: 500;
+            color: #838898;
+            &.mat-step-label-selected {
+              color: $primary500;
+            }
+          }
+        }
+        .mat-vertical-content-container {
+          margin-left: 30px;
+          .mat-vertical-content {
+            padding: 16px 20px 8px;
+            .mat-table-wrapper {
+              padding: 0 4px;
+            }
+            .mat-custom-pagination {
+              .pagination-left {
+                display: block;
+                .page-info {
+                  margin-top: 10px;
+                }
+              }
+            }
+          }
+        }
+      }
     }
   }
 }

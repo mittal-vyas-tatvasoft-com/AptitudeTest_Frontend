@@ -108,3 +108,8 @@ export enum Numbers {
   Nine = 9,
   Ten = 10,
 }
+
+export enum StaticMessages {
+  //warning static message 
+  SelectRow = 'Please select atleast one row'
+}

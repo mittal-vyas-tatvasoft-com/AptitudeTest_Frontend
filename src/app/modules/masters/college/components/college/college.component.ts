@@ -26,12 +26,7 @@ export class CollegeComponent {
     { columnDef: 'name', header: 'Name of College' },
     { columnDef: 'abbreviation', header: 'Abbreviation' },
     { columnDef: 'status', header: 'Status' },
-    {
-      columnDef: 'editAction',
-      header: 'Action',
-      isAction: true,
-      action: 'edit',
-    },
+    { columnDef: 'action', header: 'Action', isAction: true },
   ];
   private ngUnsubscribe$: Subject<void> = new Subject();
 
@@ -39,7 +34,7 @@ export class CollegeComponent {
     public dialog: MatDialog,
     private collegeService: CollegeService,
     private snackbarService: SnackbarService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<CollegeModel>([]);
