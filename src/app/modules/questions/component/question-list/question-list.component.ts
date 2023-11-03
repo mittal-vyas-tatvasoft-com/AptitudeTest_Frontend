@@ -10,6 +10,7 @@ import { UpdateStatus } from 'src/app/shared/common/interfaces/update-status';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { QuestionsService } from '../../services/questions.service';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { Topics } from '../../static/topics.static';
 
 @Component({
   selector: 'app-question-list',
@@ -21,20 +22,7 @@ export class QuestionListComponent implements OnInit {
   optionType = OptionType;
   questionTopic = QuestionTopic;
   questionType = QuestionType;
-  topics = [
-    {
-      id: 1,
-      name: 'Maths',
-    },
-    {
-      id: 2,
-      name: 'Reasoning',
-    },
-    {
-      id: 3,
-      name: 'Technical',
-    },
-  ];
+  topics = Topics;
 
   constructor(
     public dialog: MatDialog,

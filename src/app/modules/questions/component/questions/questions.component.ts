@@ -15,7 +15,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pagination } from 'src/app/shared/common/interfaces/pagination.interface';
 import { Question } from 'src/app/shared/common/interfaces/question.interface';
 import { Subject, debounceTime } from 'rxjs';
-import { Topics } from '../../static/topics.static';
+import { OptionList, Topics } from '../../static/topics.static';
 
 @Component({
   selector: 'app-questions',
@@ -23,13 +23,13 @@ import { Topics } from '../../static/topics.static';
   styleUrls: ['./questions.component.scss'],
 })
 export class QuestionsComponent implements OnInit {
-  optionsList: string[] = ['All', 'Active', 'InActive'];
+  optionsList: string[] = OptionList;
   questions: any[] = [];
   questionCount: QuestionCount = {
-    mathsCount: 0,
-    reasoningCount: 0,
-    technicalCount: 0,
-    totalCount: 0,
+    mathsCount: Numbers.Zero,
+    reasoningCount: Numbers.Zero,
+    technicalCount: Numbers.Zero,
+    totalCount: Numbers.Zero,
   };
   optionType = OptionType;
   questionTopic = QuestionTopic;
@@ -61,7 +61,7 @@ export class QuestionsComponent implements OnInit {
         if (data > 0.98 && this.response.isNextPage == true) {
           this.loadQuestions(
             this.response.pageSize,
-            this.response?.currentPageIndex + 1
+            this.response?.currentPageIndex + Numbers.One
           );
         }
       });

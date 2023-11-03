@@ -12,3 +12,5 @@ export const Topics = [
     name: 'Technical',
   },
 ];
+
+export const OptionList = ['All', 'Active', 'InActive'];
