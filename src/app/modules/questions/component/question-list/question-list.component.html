@@ -10,12 +10,16 @@
           <mat-chip class="ChipDefault">{{
             getTopicName(question.topicId)
           }}</mat-chip>
-          <ng-container *ngIf="question.status; else InActive">
-            <mat-chip class="ChipSuccess"> Active </mat-chip>
+          <ng-container>
+            <mat-chip
+              [ngClass]="{
+                ChipSuccess: question.status,
+                ChipInactive: !question.status
+              }"
+              >{{ question.status ? "Active" : "InActive" }}
+            </mat-chip>
           </ng-container>
-          <ng-template #InActive>
-            <mat-chip class="ChipInactive"> Inactive </mat-chip>
-          </ng-template>
+
           <mat-chip class="ChipInfo question-mark">
             {{ question.difficulty }}
           </mat-chip>
@@ -50,13 +54,13 @@
               <mat-icon>
                 <img
                   [src]="
-                    question.status != true
+                    !question.status
                       ? './assets/images/active.svg'
                       : './assets/images/inactive.svg'
                   "
                 />
               </mat-icon>
-              {{ question.status != true ? "Active" : "InActive" }}
+              {{ !question.status ? "Active" : "InActive" }}
             </button>
             <button
               mat-menu-item
