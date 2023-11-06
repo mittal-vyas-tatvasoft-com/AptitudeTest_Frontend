@@ -14,3 +14,4 @@ export const Topics = [
 ];
 
 export const OptionList = ['All', 'Active', 'InActive'];
+export const OptionsIndex = ['A', 'B', 'C', 'D'];
