@@ -186,7 +186,7 @@ export class CandidatesComponent {
   }
 
   handleEditCandidate(candidate: CandidateModel) {
-    this.router.navigate(['admin/candidate/edit']);
+    this.router.navigate(['admin/candidate/edit', candidate.id]);
   }
 
   getupdateStatus(id: number, newStatus: boolean) {
