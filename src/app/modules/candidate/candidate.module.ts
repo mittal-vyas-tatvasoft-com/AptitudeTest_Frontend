@@ -14,6 +14,8 @@ import { FamilyBackgroundComponent } from './components/family-background/family
 import { AddCandidateComponent } from './containers/add-candidate/add-candidate.component';
 import { CandidatesComponent } from './containers/candidates/candidates.component';
 import { ImportCandidateComponent } from './containers/import-candidate/import-candidate.component';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
 
 
 @NgModule({
@@ -31,7 +33,9 @@ import { ImportCandidateComponent } from './containers/import-candidate/import-c
     CommonModule,
     CandidateRoutingModule,
     SharedMaterialModule,
-    TablesModule
+    TablesModule,
+    ReactiveFormsModule,
+    FormControlModule
   ],
   providers: [
     CandidateService,

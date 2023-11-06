@@ -1,8 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormControlModel } from '../../interfaces/form-control-model';
 import { Option } from '../../interfaces/option';
 import { ValidationService } from '../../services/validation.service';
+import { SelectOption } from '../../interfaces/select-option.interface';
 
 @Component({
   selector: 'app-select',
@@ -10,9 +11,18 @@ import { ValidationService } from '../../services/validation.service';
   styleUrls: ['./select.component.scss'],
 })
 export class SelectComponent {
-  @Input() form!: FormGroup;
-  @Input() formControlModel!: FormControlModel;
-  @Input() options: Option[] = [];
+  @Input() formControlModel: FormControlModel;
+  @Input() form: FormGroup;
+  @Input() options: SelectOption[] | null = [];
+  @Output() selection = new EventEmitter();
+  constructor(public _validator: ValidationService) { }
 
-  constructor(public validationService: ValidationService) {}
+  getOptions() {
+    const formControlModel = this.options;
+    if (formControlModel) {
+      return formControlModel;
+    }
+
+    return [];
+  }
 }

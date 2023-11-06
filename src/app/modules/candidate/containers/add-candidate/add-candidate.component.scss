@@ -1,0 +1,11 @@
+.spinner-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
+
+::ng-deep .mat-mdc-dialog-actions .mdc-button.mat-mdc-button-base,
+::ng-deep .mat-mdc-dialog-actions .mat-mdc-unelevated-button.mat-mdc-button-base {
+    margin-right: 10px;
+}
