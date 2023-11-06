@@ -34,7 +34,9 @@ export enum Navigation {
   Lookups = 'lookups',
   Languages = 'languages',
 
+  // Candidate Navigation
   Candidate = 'candidate',
+  ImportCandidate = 'import-candidate',
 
   // Questions navigation
   Questions = 'questions',
