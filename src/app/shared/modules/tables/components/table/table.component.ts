@@ -1,15 +1,10 @@
-import {
-  Component,
-  Input,
-  Output,
-  EventEmitter,
-  SimpleChanges,
-  ViewChild,
-  OnChanges,
-} from '@angular/core';
+import { Component, Input, Output, EventEmitter, SimpleChanges, ViewChild, OnChanges, ChangeDetectorRef } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from '../../interfaces/table-data.interface';
-import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { SelectionModel } from '@angular/cdk/collections';
+import { MatSort } from '@angular/material/sort';
+import { Numbers } from 'src/app/shared/common/enums';
+
 
 @Component({
   selector: 'app-table',
@@ -20,6 +15,7 @@ export class TableComponent<T> {
   pageNumbers: number[] = [];
   currentPageIndex: number = Numbers.Zero;
   pageSizeOptions: number[] = [10, 20, 50];
+  selection = new SelectionModel<any>(true, []); // This selection model is used for item selection, and the type is not specific.
   @Input() dataSource!: MatTableDataSource<T>;
   @Input() columns: TableColumn<T>[] = [];
   @Input() pagination: boolean = true;
@@ -34,13 +30,15 @@ export class TableComponent<T> {
   @Output() pageSizeChanged = new EventEmitter<number>();
   @Output() pageChanged = new EventEmitter<'prev' | 'next'>();
   @Output() pageToPage = new EventEmitter<number>();
+  @ViewChild(MatSort) sort = new MatSort();
 
-  constructor() {}
+  constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['totalItemsCount'] || changes['pageSize']) {
       this.updatePageNumbers();
     }
+    this.dataSource.sort = this.sort
   }
 
   handleEdit(row: T) {
@@ -108,5 +106,30 @@ export class TableComponent<T> {
     const firstEntry = this.getFirstEntryIndex();
     const lastEntry = this.getLastEntryIndex();
     return `Showing ${firstEntry} - ${lastEntry} of ${this.totalItemsCount} entries`;
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+    this.selection.select(...this.dataSource.data);
+  }
+
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.firstName + 1}`;
+  }
+
+  getSelectedRowIds(): { userId: number, status: boolean }[] {
+    return this.selection.selected.map(row => ({ userId: row.id, status: row.status }));
   }
 }

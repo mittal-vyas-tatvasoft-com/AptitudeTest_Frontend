@@ -131,3 +131,8 @@ export enum PaginationDefaultValues {
   DefaultIndex = 0,
   DefaultPageSize = 10,
 }
+
+export enum StaticMessages {
+  //warning static message 
+  SelectRow = 'Please select atleast one row'
+}

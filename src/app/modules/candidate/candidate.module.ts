@@ -7,6 +7,8 @@ import { AddCandidateComponent } from './component/add-candidate/add-candidate.c
 import { ImportCandidateComponent } from './component/import-candidate/import-candidate.component';
 import { CandidateService } from './services/candidate.service';
 import { CandidatesComponent } from './component/candidates/candidates.component';
+import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
+import { TablesModule } from 'src/app/shared/modules/tables/tables.module';
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { CandidatesComponent } from './component/candidates/candidates.component
   imports: [
     CommonModule,
     CandidateRoutingModule,
-    SharedMaterialModule
+    SharedMaterialModule,
+    TablesModule
   ],
   providers: [
     CandidateService,

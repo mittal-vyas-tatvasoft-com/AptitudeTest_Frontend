@@ -6,7 +6,7 @@ import { snackBarDuration } from '../common/interfaces/constants.static';
   providedIn: 'root',
 })
 export class SnackbarService {
-  constructor(public snackBar: MatSnackBar) {}
+  constructor(public snackBar: MatSnackBar) { }
 
   success(message: string) {
     this.snackBar.open(message, '', {
@@ -21,6 +21,15 @@ export class SnackbarService {
     this.snackBar.open(message, '', {
       duration: snackBarDuration,
       panelClass: ['error'],
+      horizontalPosition: 'right',
+      verticalPosition: 'top',
+    });
+  }
+
+  warn(message: string) {
+    this.snackBar.open(message, '', {
+      duration: snackBarDuration,
+      panelClass: ['warn'],
       horizontalPosition: 'right',
       verticalPosition: 'top',
     });
