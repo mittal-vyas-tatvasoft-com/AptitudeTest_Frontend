@@ -1,1 +1,56 @@
-<p>add-candidate works!</p>
+<div class="dialog-header">
+    <h2 mat-dialog-title>Candidate Details</h2>
+    <button mat-icon-button class="dialog-close" (click)="closeModal()">
+        <mat-icon>
+            <img src="./assets/images/close-grey.svg" alt="Close" />
+        </mat-icon>
+    </button>
+</div>
+<mat-dialog-content class="dialog-body pb-0">
+    <div class="spinner-container" *ngIf="isLoading">
+        <mat-spinner diameter="32" color="primary"></mat-spinner>
+    </div>
+    <form [formGroup]="form" (ngSubmit)="onSaveClick()">
+        <div class="row">
+            <div class="col-md-4">
+                <app-text-control [formControlModel]="CandidateModel.firstName" [form]="form"
+                    class="w-100"></app-text-control>
+            </div>
+            <div class="col-md-4">
+                <app-text-control [formControlModel]="CandidateModel.fatherName" [form]="form"
+                    class="w-100"></app-text-control>
+            </div>
+            <div class="col-md-4">
+                <app-text-control [formControlModel]="CandidateModel.lastName" [form]="form"
+                    class="w-100"></app-text-control>
+            </div>
+            <div class="col-md-6">
+                <app-select [formControlModel]="CandidateModel.group" [form]="form" [options]="groups"></app-select>
+            </div>
+            <div class="col-md-6">
+                <app-select [formControlModel]="CandidateModel.college" [form]="form" [options]="colleges"></app-select>
+            </div>
+            <div class="col-md-6">
+                <app-text-control [formControlModel]="CandidateModel.email" [form]="form"
+                    class="w-100"></app-text-control>
+            </div>
+            <div class="col-md-6">
+                <app-text-control-number [formControlModel]="CandidateModel.phoneNumber" [form]="form"
+                    class="w-100"></app-text-control-number>
+            </div>
+            <div class="col-md-6">
+                <app-select [formControlModel]="CandidateModel.gender" [form]="form"
+                    [options]="selectOptionsForGender"></app-select>
+            </div>
+            <div class="col-md-6">
+                <app-select [formControlModel]="CandidateModel.status" [form]="form"
+                    [options]="selectOptionsForStatus"></app-select>
+            </div>
+        </div>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="dialog-footer">
+    <app-button [color]="'primary'" [type]="'submit'" [label]="'Add'" [isDisabled]="!form.valid"
+        (btnClick)="onSaveClick()" [class]="'button'"></app-button>
+    <app-button [color]="'primary'" [type]="'button'" [label]="'Cancel'" [mat-dialog-close]="true"></app-button>
+</mat-dialog-actions>

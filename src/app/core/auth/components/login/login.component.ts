@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private router: Router,
     private snackbarService: SnackbarService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -50,7 +50,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.ngUnsubscribe$))
         .subscribe({
           next: (res: ResponseModel<string>) => {
-            console.log('result', res);
+
             if (res.result) {
               this.router.navigate([`${Navigation.Admin}`]);
             } else {
