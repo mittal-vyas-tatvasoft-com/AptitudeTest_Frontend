@@ -133,6 +133,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
       .open(AddAdminComponent, dialogConfig)
       .afterClosed()
       .subscribe((res) => {
+        console.log(res);
+
         const payload: AdminModel = {
           id: res.id,
           email: res.email,
