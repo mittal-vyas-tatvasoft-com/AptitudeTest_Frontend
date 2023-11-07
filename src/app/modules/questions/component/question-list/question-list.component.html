@@ -80,36 +80,13 @@
           *ngIf="question.optionType == optionType.Text"
         >
           <mat-chip-option
+            *ngFor="let option of question.options; index as i"
             color="primary"
             [selectable]="false"
             disableRipple
-            [selected]="question.options[0].isAnswer"
+            [selected]="option.isAnswer"
             ><span class="mcq-option">A</span
-            >{{ question.options[0].optionValue }}</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            disableRipple
-            [selected]="question.options[1].isAnswer"
-            ><span class="mcq-option">B</span
-            >{{ question.options[1].optionValue }}</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            disableRipple
-            [selected]="question.options[2].isAnswer"
-            ><span class="mcq-option">C</span
-            >{{ question.options[2].optionValue }}</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            disableRipple
-            [selected]="question.options[3].isAnswer"
-            ><span class="mcq-option">D</span
-            >{{ question.options[3].optionValue }}</mat-chip-option
+            >{{ option.optionValue }}</mat-chip-option
           >
         </mat-chip-listbox>
         <mat-chip-listbox
@@ -117,49 +94,18 @@
           *ngIf="question.optionType == optionType.Image"
         >
           <mat-chip-option
+            *ngFor="let option of question.options; index as i"
             color="primary"
             [selectable]="false"
             disableRipple
-            [selected]="question.options[0].isAnswer"
-            ><span class="mcq-option">A</span
+            [selected]="option.isAnswer"
+            ><span class="mcq-option">{{ optionIndex[i] }}</span
             ><img
               class="option-img"
-              [src]="question.options[0].optionValue"
+              [src]="baseImageUrl + option.optionValue"
               alt="Option 1"
-          /></mat-chip-option>
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            disableRipple
-            [selected]="question.options[1].isAnswer"
-            ><span class="mcq-option">B</span
-            ><img
-              class="option-img"
-              [src]="question.options[1].optionValue"
-              alt="Option 2"
-          /></mat-chip-option>
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            disableRipple
-            [selected]="question.options[2].isAnswer"
-            ><span class="mcq-option">C</span
-            ><img
-              class="option-img"
-              [src]="question.options[2].optionValue"
-              alt="Option 3"
-          /></mat-chip-option>
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            disableRipple
-            [selected]="question.options[3].isAnswer"
-            ><span class="mcq-option">D</span
-            ><img
-              class="option-img"
-              [src]="question.options[3].optionValue"
-              alt="Option 4"
-          /></mat-chip-option>
+            />
+          </mat-chip-option>
         </mat-chip-listbox>
       </div>
     </div>

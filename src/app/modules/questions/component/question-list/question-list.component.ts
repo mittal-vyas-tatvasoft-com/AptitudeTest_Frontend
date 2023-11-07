@@ -10,8 +10,8 @@ import { UpdateStatus } from 'src/app/shared/common/interfaces/update-status';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { QuestionsService } from '../../services/questions.service';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { Topics } from '../../static/topics.static';
-
+import { OptionsIndex, Topics } from '../../static/topics.static';
+import { environment } from 'src/environments/environment';
 @Component({
   selector: 'app-question-list',
   templateUrl: './question-list.component.html',
@@ -23,7 +23,8 @@ export class QuestionListComponent implements OnInit {
   questionTopic = QuestionTopic;
   questionType = QuestionType;
   topics = Topics;
-
+  optionIndex = OptionsIndex;
+  baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
   constructor(
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
