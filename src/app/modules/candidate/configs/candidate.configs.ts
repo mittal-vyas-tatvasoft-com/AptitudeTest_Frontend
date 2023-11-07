@@ -43,8 +43,6 @@ export const candidateControl = {
         patternErrMsg: 'Please enter valid 10 digit number',
         inputType: 'number',
         displayIcon: false,
-        maxLength: 10,
-        maxLengthErrMsg: 'Contact No. must be at most 10 digits',
     },
     gender: {
         value: '',

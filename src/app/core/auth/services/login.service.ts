@@ -21,7 +21,7 @@ export class LoginService {
   private sidebarStateKey = 'sidebarState';
   private userData: any;
   private sessionTimeoutInMinutes = 20; // Adjust as needed
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) { }
 
   setToken(token: string): void {
     localStorage.setItem(this.storageToken, token);
@@ -69,7 +69,6 @@ export class LoginService {
       .pipe(
         map((res: any) => {
           if (res.result) {
-            console.log(res.result);
             this.setToken(res.data.accessToken);
             this.setRefreshToken(res.data.refreshToken);
             this.setTokenExpiry(new Date(res.data.refreshTokenExpiryTime));
@@ -151,24 +150,9 @@ export class LoginService {
       try {
         return jwtDecode(token);
       } catch (error) {
-        console.error('Token decoding error', error);
         return null;
       }
     }
     return null;
   }
-
-  // isSessionExpired(): boolean {
-  //   const expiry = this.getTokenExpiry();
-  //   console.log("new date",new Date());
-  //   return !!expiry && expiry <= new Date();
-  // }
-
-  // startSessionTimeout(): void {
-  //   setTimeout(() => {
-  //     if (this.isSessionExpired()) {
-  //       this.logout();
-  //     }
-  //   }, this.sessionTimeoutInMinutes * 60 * 1000);
-  // }
 }

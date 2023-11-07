@@ -8,7 +8,7 @@ import { CandidateModel } from '../../interfaces/candidate.interface';
 import { candidateControl, selectOptionsForGender, selectOptionsForStatus } from '../../configs/candidate.configs';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
-import { StatusCode } from 'src/app/shared/common/enums';
+import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 
 @Component({
   selector: 'app-add-candidate',
@@ -55,7 +55,6 @@ export class AddCandidateComponent {
       phoneNumber: ['', [
         Validators.required,
         Validators.pattern(validations.common.mobileNumberREGEX),
-        Validators.maxLength(candidateControl.phoneNumber.maxLength),
       ]],
       groupId: ['', Validators.required],
       collegeId: ['', Validators.required],
@@ -95,7 +94,7 @@ export class AddCandidateComponent {
       this.isLoading = true;
       const candidateData: CandidateModel = this.form.value;
       candidateData.status = this.form.value.status === 'Active' ? true : false;
-      candidateData.gender = this.form.value.gender === 'Male' ? 1 : 2;
+      candidateData.gender = this.form.value.gender === 'Male' ? Numbers.One : Numbers.Two;
       candidateData.createdBy = this.userId;
       this.candidateService.addCandidate(candidateData).subscribe(
         (response) => {

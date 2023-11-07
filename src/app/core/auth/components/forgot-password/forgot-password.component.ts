@@ -25,8 +25,8 @@ export class ForgotPasswordComponent {
     private fb: FormBuilder,
     private loginService: LoginService, // Use the service
     private router: Router,
-    private snackbarService : SnackbarService
-  ) {}
+    private snackbarService: SnackbarService
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -44,67 +44,65 @@ export class ForgotPasswordComponent {
     });
   }
 
-    onForgot() {
-      if (this.form.valid) {
-        const data = {
-          Email: this.form.value.userName,
-        };
-  
-        this.disable = true;
-  
-        this.loginService
-          .forgotPassword(data)
-          .pipe(takeUntil(this.ngUnsubscribe$))
-          .subscribe({
-            next: (res: ResponseModel<string>) => {
-              if (res.result) {
-                this.snackbarService.success(res.message);
-                this.router.navigate(['/reset-password']);
-              } else {
-                this.forgotFailed = true;
-                this.snackbarService.error(res.message);
-                this.disable = false;
-              }
-            },
-            error: (error) => {
+  onForgot() {
+    if (this.form.valid) {
+      const data = {
+        Email: this.form.value.userName,
+      };
+
+      this.disable = true;
+
+      this.loginService
+        .forgotPassword(data)
+        .pipe(takeUntil(this.ngUnsubscribe$))
+        .subscribe({
+          next: (res: ResponseModel<string>) => {
+            if (res.result) {
+              this.snackbarService.success(res.message);
+              this.router.navigate(['/reset-password']);
+            } else {
               this.forgotFailed = true;
-              this.snackbarService.error(error.message);
+              this.snackbarService.error(res.message);
               this.disable = false;
-            },
-          });
-      }
+            }
+          },
+          error: (error) => {
+            this.forgotFailed = true;
+            this.snackbarService.error(error.message);
+            this.disable = false;
+          },
+        });
     }
+  }
 
-    // if (this.form.valid) {
-    //   const data = {
-    //     userName: this.form.value.userName,
-    //   };
+  // if (this.form.valid) {
+  //   const data = {
+  //     userName: this.form.value.userName,
+  //   };
 
-    //   this.disable = true;
+  //   this.disable = true;
 
-    //   this.forgotPasswordService
-    //   .forgotPassword(data)
-    //   .pipe(takeUntil(this.ngUnsubscribe$))
-    //   .subscribe({
-    //     next: (res: ResponseModel<string>) => {
-    //       if (res.result) {
-    //         if (res.statusCode === 200) {
-    //           this.router.navigate(['/reset-password']);
-    //         }
-    //       } else {
-    //         this.forgotFailed = true;
-    //         console.error(`Password reset failed: ${res.message}`);
-    //       }
-    //       this.disable = false;
-    //     },
-    //     error: () => {
-    //       this.forgotFailed = true;
-    //       console.error('An error occurred while resetting the password.');
-    //       this.disable = false;
-    //     },
-    //   });
-    // }
- 
+  //   this.forgotPasswordService
+  //   .forgotPassword(data)
+  //   .pipe(takeUntil(this.ngUnsubscribe$))
+  //   .subscribe({
+  //     next: (res: ResponseModel<string>) => {
+  //       if (res.result) {
+  //         if (res.statusCode === 200) {
+  //           this.router.navigate(['/reset-password']);
+  //         }
+  //       } else {
+  //         this.forgotFailed = true;
+  //       }
+  //       this.disable = false;
+  //     },
+  //     error: () => {
+  //       this.forgotFailed = true;
+  //       this.disable = false;
+  //     },
+  //   });
+  // }
+
 
   ngOnDestroy() {
     this.ngUnsubscribe$.next();
