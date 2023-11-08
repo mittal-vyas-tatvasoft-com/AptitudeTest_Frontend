@@ -17,7 +17,6 @@ import { ImportCandidateComponent } from './containers/import-candidate/import-c
 import { ReactiveFormsModule } from '@angular/forms';
 import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
 
-
 @NgModule({
   declarations: [
     AddCandidateComponent,
@@ -27,7 +26,7 @@ import { FormControlModule } from 'src/app/shared/modules/form-control/form-cont
     PersonalInfoComponent,
     EducationDetailsComponent,
     ExamScoresComponent,
-    FamilyBackgroundComponent
+    FamilyBackgroundComponent,
   ],
   imports: [
     CommonModule,
@@ -35,10 +34,8 @@ import { FormControlModule } from 'src/app/shared/modules/form-control/form-cont
     SharedMaterialModule,
     TablesModule,
     ReactiveFormsModule,
-    FormControlModule
+    FormControlModule,
   ],
-  providers: [
-    CandidateService,
-  ]
+  providers: [CandidateService],
 })
-export class CandidateModule { }
+export class CandidateModule {}

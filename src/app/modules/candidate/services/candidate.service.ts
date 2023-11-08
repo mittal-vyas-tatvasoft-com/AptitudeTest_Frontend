@@ -3,14 +3,16 @@ import { Injectable } from '@angular/core';
 import { Observable, catchError, map, throwError } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { environment } from 'src/environments/environment';
-import { CandidateModel, DropdownItem } from '../interfaces/candidate.interface';
+import {
+  CandidateModel,
+  DropdownItem,
+} from '../interfaces/candidate.interface';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class CandidateService {
-
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getCandidate(
     currentPageIndex: number,
@@ -18,7 +20,8 @@ export class CandidateService {
     searchQuery?: string,
     collegeId?: number,
     groupId?: number,
-    year?: number
+    year?: number,
+    status?: boolean
   ): Observable<CandidateModel[]> {
     let params = new HttpParams()
       .set('currentPageIndex', currentPageIndex.toString())
@@ -28,28 +31,47 @@ export class CandidateService {
       params = params.set('searchQuery', searchQuery);
     }
 
-    if (collegeId !== undefined) {
+    if (collegeId !== undefined && collegeId != 0) {
       params = params.set('CollegeId', collegeId.toString());
     }
 
-    if (groupId !== undefined) {
+    if (groupId !== undefined && groupId != 0) {
       params = params.set('GroupId', groupId.toString());
     }
 
-    if (year !== undefined) {
+    if (year !== undefined && year != 0) {
       params = params.set('Year', year.toString());
     }
-    return this.http.get<ResponseModel<string>>(`${environment.baseURL}User/${currentPageIndex}/${pageSize}`, { params })
+
+    return this.http
+      .get<ResponseModel<string>>(
+        `${environment.baseURL}User/${currentPageIndex}/${pageSize}`,
+        { params }
+      )
       .pipe(map((response: any) => response.data));
   }
 
   addCandidate(element: CandidateModel): Observable<ResponseModel<string>> {
-    return this.http.post<ResponseModel<string>>(`${environment.baseURL}User/Create`, element)
+    return this.http
+      .post<ResponseModel<string>>(`${environment.baseURL}User/Create`, element)
       .pipe(
         map((res: ResponseModel<string>) => {
           return res;
         })
+      );
+  }
+
+  importCandidate(data: any): Observable<ResponseModel<string>> {
+    return this.http
+      .post<ResponseModel<string>>(
+        `${environment.baseURL}User/ImportUsers`,
+        data
       )
+      .pipe(
+        map((res: ResponseModel<string>) => {
+          return res;
+        })
+      );
   }
 
   deleteCandidate(userIds: number[]): Observable<ResponseModel<string>> {
@@ -79,24 +101,29 @@ export class CandidateService {
     }
     const payload = {
       userIds: id,
-      status: status
+      status: status,
     };
-    return this.http.put<ResponseModel<string>>(
-      `${environment.baseURL}User/ActiveInActiveUsers`, payload).pipe(
+    return this.http
+      .put<ResponseModel<string>>(
+        `${environment.baseURL}User/ActiveInActiveUsers`,
+        payload
+      )
+      .pipe(
         map((res: ResponseModel<string>) => {
           return res;
-        }),
-      );;
+        })
+      );
   }
 
   getCollegesForDropDown(): Observable<DropdownItem[]> {
-    return this.http.get<DropdownItem[]>(`${environment.baseURL}Colleges/GetActiveColleges`)
-      .pipe(map((response: any) => response.data));;
+    return this.http
+      .get<DropdownItem[]>(`${environment.baseURL}Colleges/GetActiveColleges`)
+      .pipe(map((response: any) => response.data));
   }
 
   getGroupsForDropDown(): Observable<DropdownItem[]> {
-    return this.http.get<DropdownItem[]>(`${environment.baseURL}Groups/GetGroupsForDropDown`)
-      .pipe(map((response: any) => response.data));;
+    return this.http
+      .get<DropdownItem[]>(`${environment.baseURL}Groups/GetGroupsForDropDown`)
+      .pipe(map((response: any) => response.data));
   }
-
 }
