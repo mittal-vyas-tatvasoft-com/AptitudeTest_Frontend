@@ -70,9 +70,11 @@ export class CollegeComponent {
     const dialogRef = this.dialog.open(AddCollegeComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result: any) => {
-      if (result && result.refreshTable === true) {
+      if (result && result.refreshTable === true && result.status === StatusCode.Success) {
         this.snackbarService.success(result.message);
         this.fetchColleges();
+      } else {
+        this.snackbarService.error(result.message);
       }
     });
   }
@@ -84,9 +86,11 @@ export class CollegeComponent {
     dialogConfig.data = { college, refreshTable: () => this.fetchColleges() };
     const dialogRef = this.dialog.open(AddCollegeComponent, dialogConfig);
     dialogRef.afterClosed().subscribe((result: any) => {
-      if (result && result.refreshTable === true) {
+      if (result && result.refreshTable === true && result.status === StatusCode.Success) {
         this.snackbarService.success(result.message);
         this.fetchColleges();
+      } else {
+        this.snackbarService.error(result.message);
       }
     });
   }

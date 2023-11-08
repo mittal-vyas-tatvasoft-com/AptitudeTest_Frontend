@@ -26,31 +26,16 @@ export class CollegeService {
 
   addCollege(element: CollegeModel): Observable<ResponseModel<string>> {
     return this.http.post<ResponseModel<string>>(`${environment.baseURL}Colleges/Create`, element)
-      .pipe(
-        map((res: ResponseModel<string>) => {
-          return res;
-        })
-      )
   }
 
   updateCollege(element: CollegeModel): Observable<ResponseModel<string>> {
     return this.http
       .put<ResponseModel<string>>(`${environment.baseURL}Colleges/Update`, element)
-      .pipe(
-        map((res: ResponseModel<string>) => {
-          return res;
-        }),
-      );
   }
 
   deleteCollege(id: any): Observable<ResponseModel<string>> {
     return this.http
       .delete<ResponseModel<string>>(`${environment.baseURL}Colleges/Delete?id=${id}`)
-      .pipe(
-        map((res: ResponseModel<string>) => {
-          return res;
-        }),
-      );
   }
 
   updateStatus(id: number, status: boolean) {
@@ -59,10 +44,6 @@ export class CollegeService {
       status: status,
     };
     return this.http.put<ResponseModel<string>>(
-      `${environment.baseURL}Colleges/UpdateStatus`, payload).pipe(
-        map((res: ResponseModel<string>) => {
-          return res;
-        }),
-      );;
+      `${environment.baseURL}Colleges/UpdateStatus`, payload)
   }
 }
