@@ -46,8 +46,6 @@ export class AddAdminComponent implements OnInit, AfterViewInit {
     if (this.data != Numbers.Zero) {
       this.adminService.getAdminById(this.data).subscribe({
         next: (res: any) => {
-          console.log(res);
-
           this.form.setValue({
             firstName: res.data.firstName,
             middleName: res.data.fatherName,
