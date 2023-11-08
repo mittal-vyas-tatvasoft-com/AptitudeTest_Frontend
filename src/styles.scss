@@ -23,6 +23,49 @@
   min-width: 180px;
 }
 
+// Card header
+.card-header {
+  padding: 12px;
+
+  .card-header-title {
+    font-size: 20px;
+    line-height: 24px;
+    font-weight: 500;
+  }
+
+  .card-header-btn {
+    padding: 12px;
+    padding: 12px;
+    margin-left: 12px;
+
+    .mat-icon {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+    }
+  }
+}
+
+.card-form {
+  background-color: #f7f8fd;
+  border-radius: 6px;
+  margin: 0 12px;
+  padding: 12px 12px 0;
+
+  .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
+    line-height: 12px;
+  }
+}
+
+.message-success {
+  text-align: center;
+  color: #46a746;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 24px;
+}
+
 // Sidebar
 .sidebar {
   min-height: 100%;
@@ -258,8 +301,28 @@ body,
     flex-wrap: wrap;
 
     // margin: -6px -6px -6px 0;
+    .mat-mdc-button-base {
+      margin-top: 6px;
+      margin-bottom: 6px;
+    }
+
     .mat-mdc-button-base+.mat-mdc-button-base {
-      margin: 6px;
+      margin: 6px 0 6px 12px;
+    }
+
+    .btn-with-icon .mat-icon {
+      width: 20px;
+      height: 20px;
+    }
+
+    .btn-stroked-default {
+      padding: 12px;
+
+      .mat-icon {
+        width: 20px;
+        height: 20px;
+        margin: 0;
+      }
     }
   }
 }
@@ -648,6 +711,28 @@ body,
   }
 }
 
+// Form group
+.form-group {
+  .form-group-btn {
+    padding: 12px;
+    border-color: #b8bfcb !important;
+    background: #f7f8fd !important;
+    border-left: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+
+    .mat-icon {
+      width: 20px;
+      height: 20px;
+      margin: 0;
+    }
+  }
+
+  .mdc-notched-outline__trailing {
+    border-radius: 0 !important;
+  }
+}
+
 // Form Block Card
 .form-block {
   &.mat-mdc-card.mdc-card .mat-mdc-card-content {
@@ -695,6 +780,13 @@ body,
 }
 
 @media (max-width: 767px) {
+
+  .message-success {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 21px;
+  }
+
   .wrapper {
     .layout-sidenav-container.mat-drawer-container {
       padding: 68px 0 0;
@@ -721,6 +813,18 @@ body,
   .wrapper {
     .layout-sidenav-container.mat-drawer-container {
       padding: 64px 0 0;
+    }
+  }
+
+  .action-list .btn-with-icon {
+    padding: 12px;
+
+    .mat-icon {
+      margin: 0;
+    }
+
+    .mdc-button__label {
+      display: none;
     }
   }
 }

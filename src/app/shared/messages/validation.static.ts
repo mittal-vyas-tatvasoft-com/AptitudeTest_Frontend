@@ -4,6 +4,6 @@ export const validations = {
     passwordREGEX: new RegExp(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/
     ),
-    mobileNumberREGEX: new RegExp(/^((\\+91-?)|0)?[0-9]{10}$/),
+    mobileNumberREGEX: new RegExp(/^[6-9]{1}[0-9]{9}$/),
   },
 };
