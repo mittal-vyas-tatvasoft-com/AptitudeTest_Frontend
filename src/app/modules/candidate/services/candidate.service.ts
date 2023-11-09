@@ -17,11 +17,13 @@ export class CandidateService {
   getCandidate(
     currentPageIndex: number,
     pageSize: number,
-    searchQuery?: string,
-    collegeId?: number,
-    groupId?: number,
-    year?: number,
-    status?: boolean
+    searchQuery: string,
+    collegeId: number | null,
+    groupId: number | null,
+    status: boolean | null,
+    year: number | null,
+    sortField: string,
+    sortOrder: string
   ): Observable<CandidateModel[]> {
     let params = new HttpParams()
       .set('currentPageIndex', currentPageIndex.toString())
@@ -31,17 +33,24 @@ export class CandidateService {
       params = params.set('searchQuery', searchQuery);
     }
 
-    if (collegeId !== undefined && collegeId != 0) {
+    if (collegeId !== undefined && collegeId != null) {
       params = params.set('CollegeId', collegeId.toString());
     }
 
-    if (groupId !== undefined && groupId != 0) {
+    if (status != null) {
+      params = params.set('Status', status.toString());
+    }
+
+    if (groupId !== undefined && groupId != null) {
       params = params.set('GroupId', groupId.toString());
     }
 
-    if (year !== undefined && year != 0) {
+    if (year !== undefined && year != null) {
       params = params.set('Year', year.toString());
     }
+
+    params = params.set('SortField', sortField);
+    params = params.set('SortOrder', sortOrder);
 
     return this.http
       .get<ResponseModel<string>>(

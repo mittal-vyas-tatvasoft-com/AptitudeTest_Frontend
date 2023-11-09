@@ -1,24 +1,30 @@
-import { Component, ViewChild } from "@angular/core";
-import { MatDialog, MatDialogConfig } from "@angular/material/dialog";
-import { MatTableDataSource } from "@angular/material/table";
-import { Router } from "@angular/router";
-import { Subject, takeUntil, catchError, throwError } from "rxjs";
-import { AddCollegeComponent } from "src/app/modules/masters/college/components/add-college/add-college.component";
-import { DeleteConfirmationDialogComponent } from "src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component";
-import { TableComponent } from "src/app/shared/modules/tables/components/table/table.component";
-import { TableColumn } from "src/app/shared/modules/tables/interfaces/table-data.interface";
-import { SnackbarService } from "src/app/shared/snackbar/snackbar.service";
-import { DropdownItem, CandidateModel } from "../../interfaces/candidate.interface";
-import { CandidateService } from "../../services/candidate.service";
-import { AddCandidateComponent } from "../add-candidate/add-candidate.component";
-import { Numbers, StaticMessages, StatusCode } from "src/app/shared/common/enums";
-
-
+import { Component, ViewChild } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { Subject, takeUntil, catchError, throwError } from 'rxjs';
+import { AddCollegeComponent } from 'src/app/modules/masters/college/components/add-college/add-college.component';
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import {
+  DropdownItem,
+  CandidateModel,
+} from '../../interfaces/candidate.interface';
+import { CandidateService } from '../../services/candidate.service';
+import { AddCandidateComponent } from '../add-candidate/add-candidate.component';
+import {
+  Numbers,
+  StaticMessages,
+  StatusCode,
+} from 'src/app/shared/common/enums';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-candidates',
   templateUrl: './candidates.component.html',
-  styleUrls: ['./candidates.component.scss']
+  styleUrls: ['./candidates.component.scss'],
 })
 export class CandidatesComponent {
   optionsList: number[] = [];
@@ -30,6 +36,8 @@ export class CandidatesComponent {
   groups: DropdownItem[] = [];
   checkRows = false;
   searchCandidate: string;
+  sortKey: string;
+  sortDirection: string;
   selectedGroup: DropdownItem | null;
   selectedCollege: DropdownItem | null;
   statusValue: boolean;
@@ -49,13 +57,12 @@ export class CandidatesComponent {
   private ngUnsubscribe$: Subject<void> = new Subject();
   @ViewChild('myTable') myTable: TableComponent<any>;
 
-
-  constructor(public dialog: MatDialog,
+  constructor(
+    public dialog: MatDialog,
     private router: Router,
     private candidateService: CandidateService,
-    private snackbarService: SnackbarService,
-  ) {
-  }
+    private snackbarService: SnackbarService
+  ) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<CandidateModel>([]);
@@ -65,15 +72,33 @@ export class CandidatesComponent {
 
   fetchCandidate() {
     const searchQuery = this.searchCandidate;
-    const collegeId = this.selectedCollege ? this.selectedCollege.id : undefined;
-    const groupId = this.selectedGroup ? this.selectedGroup.id : undefined;
-    const year = this.selectedYear === null ? undefined : this.selectedYear;
+    const collegeId = this.selectedCollege ? this.selectedCollege.id : null;
+    const groupId = this.selectedGroup ? this.selectedGroup.id : null;
+    const year = this.selectedYear === null ? null : this.selectedYear;
     this.candidateService
-      .getCandidate(this.currentPageIndex, this.pageSize, searchQuery, collegeId, groupId, year)
+      .getCandidate(
+        this.currentPageIndex,
+        this.pageSize,
+        searchQuery,
+        collegeId,
+        groupId,
+        null,
+        year,
+        this.sortKey,
+        this.sortDirection
+      )
       .subscribe((data: any) => {
-        data.forEach((candidate: { name: string; firstName: string; lastName: string; }) => {
-          candidate.name = `${candidate.firstName} ${candidate.lastName || ''}`;
-        });
+        data.forEach(
+          (candidate: {
+            name: string;
+            firstName: string;
+            lastName: string;
+          }) => {
+            candidate.name = `${candidate.firstName} ${
+              candidate.lastName || ''
+            }`;
+          }
+        );
         this.dataSource = new MatTableDataSource<CandidateModel>(data);
         if (data && data.length > 0) {
           this.totalItemsCount = data[0].totalRecords;
@@ -111,9 +136,9 @@ export class CandidatesComponent {
 
   handleAddCandidateDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["primary-dialog"];
+    dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
-    dialogConfig.width = "800px";
+    dialogConfig.width = '800px';
     const dialogRef = this.dialog.open(AddCandidateComponent, dialogConfig);
 
     dialogRef.afterClosed().subscribe((result: any) => {
@@ -123,7 +148,6 @@ export class CandidatesComponent {
       }
     });
   }
-
 
   handleDeleteSelected() {
     const data = this.myTable.getSelectedRowIds();
@@ -149,7 +173,7 @@ export class CandidatesComponent {
 
   handleAddCollegeDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["primary-dialog"];
+    dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
     this.dialog.open(AddCollegeComponent, dialogConfig);
   }
@@ -161,22 +185,24 @@ export class CandidatesComponent {
 
   handleDeleteCandidateDialog(id: number[]) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["confirmation-dialog"];
+    dialogConfig.panelClass = ['confirmation-dialog'];
     dialogConfig.autoFocus = false;
-    const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      DeleteConfirmationDialogComponent,
+      dialogConfig
+    );
     dialogRef?.afterClosed().subscribe((result: any) => {
       if (result) {
-        this.candidateService.deleteCandidate(id)
-          .subscribe({
-            next: (res: any) => {
-              if (res.statusCode == StatusCode.Success) {
-                this.fetchCandidate();
-                this.snackbarService.success(res.message);
-              } else {
-                this.snackbarService.error(res.message);
-              }
-            },
-          });
+        this.candidateService.deleteCandidate(id).subscribe({
+          next: (res: any) => {
+            if (res.statusCode == StatusCode.Success) {
+              this.fetchCandidate();
+              this.snackbarService.success(res.message);
+            } else {
+              this.snackbarService.error(res.message);
+            }
+          },
+        });
       }
     });
   }
@@ -191,7 +217,7 @@ export class CandidatesComponent {
 
   getupdateStatus(id: number, newStatus: boolean) {
     const idArray: number[] = [id];
-    this.updateStatus(idArray, newStatus)
+    this.updateStatus(idArray, newStatus);
   }
 
   updateStatus(id: number[], newStatus: boolean): void {
@@ -204,7 +230,7 @@ export class CandidatesComponent {
           this.snackbarService.error(res.message);
         }
       },
-    })
+    });
   }
 
   handlePageSizeChange(pageSize: number) {
@@ -235,5 +261,44 @@ export class CandidatesComponent {
     const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
     return this.currentPageIndex === totalPages - Numbers.One;
   }
-}
 
+  handleDataSorting(event: Sort) {
+    switch (event.active) {
+      case 'name':
+        this.sortKey = 'FirstName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'collegeName':
+        this.sortKey = 'CollegeName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'groupName':
+        this.sortKey = 'GroupName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'email':
+        this.sortKey = 'Email';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'phoneNumber':
+        this.sortKey = 'PhoneNumber';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'createdYear':
+        this.sortKey = 'CreatedYear';
+        this.sortDirection = event.direction;
+        break;
+
+      default:
+        this.sortKey = '';
+        this.sortDirection = '';
+        break;
+    }
+    this.fetchCandidate();
+  }
+}

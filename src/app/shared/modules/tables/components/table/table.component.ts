@@ -1,10 +1,18 @@
-import { Component, Input, Output, EventEmitter, SimpleChanges, ViewChild, OnChanges, ChangeDetectorRef } from '@angular/core';
+import {
+  Component,
+  Input,
+  Output,
+  EventEmitter,
+  SimpleChanges,
+  ViewChild,
+  OnChanges,
+  ChangeDetectorRef,
+} from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from '../../interfaces/table-data.interface';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatSort } from '@angular/material/sort';
+import { MatSort, Sort } from '@angular/material/sort';
 import { Numbers } from 'src/app/shared/common/enums';
-
 
 @Component({
   selector: 'app-table',
@@ -30,15 +38,21 @@ export class TableComponent<T> {
   @Output() pageSizeChanged = new EventEmitter<number>();
   @Output() pageChanged = new EventEmitter<'prev' | 'next'>();
   @Output() pageToPage = new EventEmitter<number>();
+  @Output() sortingChanged = new EventEmitter<Sort>();
   @ViewChild(MatSort) sort = new MatSort();
 
-  constructor() { }
+  constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['totalItemsCount'] || changes['pageSize']) {
       this.updatePageNumbers();
     }
-    this.dataSource.sort = this.sort
+  }
+
+  ngAfterViewInit() {
+    this.sort.sortChange.subscribe((event) => {
+      this.sortingChanged.emit(event);
+    });
   }
 
   handleEdit(row: T) {
@@ -126,10 +140,15 @@ export class TableComponent<T> {
     if (!row) {
       return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
     }
-    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${row.firstName + 1}`;
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.firstName + 1
+    }`;
   }
 
-  getSelectedRowIds(): { userId: number, status: boolean }[] {
-    return this.selection.selected.map(row => ({ userId: row.id, status: row.status }));
+  getSelectedRowIds(): { userId: number; status: boolean }[] {
+    return this.selection.selected.map((row) => ({
+      userId: row.id,
+      status: row.status,
+    }));
   }
 }

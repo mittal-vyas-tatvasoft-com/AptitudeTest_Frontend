@@ -32,6 +32,7 @@ import {
   DropzoneEvent,
   DropzoneFallbackFunction,
 } from 'ngx-dropzone-wrapper/lib/dropzone.interfaces';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-import-candidate',
@@ -59,6 +60,8 @@ export class ImportCandidateComponent implements OnInit {
   currentPageIndex = Numbers.Zero;
   totalItemsCount: number;
   pageSize = Numbers.Ten;
+  sortKey: string;
+  sortDirection: string;
   fileName: string = '';
   noFileSet: boolean = true;
   importSuccessFully: boolean = false;
@@ -114,7 +117,7 @@ export class ImportCandidateComponent implements OnInit {
       collegeId: [0],
     });
     this.filterForm = this.formBuilder.group({
-      collegeId: [0],
+      collegeId: [null],
       status: [''],
       searchQuery: [''],
     });
@@ -135,9 +138,11 @@ export class ImportCandidateComponent implements OnInit {
         this.pageSize,
         searchQuery,
         collegeId,
-        0,
-        0,
-        status
+        null,
+        status,
+        null,
+        this.sortKey,
+        this.sortDirection
       )
       .subscribe((data: any) => {
         data.forEach(
@@ -146,9 +151,9 @@ export class ImportCandidateComponent implements OnInit {
             firstName: string;
             lastName: string;
           }) => {
-            candidate.name = `${candidate.firstName} ${
-              candidate.lastName || ''
-            }`;
+            candidate.name = `${
+              candidate.firstName ? candidate.firstName : ''
+            } ${candidate.lastName ? candidate.lastName : ''}`;
           }
         );
         this.dataSource = new MatTableDataSource<CandidateModel>(data);
@@ -336,5 +341,45 @@ export class ImportCandidateComponent implements OnInit {
   isLastPage(): boolean {
     const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
     return this.currentPageIndex === totalPages - Numbers.One;
+  }
+
+  handleDataSorting(event: Sort) {
+    switch (event.active) {
+      case 'name':
+        this.sortKey = 'FirstName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'collegeName':
+        this.sortKey = 'CollegeName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'groupName':
+        this.sortKey = 'GroupName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'email':
+        this.sortKey = 'Email';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'phoneNumber':
+        this.sortKey = 'PhoneNumber';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'createdYear':
+        this.sortKey = 'CreatedYear';
+        this.sortDirection = event.direction;
+        break;
+
+      default:
+        this.sortKey = '';
+        this.sortDirection = '';
+        break;
+    }
+    this.fetchCandidate();
   }
 }

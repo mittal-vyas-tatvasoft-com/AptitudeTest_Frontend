@@ -8,8 +8,12 @@ import { environment } from 'src/environments/environment';
 export class ProfileService {
   constructor(private http: HttpClient) {}
   // Profiles
-  GetAllProfiles() {
-    return this.http.get(`${environment.baseURL}Profiles`);
+  GetAllProfiles(sortField: string | null, sortOrder: string | null) {
+    const params: any = {
+      sortField,
+      sortOrder,
+    };
+    return this.http.get(`${environment.baseURL}Profiles`, { params });
   }
 
   GetProfileById(id: number) {

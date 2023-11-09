@@ -15,12 +15,16 @@ export class AdminService {
     currentPageIndex: number,
     pageSize: number,
     searchQuery: string | null,
-    status: boolean | null
+    status: boolean | null,
+    sortField: string | null,
+    sortOrder: string | null
   ) {
     const params: any = {
       searchQuery,
       currentPageIndex,
       pageSize,
+      sortField,
+      sortOrder,
     };
 
     if (status != null) {

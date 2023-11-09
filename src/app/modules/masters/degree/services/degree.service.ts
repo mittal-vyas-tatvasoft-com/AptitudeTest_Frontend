@@ -9,8 +9,12 @@ import { UpdateStatus } from '../components/degree/degree.component';
 export class DegreeService {
   constructor(private httpClient: HttpClient) {}
 
-  degrees() {
-    return this.httpClient.get(`${environment.baseURL}Degrees`);
+  degrees(sortField: string | null, sortOrder: string | null) {
+    const params: any = {
+      sortField,
+      sortOrder,
+    };
+    return this.httpClient.get(`${environment.baseURL}Degrees`, { params });
   }
 
   get(id: number) {

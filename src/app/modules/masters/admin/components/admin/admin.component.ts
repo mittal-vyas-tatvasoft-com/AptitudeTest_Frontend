@@ -10,6 +10,7 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-master-admin',
@@ -22,6 +23,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
   totalItemsCount: number;
   pageNumbers: number[] = [];
   hasData: boolean;
+  sortKey: string = '';
+  sortDirection: string = '';
   optionsList = [
     { key: 'Select', value: null },
     { key: 'Active', value: true },
@@ -95,7 +98,14 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   fetchAdmin(searchValue: string | null, status: boolean | null) {
     this.adminService
-      .getAdmins(this.currentPageIndex, this.pageSize, searchValue, status)
+      .getAdmins(
+        this.currentPageIndex,
+        this.pageSize,
+        searchValue,
+        status,
+        this.sortKey,
+        this.sortDirection
+      )
       .subscribe((res: any) => {
         // not possible to remove any type because it has sometime null and sometime object with data
         if (res.data.length > Numbers.Zero) {
@@ -227,5 +237,35 @@ export class AdminComponent implements OnInit, AfterViewInit {
   resetForm() {
     this.form.reset();
     this.fetchAdmin('', null);
+  }
+
+  handleDataSorting(event: Sort) {
+    switch (event.active) {
+      case 'firstName':
+        this.sortKey = 'FirstName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'lastName':
+        this.sortKey = 'LastName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'email':
+        this.sortKey = 'Email';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'phoneNumber':
+        this.sortKey = 'PhoneNumber';
+        this.sortDirection = event.direction;
+        break;
+
+      default:
+        this.sortKey = '';
+        this.sortDirection = '';
+        break;
+    }
+    this.searchAdmin();
   }
 }
