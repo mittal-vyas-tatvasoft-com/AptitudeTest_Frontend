@@ -1,4 +1,4 @@
-import { Option } from '../../modules/form-control/interfaces/option';
+import { Option } from './option.interface';
 export interface Question {
   id: number;
   duplicateFromQuestionId: number;

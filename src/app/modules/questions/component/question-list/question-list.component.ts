@@ -10,8 +10,9 @@ import { UpdateStatus } from 'src/app/shared/common/interfaces/update-status';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { QuestionsService } from '../../services/questions.service';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { OptionsIndex, Topics } from '../../static/topics.static';
+import { OptionsIndex, Topics } from '../../static/question.static';
 import { environment } from 'src/environments/environment';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-question-list',
   templateUrl: './question-list.component.html',
@@ -28,7 +29,8 @@ export class QuestionListComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
-    private questionService: QuestionsService
+    private questionService: QuestionsService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {}
@@ -79,5 +81,17 @@ export class QuestionListComponent implements OnInit {
           });
         }
       });
+  }
+
+  createDuplicate(id: number) {
+    this.router.navigate(['/admin/questions/add-question'], {
+      queryParams: { id: id, isDuplicate: true },
+    });
+  }
+
+  edit(id: number) {
+    this.router.navigate(['/admin/questions/add-question'], {
+      queryParams: { id: id, isDuplicate: false },
+    });
   }
 }
