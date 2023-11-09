@@ -254,6 +254,7 @@ export class ImportCandidateComponent implements OnInit {
   handleImportFileError(event: any) {
     this.noFileSet = true;
     this.snackbarService.error(event[1]);
+    this.componentRef?.directiveRef?.reset();
   }
 
   onDropzoneQueueComplete() {
