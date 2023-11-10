@@ -41,7 +41,7 @@ export const candidateControl = {
         required: true,
         requiredErrMsg: 'Contact No. is required',
         patternErrMsg: 'Please enter valid 10 digit number',
-        inputType: 'number',
+        inputType: 'text',
         displayIcon: false,
     },
     gender: {

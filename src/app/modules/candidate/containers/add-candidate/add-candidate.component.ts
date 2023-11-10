@@ -98,14 +98,8 @@ export class AddCandidateComponent {
       candidateData.createdBy = this.userId;
       this.candidateService.addCandidate(candidateData).subscribe(
         (response) => {
-          if (response.statusCode == StatusCode.Success) {
-            this.isLoading = true;
-            this.dialogRef.close({ refreshTable: true, message: response.message });
-          }
-          else {
-            this.isLoading = true;
-            this.dialogRef.close({ refreshTable: true, message: response.message });
-          }
+          this.isLoading = true;
+          this.dialogRef.close({ refreshTable: true, message: response.message, status: response.statusCode });
         }
       );
     }

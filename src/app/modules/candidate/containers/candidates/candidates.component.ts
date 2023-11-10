@@ -165,18 +165,12 @@ export class CandidatesComponent {
     dialogConfig.autoFocus = false;
     const dialogRef = this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
     dialogRef?.afterClosed().subscribe((result: any) => {
-      if (result) {
-        this.candidateService.deleteCandidate(id)
-          .subscribe({
-            next: (res: any) => {
-              if (res.statusCode == StatusCode.Success) {
-                this.fetchCandidate();
-                this.snackbarService.success(res.message);
-              } else {
-                this.snackbarService.error(res.message);
-              }
-            },
-          });
+      if (result && result.refreshTable === true && result.status === StatusCode.Success) {
+        this.snackbarService.success(result.message);
+        this.fetchCandidate();
+      } else {
+        this.snackbarService.error(result.message);
+        this.fetchCandidate();
       }
     });
   }
