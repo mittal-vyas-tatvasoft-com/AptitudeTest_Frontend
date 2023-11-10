@@ -99,3 +99,8 @@ export const dropzoneConfig = {
   maxFiles: 1,
   maxFilesize: 0.09765625, // file size in mb equivalent to 100kb
 };
+export const dropzoneConfigCsv = {
+  acceptedFiles: '.csv', // Accepted file types (e.g., images)
+  addRemoveLinks: true, // Show remove links for uploaded files
+  maxFiles: 1,
+};

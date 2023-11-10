@@ -1,18 +1,57 @@
 import { Location } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { Topics } from '../../static/question.static';
+import {
+  DragDropInput,
+  QuestionControls,
+  dropzoneConfigCsv,
+} from '../../configs/question.config';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { QuestionsService } from '../../services/questions.service';
+import { StatusCode } from 'src/app/shared/common/enums';
+import { DropzoneComponent, DropzoneDirective } from 'ngx-dropzone-wrapper';
+import { QuestionListComponent } from '../question-list/question-list.component';
 
 @Component({
   selector: 'app-import-question',
   templateUrl: './import-question.component.html',
-  styleUrls: ['./import-question.component.scss']
+  styleUrls: ['./import-question.component.scss'],
 })
-export class ImportQuestionComponent {
-  optionsList: string[] = ['Option 1', 'Option 2', 'Option 3'];
-  public message: string = 'Drag & Drop or <span class="link-primary ml-4p">Browse</span>';
+export class ImportQuestionComponent implements OnInit {
+  topics = Topics;
+  public message = DragDropInput;
+  topicForm: FormGroup;
+  questionControls = QuestionControls;
+  dropzoneConfig = dropzoneConfigCsv;
+  formData: FormData = new FormData();
+  fileName: string = '';
+  isValid: boolean = false;
+  isFile: boolean = false;
+  isImportSuccess = false;
+  count: number;
+  @ViewChild(DropzoneComponent, { static: false })
+  componentRef?: DropzoneComponent;
+  @ViewChild(DropzoneDirective)
+  directive?: DropzoneDirective;
+  @ViewChild(QuestionListComponent) questionList: QuestionListComponent;
+  constructor(
+    private location: Location,
+    public dialog: MatDialog,
+    private fb: FormBuilder,
+    public validation: ValidationService,
+    public snackbarService: SnackbarService,
+    private questionService: QuestionsService
+  ) {}
 
-  constructor(private location: Location, public dialog: MatDialog) { }
+  ngOnInit(): void {
+    this.topicForm = this.fb.group({
+      topicId: ['', Validators.required],
+    });
+  }
 
   handleBackBtn() {
     this.location.back();
@@ -20,8 +59,59 @@ export class ImportQuestionComponent {
 
   handleDeleteProfileDialog() {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["confirmation-dialog"];
+    dialogConfig.panelClass = ['confirmation-dialog'];
     dialogConfig.autoFocus = false;
     this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
+  }
+
+  onUploadSuccess(event: any) {
+    this.isFile = true;
+    this.fileName = event[0].name;
+    this.formData.append('file', event[0]);
+  }
+
+  onUploadError(event: any) {
+    this.resetFile();
+    this.componentRef?.directiveRef?.reset();
+    this.snackbarService.error(event[1]);
+  }
+
+  getValidation() {
+    this.isValid = this.topicForm.valid && this.isFile;
+    return this.isValid;
+  }
+
+  importQuestions() {
+    this.formData.append('topicId', this.topicForm.get('topicId')?.value);
+    this.questionService.importQuestions(this.formData).subscribe({
+      next: (res: any) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.questionList.initializeEmptyResponse();
+          this.questionList.loadQuestions(
+            this.questionList.response.pageSize,
+            this.questionList.response.currentPageIndex
+          );
+          this.resetFile();
+          this.topicForm.reset();
+          this.topicForm;
+          this.count = res.data;
+          this.isImportSuccess = true;
+          this.componentRef?.directiveRef?.reset();
+          this.snackbarService.success(res.message);
+          setTimeout(() => {
+            this.isImportSuccess = false;
+          }, 3000);
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+    });
+  }
+
+  resetFile() {
+    this.isFile = false;
+    this.fileName = '';
+    this.formData.delete('file');
+    this.formData.delete('topicId');
   }
 }
