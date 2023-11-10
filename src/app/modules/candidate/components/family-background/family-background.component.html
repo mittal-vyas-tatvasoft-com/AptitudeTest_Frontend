@@ -1,1 +1,57 @@
-<p>family-background works!</p>
+<mat-card class="form-block-secondary mb-3">
+  <mat-card-content class="pb-0">
+    <div class="card-header px-0 pt-0">
+      <h5 class="card-header-title">Family Background</h5>
+    </div>
+    <div class="row">
+      <div class="col-12 col-md-4 col-lg-3">
+        <p>Relationship</p>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg">
+        <p>Qualification</p>
+      </div>
+      <div class="col-sm-6 col-md-4 col-lg">
+        <p>Occupation</p>
+      </div>
+    </div>
+    <hr class="hr-line d-lg-none" />
+    <form [formGroup]="form">
+      <ng-container formArrayName="familyDetailsArray">
+        <ng-container
+          *ngFor="
+            let familyDetail of familyDetailsArray.controls;
+            let i = index
+          "
+        >
+          <div class="row" [formGroupName]="i">
+            <div class="col-12 col-md-4 col-lg-3">
+              <mat-form-field appearance="outline">
+                <mat-label>Relationship</mat-label>
+                <mat-select formControlName="familyPerson">
+                  <mat-option
+                    *ngFor="let item of selectOptionsForRelationship"
+                    [value]="item.id"
+                  >
+                    {{ item.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg">
+              <mat-form-field appearance="outline">
+                <mat-label>Qualification</mat-label>
+                <input matInput formControlName="qualification" />
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6 col-md-4 col-lg">
+              <mat-form-field appearance="outline">
+                <mat-label>Occupation</mat-label>
+                <input matInput formControlName="occupation" />
+              </mat-form-field>
+            </div>
+          </div>
+        </ng-container>
+      </ng-container>
+    </form>
+  </mat-card-content>
+</mat-card>

@@ -1,1 +1,129 @@
-<p>personal-info works!</p>
+<mat-card class="form-block mb-3">
+  <mat-card-content class="pb-0">
+    <div class="card-header px-0 pt-0">
+      <h5 class="card-header-title">Personal Information</h5>
+    </div>
+    <form [formGroup]="form">
+      <div class="row row-cols-xl-5">
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-text-control
+            [formControlModel]="CandidateModel.firstName"
+            [form]="form"
+            class="w-100"
+          ></app-text-control>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-text-control
+            [formControlModel]="CandidateModel.fatherName"
+            [form]="form"
+            class="w-100"
+          ></app-text-control>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-text-control
+            [formControlModel]="CandidateModel.lastName"
+            [form]="form"
+            class="w-100"
+          ></app-text-control>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 w-xl-40">
+          <app-select
+            [formControlModel]="CandidateModel.userGroup"
+            [form]="form"
+            [options]="groups"
+          ></app-select>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-select
+            [formControlModel]="CandidateModel.userCollege"
+            [form]="form"
+            [options]="colleges"
+          ></app-select>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-select
+            [formControlModel]="CandidateModel.status"
+            [form]="form"
+            [options]="selectOptionsForStatus"
+          ></app-select>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-select
+            [formControlModel]="CandidateModel.year"
+            [form]="form"
+            [options]="selectOptionsForYear"
+          ></app-select>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-select
+            [formControlModel]="CandidateModel.gender"
+            [form]="form"
+            [options]="selectOptionsForGender"
+          ></app-select>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-date-picker
+            [form]="form"
+            [formControlModel]="CandidateModel.dateOfBirth"
+          ></app-date-picker>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-text-control
+            [formControlModel]="CandidateModel.email"
+            [form]="form"
+            class="w-100"
+          ></app-text-control>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-text-control-number
+            [formControlModel]="CandidateModel.phoneNumber"
+            [form]="form"
+            class="w-100"
+          ></app-text-control-number>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-select
+            [formControlModel]="CandidateModel.appliedThrough"
+            [form]="form"
+            [options]="selectOptionsForAppliedThrough"
+          ></app-select>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-select
+            [formControlModel]="CandidateModel.profiles"
+            [form]="form"
+            [options]="profiles"
+          ></app-select>
+        </div>
+        <div class="col-sm-6 col-md-8 col-lg-6 w-xl-40">
+          <app-text-control
+            [formControlModel]="CandidateModel.permanentAddress"
+            [form]="form"
+            class="w-100"
+          ></app-text-control>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-text-control
+            [formControlModel]="CandidateModel.cityName"
+            [form]="form"
+            class="w-100"
+          ></app-text-control>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-text-control
+            [formControlModel]="CandidateModel.pincode"
+            [form]="form"
+            class="w-100"
+          ></app-text-control>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+          <app-select
+            [formControlModel]="CandidateModel.state"
+            [form]="form"
+            [options]="states"
+          ></app-select>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

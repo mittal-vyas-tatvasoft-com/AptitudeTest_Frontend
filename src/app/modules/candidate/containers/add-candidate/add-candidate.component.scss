@@ -1,11 +1,19 @@
-.spinner-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
+.full-page-loader {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  //background-color: rgba(255, 255, 255, 0.8); / Semi-transparent white background /
+  z-index: 9999;
 }
 
 ::ng-deep .mat-mdc-dialog-actions .mdc-button.mat-mdc-button-base,
-::ng-deep .mat-mdc-dialog-actions .mat-mdc-unelevated-button.mat-mdc-button-base {
-    margin-right: 10px;
+::ng-deep
+  .mat-mdc-dialog-actions
+  .mat-mdc-unelevated-button.mat-mdc-button-base {
+  margin-right: 10px;
 }

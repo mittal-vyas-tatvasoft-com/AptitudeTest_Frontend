@@ -1,1 +1,32 @@
-<p>exam-scores works!</p>
+<mat-card class="form-block mb-3">
+  <mat-card-content class="pb-0">
+    <div class="card-header px-0 pt-0">
+      <h5 class="card-header-title">Exam Score</h5>
+    </div>
+    <form [formGroup]="form">
+      <div class="row">
+        <div class="col-sm-6 col-md-4">
+          <app-text-control-number
+            [formControlModel]="CandidateModel.acpcMeritRank"
+            [form]="form"
+            class="w-100"
+          ></app-text-control-number>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <app-text-control-number
+            [formControlModel]="CandidateModel.gujcetScore"
+            [form]="form"
+            class="w-100"
+          ></app-text-control-number>
+        </div>
+        <div class="col-sm-6 col-md-4">
+          <app-text-control-number
+            [formControlModel]="CandidateModel.jeeScore"
+            [form]="form"
+            class="w-100"
+          ></app-text-control-number>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>

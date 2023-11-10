@@ -1,4 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
+import { candidateControl } from '../../configs/candidate.configs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CandidateService } from '../../services/candidate.service';
+import { UserData } from '../../interfaces/candidate.interface';
 
 @Component({
   selector: 'app-exam-scores',
@@ -6,5 +10,31 @@ import { Component } from '@angular/core';
   styleUrls: ['./exam-scores.component.scss']
 })
 export class ExamScoresComponent {
+  CandidateModel = candidateControl;
+  form: FormGroup;
+  @Input() candidateData: UserData;
 
+  constructor(private formBuilder: FormBuilder, private candidateService: CandidateService,) { }
+
+  ngOnInit() {
+    this.createForm();
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    if (changes['candidateData'] && this.candidateData) {
+      this.form.patchValue(this.candidateData);
+    }
+  }
+
+  createForm() {
+    this.form = this.formBuilder.group({
+      acpcMeritRank: [''],
+      gujcetScore: [''],
+      jeeScore: [''],
+    })
+  }
+
+  getFormData(): FormGroup {
+    return this.form;
+  }
 }

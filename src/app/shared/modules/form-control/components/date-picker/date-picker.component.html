@@ -1,5 +1,5 @@
 <div [formGroup]="form">
-  <mat-form-field>
+  <mat-form-field appearance="outline">
     <mat-label>{{ formControlModel.label }}</mat-label>
     <input
       matInput
@@ -8,7 +8,6 @@
       [min]="minDate"
       [max]="maxDate"
     />
-    <mat-hint>DD/MM/YYYY</mat-hint>
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>
     <mat-error>{{

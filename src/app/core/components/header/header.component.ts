@@ -32,7 +32,7 @@ export class HeaderComponent {
     private loginService: LoginService,
     public dialog: MatDialog,
     public snackbar: SnackbarService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.isAuthenticated = this.loginService.isLoggedIn();
