@@ -126,4 +126,38 @@ export class CandidateService {
       .get<DropdownItem[]>(`${environment.baseURL}Groups/GetGroupsForDropDown`)
       .pipe(map((response: any) => response.data));
   }
+
+  getProfilesForDropDown(): Observable<DropdownItem[]> {
+    return this.http
+      .get<DropdownItem[]>(`${environment.baseURL}Profiles/GetActiveProfiles`)
+      .pipe(map((response: any) => response.data));
+  }
+
+  getDegreeForDropDown(): Observable<DropdownItem[]> {
+    return this.http
+      .get<DropdownItem[]>(`${environment.baseURL}Degrees/GetActiveDegrees`)
+      .pipe(map((response: any) => response.data));
+  }
+
+  getStateForDropDown(): Observable<DropdownItem[]> {
+    return this.http
+      .get<DropdownItem[]>(`${environment.baseURL}User/GetAllStates`)
+      .pipe(map((response: any) => response.data));
+  }
+
+  getCandidateData(Id: number): Observable<any> {
+    const apiUrl = `${environment.baseURL}User/Get/${Id}`;
+    return this.http.get(apiUrl);
+  }
+
+  updateCandidate(candidateData: any): Observable<any> {
+    const updateUrl = `${environment.baseURL}User/Update`;
+    return this.http.put(updateUrl, candidateData);
+  }
+
+  getStremForDropDown(): Observable<DropdownItem[]> {
+    return this.http
+      .get<DropdownItem[]>(`${environment.baseURL}Streams/GetAllActiveStreams`)
+      .pipe(map((response: any) => response.data));
+  }
 }
