@@ -1,1 +1,70 @@
-<p>group-card works!</p>
+<mat-card class="group-card" fxLayout="column" fxLayoutAlign="start start"
+  ><mat-card-content>
+    <div class="row align-items-center group-card-header">
+      <div class="col">
+        <h3 class="group-card-heading">
+          {{ groupData.name }} :<b> {{ groupData.numberOfStudentsInGroup }}</b>
+        </h3>
+      </div>
+      <div class="col-auto">
+        <button
+          mat-icon-button
+          [matMenuTriggerFor]="tableActionMenu"
+          class="btn-small"
+          (click)="$event.stopPropagation()"
+        >
+          <mat-icon>
+            <img src="./assets/images/more-black.svg" alt="Action" />
+          </mat-icon>
+        </button>
+        <mat-menu #tableActionMenu="matMenu" xPosition="before">
+          <button mat-menu-item (click)="handleEdit(groupData)">
+            <mat-icon>
+              <img src="./assets/images/edit.svg" alt="Rename" />
+            </mat-icon>
+            Rename
+          </button>
+          <button mat-menu-item (click)="handleDelete(groupData.id)">
+            <mat-icon>
+              <img src="./assets/images/delete.svg" alt="Delete" />
+            </mat-icon>
+            Delete
+          </button>
+        </mat-menu>
+      </div>
+    </div>
+    <div class="college-list">
+      <ul>
+        <li
+          *ngFor="let college of groupData.collegesUnderGroup"
+          class="group-card-listing"
+        >
+          {{ college.name }} : <b> {{ college.numberOfStudentsInCollege }}</b>
+        </li>
+      </ul>
+    </div>
+
+    <div class="row justify-content-between group-card-footer g-0">
+      <div class="col-auto">
+        <button
+          mat-stroked-button
+          color="primary"
+          class="btn-sm"
+          routerLink="/admin/candidate/import-candidate"
+        >
+          Manage Candidates
+        </button>
+      </div>
+      <div class="col-auto">
+        <p class="default-group" *ngIf="groupData.isDefault">Default Group</p>
+        <p
+          class="default-group"
+          *ngIf="!groupData.isDefault"
+          (click)="setAsDefault(groupData)"
+        >
+          Set As Default
+        </p>
+      </div>
+    </div>
+  </mat-card-content></mat-card
+>
