@@ -1,9 +1,9 @@
 import { Component, Inject, OnInit, ViewChild } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CollegeService } from '../../services/college.service';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { CollegeControl } from '../../configs/college.configs';
-import { StatusCode } from 'src/app/shared/common/enums';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { CollegeControl, selectOptionsForStatus } from '../../configs/college.configs';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 
 @Component({
   selector: 'app-add-college',
@@ -11,10 +11,10 @@ import { StatusCode } from 'src/app/shared/common/enums';
   styleUrls: ['./add-college.component.scss'],
 })
 export class AddCollegeComponent implements OnInit {
-  optionsList: string[] = ['Active', 'Inactive'];
   isEditMode: boolean = false;
   form: FormGroup;
   CollegeModel = CollegeControl;
+  selectOptionsForStatus: SelectOption[] = selectOptionsForStatus;
 
   constructor(
     public dialogRef: MatDialogRef<AddCollegeComponent>,
@@ -24,52 +24,40 @@ export class AddCollegeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.form = this.formBuilder.group({
-      name: ['', Validators.required],
-      abbreviation: ['', Validators.required],
-      status: ['Active'],
-    });
-
-    if (this.data && this.data.college) {
+    if (this.data != 0) {
       this.isEditMode = true;
-      const college = this.data.college;
-      this.form.patchValue({
-        ...college,
-        status: college.status ? 'Active' : 'Inactive',
+    } else {
+      this.isEditMode = false;
+    }
+    this.createForm();
+  }
+
+  ngAfterViewInit(): void {
+    if (this.data != 0) {
+      this.collegeService.getCollegeById(this.data).subscribe({
+        next: (res: any) => {
+          this.form.setValue({
+            id: res.data.id,
+            name: res.data.name,
+            abbreviation: res.data.abbreviation,
+            status: res.data.status === true ? 1 : 2,
+          });
+        },
       });
     }
   }
 
-  closeModal() {
-    this.dialogRef.close();
+  createForm() {
+    this.form = this.formBuilder.group({
+      id: [0],
+      name: ['', Validators.required],
+      abbreviation: ['', Validators.required],
+      status: [1, Validators.required],
+    });
   }
 
-  onSaveClick(): void {
-    if (this.form.valid) {
-      const formData = this.form.value;
-      formData.status = formData.status === 'Active' ? true : false;
-      if (!this.isEditMode) {
-        this.collegeService.addCollege(formData).subscribe((response: any) => {
-          this.dialogRef.close({
-            refreshTable: true,
-            message: response.message,
-            status: response.statusCode
-          });
-        });
-      } else {
-        formData.id = this.data.college.id;
-        this.collegeService
-          .updateCollege(formData)
-          .subscribe((response: any) => {
-            this.dialogRef.close({
-              refreshTable: true,
-              message: response.message,
-              status: response.statusCode
-            });
-          });
-      }
-    } else {
-      this.form.markAllAsTouched();
-    }
+  closeModal() {
+    this.dialogRef.close(false);
   }
+
 }

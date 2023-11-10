@@ -1,12 +1,13 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControlName, FormGroup, Validators } from '@angular/forms';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { candidateControl, selectOptionsForAppliedThrough, selectOptionsForGender, selectOptionsForStatus } from '../../configs/candidate.configs';
 import { CandidateService } from '../../services/candidate.service';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import * as moment from 'moment';
 import { UserData } from '../../interfaces/candidate.interface';
+import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
 
 
 @Component({
@@ -15,7 +16,6 @@ import { UserData } from '../../interfaces/candidate.interface';
   styleUrls: ['./personal-info.component.scss']
 })
 export class PersonalInfoComponent {
-  optionsList: string[] = ['Option 1', 'Option 2', 'Option 3'];
   selectOptionsForGender: SelectOption[] = selectOptionsForGender;
   selectOptionsForStatus: SelectOption[] = selectOptionsForStatus;
   selectOptionsForAppliedThrough: SelectOption[] = selectOptionsForAppliedThrough;
@@ -114,7 +114,11 @@ export class PersonalInfoComponent {
 
   validateForm() {
     Object.keys(this.form.controls).forEach((controlName) => {
-      this.form.get(controlName)?.markAsTouched();
+      const control = this.form.get(controlName);
+      if (control) {
+        control.markAsTouched();
+        control.updateValueAndValidity();
+      }
     });
   }
 
@@ -126,6 +130,12 @@ export class PersonalInfoComponent {
     }
     if (dateOfBirthControl!.value == '0001-01-01') {
       dateOfBirthControl!.setValue(null);
+    }
+    const userCollegeControl = this.form.get('userCollege');
+    if (userCollegeControl && userCollegeControl.value === '0') {
+      userCollegeControl.setErrors({ required: true });
+      userCollegeControl.setErrors({ custom: 'User College is required' });
+      userCollegeControl.markAsTouched();
     }
     return this.form;
   }

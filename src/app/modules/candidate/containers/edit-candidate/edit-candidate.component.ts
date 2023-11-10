@@ -10,7 +10,7 @@ import { AcademicsDetail, CombinedData, FamilyDetail, UpdateParams, UserData } f
 import { EducationDetailsComponent } from '../../components/education-details/education-details.component';
 import { FormGroup } from '@angular/forms';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { Numbers } from 'src/app/shared/common/enums';
+
 
 
 
@@ -72,7 +72,6 @@ export class EditCandidateComponent {
         familyBackground,
         educationDetail,
       };
-
       const updateParams: UpdateParams = {
         id: this.candidateId,
         firstName: personalInfo.firstName,
@@ -83,12 +82,12 @@ export class EditCandidateComponent {
         groupId: personalInfo.userGroup,
         collegeId: personalInfo.userCollege,
         gender: personalInfo.gender,
-        status: personalInfo.status === Numbers.One ? true : false,
+        status: personalInfo.status === 1 ? true : false,
         appliedThrough: personalInfo.appliedThrough,
         technologyInterestedIn: personalInfo.technologyInterestedIn || null,
         pincode: personalInfo.pincode,
         city: personalInfo.cityName,
-        permanentAddress1: personalInfo.permanentAddress,
+        permanentAddress1: personalInfo.permanentAddress1,
         permanentAddress2: 'string',
         relationshipWithExistingEmployee: 'string',
         acpcMeritRank: examScores.acpcMeritRank,
@@ -101,12 +100,12 @@ export class EditCandidateComponent {
           .filter((educationDetail: { degreeId: string; }) => educationDetail.degreeId !== '')
           .map((educationDetail: { degreeId: any; streamId: any; maths: any; physics: any; university: any; grade: any; }) => ({
             userid: this.candidateId,
-            degreeid: educationDetail.degreeId,
-            streamid: educationDetail.streamId,
-            maths: educationDetail.maths,
-            physics: educationDetail.physics,
-            university: educationDetail.university,
-            grade: educationDetail.grade,
+            degreeid: educationDetail.degreeId ? educationDetail.degreeId : 0,
+            streamid: educationDetail.streamId || null,
+            maths: educationDetail.maths ? educationDetail.maths : 0,
+            physics: educationDetail.physics ? educationDetail.physics : 0,
+            university: educationDetail.university ? educationDetail.university : null,
+            grade: educationDetail.grade ? educationDetail.grade : 0,
             durationfromyear: 0,
             durationfrommonth: 0,
             durationtoyear: 0,
@@ -134,6 +133,8 @@ export class EditCandidateComponent {
         }
       );
     } else {
+      this.personalInfoComponent.validateForm();
+      this.educationDetailsComponent.validateForm();
     }
   }
 }
