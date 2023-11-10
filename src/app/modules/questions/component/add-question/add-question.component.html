@@ -28,205 +28,225 @@
     </button>
   </div>
 </div>
-
-<mat-card class="default-card">
-  <mat-card-content>
-    <div class="container-xl-900">
-      <div class="form-block-wrapper">
-        <h5 class="form-title">Question</h5>
-        <div class="row">
-          <div class="col-lg-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Topic</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let item of optionsList" [value]="item">
-                  {{ item }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-lg-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Difficulty</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let item of optionsList" [value]="item">
-                  {{ item }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-lg-4">
-            <mat-form-field appearance="outline">
-              <mat-label>Status</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let item of optionsList" [value]="item">
-                  {{ item }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-12 mb-3">
-            <ckeditor
-              class="html-editor"
-              [editor]="Editor"
-              data="<p>Look at this series: 36, 34, 30, 28, 24, … What number should come next?</p>"
-            ></ckeditor>
+<form [formGroup]="questionForm">
+  <mat-card class="default-card">
+    <mat-card-content>
+      <div class="container-xl-900">
+        <div class="form-block-wrapper">
+          <h5 class="form-title">Question</h5>
+          <div class="row">
+            <div class="col-lg-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Topic</mat-label>
+                <mat-select formControlName="topicId">
+                  <mat-option *ngFor="let topic of topics" [value]="topic.id">
+                    {{ topic.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>{{
+                  validation.getError(
+                    questionForm,
+                    questionControls.topicId,
+                    questionControls.topicId.key
+                  )
+                }}</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Difficulty</mat-label>
+                <mat-select formControlName="difficulty">
+                  <mat-option *ngFor="let item of difficulty" [value]="item">
+                    {{ item }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>{{
+                  validation.getError(
+                    questionForm,
+                    questionControls.difficulty,
+                    questionControls.difficulty.key
+                  )
+                }}</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-lg-4">
+              <mat-form-field appearance="outline">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                  <mat-option *ngFor="let item of status" [value]="item.value">
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>{{
+                  validation.getError(
+                    questionForm,
+                    questionControls.status,
+                    questionControls.status.key
+                  )
+                }}</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 mb-3">
+              <ckeditor
+                formControlName="questionText"
+                class="html-editor"
+                [editor]="Editor"
+                data="<p>Look at this series: 36, 34, 30, 28, 24, … What number should come next?</p>"
+              ></ckeditor>
+              <mat-error>{{
+                validation.getError(
+                  questionForm,
+                  questionControls.questionText,
+                  questionControls.questionText.key
+                )
+              }}</mat-error>
+            </div>
           </div>
         </div>
-      </div>
 
-      <div class="form-block-wrapper">
-        <h5 class="form-title">Answer</h5>
-        <div class="row">
-          <div class="col-lg-4 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Type</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let item of optionsList" [value]="item">
-                  {{ item }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-auto">
-            <mat-radio-group
-              [(ngModel)]="answerType"
-              class="mt-6p d-block mb-sm-0 mb-2"
-            >
-              <mat-radio-button value="text" color="primary"
-                >Text</mat-radio-button
-              >
-              <mat-radio-button value="picture" color="primary"
-                >Picture</mat-radio-button
-              >
-            </mat-radio-group>
-          </div>
-          <div class="col-12">
-            <div
-              *ngIf="answerType === 'text'; else elseBlock"
-              class="answer-type"
-            >
-              <div class="row">
-                <div class="col-md-6">
-                  <div class="answer-type-text-option">
-                    <span class="answer-option">A</span>
-                    <mat-form-field appearance="outline" class="remove-hint">
-                      <input matInput placeholder="Answer" />
-                    </mat-form-field>
-                    <mat-checkbox class="rouded-check" color="primary" checked>
-                    </mat-checkbox>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="answer-type-text-option">
-                    <span class="answer-option">B</span>
-                    <mat-form-field appearance="outline" class="remove-hint">
-                      <input matInput placeholder="Answer" />
-                    </mat-form-field>
-                    <mat-checkbox class="rouded-check" color="primary">
-                    </mat-checkbox>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="answer-type-text-option">
-                    <span class="answer-option">C</span>
-                    <mat-form-field appearance="outline" class="remove-hint">
-                      <input matInput placeholder="Answer" />
-                    </mat-form-field>
-                    <mat-checkbox class="rouded-check" color="primary">
-                    </mat-checkbox>
-                  </div>
-                </div>
-                <div class="col-md-6">
-                  <div class="answer-type-text-option">
-                    <span class="answer-option">D</span>
-                    <mat-form-field appearance="outline" class="remove-hint">
-                      <input matInput placeholder="Answer" />
-                    </mat-form-field>
-                    <mat-checkbox class="rouded-check" color="primary">
-                    </mat-checkbox>
-                  </div>
-                </div>
-              </div>
+        <div class="form-block-wrapper">
+          <h5 class="form-title">Answer</h5>
+          <div class="row">
+            <div class="col-lg-4 col-sm-6">
+              <mat-form-field appearance="outline">
+                <mat-label>Type</mat-label>
+                <mat-select formControlName="questionType">
+                  <mat-option
+                    *ngFor="let item of answerType"
+                    [value]="item.value"
+                  >
+                    {{ item.name }}
+                  </mat-option>
+                </mat-select>
+                <mat-error>{{
+                  validation.getError(
+                    questionForm,
+                    questionControls.questionType,
+                    questionControls.questionType.key
+                  )
+                }}</mat-error>
+              </mat-form-field>
             </div>
-            <ng-template #elseBlock>
-              <div class="answer-type">
+            <div class="col-auto">
+              <mat-radio-group
+                formControlName="optionType"
+                class="mt-6p d-block mb-sm-0 mb-2"
+              >
+                <mat-radio-button [value]="optionTypes.Text" color="primary"
+                  >Text</mat-radio-button
+                >
+                <mat-radio-button [value]="optionTypes.Image" color="primary"
+                  >Picture</mat-radio-button
+                >
+              </mat-radio-group>
+            </div>
+            <div class="col-12">
+              <div
+                *ngIf="optionType == optionTypes.Text; else elseBlock"
+                class="answer-type"
+              >
                 <div class="row">
-                  <div class="col-lg-3 col-sm-6">
+                  <div
+                    class="col-md-6"
+                    *ngFor="let option of optionsIndex; let i = index"
+                  >
                     <div class="answer-type-text-option">
-                      <span class="answer-option">A</span>
-                      <div class="uploaded-box">
-                        <img
-                          src="./assets/images/circle-grey.svg"
-                          alt="Circle"
+                      <span class="answer-option">{{ optionsIndex[i] }}</span>
+                      <mat-form-field appearance="outline" class="remove-hint">
+                        <input
+                          matInput
+                          placeholder="Answer"
+                          [formControlName]="'optionValue' + option"
                         />
-                        <button mat-fab color="default" class="btn-remove">
-                          <mat-icon
-                            ><img src="./assets/images/delete.svg" alt="Delete"
-                          /></mat-icon>
-                        </button>
-                      </div>
-                      <mat-checkbox class="rouded-check" color="primary">
-                      </mat-checkbox>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="answer-type-text-option">
-                      <span class="answer-option">B</span>
-                      <div class="uploaded-box">
-                        <img
-                          src="./assets/images/triangle-grey.svg"
-                          alt="Triangle"
-                        />
-                        <button mat-fab color="default" class="btn-remove">
-                          <mat-icon
-                            ><img src="./assets/images/delete.svg" alt="Delete"
-                          /></mat-icon>
-                        </button>
-                      </div>
+                      </mat-form-field>
                       <mat-checkbox
                         class="rouded-check"
                         color="primary"
-                        checked
+                        value="{{ i }}"
+                        [checked]="isAnswer[i]"
+                        (change)="checkboxChanged($event)"
                       >
                       </mat-checkbox>
                     </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="answer-type-text-option">
-                      <span class="answer-option">C</span>
-                      <div class="uploaded-box">
-                        <img
-                          src="./assets/images/hexagon-grey.svg"
-                          alt="Hexagon"
-                        />
-                        <button mat-fab color="default" class="btn-remove">
-                          <mat-icon
-                            ><img src="./assets/images/delete.svg" alt="Delete"
-                          /></mat-icon>
-                        </button>
-                      </div>
-                      <mat-checkbox class="rouded-check" color="primary">
-                      </mat-checkbox>
-                    </div>
-                  </div>
-                  <div class="col-lg-3 col-sm-6">
-                    <div class="answer-type-text-option">
-                      <span class="answer-option">D</span>
-                      <dropzone
-                        [message]="message"
-                        class="inline-dropzone"
-                      ></dropzone>
-                      <mat-checkbox class="rouded-check" color="primary">
-                      </mat-checkbox>
-                    </div>
+                    <mat-error>{{ getOptionTextError(i) }}</mat-error>
                   </div>
                 </div>
               </div>
-            </ng-template>
+              <ng-template #elseBlock>
+                <div class="answer-type">
+                  <div class="row">
+                    <div
+                      class="col-lg-3 col-sm-6"
+                      *ngFor="let option of optionsIndex; let i = index"
+                    >
+                      <div class="answer-type-text-option">
+                        <span class="answer-option">{{ option }}</span>
+                        <dropzone
+                          *ngIf="!optionImageFlag[i]; else displayImage"
+                          (success)="onImageUpload($event, i)"
+                          (error)="onImageUploadError($event)"
+                          [message]="message"
+                          [config]="dropzoneConfig"
+                          class="inline-dropzone"
+                        ></dropzone>
+                        <ng-template #displayImage>
+                          <div class="uploaded-box">
+                            <img [src]="previewImages[i]" alt="Image" />
+                            <button
+                              mat-fab
+                              color="default"
+                              class="btn-remove"
+                              (click)="removeImage(i)"
+                            >
+                              <mat-icon
+                                ><img
+                                  src="./assets/images/delete.svg"
+                                  alt="Delete"
+                              /></mat-icon>
+                            </button>
+                          </div>
+                        </ng-template>
+
+                        <mat-checkbox
+                          class="rouded-check"
+                          color="primary"
+                          value="{{ i }}"
+                          (change)="checkboxChanged($event)"
+                          [checked]="isAnswer[i]"
+                        >
+                        </mat-checkbox>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </ng-template>
+              <mat-error *ngIf="optionType == optionTypes.Image">{{
+                getImageError()
+              }}</mat-error>
+              <mat-error>{{ getCheckboxError() }}</mat-error>
+            </div>
+            <div class="col-12">
+              <div class="form-action-list justify-content-end">
+                <button
+                  mat-flat-button
+                  color="primary"
+                  (click)="addQuestion()"
+                  [disabled]="!isValid()"
+                >
+                  {{ isEdit ? "Save" : "Add " }}
+                </button>
+                <button
+                  mat-stroked-button
+                  color="primary"
+                  (click)="handleCancelBtn()"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
+</form>

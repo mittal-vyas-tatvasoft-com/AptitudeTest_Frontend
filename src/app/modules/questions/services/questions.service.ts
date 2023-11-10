@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pagination } from 'src/app/shared/common/interfaces/pagination.interface';
-import { Question } from 'src/app/shared/common/interfaces/question.interface';
+import { Question } from 'src/app/modules/questions/interfaces/question.interface';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { UpdateStatus } from 'src/app/shared/common/interfaces/update-status';
 import { environment } from 'src/environments/environment';
 
@@ -37,7 +38,9 @@ export class QuestionsService {
   }
 
   get(id: number) {
-    return this.httpClient.get(`${environment.baseURL}Questions/Get?id=${id}`);
+    return this.httpClient.get<ResponseModel<Question>>(
+      `${environment.baseURL}Questions/Get/${id}`
+    );
   }
 
   getQuestionCount(topic?: number, status?: boolean) {
@@ -60,17 +63,17 @@ export class QuestionsService {
     );
   }
 
-  create(question: any) {
+  create(questionFormData: FormData) {
     return this.httpClient.post(
       `${environment.baseURL}Questions/Create`,
-      question
+      questionFormData
     );
   }
 
-  update(question: any) {
+  update(questionFormData: FormData) {
     return this.httpClient.put(
       `${environment.baseURL}Questions/Update`,
-      question
+      questionFormData
     );
   }
 

@@ -13,9 +13,9 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { QuestionCount } from 'src/app/shared/common/interfaces/question-count.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pagination } from 'src/app/shared/common/interfaces/pagination.interface';
-import { Question } from 'src/app/shared/common/interfaces/question.interface';
+import { Question } from 'src/app/modules/questions/interfaces/question.interface';
 import { Subject, debounceTime } from 'rxjs';
-import { OptionList, Topics } from '../../static/topics.static';
+import { OptionList, Topics } from '../../static/question.static';
 
 @Component({
   selector: 'app-questions',
@@ -37,6 +37,8 @@ export class QuestionsComponent implements OnInit {
   topics = Topics;
   filterForm: FormGroup;
   response: Pagination<Question>;
+  topic?: number;
+  status?: boolean;
   private scrollSubject = new Subject<number>();
 
   constructor(
@@ -48,6 +50,12 @@ export class QuestionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.initializeEmptyResponse();
+    let win: any = window;
+    window.addEventListener('scroll', (event: any) => {
+      let percent =
+        (window.innerHeight + window.scrollY) / document.body.offsetHeight;
+      this.scrollSubject.next(percent);
+    });
 
     const scroller = document.querySelector('.main-content');
     scroller?.addEventListener('scroll', (event: any) => {
@@ -61,11 +69,18 @@ export class QuestionsComponent implements OnInit {
         if (data > 0.98 && this.response.isNextPage == true) {
           this.loadQuestions(
             this.response.pageSize,
-            this.response?.currentPageIndex + Numbers.One
+            this.response?.currentPageIndex + Numbers.One,
+            this.topic,
+            this.status
           );
         }
       });
-    this.loadQuestions(this.response.pageSize, this.response?.currentPageIndex);
+    this.loadQuestions(
+      this.response.pageSize,
+      this.response?.currentPageIndex,
+      this.topic,
+      this.status
+    );
     this.getQuestionCount();
 
     this.filterForm = this.fb.group({
@@ -74,6 +89,8 @@ export class QuestionsComponent implements OnInit {
     });
 
     this.filterForm.valueChanges.subscribe((res) => {
+      this.topic = res.topic;
+      this.status = res.status;
       this.initializeEmptyResponse();
       this.loadQuestions(
         PaginationDefaultValues.DefaultPageSize,

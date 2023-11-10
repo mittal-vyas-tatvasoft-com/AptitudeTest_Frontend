@@ -1,1 +1,39 @@
-<p>add-group works!</p>
+<div class="dialog-header">
+  <h2 mat-dialog-title>Add Group</h2>
+  <button mat-icon-button class="dialog-close" (click)="closeModal()">
+    <mat-icon>
+      <img src="./assets/images/close-grey.svg" alt="Close" />
+    </mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content class="dialog-body pb-0">
+  <form [formGroup]="form">
+    <app-text-control
+      [form]="form"
+      [formControlModel]="formControls.name"
+    ></app-text-control>
+    <div class="d-flex justify-content-between align-items-center mt-n1 mb-1">
+      <mat-checkbox color="primary" class="font14" formControlName="isDefault"
+        >Set as Default Group</mat-checkbox
+      >
+    </div>
+  </form>
+</mat-dialog-content>
+<mat-dialog-actions align="end" class="dialog-footer">
+  <app-button
+    [color]="'primary'"
+    [type]="'submit'"
+    [label]="'Add'"
+    [isDisabled]="!form.valid"
+    (click)="onAddClick()"
+    [class]="'button'"
+  ></app-button>
+  <app-button
+    [color]="'primary'"
+    [type]="'button'"
+    [label]="'Cancel'"
+    (click)="closeModal()"
+    [mat-dialog-close]="true"
+  ></app-button>
+</mat-dialog-actions>

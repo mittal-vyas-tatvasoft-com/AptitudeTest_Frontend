@@ -32,6 +32,11 @@ const routes: Routes = [
             (m) => m.QuestionsModule
           ),
       },
+      {
+        path: 'groups',
+        loadChildren: () =>
+          import('../modules/groups/groups.module').then((m) => m.GroupsModule),
+      }
     ],
   },
 ];

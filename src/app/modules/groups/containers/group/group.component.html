@@ -1,1 +1,70 @@
-<p>group works!</p>
+<div class="page-header">
+  <div class="title-wrap">
+    <mat-icon class="page-icon">
+      <img src="./assets/images/group-primary.svg" alt="Group" />
+    </mat-icon>
+    <h4 class="title">Group</h4>
+  </div>
+  <div class="action-list">
+    <button mat-fab color="primary" (click)="handleAddGroupDialog(addGroup)">
+      <mat-icon
+        ><img src="./assets/images/add-white-full.svg" alt="Add"
+      /></mat-icon>
+    </button>
+  </div>
+</div>
+
+<mat-card class="form-block mb-3"
+  ><mat-card-content class="pb-0">
+    <div class="row" [formGroup]="form">
+      <div class="col-lg-3 col-sm-6">
+        <mat-form-field appearance="outline">
+          <mat-label>Search Group..</mat-label>
+          <input
+            matInput
+            #filter
+            formControlName="searchedGroup"
+            (keyup)="getGroupsByFiltering(filter.value)"
+          />
+        </mat-form-field>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <mat-form-field appearance="outline">
+          <mat-label>College</mat-label>
+          <mat-select formControlName="searchedCollege">
+            <mat-option
+              *ngFor="let college of colleges"
+              [value]="college"
+              (onSelectionChange)="
+                getFilteredGroupsFromCollege(filter.value, college.id)
+              "
+            >
+              {{ college.name }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div class="col-lg pb-2 pb-lg-0">
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="clearSearchAndFilter()"
+        >
+          Clear
+        </button>
+      </div>
+    </div>
+  </mat-card-content></mat-card
+>
+
+<div class="row">
+  <div class="col-md-6 col-xxl-4 mb-2" *ngFor="let group of groupList">
+    <app-group-card
+      [groupData]="group"
+      (editClicked)="handleAddGroupDialog($event)"
+      (deleteClicked)="handleDeleteGroupDialog($event)"
+      (setDefaultClicked)="setGroupAsDefault($event)"
+    >
+    </app-group-card>
+  </div>
+</div>
