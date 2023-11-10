@@ -93,7 +93,6 @@ export class ImportQuestionComponent implements OnInit {
           );
           this.resetFile();
           this.topicForm.reset();
-          this.topicForm;
           this.count = res.data;
           this.isImportSuccess = true;
           this.componentRef?.directiveRef?.reset();
