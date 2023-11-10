@@ -5,6 +5,7 @@ import { Question } from 'src/app/modules/questions/interfaces/question.interfac
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { UpdateStatus } from 'src/app/shared/common/interfaces/update-status';
 import { environment } from 'src/environments/environment';
+import { Observable, Subscriber } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -74,6 +75,13 @@ export class QuestionsService {
     return this.httpClient.put(
       `${environment.baseURL}Questions/Update`,
       questionFormData
+    );
+  }
+
+  importQuestions(questionData: FormData) {
+    return this.httpClient.post(
+      `${environment.baseURL}Questions/ImportQuestions`,
+      questionData
     );
   }
 
