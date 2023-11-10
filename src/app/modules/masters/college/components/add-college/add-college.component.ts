@@ -21,7 +21,7 @@ export class AddCollegeComponent implements OnInit {
     private collegeService: CollegeService,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.form = this.formBuilder.group({
@@ -50,34 +50,22 @@ export class AddCollegeComponent implements OnInit {
       formData.status = formData.status === 'Active' ? true : false;
       if (!this.isEditMode) {
         this.collegeService.addCollege(formData).subscribe((response: any) => {
-          if (response.status == StatusCode.Success) {
-            this.dialogRef.close({
-              refreshTable: true,
-              message: response.message,
-            });
-          } else {
-            this.dialogRef.close({
-              refreshTable: true,
-              message: response.message,
-            });
-          }
+          this.dialogRef.close({
+            refreshTable: true,
+            message: response.message,
+            status: response.statusCode
+          });
         });
       } else {
         formData.id = this.data.college.id;
         this.collegeService
           .updateCollege(formData)
           .subscribe((response: any) => {
-            if (response.status == StatusCode.Success) {
-              this.dialogRef.close({
-                refreshTable: true,
-                message: response.message,
-              });
-            } else {
-              this.dialogRef.close({
-                refreshTable: true,
-                message: response.message,
-              });
-            }
+            this.dialogRef.close({
+              refreshTable: true,
+              message: response.message,
+              status: response.statusCode
+            });
           });
       }
     } else {
