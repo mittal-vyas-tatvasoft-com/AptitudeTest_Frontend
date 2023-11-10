@@ -10,6 +10,7 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { EventEmitter } from '@angular/core';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-college',
@@ -20,6 +21,8 @@ export class CollegeComponent {
   pageSize = Numbers.Ten;
   currentPageIndex = Numbers.Zero;
   totalItemsCount: number;
+  sortKey: string = '';
+  sortDirection: string = '';
   pageNumbers: number[] = [];
   dataSource: MatTableDataSource<CollegeModel>;
   columns: TableColumn<CollegeModel>[] = [
@@ -34,7 +37,7 @@ export class CollegeComponent {
     public dialog: MatDialog,
     private collegeService: CollegeService,
     private snackbarService: SnackbarService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<CollegeModel>([]);
@@ -43,7 +46,12 @@ export class CollegeComponent {
 
   fetchColleges() {
     this.collegeService
-      .getColleges(this.currentPageIndex, this.pageSize)
+      .getColleges(
+        this.currentPageIndex,
+        this.pageSize,
+        this.sortKey,
+        this.sortDirection
+      )
       .subscribe((data: any) => {
         this.dataSource = new MatTableDataSource<CollegeModel>(data.entityList);
         this.totalItemsCount = data.totalItemsCount;
@@ -147,5 +155,25 @@ export class CollegeComponent {
   isLastPage(): boolean {
     const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
     return this.currentPageIndex === totalPages - Numbers.One;
+  }
+
+  handleDataSorting(event: Sort) {
+    switch (event.active) {
+      case 'name':
+        this.sortKey = 'Name';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'abbreviation':
+        this.sortKey = 'Abbreviation';
+        this.sortDirection = event.direction;
+        break;
+
+      default:
+        this.sortKey = '';
+        this.sortDirection = '';
+        break;
+    }
+    this.fetchColleges();
   }
 }

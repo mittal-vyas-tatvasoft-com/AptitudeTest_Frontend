@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {
   CandidateModel,
   DropdownItem,
+  GetAllCandidateParams,
 } from '../../interfaces/candidate.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -32,6 +33,7 @@ import {
   DropzoneEvent,
   DropzoneFallbackFunction,
 } from 'ngx-dropzone-wrapper/lib/dropzone.interfaces';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-import-candidate',
@@ -59,6 +61,8 @@ export class ImportCandidateComponent implements OnInit {
   currentPageIndex = Numbers.Zero;
   totalItemsCount: number;
   pageSize = Numbers.Ten;
+  sortKey: string;
+  sortDirection: string;
   fileName: string = '';
   noFileSet: boolean = true;
   importSuccessFully: boolean = false;
@@ -114,7 +118,7 @@ export class ImportCandidateComponent implements OnInit {
       collegeId: [0],
     });
     this.filterForm = this.formBuilder.group({
-      collegeId: [0],
+      collegeId: [null],
       status: [''],
       searchQuery: [''],
     });
@@ -128,34 +132,30 @@ export class ImportCandidateComponent implements OnInit {
     const searchQuery = this.filterForm.get('searchQuery')?.value;
     const collegeId = this.filterForm.get('collegeId')?.value;
     const status = this.filterForm.get('status')?.value;
-
-    this.candidateService
-      .getCandidate(
-        this.currentPageIndex,
-        this.pageSize,
-        searchQuery,
-        collegeId,
-        0,
-        0,
-        status
-      )
-      .subscribe((data: any) => {
-        data.forEach(
-          (candidate: {
-            name: string;
-            firstName: string;
-            lastName: string;
-          }) => {
-            candidate.name = `${candidate.firstName} ${
-              candidate.lastName || ''
-            }`;
-          }
-        );
-        this.dataSource = new MatTableDataSource<CandidateModel>(data);
-        if (data && data.length > 0) {
-          this.totalItemsCount = data[0].totalRecords;
+    const params: GetAllCandidateParams = {
+      currentPageIndex: this.currentPageIndex,
+      pageSize: this.pageSize,
+      searchQuery: searchQuery,
+      collegeId: collegeId,
+      groupId: null,
+      status: status,
+      year: null,
+      sortField: this.sortKey,
+      sortOrder: this.sortDirection,
+    };
+    this.candidateService.getCandidate(params).subscribe((data: any) => {
+      data.forEach(
+        (candidate: { name: string; firstName: string; lastName: string }) => {
+          candidate.name = `${candidate.firstName ? candidate.firstName : ''} ${
+            candidate.lastName ? candidate.lastName : ''
+          }`;
         }
-      });
+      );
+      this.dataSource = new MatTableDataSource<CandidateModel>(data);
+      if (data && data.length > 0) {
+        this.totalItemsCount = data[0].totalRecords;
+      }
+    });
   }
 
   getDropdowns() {
@@ -336,5 +336,45 @@ export class ImportCandidateComponent implements OnInit {
   isLastPage(): boolean {
     const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
     return this.currentPageIndex === totalPages - Numbers.One;
+  }
+
+  handleDataSorting(event: Sort) {
+    switch (event.active) {
+      case 'name':
+        this.sortKey = 'FirstName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'collegeName':
+        this.sortKey = 'CollegeName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'groupName':
+        this.sortKey = 'GroupName';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'email':
+        this.sortKey = 'Email';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'phoneNumber':
+        this.sortKey = 'PhoneNumber';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'createdYear':
+        this.sortKey = 'CreatedYear';
+        this.sortDirection = event.direction;
+        break;
+
+      default:
+        this.sortKey = '';
+        this.sortDirection = '';
+        break;
+    }
+    this.fetchCandidate();
   }
 }

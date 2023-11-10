@@ -8,6 +8,7 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { ProfileModel } from '../../interfaces/profile.interface';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { Sort } from '@angular/material/sort';
 
 @Component({
   selector: 'app-profile',
@@ -30,6 +31,8 @@ export class ProfileComponent implements OnInit {
     name: '',
     status: true,
   };
+  sortKey: string = '';
+  sortDirection: string = '';
   dataSource!: MatTableDataSource<any>;
   constructor(
     public dialog: MatDialog,
@@ -42,11 +45,13 @@ export class ProfileComponent implements OnInit {
   }
 
   getAllProfileData() {
-    this.profileService.GetAllProfiles().subscribe({
-      next: (res: any) => {
-        this.dataSource = new MatTableDataSource(res.data);
-      },
-    });
+    this.profileService
+      .GetAllProfiles(this.sortKey, this.sortDirection)
+      .subscribe({
+        next: (res: any) => {
+          this.dataSource = new MatTableDataSource(res.data);
+        },
+      });
   }
 
   handleAddProfileDialog(data: ProfileModel) {
@@ -121,5 +126,20 @@ export class ProfileComponent implements OnInit {
         }
       },
     });
+  }
+
+  handleDataSorting(event: Sort) {
+    switch (event.active) {
+      case 'name':
+        this.sortKey = 'Name';
+        this.sortDirection = event.direction;
+        break;
+
+      default:
+        this.sortKey = '';
+        this.sortDirection = '';
+        break;
+    }
+    this.getAllProfileData();
   }
 }

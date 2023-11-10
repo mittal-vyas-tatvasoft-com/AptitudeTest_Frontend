@@ -8,6 +8,7 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { DegreeModel } from '../../interfaces/degree.interface';
+import { Sort } from '@angular/material/sort';
 
 export interface UpdateStatus {
   id: number;
@@ -32,6 +33,8 @@ export class DegreeComponent implements OnInit {
       action: 'edit',
     },
   ];
+  sortKey: string = '';
+  sortDirection: string = '';
   addDegree: DegreeModel = {
     id: 0,
     name: '',
@@ -52,10 +55,12 @@ export class DegreeComponent implements OnInit {
   }
 
   getAllDegrees() {
-    this.degreeService.degrees().subscribe((response: any) => {
-      this.dataSource = new MatTableDataSource(response.data);
-      this.degreeData = response.data;
-    });
+    this.degreeService
+      .degrees(this.sortKey, this.sortDirection)
+      .subscribe((response: any) => {
+        this.dataSource = new MatTableDataSource(response.data);
+        this.degreeData = response.data;
+      });
   }
 
   handleAddDegreeDialog(data: DegreeModel) {
@@ -136,5 +141,25 @@ export class DegreeComponent implements OnInit {
         this.snackbarService.error(res.message);
       }
     });
+  }
+
+  handleDataSorting(event: Sort) {
+    switch (event.active) {
+      case 'name':
+        this.sortKey = 'Name';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'level':
+        this.sortKey = 'Level';
+        this.sortDirection = event.direction;
+        break;
+
+      default:
+        this.sortKey = '';
+        this.sortDirection = '';
+        break;
+    }
+    this.getAllDegrees();
   }
 }
