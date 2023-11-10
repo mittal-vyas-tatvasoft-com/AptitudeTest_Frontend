@@ -41,8 +41,8 @@ export class GroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.getAllGroups();
-    this.getAllColleges();
+    this.getGroups();
+    this.getColleges();
     this.searchGroupChanged.pipe(debounceTime(1000)).subscribe((value) => {
       this.getFilteredGroups();
     });
@@ -59,13 +59,13 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  getAllGroups() {
+  getGroups() {
     this.groupsService.groups().subscribe((groups) => {
       this.groupList = groups;
     });
   }
 
-  getAllColleges() {
+  getColleges() {
     this.groupsService.colleges().subscribe((collegeData) => {
       this.colleges = collegeData;
     });
@@ -99,7 +99,7 @@ export class GroupComponent implements OnInit {
             this.groupsService.create(data).subscribe({
               next: (res) => {
                 if (res.statusCode == StatusCode.Success) {
-                  this.getAllGroups();
+                  this.getGroups();
                   this.snackbarService.success(res.message);
                 } else {
                   this.snackbarService.error(res.message);
@@ -110,7 +110,7 @@ export class GroupComponent implements OnInit {
             this.groupsService.update(data).subscribe({
               next: (res) => {
                 if (res.statusCode == StatusCode.Success) {
-                  this.getAllGroups();
+                  this.getGroups();
                   this.snackbarService.success(res.message);
                 } else {
                   this.snackbarService.error(res.message);
@@ -135,7 +135,7 @@ export class GroupComponent implements OnInit {
             next: (res) => {
               if (res.statusCode == StatusCode.Success) {
                 this.snackbarService.success(res.message);
-                this.getAllGroups();
+                this.getGroups();
               } else {
                 this.snackbarService.error(res.message);
               }
@@ -150,7 +150,7 @@ export class GroupComponent implements OnInit {
     this.groupsService.update(group).subscribe({
       next: (res) => {
         if (res.statusCode == StatusCode.Success) {
-          this.getAllGroups();
+          this.getGroups();
           this.snackbarService.success(res.message);
         } else {
           this.snackbarService.error(res.message);
@@ -160,7 +160,7 @@ export class GroupComponent implements OnInit {
   }
 
   clearSearchAndFilter() {
-    this.getAllGroups();
+    this.getGroups();
     this.form.get('searchedGroup')?.setValue('');
     this.form.get('searchedCollege')?.setValue(null);
   }
