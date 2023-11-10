@@ -3,6 +3,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import {
   CandidateModel,
   DropdownItem,
+  GetAllCandidateParams,
 } from '../../interfaces/candidate.interface';
 import { SelectionModel } from '@angular/cdk/collections';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -131,36 +132,30 @@ export class ImportCandidateComponent implements OnInit {
     const searchQuery = this.filterForm.get('searchQuery')?.value;
     const collegeId = this.filterForm.get('collegeId')?.value;
     const status = this.filterForm.get('status')?.value;
-
-    this.candidateService
-      .getCandidate(
-        this.currentPageIndex,
-        this.pageSize,
-        searchQuery,
-        collegeId,
-        null,
-        status,
-        null,
-        this.sortKey,
-        this.sortDirection
-      )
-      .subscribe((data: any) => {
-        data.forEach(
-          (candidate: {
-            name: string;
-            firstName: string;
-            lastName: string;
-          }) => {
-            candidate.name = `${
-              candidate.firstName ? candidate.firstName : ''
-            } ${candidate.lastName ? candidate.lastName : ''}`;
-          }
-        );
-        this.dataSource = new MatTableDataSource<CandidateModel>(data);
-        if (data && data.length > 0) {
-          this.totalItemsCount = data[0].totalRecords;
+    const params: GetAllCandidateParams = {
+      currentPageIndex: this.currentPageIndex,
+      pageSize: this.pageSize,
+      searchQuery: searchQuery,
+      collegeId: collegeId,
+      groupId: null,
+      status: status,
+      year: null,
+      sortField: this.sortKey,
+      sortOrder: this.sortDirection,
+    };
+    this.candidateService.getCandidate(params).subscribe((data: any) => {
+      data.forEach(
+        (candidate: { name: string; firstName: string; lastName: string }) => {
+          candidate.name = `${candidate.firstName ? candidate.firstName : ''} ${
+            candidate.lastName ? candidate.lastName : ''
+          }`;
         }
-      });
+      );
+      this.dataSource = new MatTableDataSource<CandidateModel>(data);
+      if (data && data.length > 0) {
+        this.totalItemsCount = data[0].totalRecords;
+      }
+    });
   }
 
   getDropdowns() {

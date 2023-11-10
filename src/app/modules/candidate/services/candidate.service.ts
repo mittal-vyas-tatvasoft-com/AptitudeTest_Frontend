@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import {
   CandidateModel,
   DropdownItem,
+  GetAllCandidateParams,
 } from '../interfaces/candidate.interface';
 
 @Injectable({
@@ -14,47 +15,37 @@ import {
 export class CandidateService {
   constructor(private http: HttpClient) {}
 
-  getCandidate(
-    currentPageIndex: number,
-    pageSize: number,
-    searchQuery: string,
-    collegeId: number | null,
-    groupId: number | null,
-    status: boolean | null,
-    year: number | null,
-    sortField: string,
-    sortOrder: string
-  ): Observable<CandidateModel[]> {
+  getCandidate(data: GetAllCandidateParams): Observable<CandidateModel[]> {
     let params = new HttpParams()
-      .set('currentPageIndex', currentPageIndex.toString())
-      .set('pageSize', pageSize.toString());
+      .set('currentPageIndex', data.currentPageIndex.toString())
+      .set('pageSize', data.pageSize.toString());
 
-    if (searchQuery !== undefined) {
-      params = params.set('searchQuery', searchQuery);
+    if (data.searchQuery !== undefined) {
+      params = params.set('searchQuery', data.searchQuery);
     }
 
-    if (collegeId !== undefined && collegeId != null) {
-      params = params.set('CollegeId', collegeId.toString());
+    if (data.collegeId !== undefined && data.collegeId != null) {
+      params = params.set('CollegeId', data.collegeId.toString());
     }
 
     if (status != null) {
       params = params.set('Status', status.toString());
     }
 
-    if (groupId !== undefined && groupId != null) {
-      params = params.set('GroupId', groupId.toString());
+    if (data.groupId !== undefined && data.groupId != null) {
+      params = params.set('GroupId', data.groupId.toString());
     }
 
-    if (year !== undefined && year != null) {
-      params = params.set('Year', year.toString());
+    if (data.year !== undefined && data.year != null) {
+      params = params.set('Year', data.year.toString());
     }
 
-    params = params.set('SortField', sortField);
-    params = params.set('SortOrder', sortOrder);
+    params = params.set('SortField', data.sortField);
+    params = params.set('SortOrder', data.sortOrder);
 
     return this.http
       .get<ResponseModel<string>>(
-        `${environment.baseURL}User/${currentPageIndex}/${pageSize}`,
+        `${environment.baseURL}User/${data.currentPageIndex}/${data.pageSize}`,
         { params }
       )
       .pipe(map((response: any) => response.data));

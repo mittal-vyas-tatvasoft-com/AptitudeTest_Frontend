@@ -11,6 +11,7 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
   DropdownItem,
   CandidateModel,
+  GetAllCandidateParams,
 } from '../../interfaces/candidate.interface';
 import { CandidateService } from '../../services/candidate.service';
 import { AddCandidateComponent } from '../add-candidate/add-candidate.component';
@@ -75,35 +76,28 @@ export class CandidatesComponent {
     const collegeId = this.selectedCollege ? this.selectedCollege.id : null;
     const groupId = this.selectedGroup ? this.selectedGroup.id : null;
     const year = this.selectedYear === null ? null : this.selectedYear;
-    this.candidateService
-      .getCandidate(
-        this.currentPageIndex,
-        this.pageSize,
-        searchQuery,
-        collegeId,
-        groupId,
-        null,
-        year,
-        this.sortKey,
-        this.sortDirection
-      )
-      .subscribe((data: any) => {
-        data.forEach(
-          (candidate: {
-            name: string;
-            firstName: string;
-            lastName: string;
-          }) => {
-            candidate.name = `${candidate.firstName} ${
-              candidate.lastName || ''
-            }`;
-          }
-        );
-        this.dataSource = new MatTableDataSource<CandidateModel>(data);
-        if (data && data.length > 0) {
-          this.totalItemsCount = data[0].totalRecords;
+    const params: GetAllCandidateParams = {
+      currentPageIndex: this.currentPageIndex,
+      pageSize: this.pageSize,
+      searchQuery: searchQuery,
+      collegeId: collegeId,
+      groupId: groupId,
+      status: null,
+      year: year,
+      sortField: this.sortKey,
+      sortOrder: this.sortDirection,
+    };
+    this.candidateService.getCandidate(params).subscribe((data: any) => {
+      data.forEach(
+        (candidate: { name: string; firstName: string; lastName: string }) => {
+          candidate.name = `${candidate.firstName} ${candidate.lastName || ''}`;
         }
-      });
+      );
+      this.dataSource = new MatTableDataSource<CandidateModel>(data);
+      if (data && data.length > 0) {
+        this.totalItemsCount = data[0].totalRecords;
+      }
+    });
   }
 
   getDropdowns() {
