@@ -1,1 +1,70 @@
-<p>education-details works!</p>
+<mat-card class="form-block-secondary mb-3">
+  <mat-card-content class="pb-0">
+    <div class="card-header px-0 pt-0">
+      <h5 class="card-header-title">Education details</h5>
+    </div>
+    <form [formGroup]="form">
+      <div formArrayName="educationDetailsArray">
+        <div
+          *ngFor="
+            let educationDetail of educationDetailsArray.controls;
+            let i = index
+          "
+        >
+          <div class="row" [formGroupName]="i">
+            <div class="col-sm-6 col-lg-3">
+              <mat-form-field appearance="outline">
+                <mat-label>Degree Specialization</mat-label>
+                <mat-select formControlName="degreeId">
+                  <mat-option
+                    *ngFor="let option of educationDetailOptions(i)"
+                    [value]="option.id"
+                  >
+                    {{ option.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-sm-6 col-lg-4">
+              <mat-form-field appearance="outline">
+                <mat-label>School/College/University</mat-label>
+                <input matInput formControlName="university" />
+              </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3 col-lg-2">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Stream</mat-label>
+                <mat-select formControlName="streamId">
+                  <mat-option
+                    *ngFor="let option of StreamDetailOptions(i)"
+                    [value]="option.id"
+                  >
+                    {{ option.value }}
+                  </mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3 col-lg-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>CGPA / Percentage</mat-label>
+                <input matInput type="number" formControlName="grade" />
+              </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3 col-lg-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Maths</mat-label>
+                <input matInput type="number" formControlName="maths" />
+              </mat-form-field>
+            </div>
+            <div class="col-6 col-sm-3 col-lg-1">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Physics</mat-label>
+                <input matInput type="number" formControlName="physics" />
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
