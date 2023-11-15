@@ -28,8 +28,8 @@ export class CandidateService {
       params = params.set('CollegeId', data.collegeId.toString());
     }
 
-    if (status != null) {
-      params = params.set('Status', status.toString());
+    if (data.status != null) {
+      params = params.set('Status', data.status.toString());
     }
 
     if (data.groupId !== undefined && data.groupId != null) {
