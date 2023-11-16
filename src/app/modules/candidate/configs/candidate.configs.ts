@@ -164,74 +164,6 @@ export const candidateControl = {
         inputType: 'number',
         displayIcon: false,
     },
-    stream: {
-        value: '',
-        key: 'streamId',
-        label: 'Stream',
-        inputType: 'select'
-    },
-    grade: {
-        value: '',
-        key: 'grade',
-        label: 'CGPA / Percentage',
-        required: false,
-        inputType: 'number',
-        displayIcon: false,
-    },
-    maths: {
-        value: '',
-        key: 'maths',
-        label: 'Maths',
-        required: false,
-        inputType: 'number',
-        displayIcon: false,
-    },
-    physics: {
-        value: '',
-        key: 'physics',
-        label: 'Physics',
-        required: false,
-        inputType: 'number',
-        displayIcon: false,
-    },
-    University: {
-        value: '',
-        key: 'university',
-        label: 'School/College/University',
-        required: false,
-        inputType: 'text',
-        displayIcon: false,
-    },
-    DegreeSpecialization: {
-        value: '',
-        key: 'degreeId',
-        label: 'Degree Specialization',
-        inputType: 'select'
-    },
-    HSCDiploma: {
-        value: '',
-        key: 'degreeId',
-        label: 'Select HSC / Diploma',
-        inputType: 'select'
-    },
-    bachelorDegree: {
-        value: '',
-        key: 'degreeId',
-        label: "Select bachelor's degree",
-        inputType: 'select'
-    },
-    masterDegree: {
-        value: '',
-        key: 'degreeId',
-        label: "Select masters degree",
-        inputType: 'select'
-    },
-    otherDegree: {
-        value: '',
-        key: 'degreeId',
-        label: 'Select other degree',
-        inputType: 'select'
-    },
     familyPerson: {
         value: '',
         key: 'familyPerson',
@@ -335,4 +267,29 @@ export const selectOptionsForRelationship = [
         value: 'Sister',
     }
 ];
+
+export const labelNameForDegree = [
+    'SSC',
+    'Select HSC/Diploma',
+    "Select bachelor's degree",
+    'Select masters degree',
+    'Select other degree'
+];
+
+export const labelNameForCollege = [
+    'School',
+    'School',
+    'College/University',
+    'College/University',
+    'College/University'
+];
+
+export const ErrorMessageForEductionDetail = {
+    DegreeSpecialization: 'Degree Specialization is required',
+    University: 'University is required',
+    Stream: 'Stream is required',
+    Percentage: 'Required',
+    Maths: 'Required',
+    Physics: 'Required'
+}
 

@@ -1,10 +1,7 @@
 import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
 import { candidateControl, selectOptionsForRelationship } from '../../configs/candidate.configs';
-import { CandidateService } from '../../services/candidate.service';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
-import { Numbers } from 'src/app/shared/common/enums';
-import { FamilyDetail } from '../../interfaces/candidate.interface';
 
 @Component({
   selector: 'app-family-background',
