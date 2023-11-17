@@ -13,7 +13,7 @@ import {
   providedIn: 'root',
 })
 export class CandidateService {
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   getCandidate(data: GetAllCandidateParams): Observable<CandidateModel[]> {
     let params = new HttpParams()
@@ -140,8 +140,7 @@ export class CandidateService {
   }
 
   getStateForDropDown(): Observable<DropdownItem[]> {
-    return this.http
-      .get<DropdownItem[]>(`${environment.baseURL}User/GetAllStates`)
+    return this.http.get<DropdownItem[]>(`${environment.baseURL}User/GetAllState`)
       .pipe(map((response: any) => response.data));
   }
 

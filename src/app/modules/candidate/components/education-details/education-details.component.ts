@@ -1,10 +1,8 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import { candidateControl, selectOptionsForStream } from '../../configs/candidate.configs';
+import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
+import { ErrorMessageForEductionDetail, candidateControl, labelNameForCollege, labelNameForDegree, selectOptionsForStream } from '../../configs/candidate.configs';
 import { CandidateService } from '../../services/candidate.service';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
-import { Numbers } from 'src/app/shared/common/enums';
-import { AcademicsDetail } from '../../interfaces/candidate.interface';
 
 @Component({
   selector: 'app-education-details',
@@ -25,9 +23,13 @@ export class EducationDetailsComponent {
   bachelorStream: SelectOption[] = [];
   masterStream: SelectOption[] = [];
   otherStream: SelectOption[] = [];
+  labelNameForDegree: string[] = labelNameForDegree;
+  labelNameForCollege: string[] = labelNameForCollege;
+  ErrorMessage = ErrorMessageForEductionDetail;
   @Input() academicDetails: any[];
 
-  constructor(private formBuilder: FormBuilder, private candidateService: CandidateService,) { }
+  constructor(private formBuilder: FormBuilder,
+    private candidateService: CandidateService) { }
 
   ngOnInit() {
     this.getDropdowns();
@@ -40,39 +42,38 @@ export class EducationDetailsComponent {
     if (this.academicDetails) {
       this.populateForm();
     }
-
     this.setAcademicsDetails();
   }
 
   getDropdowns() {
     this.candidateService.getDegreeForDropDown().subscribe((Degrees) => {
       Degrees.forEach((degree) => {
-        if (degree.level === Numbers.One) {
+        if (degree.level === 1) {
           this.degreeSpecialization.push({
             id: degree.id,
             key: degree.name,
             value: degree.name,
           });
-        } else if (degree.level === Numbers.Two) {
+        } else if (degree.level === 2) {
           this.HSCDiploma.push({
             id: degree.id,
             key: degree.name,
             value: degree.name,
           });
         }
-        else if (degree.level === Numbers.Three) {
+        else if (degree.level === 3) {
           this.bachelorDegree.push({
             id: degree.id,
             key: degree.name,
             value: degree.name,
           });
-        } else if (degree.level === Numbers.Four) {
+        } else if (degree.level === 4) {
           this.masterDegree.push({
             id: degree.id,
             key: degree.name,
             value: degree.name,
           });
-        } else if (degree.level === Numbers.Five) {
+        } else if (degree.level === 5) {
           this.otherDegree.push({
             id: degree.id,
             key: degree.name,
@@ -82,35 +83,34 @@ export class EducationDetailsComponent {
       });
     });
 
-
     this.candidateService.getStremForDropDown().subscribe((Streams) => {
       Streams.forEach((stream) => {
-        if (stream.level === Numbers.One) {
+        if (stream.level === 1) {
           this.streamSpecialization.push({
             id: stream.id,
             key: stream.name,
             value: stream.name,
           });
-        } else if (stream.level === Numbers.Two) {
+        } else if (stream.level === 2) {
           this.HSCDiplomaStream.push({
             id: stream.id,
             key: stream.name,
             value: stream.name,
           });
         }
-        else if (stream.level === Numbers.Three) {
+        else if (stream.level === 3) {
           this.bachelorStream.push({
             id: stream.id,
             key: stream.name,
             value: stream.name,
           });
-        } else if (stream.level === Numbers.Four) {
+        } else if (stream.level === 4) {
           this.masterStream.push({
             id: stream.id,
             key: stream.name,
             value: stream.name,
           });
-        } else if (stream.level === Numbers.Five) {
+        } else if (stream.level === 5) {
           this.otherStream.push({
             id: stream.id,
             key: stream.name,
@@ -128,7 +128,7 @@ export class EducationDetailsComponent {
   setAcademicsDetails() {
     if (this.academicDetails) {
       const academicDetails = this.academicDetails;
-      for (let index = Numbers.Zero; index < this.educationDetailsArray.controls.length; index++) {
+      for (let index = 0; index < this.educationDetailsArray.controls.length; index++) {
         const control = this.educationDetailsArray.controls[index] as FormGroup;
         control.patchValue({
           degreeId: '',
@@ -141,7 +141,7 @@ export class EducationDetailsComponent {
       }
       academicDetails.forEach((academicDetail: any) => {
         const index = this.findFormArrayIndexByDegreeLevel(academicDetail.degreeLevel);
-        if (index >= Numbers.Zero && index < this.educationDetailsArray.controls.length) {
+        if (index >= 0 && index < this.educationDetailsArray.controls.length) {
           const control = this.educationDetailsArray.controls[index] as FormGroup;
 
           control.patchValue({
@@ -165,21 +165,20 @@ export class EducationDetailsComponent {
       4: 3,
       5: 4,
     };
-
-    return degreeLevelMapping[level] || Numbers.Zero;
+    return degreeLevelMapping[level] || 0;
   }
 
   educationDetailOptions(index: number) {
     switch (index) {
-      case Numbers.Zero:
+      case 0:
         return this.degreeSpecialization;
-      case Numbers.One:
+      case 1:
         return this.HSCDiploma;
-      case Numbers.Two:
+      case 2:
         return this.bachelorDegree;
-      case Numbers.Three:
+      case 3:
         return this.masterDegree;
-      case Numbers.Four:
+      case 4:
         return this.otherDegree;
       default:
         return [];
@@ -188,15 +187,15 @@ export class EducationDetailsComponent {
 
   StreamDetailOptions(index: number) {
     switch (index) {
-      case Numbers.Zero:
+      case 0:
         return this.streamSpecialization;
-      case Numbers.One:
+      case 1:
         return this.HSCDiplomaStream;
-      case Numbers.Two:
+      case 2:
         return this.bachelorStream;
-      case Numbers.Three:
+      case 3:
         return this.masterStream;
-      case Numbers.Four:
+      case 4:
         return this.otherStream;
       default:
         return [];
@@ -229,4 +228,23 @@ export class EducationDetailsComponent {
     }
   }
 
+  isInvalid(control: AbstractControl): boolean {
+    return control instanceof FormControl && control.invalid && control.touched;
+  }
+
+  validateForm() {
+    for (let i = 0; i < 3; i++) {
+      const control = this.educationDetailsArray.at(i) as FormGroup | null;
+      if (control) {
+        Object.keys(control.controls).forEach((key) => {
+          const formControl = control.get(key) as FormControl;
+          if (formControl) {
+            formControl.markAsTouched();
+            formControl.setValidators(Validators.required);
+            formControl.updateValueAndValidity();
+          }
+        });
+      }
+    }
+  }
 }
