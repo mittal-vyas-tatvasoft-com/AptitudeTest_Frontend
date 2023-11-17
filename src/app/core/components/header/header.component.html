@@ -11,7 +11,12 @@
           alt="Tatvasoft"
         />
       </a>
-      <button mat-icon-button class="btn-menu" (click)="toggleSidebar()">
+      <button
+        mat-icon-button
+        class="btn-menu"
+        (click)="toggleSidebar()"
+        *ngIf="isAdmin"
+      >
         <mat-icon>
           <img src="./assets/images/hamburg-white.svg" alt="Menu" />
         </mat-icon>
@@ -19,7 +24,7 @@
     </div>
     <div class="header-right">
       <ul class="top-actions">
-        <li>
+        <li *ngIf="isAdmin">
           <span class="logged-time">
             {{ currentTime | date : "dd-MM-yyyy"
             }}<em class="time">{{ currentTime | date : "HH:mm:ss" }}</em>
@@ -34,7 +39,9 @@
           >
             <p class="text-block">
               {{ userName }}
-              <span class="username">Admin</span>
+              <span class="username">{{
+                role === "Admin" ? role : "Candidate"
+              }}</span>
             </p>
             <mat-icon class="arrow">
               <img src="./assets/images/chevron-down-white.svg" alt="Chevron" />
@@ -45,7 +52,11 @@
             class="profile-menu"
             xPosition="before"
           >
-            <button mat-menu-item (click)="chanegPasswordDialog()">
+            <button
+              mat-menu-item
+              (click)="chanegPasswordDialog()"
+              *ngIf="isAdmin"
+            >
               <mat-icon>
                 <img
                   src="./assets/images/change-password-grey.svg"
@@ -53,6 +64,15 @@
                 />
               </mat-icon>
               <span>Change Password</span>
+            </button>
+            <button mat-menu-item *ngIf="!isAdmin">
+              <mat-icon>
+                <img
+                  src="./assets/images/candidates-grey.svg"
+                  alt="My Profile"
+                />
+              </mat-icon>
+              <span>My Profile</span>
             </button>
             <button mat-menu-item routerLink="/" (click)="logout()">
               <mat-icon>
