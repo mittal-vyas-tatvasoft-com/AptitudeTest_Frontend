@@ -23,6 +23,8 @@ export class HeaderComponent {
   email: string;
   isSidebarOpen!: boolean;
   isAuthenticated: boolean = false;
+  isAdmin: boolean = false;
+  role: string | null;
   public mobileScreen: boolean = window.innerWidth < 575;
   @Input() isHandset: boolean | null | undefined;
   @Output() onMenuIconClick = new EventEmitter();
@@ -43,6 +45,7 @@ export class HeaderComponent {
     setInterval(() => {
       this.updateTime();
     }, 1000);
+    this.getRole();
   }
 
   @HostListener('window:resize', ['$event'])
@@ -54,6 +57,17 @@ export class HeaderComponent {
     this.loginService.logout();
     this.isAuthenticated = false;
   }
+
+  getRole() {
+    this.role = this.loginService.getUserRole();
+    if (this.role === "Admin") {
+      this.isAdmin = true
+    }
+    else {
+      this.isAdmin = false;
+    }
+  }
+
 
   onClick() {
     this.onMenuIconClick.emit();
