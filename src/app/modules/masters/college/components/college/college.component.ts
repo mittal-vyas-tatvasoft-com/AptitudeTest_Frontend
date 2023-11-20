@@ -5,11 +5,10 @@ import { AddCollegeComponent } from '../add-college/add-college.component';
 import { CollegeService } from '../../services/college.service';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { CollegeModel } from '../../interfaces/college.interface';
-import { takeUntil, catchError, throwError, Subject } from 'rxjs';
+import { Subject } from 'rxjs';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { EventEmitter } from '@angular/core';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
-import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { StatusCode } from 'src/app/shared/common/enums';
 import { Sort } from '@angular/material/sort';
 
 @Component({
@@ -18,11 +17,17 @@ import { Sort } from '@angular/material/sort';
   styleUrls: ['./college.component.scss'],
 })
 export class CollegeComponent {
-  pageSize = Numbers.Ten;
-  currentPageIndex = Numbers.Zero;
+  pageSize = 10;
+  currentPageIndex = 0;
   totalItemsCount: number;
   sortKey: string = '';
   sortDirection: string = '';
+  addCollege: CollegeModel = {
+    id: 0,
+    name: '',
+    abbreviation: '',
+    status: true,
+  };
   pageNumbers: number[] = [];
   dataSource: MatTableDataSource<CollegeModel>;
   columns: TableColumn<CollegeModel>[] = [
@@ -37,7 +42,7 @@ export class CollegeComponent {
     public dialog: MatDialog,
     private collegeService: CollegeService,
     private snackbarService: SnackbarService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<CollegeModel>([]);
@@ -71,36 +76,48 @@ export class CollegeComponent {
     });
   }
 
-  handleAddCollegeDialog() {
+  handleAddEditCollegeDialog(data: CollegeModel) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
-    const dialogRef = this.dialog.open(AddCollegeComponent, dialogConfig);
+    dialogConfig.data = data.id;
 
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result && result.refreshTable === true && result.status === StatusCode.Success) {
-        this.snackbarService.success(result.message);
-        this.fetchColleges();
-      } else {
-        this.snackbarService.error(result.message);
-      }
-    });
-  }
-
-  handleEditCollegeDialog(college: CollegeModel) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ['primary-dialog'];
-    dialogConfig.autoFocus = false;
-    dialogConfig.data = { college, refreshTable: () => this.fetchColleges() };
-    const dialogRef = this.dialog.open(AddCollegeComponent, dialogConfig);
-    dialogRef.afterClosed().subscribe((result: any) => {
-      if (result && result.refreshTable === true && result.status === StatusCode.Success) {
-        this.snackbarService.success(result.message);
-        this.fetchColleges();
-      } else {
-        this.snackbarService.error(result.message);
-      }
-    });
+    this.dialog
+      .open(AddCollegeComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((res) => {
+        const payload: CollegeModel = {
+          id: res.id,
+          name: res.name,
+          abbreviation: res.abbreviation,
+          status: res.status === 1 ? true : false,
+        };
+        if (res) {
+          if (res.id == 0) {
+            this.collegeService.addCollege(payload).subscribe({
+              next: (res) => {
+                if (res.statusCode == StatusCode.Success) {
+                  this.fetchColleges()
+                  this.snackbarService.success(res.message);
+                } else {
+                  this.snackbarService.error(res.message);
+                }
+              },
+            });
+          } else {
+            this.collegeService.updateCollege(payload).subscribe({
+              next: (res) => {
+                if (res.statusCode == StatusCode.Success) {
+                  this.fetchColleges();
+                  this.snackbarService.success(res.message);
+                } else {
+                  this.snackbarService.error(res.message);
+                }
+              },
+            });
+          }
+        }
+      });
   }
 
   handleDeleteProfileDialog(id: number) {
@@ -130,7 +147,7 @@ export class CollegeComponent {
 
   handlePageSizeChange(pageSize: number) {
     this.pageSize = pageSize;
-    this.currentPageIndex = Numbers.Zero;
+    this.currentPageIndex = 0;
     this.fetchColleges();
   }
 
@@ -144,17 +161,17 @@ export class CollegeComponent {
   }
 
   handlePageToPage(page: number) {
-    this.currentPageIndex = page - Numbers.One;
+    this.currentPageIndex = page - 1;
     this.fetchColleges();
   }
 
   isFirstPage(): boolean {
-    return this.currentPageIndex === Numbers.Zero;
+    return this.currentPageIndex === 0;
   }
 
   isLastPage(): boolean {
     const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
-    return this.currentPageIndex === totalPages - Numbers.One;
+    return this.currentPageIndex === totalPages - 1;
   }
 
   handleDataSorting(event: Sort) {
@@ -163,12 +180,10 @@ export class CollegeComponent {
         this.sortKey = 'Name';
         this.sortDirection = event.direction;
         break;
-
       case 'abbreviation':
         this.sortKey = 'Abbreviation';
         this.sortDirection = event.direction;
         break;
-
       default:
         this.sortKey = '';
         this.sortDirection = '';

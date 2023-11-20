@@ -6,6 +6,11 @@
   overflow: auto;
   padding-bottom: 15px;
 }
-.default-group {
-  align-items: center;
+.nondefault-group {
+  color: blue;
+  font-size: 13px;
+  line-height: 13px;
+  line-height: 16px;
+  padding: 6px 0;
+  cursor: pointer;
 }

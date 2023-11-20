@@ -18,4 +18,23 @@ export const CollegeControl = {
         inputType: 'text',
         displayIcon: false,
     },
+    status: {
+        value: '',
+        key: 'status',
+        label: 'Status',
+        requiredErrMsg: 'Status is required!',
+    },
 }
+
+export const selectOptionsForStatus = [
+    {
+        id: 1,
+        key: 'Active',
+        value: 'Active',
+    },
+    {
+        id: 2,
+        key: 'Inactive',
+        value: 'Inactive',
+    },
+];

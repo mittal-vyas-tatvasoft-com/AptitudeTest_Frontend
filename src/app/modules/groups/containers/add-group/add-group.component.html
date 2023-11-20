@@ -20,7 +20,7 @@
     </div>
   </form>
 </mat-dialog-content>
-<mat-dialog-actions align="end" class="dialog-footer">
+<mat-dialog-actions align="end" class="add-dialog-action">
   <app-button
     [color]="'primary'"
     [type]="'submit'"
@@ -34,6 +34,7 @@
     [type]="'button'"
     [label]="'Cancel'"
     (click)="closeModal()"
+    [class]="'button'"
     [mat-dialog-close]="true"
   ></app-button>
 </mat-dialog-actions>

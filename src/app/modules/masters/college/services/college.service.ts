@@ -54,6 +54,10 @@ export class CollegeService {
       );
   }
 
+  getCollegeById(id: number) {
+    return this.http.get(`${environment.baseURL}Colleges/Get?id=${id}`);
+  }
+
   deleteCollege(id: any): Observable<ResponseModel<string>> {
     return this.http
       .delete<ResponseModel<string>>(

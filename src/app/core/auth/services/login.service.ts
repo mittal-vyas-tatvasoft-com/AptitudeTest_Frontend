@@ -78,6 +78,12 @@ export class LoginService {
       );
   }
 
+  getUserRole(): string | null {
+    const data = this.decodeToken();
+    const role = data.Role
+    return role;
+  }
+
   forgotPassword(
     userName: ForgotPasswordModel
   ): Observable<ResponseModel<string>> {

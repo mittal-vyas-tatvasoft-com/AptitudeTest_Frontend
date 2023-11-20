@@ -7,6 +7,10 @@ import { CandidateInstructionsComponent } from './containers/candidate-instructi
 import { CandidateTestComponent } from './containers/candidate-test/components/candidate-test/candidate-test.component';
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
 import { TestSubmittedComponent } from './containers/test-submitted/test-submitted.component';
+import { LayoutComponent } from './containers/layout/layout.component';
+import { CoreModule } from '../core/core.module';
+import { SharedMaterialModule } from '../shared/material/shared-material.module';
+import { AuthModule } from '../core/auth/auth.module';
 
 
 
@@ -16,11 +20,15 @@ import { TestSubmittedComponent } from './containers/test-submitted/test-submitt
         CandidateInstructionsComponent,
         TestSubmittedComponent,
         CandidateTestComponent,
-        McqTestComponent
+        McqTestComponent,
+        LayoutComponent
     ],
     imports: [
         CommonModule,
-        CandidateTestRoutingModule
+        CandidateTestRoutingModule,
+        SharedMaterialModule,
+        CoreModule,
+        AuthModule
     ]
 })
 export class CandidateTestModule { }

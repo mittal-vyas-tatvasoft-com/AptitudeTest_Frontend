@@ -9,7 +9,11 @@
     <h4 class="title">College</h4>
   </div>
   <div class="action-list">
-    <button mat-fab color="primary" (click)="handleAddCollegeDialog()">
+    <button
+      mat-fab
+      color="primary"
+      (click)="handleAddEditCollegeDialog(addCollege)"
+    >
       <mat-icon
         ><img src="./assets/images/add-white-full.svg" alt="Add"
       /></mat-icon>
@@ -21,7 +25,7 @@
   [dataSource]="dataSource"
   [columns]="columns"
   [pagination]="true"
-  (editClicked)="handleEditCollegeDialog($event)"
+  (editClicked)="handleAddEditCollegeDialog($event)"
   (deleteClicked)="handleDeleteProfileDialog($event)"
   (actionClicked)="updateStatus($event.row, $event.action)"
   [totalItemsCount]="totalItemsCount"

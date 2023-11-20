@@ -4,7 +4,7 @@ import { LoginService } from '../../services/login.service';
 import { loginControl } from '../../configs/login.config';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { Navigation } from 'src/app/shared/common/enums';
@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private loginService: LoginService,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService
   ) { }
 
@@ -50,9 +51,13 @@ export class LoginComponent implements OnInit, OnDestroy {
         .pipe(takeUntil(this.ngUnsubscribe$))
         .subscribe({
           next: (res: ResponseModel<string>) => {
-
             if (res.result) {
-              this.router.navigate([`${Navigation.Admin}`]);
+              const data = this.loginService.decodeToken();
+              if (data.Role === 'Admin') {
+                this.router.navigate([`${Navigation.Admin}`]);
+              } else {
+                this.router.navigate([`${Navigation.CandidateUser}`]);
+              }
             } else {
               this.snackbarService.error(res.message);
             }
