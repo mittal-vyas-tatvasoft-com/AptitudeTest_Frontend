@@ -12,19 +12,29 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./core/core.module').then((m) => m.CoreModule),
-    canActivate: [AuthGuard]
+    canActivate: [AuthGuard],
   },
 
   {
     path: 'user',
     loadChildren: () =>
-      import('./candidate-test/candidate-test.module').then((m) => m.CandidateTestModule),
-    canActivate: [AuthGuard]
+      import('./candidate-test/candidate-test.module').then(
+        (m) => m.CandidateTestModule
+      ),
+    canActivate: [AuthGuard],
+  },
+  {
+    path: 'candidate-test',
+    loadChildren: () =>
+      import('./candidate-test/candidate-test.module').then(
+        (m) => m.CandidateTestModule
+      ),
+    canActivate: [AuthGuard],
   },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}

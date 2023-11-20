@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormControlModel } from '../../interfaces/form-control-model';
 import { ValidationService } from '../../services/validation.service';
@@ -13,6 +13,11 @@ export class DatePickerComponent {
   @Input() formControlModel!: FormControlModel;
   @Input() minDate: Date = new Date(new Date().getFullYear() - 50, 0, 1);
   @Input() maxDate: Date = new Date(new Date().getFullYear() + 50, 11, 31);
+  @Output() changeDate = new EventEmitter();
 
   constructor(public validationService: ValidationService) {}
+
+  dateChange() {
+    this.changeDate.emit();
+  }
 }

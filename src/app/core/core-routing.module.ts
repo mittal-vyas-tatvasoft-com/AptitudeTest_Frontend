@@ -33,10 +33,15 @@ const routes: Routes = [
           ),
       },
       {
+        path: `${Navigation.Tests}`,
+        loadChildren: () =>
+          import('../modules/test/test.module').then((m) => m.TestModule),
+      },
+      {
         path: 'groups',
         loadChildren: () =>
           import('../modules/groups/groups.module').then((m) => m.GroupsModule),
-      }
+      },
     ],
   },
 ];

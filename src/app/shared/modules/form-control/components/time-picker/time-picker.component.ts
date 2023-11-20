@@ -6,7 +6,6 @@ import {
   ViewChild,
 } from '@angular/core';
 import { FormGroup, Validators } from '@angular/forms';
-import { FormControlModel } from '../../interfaces/form-control-model';
 import { ValidationService } from '../../services/validation.service';
 
 @Component({
@@ -17,7 +16,7 @@ import { ValidationService } from '../../services/validation.service';
 export class TimePickerComponent {
   readonly Validators: typeof Validators = Validators;
   selectedTime: any;
-
+  @Input() minTime: string;
   @Output() timeChanged = new EventEmitter<string>();
   @Input() form!: FormGroup;
   @Input() timePickerModel: any;

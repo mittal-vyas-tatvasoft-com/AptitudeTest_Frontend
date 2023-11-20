@@ -43,6 +43,10 @@ export enum Navigation {
   Questions = 'questions',
   AddQuestion = 'add-question',
   ImportQuestion = 'import-question',
+
+  //Test navigation
+  Tests = 'tests',
+  CreateTest = 'create',
 }
 
 export enum Type {
@@ -136,6 +140,6 @@ export enum PaginationDefaultValues {
 }
 
 export enum StaticMessages {
-  //warning static message 
-  SelectRow = 'Please select atleast one row'
+  //warning static message
+  SelectRow = 'Please select atleast one row',
 }
