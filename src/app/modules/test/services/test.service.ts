@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   GetAllTestCandidateParams,
+  TestData,
   TestQueryParams,
   createTestModel,
   testCandidatesModel,
@@ -113,7 +114,7 @@ export class TestService {
       params = params.set('SortOrder', data.sortOrder);
     }
 
-    return this.http.get(
+    return this.http.get<ResponseModel<TestData[]>>(
       `${environment.baseURL}Tests/${data.currentPageIndex}/${data.pageSize}`,
       {
         params,

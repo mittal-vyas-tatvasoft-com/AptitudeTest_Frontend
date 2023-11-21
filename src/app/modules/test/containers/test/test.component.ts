@@ -120,16 +120,18 @@ export class TestComponent implements OnInit {
       sortField: this.sortField,
       sortOrder: this.sortOrder,
     };
-    this.testService.getTests(data).subscribe((res: any) => {
-      if (res.statusCode != StatusCode.Success) {
-        this.snackbarService.error(res.message);
-      } else {
-        this.dataSource = new MatTableDataSource<TestData>(res.data);
-        if (res.data.length != 0) {
-          this.totalItemsCount = res.data[0].totalRecords;
+    this.testService
+      .getTests(data)
+      .subscribe((res: ResponseModel<TestData[]>) => {
+        if (res.statusCode != StatusCode.Success) {
+          this.snackbarService.error(res.message);
+        } else {
+          this.dataSource = new MatTableDataSource<TestData>(res.data);
+          if (res.data.length != 0) {
+            this.totalItemsCount = res.data[0].totalRecords;
+          }
         }
-      }
-    });
+      });
   }
 
   handleDeleteTestDialog(id: number) {
