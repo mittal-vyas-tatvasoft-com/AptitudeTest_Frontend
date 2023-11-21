@@ -1,8 +1,9 @@
-import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { GroupFormControls } from '../../configs/group.config';
+import { GroupsModel } from '../../interfaces/groups.interface';
 
 @Component({
   selector: 'app-add-group',
@@ -10,16 +11,16 @@ import { GroupFormControls } from '../../configs/group.config';
   styleUrls: ['./add-group.component.scss'],
 })
 export class AddGroupComponent implements OnInit {
+  id: number = 0;
+  isEditMode: boolean = false;
+  formControls = GroupFormControls;
+  form: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<AddGroupComponent>,
     private fb: FormBuilder,
     public validation: ValidationService,
-    @Inject(MAT_DIALOG_DATA) public id: number
+    @Inject(MAT_DIALOG_DATA) public data: GroupsModel
   ) {}
-
-  formControls = GroupFormControls;
-  data: any;
-  form!: FormGroup;
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -33,6 +34,21 @@ export class AddGroupComponent implements OnInit {
       ],
       isDefault: [GroupFormControls.default.value],
     });
+
+    if (this.data.id != 0) {
+      this.isEditMode = !this.isEditMode;
+      this.form.setValue({
+        id: this.data.id,
+        name: this.data.name,
+        isDefault: this.data.isDefault,
+      });
+    } else {
+      this.form.setValue({
+        id: this.data.id,
+        name: this.data.name,
+        isDefault: this.data.isDefault,
+      });
+    }
   }
 
   closeModal() {

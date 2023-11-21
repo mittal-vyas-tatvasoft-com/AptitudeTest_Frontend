@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { StatusCode } from 'src/app/shared/common/enums';
+import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
@@ -19,7 +19,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
   styleUrls: ['./group.component.scss'],
 })
 export class GroupComponent implements OnInit {
-  groupList: GroupsModel[];
+  groupList: GroupsModel[] = [];
   colleges: CollegeModel[];
   filteredGroupList: GroupsModel[];
   addGroup: GroupsModel = {
@@ -43,9 +43,11 @@ export class GroupComponent implements OnInit {
     this.createForm();
     this.getGroups();
     this.getColleges();
-    this.searchGroupChanged.pipe(debounceTime(1000)).subscribe((value) => {
-      this.getFilteredGroups();
-    });
+    this.searchGroupChanged
+      .pipe(debounceTime(Numbers.Debounce))
+      .subscribe(() => {
+        this.getFilteredGroups();
+      });
   }
 
   getGroupsByFiltering(value: string) {
@@ -89,7 +91,7 @@ export class GroupComponent implements OnInit {
     dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
     dialogConfig.width = '556px';
-    dialogConfig.data = data.id;
+    dialogConfig.data = data;
     this.dialog
       .open(AddGroupComponent, dialogConfig)
       .afterClosed()
@@ -110,7 +112,7 @@ export class GroupComponent implements OnInit {
             this.groupsService.update(data).subscribe({
               next: (res) => {
                 if (res.statusCode == StatusCode.Success) {
-                  this.getGroups();
+                  this.getFilteredGroups();
                   this.snackbarService.success(res.message);
                 } else {
                   this.snackbarService.error(res.message);
@@ -150,7 +152,7 @@ export class GroupComponent implements OnInit {
     this.groupsService.update(group).subscribe({
       next: (res) => {
         if (res.statusCode == StatusCode.Success) {
-          this.getGroups();
+          this.getFilteredGroups();
           this.snackbarService.success(res.message);
         } else {
           this.snackbarService.error(res.message);

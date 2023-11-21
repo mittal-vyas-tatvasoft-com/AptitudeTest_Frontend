@@ -51,17 +51,11 @@ export class ImportCandidateComponent implements OnInit {
   collegesForFilter: DropdownItem[] = [{ id: 0, name: 'All' }];
   groups: SelectOption[] = [];
   dropzoneConfig = dropzoneConfig;
-  status: SelectOption[] = [
-    { value: 'Select', id: '' },
-    { value: 'Active', id: true },
-    { value: 'InActive', id: false },
-  ];
   optionsList: SelectOption[] = [];
   form: FormGroup;
   filterForm: FormGroup;
   dataSource: MatTableDataSource<CandidateModel>;
   selection = new SelectionModel<CandidateModel>(true, []);
-  public message: string = DragDropInput;
   statusValue: boolean | null;
   currentPageIndex = Numbers.Zero;
   totalItemsCount: number;
@@ -69,13 +63,17 @@ export class ImportCandidateComponent implements OnInit {
   sortKey: string;
   sortDirection: string;
   fileName: string = '';
+  formData = new FormData();
   noFileSet: boolean = true;
   importSuccessFully: boolean = false;
   importCount: number;
-  candidateFilterForm = candidateFilterFormConfig;
-  importCandidateFormConfig = importCandidateFormConfig;
-  private searchInputValue = new Subject();
-
+  private searchInputValue = new Subject<string>();
+  public message: string = DragDropInput;
+  status = [
+    { key: 'Select', value: null },
+    { key: 'Active', value: true },
+    { key: 'InActive', value: false },
+  ];
   columns: TableColumn<CandidateModel>[] = [
     { columnDef: 'select', header: '' },
     { columnDef: 'name', header: 'Name' },
@@ -89,12 +87,10 @@ export class ImportCandidateComponent implements OnInit {
   ];
   @ViewChild('myTable') myTable: TableComponent<any>;
   @ViewChild('dropzone') dropzone: DropzoneDirective;
-  // @ViewChild('myDropzone', { static: false }) dropzone: NgxDropzoneComponent;
   @ViewChild(DropzoneComponent, { static: false })
   componentRef?: DropzoneComponent;
   @ViewChild(DropzoneDirective)
   directive?: DropzoneDirective;
-  formData = new FormData();
 
   constructor(
     public dialog: MatDialog,
@@ -112,7 +108,7 @@ export class ImportCandidateComponent implements OnInit {
     this.getDropdowns();
     this.searchInputValue
       .pipe(
-        debounceTime(1000) // Adjust the debounce time as needed
+        debounceTime(Numbers.Debounce) // Adjust the debounce time as needed
       )
       .subscribe(() => {
         this.fetchCandidate();

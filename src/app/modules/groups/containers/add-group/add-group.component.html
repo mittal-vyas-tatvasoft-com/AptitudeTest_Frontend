@@ -1,5 +1,5 @@
 <div class="dialog-header">
-  <h2 mat-dialog-title>Add Group</h2>
+  <h2 mat-dialog-title>{{ isEditMode ? "Edit" : "Add" }} Group</h2>
   <button mat-icon-button class="dialog-close" (click)="closeModal()">
     <mat-icon>
       <img src="./assets/images/close-grey.svg" alt="Close" />
@@ -19,22 +19,22 @@
       >
     </div>
   </form>
+  <mat-dialog-actions align="end" class="add-dialog-action mb-2">
+    <app-button
+      [color]="'primary'"
+      [type]="'submit'"
+      [label]="isEditMode ? 'Save' : 'Add'"
+      [isDisabled]="!form.valid"
+      (click)="onAddClick()"
+      [class]="'button'"
+    ></app-button>
+    <button
+      mat-stroked-button
+      [mat-dialog-close]="true"
+      color="primary"
+      (click)="closeModal()"
+    >
+      Cancel
+    </button>
+  </mat-dialog-actions>
 </mat-dialog-content>
-<mat-dialog-actions align="end" class="add-dialog-action">
-  <app-button
-    [color]="'primary'"
-    [type]="'submit'"
-    [label]="'Add'"
-    [isDisabled]="!form.valid"
-    (click)="onAddClick()"
-    [class]="'button'"
-  ></app-button>
-  <app-button
-    [color]="'primary'"
-    [type]="'button'"
-    [label]="'Cancel'"
-    (click)="closeModal()"
-    [class]="'button'"
-    [mat-dialog-close]="true"
-  ></app-button>
-</mat-dialog-actions>
