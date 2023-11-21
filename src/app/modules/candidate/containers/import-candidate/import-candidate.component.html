@@ -27,14 +27,20 @@
             <div class="col-sm-6">
               <div class="row form-group">
                 <div class="col pe-0">
-                  <mat-form-field appearance="outline">
+                  <!-- <mat-form-field appearance="outline">
                     <mat-label>Group Name</mat-label>
                     <mat-select formControlName="groupId">
                       <mat-option *ngFor="let item of groups" [value]="item.id">
                         {{ item.name }}
                       </mat-option>
                     </mat-select>
-                  </mat-form-field>
+                  </mat-form-field> -->
+                  <app-select
+                    [form]="form"
+                    [formControlModel]="importCandidateFormConfig.groupId"
+                    [options]="groups"
+                  >
+                  </app-select>
                 </div>
                 <div class="col-auto ps-0">
                   <button
@@ -50,14 +56,12 @@
               </div>
             </div>
             <div class="col-sm-6">
-              <mat-form-field appearance="outline">
-                <mat-label>College</mat-label>
-                <mat-select formControlName="collegeId">
-                  <mat-option *ngFor="let item of colleges" [value]="item.id">
-                    {{ item.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+              <app-select
+                [form]="form"
+                [formControlModel]="importCandidateFormConfig.collegeId"
+                [options]="colleges"
+              >
+              </app-select>
             </div>
           </div>
 
@@ -141,41 +145,29 @@
       <form [formGroup]="filterForm">
         <div class="row">
           <div class="col-lg-4 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Search candidate..</mat-label>
-              <input
-                matInput
-                #searchField
-                formControlName="searchQuery"
-                (keyup)="search(searchField.value)"
-              />
-            </mat-form-field>
+            <app-text-control
+              [formControlModel]="candidateFilterForm.search"
+              [form]="filterForm"
+              (keyup)="search()"
+            ></app-text-control>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>College</mat-label>
-              <mat-select
-                formControlName="collegeId"
-                (selectionChange)="onFilterChange()"
-              >
-                <mat-option *ngFor="let item of colleges" [value]="item.id">
-                  {{ item.name }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <app-select
+              [form]="filterForm"
+              [formControlModel]="candidateFilterForm.collegeId"
+              [options]="colleges"
+              (selection)="onFilterChange()"
+            >
+            </app-select>
           </div>
           <div class="col-lg-4 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Status</mat-label>
-              <mat-select
-                formControlName="status"
-                (selectionChange)="onFilterChange()"
-              >
-                <mat-option *ngFor="let item of status" [value]="item.value">
-                  {{ item.key }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <app-select
+              [form]="filterForm"
+              [formControlModel]="candidateFilterForm.status"
+              [options]="status"
+              (selection)="onFilterChange()"
+            >
+            </app-select>
           </div>
         </div>
       </form>

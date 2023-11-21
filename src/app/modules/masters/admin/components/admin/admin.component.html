@@ -26,32 +26,20 @@
       <div class="col-sm">
         <form class="row" [formGroup]="form">
           <div class="col-lg-3 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Search..</mat-label>
-              <input
-                matInput
-                #search
-                (keyup)="searchAdmin()"
-                formControlName="searchField"
-              />
-            </mat-form-field>
+            <app-text-control
+              [formControlModel]="AdminFilterFormConfigModel.search"
+              [form]="form"
+              (keyup)="searchAdmin()"
+            ></app-text-control>
           </div>
           <div class="col-lg-3 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Status</mat-label>
-              <mat-select
-                #status
-                formControlName="statusField"
-                (selectionChange)="searchAdmin()"
-              >
-                <mat-option
-                  *ngFor="let item of optionsList"
-                  [value]="item.value"
-                >
-                  {{ item.key }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
+            <app-select
+              [form]="form"
+              [formControlModel]="AdminFilterFormConfigModel.status"
+              [options]="optionsList"
+              (selection)="searchAdmin()"
+            >
+            </app-select>
           </div>
         </form>
       </div>

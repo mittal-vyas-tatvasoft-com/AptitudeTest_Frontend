@@ -53,3 +53,22 @@ export const AdminControl = {
     requiredErrMsg: 'Status is required!',
   },
 };
+
+export const adminFilterFormConfig = {
+  search: {
+    value: '',
+    key: 'searchField',
+    label: 'Search..',
+    required: false,
+    inputType: 'text',
+    displayIcon: false,
+  },
+  status: {
+    value: '',
+    key: 'statusField',
+    label: 'Status',
+    required: false,
+    inputType: 'text',
+    displayIcon: false,
+  },
+};

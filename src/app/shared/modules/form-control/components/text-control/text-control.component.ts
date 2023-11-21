@@ -12,6 +12,7 @@ export class TextControlComponent {
   @Input() form!: FormGroup;
   @Input() formControlModel!: FormControlModel;
   @Output() iconClick = new EventEmitter<Event>();
+  @Output() keyup = new EventEmitter();
 
   constructor(public validationService: ValidationService) {}
 
