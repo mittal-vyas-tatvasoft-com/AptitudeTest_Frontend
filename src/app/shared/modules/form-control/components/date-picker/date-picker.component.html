@@ -7,6 +7,7 @@
       [formControlName]="formControlModel.key"
       [min]="minDate"
       [max]="maxDate"
+      (change)="dateChange()"
     />
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>

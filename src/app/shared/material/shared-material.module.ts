@@ -34,6 +34,12 @@ import {
   DropzoneConfigInterface,
   DropzoneModule,
 } from 'ngx-dropzone-wrapper';
+import { MatStepperModule } from '@angular/material/stepper';
+import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MatMomentDateModule,
+} from '@angular/material-moment-adapter';
 
 const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
   // Change this to your upload POST address:
@@ -86,16 +92,19 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     MatExpansionModule,
     MatTabsModule,
     MatMenuModule,
+    MatStepperModule,
+    NgxMaterialTimepickerModule,
     FormsModule,
     DropzoneModule,
     CKEditorModule,
+    MatMomentDateModule,
   ],
   providers: [
-    MatDatepickerModule,
     {
       provide: DROPZONE_CONFIG,
       useValue: DEFAULT_DROPZONE_CONFIG,
     },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
   ],
 })
 export class SharedMaterialModule {}

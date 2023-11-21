@@ -27,14 +27,6 @@
             <div class="col-sm-6">
               <div class="row form-group">
                 <div class="col pe-0">
-                  <!-- <mat-form-field appearance="outline">
-                    <mat-label>Group Name</mat-label>
-                    <mat-select formControlName="groupId">
-                      <mat-option *ngFor="let item of groups" [value]="item.id">
-                        {{ item.name }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field> -->
                   <app-select
                     [form]="form"
                     [formControlModel]="importCandidateFormConfig.groupId"

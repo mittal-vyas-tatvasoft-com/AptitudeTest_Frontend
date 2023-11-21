@@ -18,10 +18,12 @@ import { MultiSelectComponent } from './components/multi-select/multi-select.com
 import { TextControlComponent } from './components/text-control/text-control.component';
 import { TextControlNumberComponent } from './components/text-control-number/text-control-number.component';
 import { ButtonComponent } from './components/button/button.component';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import {
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MomentDateAdapter,
+} from '@angular/material-moment-adapter';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-
 
 @NgModule({
   declarations: [
@@ -40,9 +42,9 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     {
       provide: DateAdapter,
       useClass: MomentDateAdapter,
-      deps: [MAT_DATE_LOCALE],
+      deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
     },
-    { provide: MAT_DATE_FORMATS, useValue: DATE_FORMAT },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
   ],
   imports: [
     CommonModule,

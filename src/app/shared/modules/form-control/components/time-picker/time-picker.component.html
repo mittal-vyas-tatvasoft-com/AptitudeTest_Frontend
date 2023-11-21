@@ -34,6 +34,7 @@
       [formControlName]="timePickerModel.key"
       [id]="timePickerModel.key"
       (ngModelChange)="changeTime()"
+      [min]="minTime"
     />
 
     <mat-icon
@@ -55,6 +56,9 @@
     >
       schedule
     </mat-icon>
+    <mat-error>{{
+      validationService.getError(form, timePickerModel, timePickerModel.key)
+    }}</mat-error>
   </mat-form-field>
   <ngx-mat-timepicker #timepicker></ngx-mat-timepicker>
   <app-button

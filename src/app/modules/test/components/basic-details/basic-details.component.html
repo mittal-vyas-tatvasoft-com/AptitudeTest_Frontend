@@ -1,0 +1,183 @@
+<form [formGroup]="basicTestDetails">
+  <div class="container-900">
+    <div class="row">
+      <div class="col-lg">
+        <app-text-control
+          [formControlModel]="testBasicDetailFormModel.testName"
+          [form]="basicTestDetails"
+        ></app-text-control>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <app-select
+          [form]="basicTestDetails"
+          [formControlModel]="testBasicDetailFormModel.status"
+          [options]="optionsList"
+        >
+        </app-select>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <app-text-control-number
+          [formControlModel]="testBasicDetailFormModel.basicPoints"
+          [form]="basicTestDetails"
+        ></app-text-control-number>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-lg-3 col-sm-6">
+        <app-text-control-number
+          [formControlModel]="testBasicDetailFormModel.testDuration"
+          [form]="basicTestDetails"
+        ></app-text-control-number>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <app-date-picker
+          [form]="basicTestDetails"
+          [formControlModel]="testBasicDetailFormModel.date"
+          [minDate]="minDate"
+          (changeDate)="checkDifference()"
+        >
+        </app-date-picker>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <app-time-picker
+          [form]="basicTestDetails"
+          [timePickerModel]="testBasicDetailFormModel.startTime"
+          (timeChanged)="
+            setEndDate($event, basicTestDetails.get('testDuration')?.value)
+          "
+        ></app-time-picker>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <app-time-picker
+          [form]="basicTestDetails"
+          [timePickerModel]="testBasicDetailFormModel.endTime"
+          (timeChanged)="checkDifference()"
+        ></app-time-picker>
+      </div>
+      <div class="col-12" *ngIf="!startEndTimeDifferenceValid">
+        <mat-error class="w-100" *ngIf="!startEndTimeDifferenceValid">
+          Please enter appropriate Start Time and End Time
+        </mat-error>
+      </div>
+      <div class="col-12">
+        <app-text-control
+          [formControlModel]="testBasicDetailFormModel.description"
+          [form]="basicTestDetails"
+        ></app-text-control>
+      </div>
+
+      <div class="col-lg-6 col-sm-12">
+        <mat-form-field appearance="outline">
+          <mat-label>{{
+            testBasicDetailFormModel.messageAtTheStartOfTest.label
+          }}</mat-label>
+          <textarea
+            formControlName="{{
+              testBasicDetailFormModel.messageAtTheStartOfTest.key
+            }}"
+            matInput
+            rows="3"
+          ></textarea>
+          <mat-error>{{
+            validationService.getError(
+              basicTestDetails,
+              testBasicDetailFormModel.messageAtTheStartOfTest,
+              testBasicDetailFormModel.messageAtTheStartOfTest.key
+            )
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="col-lg-6 col-sm-12">
+        <mat-form-field appearance="outline">
+          <mat-label>{{
+            testBasicDetailFormModel.messageAtTheEndOfTest.label
+          }}</mat-label>
+          <textarea
+            formControlName="{{
+              testBasicDetailFormModel.messageAtTheEndOfTest.key
+            }}"
+            matInput
+            rows="3"
+          ></textarea>
+          <mat-error>{{
+            validationService.getError(
+              basicTestDetails,
+              testBasicDetailFormModel.messageAtTheEndOfTest,
+              testBasicDetailFormModel.messageAtTheEndOfTest.key
+            )
+          }}</mat-error>
+        </mat-form-field>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-6">
+        <div class="switch-block-wrapper">
+          <mat-slide-toggle
+            color="primary"
+            hideIcon
+            labelPosition="before"
+            formControlName="{{ testBasicDetailFormModel.randomQuestions.key }}"
+            >{{
+              testBasicDetailFormModel.randomQuestions.label
+            }}</mat-slide-toggle
+          >
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="switch-block-wrapper">
+          <mat-slide-toggle
+            color="primary"
+            hideIcon
+            labelPosition="before"
+            formControlName="{{ testBasicDetailFormModel.randomAnswers.key }}"
+            >{{
+              testBasicDetailFormModel.randomAnswers.label
+            }}</mat-slide-toggle
+          >
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="switch-block-wrapper">
+          <mat-slide-toggle
+            color="primary"
+            hideIcon
+            labelPosition="before"
+            formControlName="{{
+              testBasicDetailFormModel.logoutWhenTimeExpires.key
+            }}"
+            >{{
+              testBasicDetailFormModel.logoutWhenTimeExpires.label
+            }}</mat-slide-toggle
+          >
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="switch-block-wrapper">
+          <mat-slide-toggle
+            color="primary"
+            hideIcon
+            labelPosition="before"
+            formControlName="{{ testBasicDetailFormModel.questignsMenu.key }}"
+            >{{
+              testBasicDetailFormModel.questignsMenu.label
+            }}</mat-slide-toggle
+          >
+        </div>
+      </div>
+    </div>
+    <div class="action-list mt-md-2 mt-1 mb-lg-2">
+      <button
+        mat-flat-button
+        matStepperNext
+        [disabled]="basicTestDetails.invalid || !startEndTimeDifferenceValid"
+        color="primary"
+        (click)="saveBasicDetails()"
+      >
+        Save
+      </button>
+      <button mat-stroked-button color="primary" routerLink="/admin/test">
+        Cancel
+      </button>
+    </div>
+  </div>
+</form>

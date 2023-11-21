@@ -271,6 +271,10 @@ export class AdminComponent implements OnInit, AfterViewInit {
         this.sortDirection = '';
         break;
     }
-    this.searchAdmin();
+
+    const searchValue = this.form.get('searchField')?.value;
+    const statusValue = this.form.get('statusField')?.value;
+    this.fetchAdmin(searchValue, statusValue);
+    //this.searchAdmin();
   }
 }

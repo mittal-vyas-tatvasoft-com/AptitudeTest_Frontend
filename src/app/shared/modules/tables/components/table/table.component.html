@@ -19,7 +19,8 @@
               *ngIf="
                 column.columnDef !== 'status' &&
                   !column.isAction &&
-                  column.columnDef !== 'streams' && !column.isAction;
+                  column.columnDef !== 'streams' &&
+                  !column.isAction;
                 else noSortHeader
               "
             >

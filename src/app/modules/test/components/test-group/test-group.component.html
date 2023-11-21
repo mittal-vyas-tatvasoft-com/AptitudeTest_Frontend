@@ -1,0 +1,62 @@
+<div class="row d-flex justify-content-center">
+  <div class="col-lg-3 col-sm-6">
+    <app-select
+      [form]="testGroupForm"
+      [formControlModel]="testGroupFormModel.groupId"
+      [options]="groups"
+      (selection)="changeFilterSelection()"
+    >
+    </app-select>
+  </div>
+  <div class="col-lg-3 col-sm-6">
+    <app-button
+      [color]="'primary'"
+      [type]="'submit'"
+      [label]="'Save'"
+      [isDisabled]="!testGroupForm.valid"
+      (click)="updateTestGroup()"
+      [class]="'button'"
+    ></app-button>
+  </div>
+</div>
+<div class="row back-bg-card mb-1 p-lg-1">
+  <div class="col-sm">
+    <div class="row">
+      <div class="col-lg col-sm-6">
+        <app-text-control
+          [formControlModel]="testGroupFilterModel.search"
+          [form]="testGroupFilterForm"
+          (keyup)="searchTestCandidates()"
+        ></app-text-control>
+      </div>
+      <div class="col-lg-3 col-sm-6">
+        <app-select
+          [form]="testGroupFilterForm"
+          [formControlModel]="testGroupFilterModel.collegeId"
+          [options]="colleges"
+          (selection)="changeFilterSelection()"
+        >
+        </app-select>
+      </div>
+    </div>
+  </div>
+  <div class="col-md-auto pb-1 pb-md-0 text-left">
+    <button mat-stroked-button color="primary">clear</button>
+  </div>
+</div>
+<div style="margin: 0 -24px -24px">
+  <div class="mat-table-wrapper">
+    <app-table
+      [dataSource]="dataSource"
+      [columns]="columns"
+      [pagination]="true"
+      [totalItemsCount]="totalItemsCount"
+      [pageSize]="pageSize"
+      [pagination]="pagination"
+      (pageSizeChanged)="handlePageSizeChange($event)"
+      (pageToPage)="handlePageToPage($event)"
+      (pageChanged)="handlePageChange($event)"
+      (sortingChanged)="handleDataSorting($event)"
+    ></app-table>
+  </div>
+</div>
