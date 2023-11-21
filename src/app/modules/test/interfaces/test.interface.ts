@@ -51,3 +51,14 @@ export interface TestData {
   totalPages: number;
   nextPage: number;
 }
+
+export interface TestQueryParams {
+  currentPageIndex: number;
+  pageSize: number;
+  searchQuery: string | null;
+  groupId: number | null;
+  status: number | null;
+  date: Date | null;
+  sortField: string | null;
+  sortOrder: string | null;
+}

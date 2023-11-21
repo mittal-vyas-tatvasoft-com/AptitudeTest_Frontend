@@ -2,6 +2,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import {
   GetAllTestCandidateParams,
+  TestQueryParams,
   createTestModel,
   testCandidatesModel,
 } from '../interfaces/test.interface';
@@ -82,41 +83,38 @@ export class TestService {
     );
   }
 
-  getTests(
-    currentPageIndex: number,
-    pageSize: number,
-    searchQuery: string | null,
-    groupId: number | null,
-    status: number | null,
-    date: Date | null,
-    sortField: string | null,
-    sortOrder: string | null
-  ) {
-    const params: any = {
-      currentPageIndex,
-      pageSize,
-    };
+  getTests(data: TestQueryParams) {
+    //const params=testQueryParams;
 
-    if (searchQuery != '') {
-      params.searchQuery = searchQuery;
+    let params = new HttpParams()
+      .set('currentPageIndex', data.currentPageIndex.toString())
+      .set('pageSize', data.pageSize.toString());
+
+    if (data.searchQuery !== undefined && data.searchQuery != null) {
+      params = params.set('searchQuery', data.searchQuery);
     }
-    if (status != null) {
-      params.Status = status;
+
+    if (data.status != null) {
+      params = params.set('Status', data.status.toString());
     }
-    if (groupId != null) {
-      params.GroupId = groupId;
+
+    if (data.groupId !== undefined && data.groupId != null) {
+      params = params.set('GroupId', data.groupId.toString());
     }
-    if (date != null) {
-      params.Date = moment(date).format('MM-DD-YYYY');
+
+    if (data.date !== undefined && data.date != null) {
+      params = params.set('Date', moment(data.date).format('MM-DD-YYYY'));
     }
-    if (sortField != '') {
-      params.sortField = sortField;
+
+    if (data.sortField != null) {
+      params = params.set('SortField', data.sortField);
     }
-    if (sortOrder != '') {
-      params.sortOrder = sortOrder;
+    if (data.sortOrder != null) {
+      params = params.set('SortOrder', data.sortOrder);
     }
+
     return this.http.get(
-      `${environment.baseURL}Tests/${currentPageIndex}/${pageSize}`,
+      `${environment.baseURL}Tests/${data.currentPageIndex}/${data.pageSize}`,
       {
         params,
       }

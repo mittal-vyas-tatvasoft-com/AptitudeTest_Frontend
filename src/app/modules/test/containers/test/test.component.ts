@@ -8,7 +8,7 @@ import { TestService } from '../../services/test.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { Numbers, StatusCode, TestStatus } from 'src/app/shared/common/enums';
-import { TestData } from '../../interfaces/test.interface';
+import { TestData, TestQueryParams } from '../../interfaces/test.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
@@ -110,27 +110,26 @@ export class TestComponent implements OnInit {
     if (date != null && date != '') {
       filterDate = date.toDate();
     }
-    this.testService
-      .getTests(
-        this.currentPageIndex,
-        this.pageSize,
-        searchQuery,
-        groupId,
-        status,
-        filterDate,
-        this.sortField,
-        this.sortOrder
-      )
-      .subscribe((res: any) => {
-        if (res.statusCode != StatusCode.Success) {
-          this.snackbarService.error(res.message);
-        } else {
-          this.dataSource = new MatTableDataSource<TestData>(res.data);
-          if (res.data.length != 0) {
-            this.totalItemsCount = res.data[0].totalRecords;
-          }
+    const data: TestQueryParams = {
+      currentPageIndex: this.currentPageIndex,
+      pageSize: this.pageSize,
+      searchQuery: searchQuery,
+      groupId: groupId,
+      status: status,
+      date: filterDate,
+      sortField: this.sortField,
+      sortOrder: this.sortOrder,
+    };
+    this.testService.getTests(data).subscribe((res: any) => {
+      if (res.statusCode != StatusCode.Success) {
+        this.snackbarService.error(res.message);
+      } else {
+        this.dataSource = new MatTableDataSource<TestData>(res.data);
+        if (res.data.length != 0) {
+          this.totalItemsCount = res.data[0].totalRecords;
         }
-      });
+      }
+    });
   }
 
   handleDeleteTestDialog(id: number) {
