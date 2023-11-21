@@ -45,18 +45,11 @@ export class ImportCandidateComponent implements OnInit {
   collegesForFilter: DropdownItem[] = [{ id: 0, name: 'All' }];
   groups: DropdownItem[];
   dropzoneConfig = dropzoneConfig;
-
-  status = [
-    { key: 'Select', value: null },
-    { key: 'Active', value: true },
-    { key: 'InActive', value: false },
-  ];
   optionsList: number[] = [];
   form: FormGroup;
   filterForm: FormGroup;
   dataSource: MatTableDataSource<CandidateModel>;
   selection = new SelectionModel<CandidateModel>(true, []);
-  public message: string = DragDropInput;
   statusValue: boolean | null;
   currentPageIndex = Numbers.Zero;
   totalItemsCount: number;
@@ -64,11 +57,17 @@ export class ImportCandidateComponent implements OnInit {
   sortKey: string;
   sortDirection: string;
   fileName: string = '';
+  formData = new FormData();
   noFileSet: boolean = true;
   importSuccessFully: boolean = false;
   importCount: number;
   private searchInputValue = new Subject<string>();
-
+  public message: string = DragDropInput;
+  status = [
+    { key: 'Select', value: null },
+    { key: 'Active', value: true },
+    { key: 'InActive', value: false },
+  ];
   columns: TableColumn<CandidateModel>[] = [
     { columnDef: 'select', header: '' },
     { columnDef: 'name', header: 'Name' },
@@ -82,12 +81,10 @@ export class ImportCandidateComponent implements OnInit {
   ];
   @ViewChild('myTable') myTable: TableComponent<any>;
   @ViewChild('dropzone') dropzone: DropzoneDirective;
-  // @ViewChild('myDropzone', { static: false }) dropzone: NgxDropzoneComponent;
   @ViewChild(DropzoneComponent, { static: false })
   componentRef?: DropzoneComponent;
   @ViewChild(DropzoneDirective)
   directive?: DropzoneDirective;
-  formData = new FormData();
 
   constructor(
     public dialog: MatDialog,
