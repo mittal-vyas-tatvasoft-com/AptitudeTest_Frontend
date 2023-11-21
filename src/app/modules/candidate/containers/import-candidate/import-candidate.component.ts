@@ -104,7 +104,7 @@ export class ImportCandidateComponent implements OnInit {
     this.getDropdowns();
     this.searchInputValue
       .pipe(
-        debounceTime(1000) // Adjust the debounce time as needed
+        debounceTime(Numbers.Debounce) // Adjust the debounce time as needed
       )
       .subscribe((value) => {
         this.fetchCandidate();

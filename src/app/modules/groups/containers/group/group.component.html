@@ -58,13 +58,25 @@
 >
 
 <div class="row">
-  <div class="col-md-6 col-xxl-4 mb-2" *ngFor="let group of groupList">
-    <app-group-card
-      [groupData]="group"
-      (editClicked)="handleAddGroupDialog($event)"
-      (deleteClicked)="handleDeleteGroupDialog($event)"
-      (setDefaultClicked)="setGroupAsDefault($event)"
-    >
-    </app-group-card>
-  </div>
+  <ng-container *ngIf="groupList.length > 0; else noDataFound">
+    <div class="col-md-6 col-xxl-4 mb-2" *ngFor="let group of groupList">
+      <app-group-card
+        [groupData]="group"
+        (editClicked)="handleAddGroupDialog($event)"
+        (deleteClicked)="handleDeleteGroupDialog($event)"
+        (setDefaultClicked)="setGroupAsDefault($event)"
+      >
+      </app-group-card>
+    </div>
+  </ng-container>
+
+  <ng-template #noDataFound>
+    <div>
+      <mat-card class="form-block mb-3">
+        <mat-card-content>
+          <div class="no-data-message">No data found</div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </ng-template>
 </div>
