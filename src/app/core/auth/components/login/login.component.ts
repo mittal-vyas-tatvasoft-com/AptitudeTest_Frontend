@@ -17,6 +17,7 @@ import { Navigation } from 'src/app/shared/common/enums';
 export class LoginComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   loginModel = loginControl;
+  isAdmin: boolean = false;
   private ngUnsubscribe$ = new Subject<void>();
 
   constructor(
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.isAdmin = this.isRouteAdmin(this.activatedRoute);
     this.form = this.formBuilder.group({
       userName: [
         '',
@@ -46,28 +48,51 @@ export class LoginComponent implements OnInit, OnDestroy {
         email: this.form.value.userName,
         password: this.form.value.password,
       };
-      this.loginService
-        .login(payload)
-        .pipe(takeUntil(this.ngUnsubscribe$))
-        .subscribe({
-          next: (res: ResponseModel<string>) => {
-            if (res.result) {
-              const data = this.loginService.decodeToken();
-              if (data.Role === 'Admin') {
+      if (this.isAdmin) {
+        this.loginService
+          .Adminlogin(payload)
+          .pipe(takeUntil(this.ngUnsubscribe$))
+          .subscribe({
+            next: (res: ResponseModel<string>) => {
+              if (res.result) {
                 this.router.navigate([`${Navigation.Admin}`]);
               } else {
-                this.router.navigate([`${Navigation.CandidateUser}`]);
+                this.snackbarService.error(res.message);
               }
-            } else {
-              this.snackbarService.error(res.message);
-            }
-          },
-          error: (error: { message: string }) => {
-            this.snackbarService.error(error.message);
-          },
-        });
+            },
+            error: (error: { message: string }) => {
+              this.snackbarService.error(error.message);
+            },
+          });
+      }
+      else {
+        this.loginService
+          .login(payload)
+          .pipe(takeUntil(this.ngUnsubscribe$))
+          .subscribe({
+            next: (res: ResponseModel<string>) => {
+              if (res.result) {
+                this.router.navigate([`${Navigation.CandidateUser}`]);
+              } else {
+                this.snackbarService.error(res.message);
+              }
+            },
+            error: (error: { message: string }) => {
+              this.snackbarService.error(error.message);
+            },
+          });
+      }
     } else {
       this.form.markAllAsTouched();
+    }
+  }
+
+  isRouteAdmin(route: ActivatedRoute | null): any {
+    if (!route) {
+      return false;
+    }
+    if (route.snapshot.url.some(segment => segment.path === 'login')) {
+      return true;
     }
   }
 

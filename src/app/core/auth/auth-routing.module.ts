@@ -11,6 +11,10 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
+    path: 'admin/login',
+    component: LoginComponent,
+  },
+  {
     path: 'forgot',
     component: ForgotPasswordComponent,
   },
@@ -24,4 +28,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AuthRoutingModule {}
+export class AuthRoutingModule { }

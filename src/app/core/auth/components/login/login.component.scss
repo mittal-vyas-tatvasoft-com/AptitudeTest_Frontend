@@ -74,6 +74,25 @@
   display: inline-block;
 }
 
+.forgot-password {
+  color: rgba(85, 127, 188, 255);
+  font-size: 14px;
+  font-weight: 300;
+  text-decoration: none;
+}
+
+.register {
+  color: rgba(72, 117, 183, 255);
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.account {
+  font-size: 14px;
+  // font-weight: 600;
+  color: rgba(169, 170, 173, 255);
+}
+
 div.pagehelp {
   border: 0;
   font-size: 15px;

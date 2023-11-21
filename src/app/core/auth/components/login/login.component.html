@@ -35,10 +35,19 @@
               <mat-checkbox color="primary" class="font14"
                 >Remeber me</mat-checkbox
               >
+              <a href="#" class="forgot-password" *ngIf="!isAdmin"
+                >Forgot Password?</a
+              >
             </div>
           </div>
           <div class="col-12 animation-target">
             <button mat-flat-button color="primary" class="w-100">Login</button>
+          </div>
+          <div class="col-12 animation-target mt-5" *ngIf="!isAdmin">
+            <p class="account">
+              Don't have an account?
+              <a href="#" class="register">Register Now!</a>
+            </p>
           </div>
         </div>
       </form>

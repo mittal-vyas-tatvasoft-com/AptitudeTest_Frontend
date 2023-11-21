@@ -119,7 +119,6 @@ export class HeaderComponent {
             .pipe(takeUntil(this.ngUnsubscribe$))
             .subscribe({
               next: (res) => {
-                debugger;
                 if (res.statusCode === StatusCode.Success) {
                   this.snackbar.success(res.message);
                 } else {
