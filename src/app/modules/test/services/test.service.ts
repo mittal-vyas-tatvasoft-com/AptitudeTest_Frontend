@@ -107,7 +107,7 @@ export class TestService {
       params.GroupId = groupId;
     }
     if (date != null) {
-      params.Date = moment(date).format('DD-MM-YYYY');
+      params.Date = moment(date).format('MM-DD-YYYY');
     }
     if (sortField != '') {
       params.sortField = sortField;
