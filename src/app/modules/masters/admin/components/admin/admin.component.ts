@@ -11,6 +11,8 @@ import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 import { Sort } from '@angular/material/sort';
+import { adminFilterFormConfig } from '../../configs/admin.configs';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 
 @Component({
   selector: 'app-master-admin',
@@ -25,12 +27,15 @@ export class AdminComponent implements OnInit, AfterViewInit {
   hasData: boolean;
   sortKey: string = '';
   sortDirection: string = '';
-  optionsList = [
-    { key: 'Select', value: null },
-    { key: 'Active', value: true },
-    { key: 'InActive', value: false },
+  optionsList: SelectOption[] = [
+    { value: 'Select', id: '' },
+    { value: 'Active', id: true },
+    { value: 'InActive', id: false },
   ];
+
   dataSource: MatTableDataSource<AdminModel>;
+  AdminFilterFormConfigModel = adminFilterFormConfig;
+
   addAdmin: AdminModel = {
     id: Numbers.Zero,
     firstName: '',

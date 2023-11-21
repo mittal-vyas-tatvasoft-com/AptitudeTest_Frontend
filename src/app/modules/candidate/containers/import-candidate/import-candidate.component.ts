@@ -34,6 +34,12 @@ import {
   DropzoneFallbackFunction,
 } from 'ngx-dropzone-wrapper/lib/dropzone.interfaces';
 import { Sort } from '@angular/material/sort';
+import { GroupsService } from 'src/app/modules/groups/services/groups.service';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import {
+  candidateFilterFormConfig,
+  importCandidateFormConfig,
+} from '../../configs/candidate.configs';
 
 @Component({
   selector: 'app-import-candidate',
@@ -41,11 +47,11 @@ import { Sort } from '@angular/material/sort';
   styleUrls: ['./import-candidate.component.scss'],
 })
 export class ImportCandidateComponent implements OnInit {
-  colleges: DropdownItem[] = [];
+  colleges: SelectOption[] = [];
   collegesForFilter: DropdownItem[] = [{ id: 0, name: 'All' }];
-  groups: DropdownItem[];
+  groups: SelectOption[] = [];
   dropzoneConfig = dropzoneConfig;
-  optionsList: number[] = [];
+  optionsList: SelectOption[] = [];
   form: FormGroup;
   filterForm: FormGroup;
   dataSource: MatTableDataSource<CandidateModel>;
@@ -89,6 +95,7 @@ export class ImportCandidateComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private candidateService: CandidateService,
+    private groupsService: GroupsService,
     private formBuilder: FormBuilder,
     private router: Router,
     private snackbarService: SnackbarService
@@ -103,7 +110,7 @@ export class ImportCandidateComponent implements OnInit {
       .pipe(
         debounceTime(Numbers.Debounce) // Adjust the debounce time as needed
       )
-      .subscribe((value) => {
+      .subscribe(() => {
         this.fetchCandidate();
       });
   }
@@ -115,20 +122,21 @@ export class ImportCandidateComponent implements OnInit {
       collegeId: [0],
     });
     this.filterForm = this.formBuilder.group({
-      collegeId: [null],
+      collegeId: [''],
       status: [''],
       searchQuery: [''],
     });
   }
 
-  search(value: string) {
-    this.searchInputValue.next(value);
+  search() {
+    this.searchInputValue.next('');
   }
 
   fetchCandidate() {
     const searchQuery = this.filterForm.get('searchQuery')?.value;
     const collegeId = this.filterForm.get('collegeId')?.value;
     const status = this.filterForm.get('status')?.value;
+
     const params: GetAllCandidateParams = {
       currentPageIndex: this.currentPageIndex,
       pageSize: this.pageSize,
@@ -140,6 +148,7 @@ export class ImportCandidateComponent implements OnInit {
       sortField: this.sortKey,
       sortOrder: this.sortDirection,
     };
+
     this.candidateService.getCandidate(params).subscribe((data: any) => {
       data.forEach(
         (candidate: { name: string; firstName: string; lastName: string }) => {
@@ -158,16 +167,19 @@ export class ImportCandidateComponent implements OnInit {
   getDropdowns() {
     const currentYear = new Date().getFullYear();
     for (let year = 2023; year <= currentYear; year++) {
-      this.optionsList.push(year);
+      this.optionsList.push({ value: year.toString(), id: year });
     }
 
     this.candidateService.getCollegesForDropDown().subscribe((colleges) => {
-      this.colleges = colleges;
-      this.collegesForFilter = [...this.colleges, ...colleges];
+      colleges.forEach((element) => {
+        this.colleges.push({ value: element.name.toString(), id: element.id });
+      });
     });
 
     this.candidateService.getGroupsForDropDown().subscribe((groups) => {
-      this.groups = groups;
+      groups.forEach((element) => {
+        this.groups.push({ value: element.name, id: element.id });
+      });
     });
   }
 
@@ -176,7 +188,9 @@ export class ImportCandidateComponent implements OnInit {
   }
 
   clearFilters() {
-    this.filterForm.reset();
+    this.filterForm.get('searchQuery')?.setValue('');
+    this.filterForm.get('collegeId')?.setValue('');
+    this.filterForm.get('status')?.setValue('');
     this.fetchCandidate();
   }
 
@@ -206,8 +220,28 @@ export class ImportCandidateComponent implements OnInit {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
-    dialogConfig.width = '550px';
-    this.dialog.open(AddGroupComponent, dialogConfig);
+    dialogConfig.width = '556px';
+    dialogConfig.data = 0;
+    this.dialog
+      .open(AddGroupComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((data) => {
+        if (data != null) {
+          if (data.id == 0) {
+            this.groupsService.create(data).subscribe({
+              next: (res) => {
+                if (res.statusCode == StatusCode.Success) {
+                  this.groups = [];
+                  this.getDropdowns();
+                  this.snackbarService.success(res.message);
+                } else {
+                  this.snackbarService.error(res.message);
+                }
+              },
+            });
+          }
+        }
+      });
   }
 
   getDeleteCandidateDialog(id: number) {
@@ -233,6 +267,8 @@ export class ImportCandidateComponent implements OnInit {
     this.candidateService.importCandidate(this.formData).subscribe({
       next: (res: any) => {
         this.componentRef?.directiveRef?.reset();
+        this.fileName = '';
+        this.noFileSet = true;
         if (res.statusCode == StatusCode.Success) {
           this.fetchCandidate();
           this.importCount = res.data;
@@ -246,6 +282,7 @@ export class ImportCandidateComponent implements OnInit {
         }
       },
     });
+    this.form.reset();
   }
 
   handleImportFileError(event: any) {
@@ -255,7 +292,6 @@ export class ImportCandidateComponent implements OnInit {
   }
 
   onDropzoneQueueComplete() {
-    // alert('hello');
     this.fileName = '';
     this.noFileSet = true;
   }
