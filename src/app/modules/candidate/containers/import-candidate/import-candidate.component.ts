@@ -69,10 +69,12 @@ export class ImportCandidateComponent implements OnInit {
   importCount: number;
   private searchInputValue = new Subject<string>();
   public message: string = DragDropInput;
-  status = [
-    { key: 'Select', value: null },
-    { key: 'Active', value: true },
-    { key: 'InActive', value: false },
+  importCandidateFormConfig = importCandidateFormConfig;
+  candidateFilterForm = candidateFilterFormConfig;
+  status: SelectOption[] = [
+    { value: 'Select', id: '' },
+    { value: 'Active', id: true },
+    { value: 'InActive', id: false },
   ];
   columns: TableColumn<CandidateModel>[] = [
     { columnDef: 'select', header: '' },
