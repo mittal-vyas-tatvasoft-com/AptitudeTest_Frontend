@@ -37,3 +37,17 @@ export interface GetAllTestCandidateParams {
   sortField: string;
   sortOrder: string;
 }
+
+export interface TestData {
+  id: number;
+  testName: string;
+  groupName: string;
+  testTime: string;
+  startTime: string;
+  endTime: string;
+  noOfCandidates: string;
+  status: string;
+  totalRecords: number;
+  totalPages: number;
+  nextPage: number;
+}

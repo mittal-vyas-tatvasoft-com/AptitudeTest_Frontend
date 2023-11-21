@@ -1,60 +1,245 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Sort, MatSortModule, MatSort } from '@angular/material/sort';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { Router } from '@angular/router';
-
-export interface TestData {
-  test: string;
-  group: string;
-  testTime: string;
-  startTime: string;
-  endTime: string;
-  NoOfCandidates: string;
-  status: string;
-  action: string;
-}
+import { TestService } from '../../services/test.service';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { Numbers, StatusCode, TestStatus } from 'src/app/shared/common/enums';
+import { TestData } from '../../interfaces/test.interface';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { debounceTime } from 'rxjs';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { DropdownData } from 'src/app/shared/common/interfaces/dropdown-data.interface';
+import { testFilterModel } from '../../config/test.configs';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-test',
   templateUrl: './test.component.html',
-  styleUrls: ['./test.component.scss']
+  styleUrls: ['./test.component.scss'],
 })
-export class TestComponent {
-  optionsList: string[] = ['Option 1', 'Option 2', 'Option 3'];
-  selectedOption = '10';
-  paginationOptionsList: string[] = ['10', '20', '25'];
-  displayedColumns: string[] = ['test', 'group', 'testTime', 'startTime', 'endTime', 'NoOfCandidates', 'status', 'action'];
-  dataSource: MatTableDataSource<TestData>;
+export class TestComponent implements OnInit {
+  pageSize = 10;
+  currentPageIndex = 0;
+  totalItemsCount: number;
+  sortField: string = '';
+  sortOrder: string = '';
+  pageNumbers: number[] = [];
+  form: FormGroup;
+  formData = testFilterModel;
+  dataSource!: MatTableDataSource<TestData>;
+  displayedColumns: TableColumn<TestData>[] = [
+    { columnDef: 'testName', header: 'Test' },
+    { columnDef: 'groupName', header: 'Group' },
+    { columnDef: 'testTime', header: 'Test Time' },
+    { columnDef: 'startTime', header: 'Start Time' },
+    { columnDef: 'endTime', header: 'End Time' },
+    { columnDef: 'noOfCandidates', header: 'No. Of Candidates' },
+    { columnDef: 'status', header: 'Status' },
+    {
+      columnDef: 'editAction',
+      header: 'Action',
+      isAction: true,
+      action: 'edit',
+    },
+  ];
+
+  statusList: SelectOption[] = [
+    { value: 'All', id: '' },
+    { value: 'Active', id: TestStatus.Active },
+    { value: 'Draft', id: TestStatus.Draft },
+    { value: 'Completed', id: TestStatus.Completed },
+  ];
+  groupList: SelectOption[] = [{ value: 'All', id: '' }];
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
 
-  constructor(public dialog: MatDialog, private router: Router) {
-    this.dataSource = new MatTableDataSource([
-      { test: "Maths Test", group: "Columbia University", testTime: "60m", startTime: "17 Jun, 2020 02:57 pm", endTime: "17 Jun, 2020 02:57 pm", NoOfCandidates: "470", status: "Active", action: "" },
-      { test: "Grammer Test", group: "Harvard University", testTime: "60m", startTime: "23 Jun, 2020 01:17 pm", endTime: "23 Jun, 2020 01:17 pm", NoOfCandidates: "854", status: "Completed", action: "" },
-      { test: "Practical Test", group: "Duke University", testTime: "60m", startTime: "26 Jun, 2020 12:30 am", endTime: "26 Jun, 2020 12:30 am", NoOfCandidates: "478", status: "Draft", action: "" },
-      { test: "Reasoning Test", group: "Villanova University", testTime: "60m", startTime: "29 Jun, 2020 07:40 am", endTime: "29 Jun, 2020 07:40 am", NoOfCandidates: "605", status: "Completed", action: "" },
-      { test: "English Test", group: "Massachusetts Institute of Technology", testTime: "60m", startTime: "04 Jun, 2020 04:51 am", endTime: "04 Jun, 2020 04:51 am", NoOfCandidates: "800", status: "Completed", action: "" },
-      { test: "Aptitude Test", group: "University of North Carolina, Chapel Hill", testTime: "60m", startTime: "24 Jun, 2020 09:20 am", endTime: "24 Jun, 2020 09:20 am", NoOfCandidates: "758", status: "Draft", action: "" },
-      { test: "Technical Test", group: "Standford University", testTime: "60m", startTime: "01 Jun, 2020 05:05 pm", endTime: "01 Jun, 2020 05:05 pm", NoOfCandidates: "900", status: "Completed", action: "" },
-      { test: "Programming Test", group: "St. John's College", testTime: "60m", startTime: "17 Jun, 2020 06:49 am", endTime: "17 Jun, 2020 06:49 am", NoOfCandidates: "244", status: "Draft", action: "" },
-      { test: "Maths Test", group: "Brigham Young University", testTime: "60m", startTime: "04 Jun, 2020 07:00 am", endTime: "04 Jun, 2020 07:00 am", NoOfCandidates: "488", status: "Completed", action: "" },
-    ]);
+  constructor(
+    private router: Router,
+    public dialog: MatDialog,
+    private testService: TestService,
+    private snackbarService: SnackbarService,
+    private formBuilder: FormBuilder
+  ) {}
+
+  ngOnInit(): void {
+    this.createForm();
+    this.testService.getGroups().subscribe({
+      next: (res: ResponseModel<DropdownData[]>) => {
+        const tempData: SelectOption[] = res.data.map((data) => {
+          return {
+            id: data.id,
+            value: data.name,
+          };
+        });
+        this.groupList = [...this.groupList, ...tempData];
+      },
+    });
+
+    this.dataSource = new MatTableDataSource<TestData>([]);
+    this.getTests();
+    this.form.valueChanges.pipe(debounceTime(Numbers.Debounce)).subscribe({
+      next: (res) => {
+        this.currentPageIndex = 0;
+        this.pageSize = 10;
+        this.sortField = '';
+        this.sortOrder = '';
+        this.getTests();
+      },
+    });
   }
 
-  ngAfterViewInit() {
-    this.dataSource.sort = this.sort;
+  createForm() {
+    this.form = this.formBuilder.group({
+      searchQuery: [''],
+      groupId: [null],
+      status: [null],
+      date: [null],
+    });
   }
 
-  handleDeleteProfileDialog() {
+  getTests() {
+    const searchQuery = this.form.get('searchQuery')?.value;
+    const groupId = this.form.get('groupId')?.value;
+    const status = this.form.get('status')?.value;
+    const date = this.form.get('date')?.value;
+    var filterDate: Date | null = null;
+    if (date != null && date != '') {
+      filterDate = date.toDate();
+    }
+    this.testService
+      .getTests(
+        this.currentPageIndex,
+        this.pageSize,
+        searchQuery,
+        groupId,
+        status,
+        filterDate,
+        this.sortField,
+        this.sortOrder
+      )
+      .subscribe((res: any) => {
+        if (res.statusCode != StatusCode.Success) {
+          this.snackbarService.error(res.message);
+        } else {
+          this.dataSource = new MatTableDataSource<TestData>(res.data);
+          if (res.data.length != 0) {
+            this.totalItemsCount = res.data[0].totalRecords;
+          }
+        }
+      });
+  }
+
+  handleDeleteTestDialog(id: number) {
     const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ["confirmation-dialog"];
+    dialogConfig.panelClass = ['primary-dialog'];
+    dialogConfig.panelClass = ['confirmation-dialog'];
     dialogConfig.autoFocus = false;
-    this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
+    const dialogRef = this.dialog.open(
+      DeleteConfirmationDialogComponent,
+      dialogConfig
+    );
+    dialogRef?.afterClosed().subscribe((result: any) => {
+      if (result) {
+        this.testService.delete(id).subscribe({
+          next: (res: any) => {
+            if (res.statusCode == StatusCode.Success) {
+              this.getTests();
+              this.snackbarService.success(res.message);
+            } else {
+              this.snackbarService.error(res.message);
+            }
+          },
+        });
+      }
+    });
   }
 
-  handleTestDetailRow() {
-    this.router.navigate(['/admin/test/create-test'])
+  handleEditTest(event: any) {
+    this.router.navigate(['/admin/tests/create'], {
+      queryParams: { id: event.id },
+    });
+  }
+
+  handleDataSorting(event: Sort) {
+    switch (event.active) {
+      case 'testName':
+        this.sortField = 'TestName';
+        this.sortOrder = event.direction;
+        break;
+
+      case 'groupName':
+        this.sortField = 'GroupName';
+        this.sortOrder = event.direction;
+        break;
+
+      case 'testTime':
+        this.sortField = 'TestTime';
+        this.sortOrder = event.direction;
+        break;
+
+      case 'startTime':
+        this.sortField = 'StartTime';
+        this.sortOrder = event.direction;
+        break;
+
+      case 'endTime':
+        this.sortField = 'EndTime';
+        this.sortOrder = event.direction;
+        break;
+
+      case 'noOfCandidates':
+        this.sortField = 'NoOfCandidates';
+        this.sortOrder = event.direction;
+        break;
+
+      default:
+        this.sortField = '';
+        this.sortOrder = '';
+        break;
+    }
+    this.getTests();
+  }
+
+  handlePageSizeChange(pageSize: number) {
+    this.pageSize = pageSize;
+    this.currentPageIndex = Numbers.Zero;
+    this.getTests();
+  }
+
+  handlePageChange(direction: 'prev' | 'next') {
+    if (direction === 'prev' && !this.isFirstPage()) {
+      this.currentPageIndex--;
+    } else if (direction === 'next' && !this.isLastPage()) {
+      this.currentPageIndex++;
+    }
+    this.getTests();
+  }
+
+  handlePageToPage(page: number) {
+    this.currentPageIndex = page - Numbers.One;
+    this.getTests();
+  }
+
+  isFirstPage(): boolean {
+    return this.currentPageIndex === Numbers.Zero;
+  }
+
+  isLastPage(): boolean {
+    const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
+    return this.currentPageIndex === totalPages - Numbers.One;
+  }
+
+  resetForm() {
+    this.form.setValue({
+      searchQuery: '',
+      groupId: '',
+      status: '',
+      date: '',
+    });
+    this.getTests();
   }
 }
