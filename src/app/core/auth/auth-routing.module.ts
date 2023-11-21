@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './components/login/login.component';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { Navigation } from 'src/app/shared/common/enums';
 
 
 const routes: Routes = [
@@ -11,7 +12,7 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'admin/login',
+    path: Navigation.AdminLogin,
     component: LoginComponent,
   },
   {
