@@ -12,8 +12,12 @@
     <mat-error>{{
       validationService.getError(form, formControlModel, formControlModel.key)
     }}</mat-error>
-    <mat-icon matSuffix (click)="onIconClick($event)">{{
-      formControlModel.iconName
-    }}</mat-icon>
+    <mat-icon
+      matSuffix
+      class="svg-icon"
+      (click)="onIconClick($event)"
+      [svgIcon]="getSvgIcon()"
+      >{{ formControlModel.iconName }}
+    </mat-icon>
   </mat-form-field>
 </div>
