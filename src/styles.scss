@@ -368,10 +368,6 @@
   &.mat-mdc-card.mdc-card .mat-mdc-card-content {
     padding: 12px;
   }
-  .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
-    line-height: 12px;
-    height: 12px;
-  }
 }
 
 .form-action-list {
@@ -1793,7 +1789,6 @@
   }
 }
 
-
 // toaster styles
 .mat-mdc-snack-bar-container {
   &.success {
@@ -1810,5 +1805,4 @@
     --mdc-snackbar-container-color: var(--color-warn);
     --mdc-snackbar-supporting-text-color: var(--color-white);
   }
-
 }
