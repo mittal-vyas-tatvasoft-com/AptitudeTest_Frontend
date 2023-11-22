@@ -59,10 +59,27 @@
                   *ngIf="column.columnDef === 'status'; else defaultTemplate"
                 >
                   <mat-chip
+                    *ngIf="!isTestTable"
                     [ngClass]="row.status ? 'ChipSuccess' : 'ChipInactive'"
                   >
                     {{ row.status ? "Active" : "Inactive" }}
                   </mat-chip>
+                  <ng-container *ngIf="isTestTable">
+                    <ng-container [ngSwitch]="row.status">
+                      <mat-chip *ngSwitchCase="1" [class.ChipWarn]="row.status">
+                        Draft
+                      </mat-chip>
+                      <mat-chip
+                        *ngSwitchCase="2"
+                        [class.ChipSuccess]="row.status"
+                      >
+                        Active
+                      </mat-chip>
+                      <mat-chip *ngSwitchCase="3" [class.ChipInfo]="row.status">
+                        Completed
+                      </mat-chip>
+                    </ng-container>
+                  </ng-container>
                 </ng-container>
                 <ng-template #defaultTemplate>
                   {{ row[column.columnDef] }}
@@ -97,24 +114,29 @@
                   </mat-icon>
                   Edit
                 </button>
-                <button
-                  mat-menu-item
-                  *ngIf="!row.status; else activeButton"
-                  (click)="handleAction(row.id, true)"
-                >
-                  <mat-icon>
-                    <img src="./assets/images/active.svg" alt="Active" />
-                  </mat-icon>
-                  Active
-                </button>
-                <ng-template #activeButton>
-                  <button mat-menu-item (click)="handleAction(row.id, false)">
+                <ng-container *ngIf="!isTestTable">
+                  <button
+                    mat-menu-item
+                    *ngIf="!row.status; else activeButton"
+                    (click)="handleAction(row.id, true)"
+                  >
                     <mat-icon>
-                      <img src="./assets/images/inactive.svg" alt="Inactive" />
+                      <img src="./assets/images/active.svg" alt="Active" />
                     </mat-icon>
-                    Inactive
+                    Active
                   </button>
-                </ng-template>
+                  <ng-template #activeButton>
+                    <button mat-menu-item (click)="handleAction(row.id, false)">
+                      <mat-icon>
+                        <img
+                          src="./assets/images/inactive.svg"
+                          alt="Inactive"
+                        />
+                      </mat-icon>
+                      Inactive
+                    </button>
+                  </ng-template>
+                </ng-container>
                 <button mat-menu-item (click)="handleDelete(row.id)">
                   <mat-icon>
                     <img src="./assets/images/delete.svg" alt="Delete" />

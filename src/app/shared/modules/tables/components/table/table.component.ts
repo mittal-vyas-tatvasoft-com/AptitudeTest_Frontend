@@ -29,6 +29,7 @@ export class TableComponent<T> {
   @Input() pagination: boolean = true;
   @Input() totalItemsCount: number = Numbers.Zero;
   @Input() pageSize: number = Numbers.Ten;
+  @Input() isTestTable: boolean = false;
   @Output() editClicked = new EventEmitter<T>();
   @Output() deleteClicked = new EventEmitter<number>();
   @Output() actionClicked = new EventEmitter<{

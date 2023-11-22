@@ -20,228 +20,65 @@
   </div>
 </div>
 
-<mat-card class="form-block mb-3">
-  <mat-card-content class="pb-0">
-    <div class="row">
-      <div class="col-sm">
-        <div class="row">
-          <div class="col-xxl-4 col-lg-3 col-sm-6">
-            <mat-form-field appearance="outline">
-              <input matInput placeholder="Search test.." />
-            </mat-form-field>
-          </div>
-          <div class="col-xxl-4 col-lg-3 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Group</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let item of optionsList" [value]="item">
-                  {{ item }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-xxl-2 col-lg-3 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Status</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let item of optionsList" [value]="item">
-                  {{ item }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-xxl-2 col-lg-3 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Date</mat-label>
-              <input matInput [matDatepicker]="picker" />
-              <mat-datepicker-toggle matIconSuffix [for]="picker">
-              </mat-datepicker-toggle>
-              <mat-datepicker #picker></mat-datepicker>
-            </mat-form-field>
+<form [formGroup]="form">
+  <mat-card class="form-block mb-3">
+    <mat-card-content class="pb-0">
+      <div class="row">
+        <div class="col-sm">
+          <div class="row">
+            <div class="col-xxl-4 col-lg-3 col-sm-6">
+              <app-text-control
+                [formControlModel]="formData.searchQuery"
+                [form]="form"
+              ></app-text-control>
+            </div>
+            <div class="col-xxl-4 col-lg-3 col-sm-6">
+              <app-select
+                [form]="form"
+                [formControlModel]="formData.groupId"
+                [options]="groupList"
+              >
+              </app-select>
+            </div>
+            <div class="col-xxl-2 col-lg-3 col-sm-6">
+              <app-select
+                [form]="form"
+                [formControlModel]="formData.status"
+                [options]="statusList"
+              >
+              </app-select>
+            </div>
+            <div class="col-xxl-2 col-lg-3 col-sm-6">
+              <app-date-picker [form]="form" [formControlModel]="formData.date">
+              </app-date-picker>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="col-sm-auto pb-12p d-flex">
-        <button mat-stroked-button color="primary" class="mt-auto">
-          clear
-        </button>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
-
-<mat-card class="table-card">
-  <mat-card-content>
-    <div class="mat-table-wrapper">
-      <table mat-table matSort [dataSource]="dataSource">
-        <!-- Test Column -->
-        <ng-container matColumnDef="test">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Test</th>
-          <td mat-cell *matCellDef="let row">
-            <a
-              href="javascript:void(0)"
-              class="default-bold-link"
-              (click)="handleTestDetailRow()"
-            >
-              {{ row.test }}
-            </a>
-          </td>
-        </ng-container>
-
-        <!-- Group Column -->
-        <ng-container matColumnDef="group">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header width="200">
-            Group
-          </th>
-          <td mat-cell *matCellDef="let row">{{ row.group }}</td>
-        </ng-container>
-
-        <!-- Test Time Column -->
-        <ng-container matColumnDef="testTime">
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-            class="text-center"
-            mat-sort-header
-            width="250"
+        <div class="col-sm-auto pb-12p d-flex">
+          <button
+            mat-stroked-button
+            color="primary"
+            class="mt-auto"
+            (click)="resetForm()"
           >
-            Test Time
-          </th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            {{ row.testTime }}
-          </td>
-        </ng-container>
-
-        <!-- Start Time Column -->
-        <ng-container matColumnDef="startTime">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>Start Time</th>
-          <td mat-cell *matCellDef="let row">{{ row.startTime }}</td>
-        </ng-container>
-
-        <!-- End Time Column -->
-        <ng-container matColumnDef="endTime">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header>End Time</th>
-          <td mat-cell *matCellDef="let row">{{ row.endTime }}</td>
-        </ng-container>
-
-        <!--No. of Candidates Column -->
-        <ng-container matColumnDef="NoOfCandidates">
-          <th
-            mat-header-cell
-            *matHeaderCellDef
-            class="text-center"
-            mat-sort-header
-          >
-            No. of Candidates
-          </th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            {{ row.NoOfCandidates }}
-          </td>
-        </ng-container>
-
-        <!-- Status Column -->
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef class="text-center">Status</th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            <ng-container [ngSwitch]="row.status">
-              <mat-chip
-                *ngSwitchCase="'Active'"
-                [class.ChipSuccess]="row.status"
-              >
-                {{ row.status }}
-              </mat-chip>
-              <mat-chip
-                *ngSwitchCase="'Completed'"
-                [class.ChipInfo]="row.status"
-              >
-                {{ row.status }}
-              </mat-chip>
-              <mat-chip *ngSwitchCase="'Draft'" [class.ChipWarn]="row.status">
-                {{ row.status }}
-              </mat-chip>
-            </ng-container>
-          </td>
-        </ng-container>
-
-        <!-- Action Column -->
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            <button
-              mat-icon-button
-              [matMenuTriggerFor]="tableActionMenu"
-              class="btn-small"
-            >
-              <mat-icon>
-                <img src="./assets/images/more-black.svg" alt="Action" />
-              </mat-icon>
-            </button>
-            <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item routerLink="/admin/test/create-test">
-                <mat-icon>
-                  <img src="./assets/images/edit.svg" alt="Edit" />
-                </mat-icon>
-                Edit
-              </button>
-              <button mat-menu-item (click)="handleDeleteProfileDialog()">
-                <mat-icon>
-                  <img src="./assets/images/delete.svg" alt="Delete" />
-                </mat-icon>
-                Delete
-              </button>
-            </mat-menu>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-    <div class="mat-custom-pagination">
-      <div class="pagination-left">
-        <mat-form-field
-          appearance="outline"
-          class="pagination-select remove-hint"
-        >
-          <mat-label>Page</mat-label>
-          <mat-select [(ngModel)]="selectedOption">
-            <mat-option
-              *ngFor="let item of paginationOptionsList"
-              [value]="item"
-            >
-              {{ item }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <span class="page-info">Showing 10 - 20 of 50 entries</span>
+            clear
+          </button>
+        </div>
       </div>
-      <ul class="pagination-right">
-        <li>
-          <a mat-stroked-button href="javascript:void(0)" disabled>
-            <img src="./assets/images/chevron-backward.svg" alt="Prev" />
-          </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)" class="active"> 1 </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)"> 2 </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)"> 3 </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)"> 4 </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)"> 5 </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)">
-            <img src="./assets/images/chevron-forward.svg" alt="Prev" />
-          </a>
-        </li>
-      </ul>
-    </div>
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
+</form>
+<app-table
+  [dataSource]="dataSource"
+  [columns]="displayedColumns"
+  [pagination]="true"
+  (editClicked)="handleEditTest($event)"
+  (deleteClicked)="handleDeleteTestDialog($event)"
+  [totalItemsCount]="totalItemsCount"
+  [pageSize]="pageSize"
+  [isTestTable]="true"
+  (pageSizeChanged)="handlePageSizeChange($event)"
+  (pageToPage)="handlePageToPage($event)"
+  (pageChanged)="handlePageChange($event)"
+  (sortingChanged)="handleDataSorting($event)"
+></app-table>

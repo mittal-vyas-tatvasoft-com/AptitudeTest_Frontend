@@ -149,3 +149,38 @@ export const testGroupFilterModel = {
     displayIcon: false,
   },
 };
+
+export const testFilterModel = {
+  searchQuery: {
+    value: '',
+    key: 'searchQuery',
+    label: 'Search candidates..',
+    required: false,
+    inputType: 'text',
+    displayIcon: false,
+  },
+  groupId: {
+    value: '',
+    key: 'groupId',
+    label: 'Group',
+    required: false,
+    inputType: 'text',
+    displayIcon: false,
+  },
+  status: {
+    value: '',
+    key: 'status',
+    label: 'Status',
+    required: false,
+    inputType: 'text',
+    displayIcon: false,
+  },
+  date: {
+    value: '',
+    key: 'date',
+    label: 'Date',
+    required: false,
+    inputType: 'text',
+    displayIcon: false,
+  },
+};

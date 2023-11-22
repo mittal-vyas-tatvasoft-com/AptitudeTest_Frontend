@@ -143,3 +143,9 @@ export enum StaticMessages {
   //warning static message
   SelectRow = 'Please select atleast one row',
 }
+
+export enum TestStatus {
+  Draft = 1,
+  Active = 2,
+  Completed = 3,
+}
