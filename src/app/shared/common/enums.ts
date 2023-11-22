@@ -1,6 +1,6 @@
 export enum Navigation {
   //Common Navigation
-  Admin = 'admin',
+  Admin = 'admin/candidate',
   CandidateUser = 'user',
   Add = 'add',
   Edit = 'edit',
@@ -43,6 +43,13 @@ export enum Navigation {
   Questions = 'questions',
   AddQuestion = 'add-question',
   ImportQuestion = 'import-question',
+
+  //Role
+  RoleAdmin = 'Admin',
+  RoleUser = 'User',
+
+  //Navigation
+  AdminLogin = 'admin/login',
 
   //Test navigation
   Tests = 'tests',

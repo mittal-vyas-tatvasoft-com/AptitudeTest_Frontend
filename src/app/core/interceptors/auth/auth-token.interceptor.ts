@@ -6,22 +6,52 @@ import {
   HttpErrorResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, switchMap, throwError } from 'rxjs';
+import { Observable, catchError, map, switchMap, takeUntil, throwError } from 'rxjs';
 import { LoginService } from '../../auth/services/login.service';
-import { StatusCode } from 'src/app/shared/common/enums';
+import { Navigation, StatusCode } from 'src/app/shared/common/enums';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { Messages } from 'src/app/shared/messages/messages.static';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
+  refreshTokenObservable: Observable<ResponseModel<string>>;
+
   constructor(
     private loginService: LoginService,
     public snackbar: SnackbarService
-  ) {}
+  ) { }
+
+  private handleTokenRefresh(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
+    const data = this.loginService.decodeToken();
+    if (data.Role === Navigation.RoleAdmin) {
+      this.refreshTokenObservable = this.loginService.refreshTokenAdmin();
+    } else {
+      this.refreshTokenObservable = this.loginService.refreshToken();
+    }
+    return this.refreshTokenObservable.pipe(
+      switchMap((res: any) => {
+        if (res.result) {
+          const newReq = req.clone({
+            setHeaders: {
+              Authorization: `Bearer ${this.loginService.getToken()}`,
+            },
+          });
+          return next.handle(newReq);
+        } else {
+          this.loginService.logout();
+          return throwError(Error);
+        }
+      }),
+      catchError((error: any) => {
+        this.loginService.logout();
+        return throwError(error);
+      })
+    );
+  }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     const token = this.loginService.getToken();
-
     if (token) {
       req = req.clone({
         setHeaders: {
@@ -29,35 +59,16 @@ export class AuthTokenInterceptor implements HttpInterceptor {
         },
       });
     }
-
     return next.handle(req).pipe(
       catchError((error) => {
         if (
           error instanceof HttpErrorResponse &&
           error.status === StatusCode.Unauthorized
         ) {
-          // Token is invalid or expired, try refreshing the token
-          return this.loginService.refreshToken().pipe(
-            switchMap((result) => {
-              if (result.result) {
-                // Retry the original request with the new token
-                req = req.clone({
-                  setHeaders: {
-                    Authorization: `Bearer ${this.loginService.getToken()}`,
-                  },
-                });
-                return next.handle(req);
-              } else {
-                // Refresh token failed, perform logout
-                this.loginService.logout();
-                return throwError('Token refresh failed.');
-              }
-            })
-          );
+          return this.handleTokenRefresh(req, next);
         } else {
-          this.snackbar.error(Messages.internalServerError);
+          return throwError(error);
         }
-        return throwError(error);
       })
     );
   }
