@@ -5,6 +5,7 @@ import { changePasswordControl } from '../../configs/change-password.config';
 import { MatDialogRef } from '@angular/material/dialog';
 import { AddDegreeComponent } from 'src/app/modules/masters/degree/components/add-degree/add-degree.component';
 import { validations } from 'src/app/shared/messages/validation.static';
+import { Messages } from 'src/app/shared/messages/messages.static';
 
 @Component({
   selector: 'app-change-password',
@@ -14,6 +15,7 @@ import { validations } from 'src/app/shared/messages/validation.static';
 export class ChangePasswordComponent implements OnInit {
   form: FormGroup;
   formControls = changePasswordControl;
+  message = Messages.passwordPattern;
 
   constructor(
     public validation: ValidationService,

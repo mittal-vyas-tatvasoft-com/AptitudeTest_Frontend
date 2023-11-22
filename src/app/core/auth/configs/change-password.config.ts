@@ -6,7 +6,7 @@ export const changePasswordControl = {
     required: true,
     requiredErrMsg: 'New Password is required',
     patternErrMsg:
-      'Password length should be 8 characters and it should contain one uppercase, lowercase, special character, and digit.',
+      'Please enter password in given format',
     inputType: 'password',
     displayIcon: true,
     iconName: 'visibility',
