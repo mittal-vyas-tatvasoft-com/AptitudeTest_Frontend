@@ -6,6 +6,7 @@ import { MatDialogRef } from '@angular/material/dialog';
 import { AddDegreeComponent } from 'src/app/modules/masters/degree/components/add-degree/add-degree.component';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { Messages } from 'src/app/shared/messages/messages.static';
+import { FormControlModel } from 'src/app/shared/modules/form-control/interfaces/form-control-model';
 
 @Component({
   selector: 'app-change-password',
@@ -21,7 +22,7 @@ export class ChangePasswordComponent implements OnInit {
     public validation: ValidationService,
     private fb: FormBuilder,
     public dialogRef: MatDialogRef<AddDegreeComponent>
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.createForm();
@@ -51,17 +52,30 @@ export class ChangePasswordComponent implements OnInit {
   }
 
   closeModal() {
+    this.resetPasswordVisibility();
     this.dialogRef.close();
   }
 
-  onIconClick(event: any) {
-    if (event.formControlModel.inputType === 'text') {
-      event.formControlModel.inputType = 'password';
-    } else {
-      event.formControlModel.inputType = 'text';
-    }
+  private resetPasswordVisibility() {
+    this.formControls.currentPasswordField.inputType = 'password';
+    this.formControls.currentPasswordField.iconName = 'password-visibility-show-dark.svg';
+
+    this.formControls.newPasswordField.inputType = 'password';
+    this.formControls.newPasswordField.iconName = 'password-visibility-show-dark.svg';
+
+    this.formControls.confirmPasswordField.inputType = 'password';
+    this.formControls.confirmPasswordField.iconName = 'password-visibility-show-dark.svg';
   }
 
+  onIconClick(formControlModel: FormControlModel) {
+    if (formControlModel.inputType === 'text') {
+      formControlModel.inputType = 'password';
+      formControlModel.iconName = 'password-visibility-show-dark.svg';
+    } else {
+      formControlModel.inputType = 'text';
+      formControlModel.iconName = 'password-visibility-hide-dark.svg';
+    }
+  }
   checkPasswords(group: FormGroup) {
     const currentPassword = group.controls['currentPasswordField'];
     const newPassword = group.controls['newPasswordField'];

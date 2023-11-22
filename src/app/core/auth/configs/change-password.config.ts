@@ -9,7 +9,7 @@ export const changePasswordControl = {
       'Please enter password in given format',
     inputType: 'password',
     displayIcon: true,
-    iconName: 'visibility',
+    iconName: 'password-visibility-show-dark.svg',
   },
   currentPasswordField: {
     value: '',
@@ -20,7 +20,7 @@ export const changePasswordControl = {
     patternErrMsg: 'Current Password is not valid',
     inputType: 'password',
     displayIcon: true,
-    iconName: 'visibility',
+    iconName: 'password-visibility-show-dark.svg',
   },
   confirmPasswordField: {
     value: '',
@@ -31,6 +31,6 @@ export const changePasswordControl = {
     patternErrMsg: `Confirm Password Doesn't match with new password !`,
     inputType: 'password',
     displayIcon: true,
-    iconName: 'visibility',
+    iconName: 'password-visibility-show-dark.svg',
   },
 };

@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Subject, takeUntil, catchError, throwError } from 'rxjs';
+import { Subject, takeUntil, catchError, throwError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { AddCollegeComponent } from 'src/app/modules/masters/college/components/add-college/add-college.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
@@ -57,16 +57,18 @@ export class CandidatesComponent {
   ];
   private ngUnsubscribe$: Subject<void> = new Subject();
   @ViewChild('myTable') myTable: TableComponent<any>;
+  private searchSubject = new Subject<string>();
 
   constructor(
     public dialog: MatDialog,
     private router: Router,
     private candidateService: CandidateService,
     private snackbarService: SnackbarService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<CandidateModel>([]);
+    this.setupSearchObservable();
     this.fetchCandidate();
     this.getDropdowns();
   }
@@ -100,6 +102,24 @@ export class CandidatesComponent {
     });
   }
 
+  private setupSearchObservable() {
+    this.searchSubject
+      .pipe(
+        debounceTime(300),
+        distinctUntilChanged(),
+        switchMap(async () => this.fetchCandidate())
+      )
+      .subscribe();
+  }
+
+  onSearchChange() {
+    this.searchSubject.next(this.searchCandidate);
+  }
+
+  onFilterChange() {
+    this.fetchCandidate();
+  }
+
   getDropdowns() {
     const currentYear = new Date().getFullYear();
     for (let year = 2023; year <= currentYear; year++) {
@@ -113,10 +133,6 @@ export class CandidatesComponent {
     this.candidateService.getGroupsForDropDown().subscribe((colleges) => {
       this.groups = colleges;
     });
-  }
-
-  onFilterChange() {
-    this.fetchCandidate();
   }
 
   clearFilters() {
