@@ -8,6 +8,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { Navigation } from 'src/app/shared/common/enums';
+import { FormControlModel } from 'src/app/shared/modules/form-control/interfaces/form-control-model';
 
 @Component({
   selector: 'app-login',
@@ -38,7 +39,8 @@ export class LoginComponent implements OnInit, OnDestroy {
           Validators.pattern(validations.common.emailREGEX),
         ],
       ],
-      password: ['', Validators.required],
+      password: ['', [Validators.required,
+      Validators.pattern(validations.common.passwordREGEX)]],
     });
   }
 
@@ -48,6 +50,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         email: this.form.value.userName,
         password: this.form.value.password,
       };
+      this.loginModel.passwordField.inputType = 'password';
+      this.loginModel.passwordField.iconName = 'password-visibility-show-dark.svg';
       if (this.isAdmin) {
         this.loginService
           .Adminlogin(payload)

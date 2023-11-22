@@ -19,11 +19,11 @@
               class="w-100"
             ></app-text-control>
           </div>
-          <div class="col-12">
+          <div class="col-12 password">
             <app-text-control
               [formControlModel]="loginModel.passwordField"
               [form]="form"
-              (iconClick)="onIconClick(input)"
+              (iconClick)="onIconClick(loginModel.passwordField)"
               class="w-100"
               #input
             ></app-text-control>
