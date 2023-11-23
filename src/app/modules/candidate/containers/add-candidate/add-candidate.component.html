@@ -87,10 +87,7 @@
     (btnClick)="onSaveClick()"
     [class]="'button'"
   ></app-button>
-  <app-button
-    [color]="'primary'"
-    [type]="'button'"
-    [label]="'Cancel'"
-    [mat-dialog-close]="true"
-  ></app-button>
+  <button mat-stroked-button color="primary" [mat-dialog-close]="true">
+    Cancel
+  </button>
 </mat-dialog-actions>
