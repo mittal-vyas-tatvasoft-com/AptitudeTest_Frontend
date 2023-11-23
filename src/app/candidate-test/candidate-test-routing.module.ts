@@ -2,14 +2,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
 import { LayoutComponent } from './containers/layout/layout.component';
-import { AuthGuard } from '../core/guards/auth/auth.guard';
+import { RoleGuard } from '../core/guards/role/role.guard';
+import { Navigation } from '../shared/common/enums';
 
 
 const routes: Routes = [
     {
         path: '',
         component: LayoutComponent,
-        canActivate: [AuthGuard],
+        canActivate: [RoleGuard],
+        data: { allowedRoles: [Navigation.RoleUser] },
         children: [
             {
                 path: ``,
