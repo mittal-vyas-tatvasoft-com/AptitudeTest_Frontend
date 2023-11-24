@@ -1,0 +1,138 @@
+<form [formGroup]="form">
+  <div class="row mb-1">
+    <div class="col-md-6">
+      <mat-form-field appearance="outline">
+        <mat-label>Topics</mat-label>
+        <mat-select formControlName="topicId">
+          <ng-container *ngFor="let item of topics">
+            <mat-option
+              *ngIf="!(existingQuestionsTopicId.indexOf(+item.id) > -1)"
+              [value]="item.id"
+            >
+              {{ item.name }}
+              <span *ngIf="item.questionCount != 0">{{
+                "(" + item.questionCount + ")"
+              }}</span>
+            </mat-option>
+          </ng-container>
+        </mat-select>
+        <mat-error>Topic is required</mat-error>
+      </mat-form-field>
+    </div>
+    <div class="col-md-6">
+      <div class="row">
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Number of question</mat-label>
+            <input
+              matInput
+              formControlName="numberOfQuestions"
+              (keyup)="handleValidateMarks()"
+            />
+            <mat-error>Number of questions are required</mat-error>
+          </mat-form-field>
+        </div>
+        <div class="col-sm-6">
+          <mat-form-field appearance="outline">
+            <mat-label>Weightage</mat-label>
+            <input matInput formControlName="weightage" />
+            <mat-icon matSuffix style="width: 18px; height: 18px">
+              <img src="./assets/images/percentage-grey.svg" alt="User" />
+            </mat-icon>
+            <mat-error>Weightage is required</mat-error>
+          </mat-form-field>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="mark-distribution-block mb-md-4 mb-3">
+    <div class="row flex-lg-nowrap">
+      <div class="col-lg pe-lg-0">
+        <div class="mark-distribution-table">
+          <table>
+            <thead>
+              <th [width]="200">Type of Question</th>
+              <th>1 marks</th>
+              <th>2 marks</th>
+              <th>3 marks</th>
+              <th>4 marks</th>
+              <th>5 marks</th>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  Single Answer ({{ singleAnswerQuestionTotalCountTopicWise }})
+                </td>
+                <td *ngFor="let item of singleMarksDropDownData | async">
+                  <mat-form-field appearance="outline" style="width: 84px">
+                    <mat-select
+                      formControlName="{{ item.key }}"
+                      (selectionChange)="handleSumOfMarks()"
+                    >
+                      <mat-option
+                        *ngFor="
+                          let _ of [].constructor(+item.value + 1);
+                          let i = index
+                        "
+                        [value]="i"
+                      >
+                        {{ i }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Muliple Answer ({{ multiAnswerQuestionTotalCountTopicWise }})
+                </td>
+                <td *ngFor="let item of multiMarksDropDownData | async">
+                  <mat-form-field appearance="outline" style="width: 84px">
+                    <mat-select
+                      formControlName="{{ item.key }}"
+                      (selectionChange)="handleSumOfMarks()"
+                    >
+                      <mat-option
+                        *ngFor="
+                          let _ of [].constructor(+item.value + 1);
+                          let i = index
+                        "
+                        [value]="i"
+                      >
+                        {{ i }}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-auto ps-lg-0">
+        <div class="question-distribution">
+          <div>
+            <p class="question-mark">
+              {{ totalSelectedQuestions }}<span>Questions selected</span>
+            </p>
+            <p class="question-mark">
+              {{ totalSelectedQuestionsMarks }}<span>Marks</span>
+            </p>
+          </div>
+          <button
+            [disabled]="form.invalid || isDataValid == false"
+            mat-flat-button
+            color="primary"
+            class="w-lg-100 mt-lg-auto mb-lg-0 my-auto"
+            (click)="add()"
+          >
+            Add questions
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="isDataValid == false">
+    <mat-error>{{ validationMSG }}</mat-error>
+  </div>
+</form>

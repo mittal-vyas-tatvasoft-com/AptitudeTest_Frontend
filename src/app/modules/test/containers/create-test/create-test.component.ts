@@ -1,34 +1,31 @@
 import { Component, HostListener, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatSort, Sort } from '@angular/material/sort';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { Sort } from '@angular/material/sort';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
-import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { EditQuestionComponent } from '../edit-question/edit-question.component';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import * as moment from 'moment';
+import { Subject, debounceTime } from 'rxjs';
+import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
+import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
   testBasicDetailFormModel,
   testGroupFilterModel,
   testGroupFormModel,
 } from '../../config/test.configs';
-import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
-import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import {
+  AllInsertedQuestionModel,
   GetAllTestCandidateParams,
+  TopicWiseQuestionData,
   createTestModel,
   testCandidatesModel,
 } from '../../interfaces/test.interface';
 import { TestService } from '../../services/test.service';
-import { DatePipe } from '@angular/common';
-import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { Numbers, StatusCode } from 'src/app/shared/common/enums';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
-import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
-import { AdminModel } from 'src/app/modules/masters/admin/interfaces/admin.interface';
-import { Subject, debounceTime } from 'rxjs';
-import { DateTime } from 'luxon';
-import * as moment from 'moment';
+import { Topics } from '../../static/test.static';
 
 export interface CandidateData {
   candidate: string;
@@ -49,6 +46,7 @@ export class CreateTestComponent {
     { value: 'Active', id: 2 },
     { value: 'Completed', id: 3 },
   ];
+  topics = Topics;
   pageSize = 10;
   currentPageIndex = 0;
   totalItemsCount: number;
@@ -77,10 +75,14 @@ export class CreateTestComponent {
   testBasicDetailFormModel = testBasicDetailFormModel;
   testGroupFormModel = testGroupFormModel;
   testGroupFilterModel = testGroupFilterModel;
-  public smallScreen: boolean = window.innerWidth < 767;
+  allInsertedQuestions: AllInsertedQuestionModel[] = [];
+  totalMarksQuestionsAdded: number = 0;
   startTime: Date;
   endTime: Date;
+  testQuestionsCountData: TopicWiseQuestionData[] = [];
+  existingQuestionsTopicId: number[] = [];
   @ViewChild('stepper') stepper!: MatStepper;
+  public smallScreen: boolean = window.innerWidth < 767;
   private searchInputValue = new Subject<string>();
 
   @HostListener('window:resize', ['$event'])
@@ -108,6 +110,37 @@ export class CreateTestComponent {
       } else {
         this.isPagination = false;
       }
+    });
+
+    this.fetchAllInsertedQuestions();
+  }
+
+  createForms() {
+    this.basicTestDetails = this.formBuilder.group({
+      testId: [0],
+      testName: ['', Validators.required],
+      status: [1, Validators.required],
+      basicPoints: ['', Validators.required],
+      testDuration: ['', Validators.required],
+      date: ['', Validators.required],
+      startTime: ['', Validators.required],
+      endTime: ['', Validators.required],
+      description: ['', Validators.required],
+      messageAtTheStartOfTest: [''],
+      messageAtTheEndOfTest: [''],
+      randomQuestions: [false],
+      randomAnswers: [false],
+      logoutWhenTimeExpires: [false],
+      questignsMenu: [false],
+    });
+
+    this.testGroupForm = this.formBuilder.group({
+      groupId: ['', Validators.required],
+    });
+
+    this.testGroupFilterForm = this.formBuilder.group({
+      collegeId: [''],
+      searchQuery: [''],
     });
   }
 
@@ -157,6 +190,39 @@ export class CreateTestComponent {
     }
   }
 
+  fetchAllInsertedQuestions() {
+    this.testService.GetTopicWiseQuestionsCount().subscribe({
+      next: (res) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.testQuestionsCountData = res.data;
+          this.topics.map((topic) => {
+            res.data.map((data) => {
+              if (topic.id == data.topicId) {
+                topic.questionCount = data.totalQuestions;
+              }
+            });
+          });
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+    });
+
+    this.testService.GetAllInsertedQuestions(this.testId).subscribe({
+      next: (res) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.existingQuestionsTopicId = [];
+          res.data.questionsCount.map((res) => {
+            this.existingQuestionsTopicId.push(res.topicId);
+          });
+          this.allInsertedQuestions = [];
+          this.allInsertedQuestions.push(res.data);
+          this.totalMarksQuestionsAdded = res.data.totalMarks;
+        }
+      },
+    });
+  }
+
   searchTestCandidates() {
     const group = this.testGroupForm.get('groupId')?.value;
     const searchValue = this.testGroupFilterForm.get('searchQuery')?.value;
@@ -180,34 +246,6 @@ export class CreateTestComponent {
     });
   }
 
-  createForms() {
-    this.basicTestDetails = this.formBuilder.group({
-      testName: ['', Validators.required],
-      status: [1, Validators.required],
-      basicPoints: ['', Validators.required],
-      testDuration: ['', Validators.required],
-      date: ['', Validators.required],
-      startTime: ['', Validators.required],
-      endTime: ['', Validators.required],
-      description: ['', Validators.required],
-      messageAtTheStartOfTest: [''],
-      messageAtTheEndOfTest: [''],
-      randomQuestions: [false],
-      randomAnswers: [false],
-      logoutWhenTimeExpires: [false],
-      questignsMenu: [false],
-    });
-
-    this.testGroupForm = this.formBuilder.group({
-      groupId: ['', Validators.required],
-    });
-
-    this.testGroupFilterForm = this.formBuilder.group({
-      collegeId: [''],
-      searchQuery: [''],
-    });
-  }
-
   onTimeSet(selectedTime: string) {
     const today = new Date(Date.now());
     const [time, period] = selectedTime.split(' ');
@@ -228,21 +266,6 @@ export class CreateTestComponent {
 
   handleNextClick() {
     this.stepper.next();
-  }
-
-  handleEditQuestionDialog() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ['primary-dialog'];
-    dialogConfig.autoFocus = false;
-    dialogConfig.width = '980px';
-    this.dialog.open(EditQuestionComponent, dialogConfig);
-  }
-
-  handleDeleteProfileDialog() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ['confirmation-dialog'];
-    dialogConfig.autoFocus = false;
-    this.dialog.open(DeleteConfirmationDialogComponent, dialogConfig);
   }
 
   saveBasicDetails() {
@@ -273,6 +296,7 @@ export class CreateTestComponent {
       this.testService.createTest(payload).subscribe({
         next: (res) => {
           if ((res.statusCode = StatusCode.Success)) {
+            this.basicTestDetails.get('testId')?.setValue(res.data);
             this.testId = res.data;
             this.fetchTestCandidates();
             this.snackbarService.success(res.message);
@@ -297,6 +321,42 @@ export class CreateTestComponent {
         },
       });
     }
+  }
+
+  questionsAddedSuccess() {
+    this.fetchAllInsertedQuestions();
+  }
+
+  deleteTopicWiseQuestions(topicId: number) {
+    this.testService
+      .DeleteTopicWiseTestQuestions(this.testId, topicId)
+      .subscribe({
+        next: (res) => {
+          this.allInsertedQuestions = [];
+          this.existingQuestionsTopicId = [];
+          this.fetchAllInsertedQuestions();
+          if (res.statusCode == StatusCode.Success) {
+            this.snackbarService.success(res.message);
+          } else {
+            this.snackbarService.error(res.message);
+          }
+        },
+      });
+  }
+
+  deleteAllQuestions() {
+    this.testService.DeleteAllTestQuestions(this.testId).subscribe({
+      next: (res) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.allInsertedQuestions = [];
+          this.existingQuestionsTopicId = [];
+          this.fetchAllInsertedQuestions();
+          this.snackbarService.success(res.message);
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+    });
   }
 
   handlePageSizeChange(pageSize: number) {

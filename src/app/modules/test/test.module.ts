@@ -13,6 +13,8 @@ import { BasicDetailsComponent } from './components/basic-details/basic-details.
 import { TestGroupComponent } from './components/test-group/test-group.component';
 import { TestQuestionsComponent } from './components/test-questions/test-questions.component';
 import { TablesModule } from 'src/app/shared/modules/tables/tables.module';
+import { AddTestQuestionsComponent } from './components/add-test-questions/add-test-questions.component';
+import { TestQuestionsListingComponent } from './components/test-questions-listing/test-questions-listing.component';
 
 @NgModule({
   declarations: [
@@ -22,6 +24,8 @@ import { TablesModule } from 'src/app/shared/modules/tables/tables.module';
     BasicDetailsComponent,
     TestGroupComponent,
     TestQuestionsComponent,
+    AddTestQuestionsComponent,
+    TestQuestionsListingComponent,
   ],
   imports: [
     CommonModule,

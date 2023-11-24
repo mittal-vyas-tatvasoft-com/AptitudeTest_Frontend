@@ -62,3 +62,45 @@ export interface TestQueryParams {
   sortField: string | null;
   sortOrder: string | null;
 }
+
+export interface TopicWiseQuestionData {
+  topicId: number;
+  totalQuestions: number;
+  totalMarks: number;
+  singleAnswerCount: number;
+  singleAnswer: QuestionTypeCount;
+  multiAnswerCount: number;
+  multiAnswer: QuestionTypeCount;
+}
+
+export interface QuestionTypeCount {
+  questionType: number;
+  oneMarkQuestion: number;
+  twoMarkQuestion: number;
+  threeMarkQuestion: number;
+  fourMarkQuestion: number;
+  fiveMarkQuestion: number;
+}
+
+export interface QuestionTopics {
+  id: number | string;
+  name: string;
+  questionCount: number;
+}
+
+export interface AllInsertedQuestionModel {
+  testId: number;
+  totalMarks: number;
+  totalQuestions: number;
+  questionsCount: TopicWiseQuestionData[];
+}
+
+export interface AddTestQuestionModel {
+  testId: number;
+  topicId: number;
+  NoOfQuestions: number;
+  weightage: number;
+  testQuestionsCount: QuestionTypeCount[];
+  createdBy: number;
+  updatedBy: number;
+}
