@@ -31,17 +31,17 @@
         ></app-select>
       </div>
     </div>
-    <mat-dialog-actions align="end" class="dialog-footer">
-      <button mat-flat-button [mat-dialog-close]="false" color="primary">
-        Cancel
-      </button>
-      <app-button
-        [color]="'primary'"
-        [type]="'submit'"
-        [label]="isEditMode ? 'Save' : 'Add'"
-        [isDisabled]="!form.valid"
-        [mat-dialog-close]="form.value"
-      ></app-button>
-    </mat-dialog-actions>
   </form>
 </mat-dialog-content>
+<mat-dialog-actions align="end" class="dialog-footer">
+  <app-button
+    [color]="'primary'"
+    [type]="'submit'"
+    [label]="isEditMode ? 'Save' : 'Add'"
+    [isDisabled]="!form.valid"
+    [mat-dialog-close]="form.value"
+  ></app-button>
+  <button mat-stroked-button color="primary" [mat-dialog-close]="false">
+    Cancel
+  </button>
+</mat-dialog-actions>

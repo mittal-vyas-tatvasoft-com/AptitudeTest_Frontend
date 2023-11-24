@@ -12,10 +12,10 @@ import { TestData, TestQueryParams } from '../../interfaces/test.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { debounceTime } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { DropdownData } from 'src/app/shared/common/interfaces/dropdown-data.interface';
 import { testFilterModel } from '../../config/test.configs';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import * as moment from 'moment';
+import { DropdownData } from 'src/app/shared/common/interfaces/dropdown-data.interface';
 
 @Component({
   selector: 'app-test',
@@ -63,7 +63,7 @@ export class TestComponent implements OnInit {
     private testService: TestService,
     private snackbarService: SnackbarService,
     private formBuilder: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.createForm();

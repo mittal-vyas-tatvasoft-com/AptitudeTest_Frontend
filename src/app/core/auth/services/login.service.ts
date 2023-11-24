@@ -107,10 +107,15 @@ export class LoginService {
       );
   }
 
-  getUserRole(): string | null {
+  getUserRole(): string {
     const data = this.decodeToken();
     const role = data.Role
     return role;
+  }
+
+  hasAnyRole(allowedRoles: string[]): boolean {
+    const userRoles = this.getUserRole();
+    return allowedRoles.some(role => userRoles.includes(role));
   }
 
   forgotPassword(

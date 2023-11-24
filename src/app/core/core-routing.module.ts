@@ -1,15 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Navigation } from '../shared/common/enums';
-import { AuthGuard } from './guards/auth/auth.guard';
 import { CoreComponent } from './core.component';
+import { RoleGuard } from './guards/role/role.guard';
+import { AuthGuard } from './guards/auth/auth.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: CoreComponent,
-    canActivate: [AuthGuard],
-    data: { breadCrumb: 'Admin' },
+    canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: [Navigation.RoleAdmin] },
     children: [
       {
         path: `${Navigation.Masters}`,
@@ -50,4 +51,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CoreRoutingModule {}
+export class CoreRoutingModule { }
