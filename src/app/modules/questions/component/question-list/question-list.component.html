@@ -3,7 +3,7 @@
     <div class="qa-card">
       <div class="qa-head">
         <div class="qa-left">
-          <span class="qa-sequence">{{ i + 1 }}.</span>
+          <span class="qa-sequence">{{ question.sequence }}.</span>
           <p class="question-text" [innerHTML]="question.questionText"></p>
         </div>
         <div class="qa-right">
@@ -33,7 +33,11 @@
             </mat-icon>
           </button>
           <mat-menu #questionActionMenu="matMenu" xPosition="before">
-            <button mat-menu-item (click)="createDuplicate(question.id)">
+            <button
+              mat-menu-item
+              (click)="createDuplicate(question.id)"
+              *ngIf="question.parentId == null || question.parentId == 0"
+            >
               <mat-icon>
                 <img src="./assets/images/duplicate-grey.svg" alt="Duplicate" />
               </mat-icon>

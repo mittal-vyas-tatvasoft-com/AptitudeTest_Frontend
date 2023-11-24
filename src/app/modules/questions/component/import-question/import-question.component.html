@@ -17,63 +17,42 @@
     </button>
   </div>
 </div>
-<form [formGroup]="topicForm">
-  <mat-card class="form-block mb-3">
-    <mat-card-content>
-      <div class="row justify-content-center">
-        <div class="col-lg-8">
-          <div class="row">
-            <div class="col-sm-4 mx-auto mb-1">
-              <mat-form-field appearance="outline">
-                <mat-label>Topic</mat-label>
-                <mat-select formControlName="topicId">
-                  <mat-option *ngFor="let item of topics" [value]="item.id">
-                    {{ item.name }}
-                  </mat-option>
-                </mat-select>
-                <mat-error>{{
-                  validation.getError(
-                    topicForm,
-                    questionControls.topicId,
-                    questionControls.topicId.key
-                  )
-                }}</mat-error>
-              </mat-form-field>
-            </div>
+<mat-card class="form-block mb-3">
+  <mat-card-content>
+    <div class="row justify-content-center">
+      <div class="col-lg-8 mt-3">
+        <div class="row align-items-end">
+          <div class="col-sm mb-2">
+            <dropzone
+              [message]="message"
+              [config]="dropzoneConfig"
+              (success)="onUploadSuccess($event)"
+              (error)="onUploadError($event)"
+            ></dropzone>
           </div>
-          <div class="row align-items-end">
-            <div class="col-sm mb-2">
-              <dropzone
-                [message]="message"
-                [config]="dropzoneConfig"
-                (success)="onUploadSuccess($event)"
-                (error)="onUploadError($event)"
-              ></dropzone>
-            </div>
-            <div class="col-sm-auto mb-2">
-              <button
-                mat-flat-button
-                color="primary"
-                [disabled]="!getValidation()"
-                (click)="importQuestions()"
-              >
-                Import
-              </button>
-            </div>
-            <div class="col-12" *ngIf="isImportSuccess">
-              <p class="message-success pb-1">
-                Successfully imported {{ count }} Questions.
-              </p>
-            </div>
-            <div class="col-12">
-              <p class="message-success pb-1">
-                {{ fileName }}
-              </p>
-            </div>
+          <div class="col-sm-auto mb-2">
+            <button
+              mat-flat-button
+              color="primary"
+              [disabled]="!getValidation()"
+              (click)="importQuestions()"
+            >
+              Import
+            </button>
+          </div>
+          <div class="col-12" *ngIf="isImportSuccess">
+            <p class="message-success pb-1">
+              Successfully imported {{ count }} Questions.
+            </p>
+          </div>
+          <div class="col-12">
+            <p class="message-success pb-1">
+              {{ fileName }}
+            </p>
           </div>
         </div>
       </div>
-    </mat-card-content>
-  </mat-card>
-</form>
+    </div>
+  </mat-card-content>
+</mat-card>
 <app-question-list></app-question-list>

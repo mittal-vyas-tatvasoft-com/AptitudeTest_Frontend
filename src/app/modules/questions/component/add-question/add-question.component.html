@@ -38,7 +38,10 @@
             <div class="col-lg-4">
               <mat-form-field appearance="outline">
                 <mat-label>Topic</mat-label>
-                <mat-select formControlName="topicId">
+                <mat-select
+                  formControlName="topicId"
+                  [disabled]="!isTopicEditable"
+                >
                   <mat-option *ngFor="let topic of topics" [value]="topic.id">
                     {{ topic.name }}
                   </mat-option>
