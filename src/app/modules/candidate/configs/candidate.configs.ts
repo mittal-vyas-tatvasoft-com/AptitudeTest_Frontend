@@ -82,9 +82,9 @@ export const candidateControl = {
   },
   year: {
     value: '',
-    key: 'year',
+    key: 'createdYear',
     label: 'Year Added',
-    inputType: 'select',
+    inputType: 'text',
   },
   status: {
     value: 'Active',

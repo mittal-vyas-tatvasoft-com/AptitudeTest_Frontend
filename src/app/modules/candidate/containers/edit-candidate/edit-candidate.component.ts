@@ -127,6 +127,7 @@ export class EditCandidateComponent {
       this.candidateService.updateCandidate(updateParams).subscribe(
         (response) => {
           this.snackbarService.success(response.message);
+          this._location.back();
         },
         (error) => {
           this.snackbarService.error(error.message);

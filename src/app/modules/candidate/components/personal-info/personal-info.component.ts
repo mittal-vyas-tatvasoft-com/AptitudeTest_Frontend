@@ -61,7 +61,7 @@ export class PersonalInfoComponent {
       userCollege: ['', Validators.required],
       gender: [''],
       status: [candidateControl.status.value],
-      year: [''],
+      createdYear: [{ value: '', disabled: true }],
       appliedThrough: [''],
       technologyInterestedIn: [''],
       pincode: [''],
