@@ -29,7 +29,6 @@ export class ImportQuestionComponent implements OnInit {
   dropzoneConfig = dropzoneConfigCsv;
   formData: FormData = new FormData();
   fileName: string = '';
-  isValid: boolean = false;
   isFile: boolean = false;
   isImportSuccess = false;
   count: number;
@@ -73,8 +72,7 @@ export class ImportQuestionComponent implements OnInit {
   }
 
   getValidation() {
-    this.isValid = this.isFile;
-    return this.isValid;
+    return this.isFile;
   }
 
   importQuestions() {
