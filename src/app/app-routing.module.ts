@@ -1,6 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
+import { RoleGuard } from './core/guards/role/role.guard';
+import { Navigation } from './shared/common/enums';
 import { AuthGuard } from './core/guards/auth/auth.guard';
 
 const routes: Routes = [
@@ -12,7 +14,8 @@ const routes: Routes = [
   {
     path: 'admin',
     loadChildren: () => import('./core/core.module').then((m) => m.CoreModule),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: [Navigation.RoleAdmin] },
   },
 
   {
@@ -21,15 +24,8 @@ const routes: Routes = [
       import('./candidate-test/candidate-test.module').then(
         (m) => m.CandidateTestModule
       ),
-    canActivate: [AuthGuard],
-  },
-  {
-    path: 'candidate-test',
-    loadChildren: () =>
-      import('./candidate-test/candidate-test.module').then(
-        (m) => m.CandidateTestModule
-      ),
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard, RoleGuard],
+    data: { allowedRoles: [Navigation.RoleUser] },
   },
 ];
 
@@ -37,4 +33,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

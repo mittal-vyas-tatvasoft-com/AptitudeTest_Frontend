@@ -4,7 +4,7 @@ import { LoginService } from '../../services/login.service';
 import { loginControl } from '../../configs/login.config';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { Navigation } from 'src/app/shared/common/enums';
@@ -42,6 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: ['', [Validators.required,
       Validators.pattern(validations.common.passwordREGEX)]],
     });
+    this.getToken()
   }
 
   login() {
@@ -105,6 +106,17 @@ export class LoginComponent implements OnInit, OnDestroy {
       event.formControlModel.inputType = 'password';
     } else {
       event.formControlModel.inputType = 'text';
+    }
+  }
+
+  getToken() {
+    const data = this.loginService.getToken();
+    if (data) {
+      if (this.isAdmin) {
+        this.router.navigate([`${Navigation.Admin}`]);
+      } else {
+        this.router.navigate([`${Navigation.CandidateUser}`]);
+      }
     }
   }
 

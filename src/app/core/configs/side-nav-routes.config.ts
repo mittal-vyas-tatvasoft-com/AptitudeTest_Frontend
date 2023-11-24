@@ -23,7 +23,7 @@ export const navBarRoutes = {
       },
       {
         label: 'Admin',
-        path: `./${Navigation.Masters}/${Navigation.Admin}`,
+        path: `./${Navigation.Masters}/${Navigation.Admins}`,
       },
     ],
     label: 'Manage Master',

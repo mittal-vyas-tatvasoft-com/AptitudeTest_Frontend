@@ -29,6 +29,7 @@ export enum Navigation {
   Stream = 'stream',
   Technology = 'technology',
   Profile = 'profile',
+  Admins = 'admin',
 
   //Utilities Navigation
   Utilities = 'utilities',
