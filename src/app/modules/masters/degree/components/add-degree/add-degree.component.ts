@@ -7,11 +7,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import {
-  MatChipEditedEvent,
-  MatChipInputEvent,
-  MatChipsModule,
-} from '@angular/material/chips';
+import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormControls } from '../../config/degree.config';
@@ -92,7 +88,6 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
           if (res.statusCode == StatusCode.Success) {
             this.data = res.data;
             this.setFormValues();
-          } else {
           }
         },
       });

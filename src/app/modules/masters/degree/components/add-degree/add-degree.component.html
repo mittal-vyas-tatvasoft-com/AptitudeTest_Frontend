@@ -100,7 +100,7 @@
     [disabled]="!form.valid"
     (click)="onAddClick()"
   >
-    {{ id == 0 ? "Add" : "Save" }}
+    {{ id === 0 ? "Add" : "Save" }}
   </button>
   <button mat-stroked-button color="primary" [mat-dialog-close]="null">
     Cancel

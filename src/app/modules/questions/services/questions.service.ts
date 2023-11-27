@@ -5,7 +5,6 @@ import { Question } from 'src/app/modules/questions/interfaces/question.interfac
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { UpdateStatus } from 'src/app/shared/common/interfaces/update-status';
 import { environment } from 'src/environments/environment';
-import { Observable, Subscriber } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -45,7 +44,7 @@ export class QuestionsService {
   }
 
   getQuestionCount(topic?: number, status?: boolean) {
-    let url =
+    const url =
       `${environment.baseURL}Questions/GetQuestionCount` +
       this.createUrl(topic, status);
     return this.httpClient.get(url);

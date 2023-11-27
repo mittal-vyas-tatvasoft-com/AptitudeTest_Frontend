@@ -4,7 +4,6 @@ import { QuestionsService } from '../../services/questions.service';
 import {
   Numbers,
   OptionType,
-  PaginationDefaultValues,
   QuestionTopic,
   QuestionType,
   StatusCode,
@@ -14,7 +13,7 @@ import { QuestionCount } from 'src/app/shared/common/interfaces/question-count.i
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pagination } from 'src/app/shared/common/interfaces/pagination.interface';
 import { Question } from 'src/app/modules/questions/interfaces/question.interface';
-import { Subject, debounceTime } from 'rxjs';
+import { Subject } from 'rxjs';
 import { OptionList, Topics } from '../../static/question.static';
 
 @Component({
