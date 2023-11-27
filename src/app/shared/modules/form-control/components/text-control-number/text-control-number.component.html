@@ -7,7 +7,7 @@
       [id]="formControlModel.key"
       [type]="formControlModel.inputType || ''"
       [maxlength]="formControlModel.maxLength || null"
-      numbersOnly
+      appNumbersOnly
     />
     <mat-error>{{
       validationService.getError(form, formControlModel, formControlModel.key)

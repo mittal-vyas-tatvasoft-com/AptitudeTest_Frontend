@@ -1,20 +1,29 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { candidateControl } from '../../configs/candidate.configs';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CandidateService } from '../../services/candidate.service';
 import { UserData } from '../../interfaces/candidate.interface';
 
 @Component({
   selector: 'app-exam-scores',
   templateUrl: './exam-scores.component.html',
-  styleUrls: ['./exam-scores.component.scss']
+  styleUrls: ['./exam-scores.component.scss'],
 })
-export class ExamScoresComponent {
+export class ExamScoresComponent implements OnInit, OnChanges {
   CandidateModel = candidateControl;
   form: FormGroup;
   @Input() candidateData: UserData;
 
-  constructor(private formBuilder: FormBuilder, private candidateService: CandidateService,) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private candidateService: CandidateService
+  ) {}
 
   ngOnInit() {
     this.createForm();
@@ -31,7 +40,7 @@ export class ExamScoresComponent {
       acpcMeritRank: [''],
       gujcetScore: [''],
       jeeScore: [''],
-    })
+    });
   }
 
   getFormData(): FormGroup {

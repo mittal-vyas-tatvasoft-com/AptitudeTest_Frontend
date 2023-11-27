@@ -1,4 +1,11 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import {
   AbstractControl,
   FormArray,
@@ -22,7 +29,9 @@ import { CandidateService } from '../../services/candidate.service';
   templateUrl: './education-details.component.html',
   styleUrls: ['./education-details.component.scss'],
 })
-export class EducationDetailsComponent {
+export class EducationDetailsComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   CandidateModel = candidateControl;
   form: FormGroup;
   selectOptionsForStream: SelectOption[] = selectOptionsForStream;
@@ -57,7 +66,7 @@ export class EducationDetailsComponent {
     this.populateForm();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     if (this.academicDetails) {
       this.populateForm();
     }

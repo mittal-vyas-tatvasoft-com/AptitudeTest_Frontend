@@ -1,8 +1,11 @@
-import { Component, Inject, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { CollegeService } from '../../services/college.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CollegeControl, selectOptionsForStatus } from '../../configs/college.configs';
+import {
+  CollegeControl,
+  selectOptionsForStatus,
+} from '../../configs/college.configs';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 
 @Component({
@@ -10,8 +13,8 @@ import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/sel
   templateUrl: './add-college.component.html',
   styleUrls: ['./add-college.component.scss'],
 })
-export class AddCollegeComponent implements OnInit {
-  isEditMode: boolean = false;
+export class AddCollegeComponent implements OnInit, AfterViewInit {
+  isEditMode = false;
   form: FormGroup;
   CollegeModel = CollegeControl;
   selectOptionsForStatus: SelectOption[] = selectOptionsForStatus;
@@ -21,7 +24,7 @@ export class AddCollegeComponent implements OnInit {
     private collegeService: CollegeService,
     private formBuilder: FormBuilder,
     @Inject(MAT_DIALOG_DATA) public data: any
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     if (this.data != 0) {
@@ -59,5 +62,4 @@ export class AddCollegeComponent implements OnInit {
   closeModal() {
     this.dialogRef.close(false);
   }
-
 }

@@ -1,7 +1,7 @@
 import { Directive, ElementRef, HostListener } from '@angular/core';
 
 @Directive({
-  selector: '[numbersOnly]',
+  selector: '[appNumbersOnly]',
 })
 export class NumbersOnlyDirective {
   private navigationKeys = [

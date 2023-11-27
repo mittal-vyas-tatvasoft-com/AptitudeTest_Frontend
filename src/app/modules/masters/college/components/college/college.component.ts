@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { AddCollegeComponent } from '../add-college/add-college.component';
@@ -16,12 +16,12 @@ import { Sort } from '@angular/material/sort';
   templateUrl: './college.component.html',
   styleUrls: ['./college.component.scss'],
 })
-export class CollegeComponent {
+export class CollegeComponent implements OnInit {
   pageSize = 10;
   currentPageIndex = 0;
   totalItemsCount: number;
-  sortKey: string = '';
-  sortDirection: string = '';
+  sortKey = '';
+  sortDirection = '';
   addCollege: CollegeModel = {
     id: 0,
     name: '',
@@ -42,7 +42,7 @@ export class CollegeComponent {
     public dialog: MatDialog,
     private collegeService: CollegeService,
     private snackbarService: SnackbarService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<CollegeModel>([]);
@@ -97,7 +97,7 @@ export class CollegeComponent {
             this.collegeService.addCollege(payload).subscribe({
               next: (res) => {
                 if (res.statusCode == StatusCode.Success) {
-                  this.fetchColleges()
+                  this.fetchColleges();
                   this.snackbarService.success(res.message);
                 } else {
                   this.snackbarService.error(res.message);

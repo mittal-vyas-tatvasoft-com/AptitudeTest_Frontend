@@ -5,19 +5,12 @@ import { AddCollegeComponent } from './components/add-college/add-college.compon
 import { CollegeRountingModule } from './college-routing.module';
 import { CoreModule } from 'src/app/core/core.module';
 import { SharedMaterialModule } from 'src/app/shared/material/shared-material.module';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
+import { ReactiveFormsModule } from '@angular/forms';
 import { TablesModule } from 'src/app/shared/modules/tables/tables.module';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
 
-
-
 @NgModule({
-  declarations: [
-    AddCollegeComponent,
-    CollegeComponent
-  ],
+  declarations: [AddCollegeComponent, CollegeComponent],
   imports: [
     CommonModule,
     CollegeRountingModule,
@@ -25,7 +18,7 @@ import { FormControlModule } from 'src/app/shared/modules/form-control/form-cont
     ReactiveFormsModule,
     SharedMaterialModule,
     TablesModule,
-    FormControlModule
-  ]
+    FormControlModule,
+  ],
 })
-export class CollegeModule { }
+export class CollegeModule {}

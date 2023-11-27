@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { AppComponent } from './app.component';
 import { RoleGuard } from './core/guards/role/role.guard';
 import { Navigation } from './shared/common/enums';
 import { AuthGuard } from './core/guards/auth/auth.guard';
@@ -33,4 +32,4 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule { }
+export class AppRoutingModule {}
