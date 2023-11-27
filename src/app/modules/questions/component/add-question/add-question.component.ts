@@ -56,6 +56,7 @@ export class AddQuestionComponent implements OnInit {
   optionIds: number[] = [0, 0, 0, 0];
   formData: FormData;
   isDuplicate: boolean;
+  isTopicEditable: boolean = true;
   question: Question;
   isEdit: boolean = false;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
@@ -78,6 +79,13 @@ export class AddQuestionComponent implements OnInit {
         this.isEdit = !this.isDuplicate;
         this.questionService.get(param.id).subscribe((data: any) => {
           this.question = data.data;
+          if (this.question.parentId != null && this.question.parentId != 0) {
+            this.isTopicEditable = false;
+          } else {
+            this.isTopicEditable = !this.isDuplicate;
+          }
+          console.log(!this.isTopicEditable);
+          console.log(this.question);
           this.setFormValues();
         });
       }

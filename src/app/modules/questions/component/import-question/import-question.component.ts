@@ -29,7 +29,6 @@ export class ImportQuestionComponent implements OnInit {
   dropzoneConfig = dropzoneConfigCsv;
   formData: FormData = new FormData();
   fileName: string = '';
-  isValid: boolean = false;
   isFile: boolean = false;
   isImportSuccess = false;
   count: number;
@@ -47,11 +46,7 @@ export class ImportQuestionComponent implements OnInit {
     private questionService: QuestionsService
   ) {}
 
-  ngOnInit(): void {
-    this.topicForm = this.fb.group({
-      topicId: ['', Validators.required],
-    });
-  }
+  ngOnInit(): void {}
 
   handleBackBtn() {
     this.location.back();
@@ -77,12 +72,10 @@ export class ImportQuestionComponent implements OnInit {
   }
 
   getValidation() {
-    this.isValid = this.topicForm.valid && this.isFile;
-    return this.isValid;
+    return this.isFile;
   }
 
   importQuestions() {
-    this.formData.append('topicId', this.topicForm.get('topicId')?.value);
     this.questionService.importQuestions(this.formData).subscribe({
       next: (res: any) => {
         if (res.statusCode == StatusCode.Success) {
@@ -92,7 +85,6 @@ export class ImportQuestionComponent implements OnInit {
             this.questionList.response.currentPageIndex
           );
           this.resetFile();
-          this.topicForm.reset();
           this.count = res.data;
           this.isImportSuccess = true;
           this.componentRef?.directiveRef?.reset();
@@ -101,6 +93,8 @@ export class ImportQuestionComponent implements OnInit {
             this.isImportSuccess = false;
           }, 3000);
         } else {
+          this.resetFile();
+          this.componentRef?.directiveRef?.reset();
           this.snackbarService.error(res.message);
         }
       },
@@ -111,6 +105,5 @@ export class ImportQuestionComponent implements OnInit {
     this.isFile = false;
     this.fileName = '';
     this.formData.delete('file');
-    this.formData.delete('topicId');
   }
 }

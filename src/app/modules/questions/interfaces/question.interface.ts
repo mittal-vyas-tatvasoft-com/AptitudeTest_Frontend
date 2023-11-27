@@ -11,4 +11,5 @@ export interface Question {
   options: Option[];
   createdBy?: number;
   updatedBy?: number;
+  parentId?: number;
 }
