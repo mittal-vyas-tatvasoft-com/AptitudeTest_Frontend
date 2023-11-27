@@ -1,16 +1,16 @@
 import {
   Component,
-  Input,
-  Output,
   EventEmitter,
   HostListener,
+  Input,
+  Output,
 } from '@angular/core';
-import { LoginService } from '../../auth/services/login.service';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { ChangePasswordComponent } from '../../auth/components/change-password/change-password.component';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { StatusCode } from 'src/app/shared/common/enums';
 import { Subject, takeUntil } from 'rxjs';
+import { StatusCode } from 'src/app/shared/common/enums';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { ChangePasswordComponent } from '../../auth/components/change-password/change-password.component';
+import { LoginService } from '../../auth/services/login.service';
 
 @Component({
   selector: 'app-header',
@@ -26,6 +26,7 @@ export class HeaderComponent {
   isAdmin: boolean = false;
   role: string | null;
   public mobileScreen: boolean = window.innerWidth < 575;
+  @Input() register: boolean;
   @Input() isHandset: boolean | null | undefined;
   @Output() onMenuIconClick = new EventEmitter();
   private ngUnsubscribe$ = new Subject<void>();
@@ -34,7 +35,7 @@ export class HeaderComponent {
     private loginService: LoginService,
     public dialog: MatDialog,
     public snackbar: SnackbarService
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.isAuthenticated = this.loginService.isLoggedIn();
@@ -59,15 +60,15 @@ export class HeaderComponent {
   }
 
   getRole() {
-    this.role = this.loginService.getUserRole();
-    if (this.role === "Admin") {
-      this.isAdmin = true
-    }
-    else {
-      this.isAdmin = false;
+    if (!this.register) {
+      this.role = this.loginService.getUserRole();
+      if (this.role === 'Admin') {
+        this.isAdmin = true;
+      } else {
+        this.isAdmin = false;
+      }
     }
   }
-
 
   onClick() {
     this.onMenuIconClick.emit();

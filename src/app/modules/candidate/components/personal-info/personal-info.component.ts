@@ -1,24 +1,28 @@
 import { Component, Input, SimpleChanges } from '@angular/core';
 
-import { FormBuilder, FormControlName, FormGroup, Validators } from '@angular/forms';
-import { validations } from 'src/app/shared/messages/validation.static';
-import { candidateControl, selectOptionsForAppliedThrough, selectOptionsForGender, selectOptionsForStatus } from '../../configs/candidate.configs';
-import { CandidateService } from '../../services/candidate.service';
-import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { validations } from 'src/app/shared/messages/validation.static';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import {
+  candidateControl,
+  selectOptionsForAppliedThrough,
+  selectOptionsForGender,
+  selectOptionsForStatus,
+} from '../../configs/candidate.configs';
 import { UserData } from '../../interfaces/candidate.interface';
-import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
-
+import { CandidateService } from '../../services/candidate.service';
 
 @Component({
   selector: 'app-personal-info',
   templateUrl: './personal-info.component.html',
-  styleUrls: ['./personal-info.component.scss']
+  styleUrls: ['./personal-info.component.scss'],
 })
 export class PersonalInfoComponent {
   selectOptionsForGender: SelectOption[] = selectOptionsForGender;
   selectOptionsForStatus: SelectOption[] = selectOptionsForStatus;
-  selectOptionsForAppliedThrough: SelectOption[] = selectOptionsForAppliedThrough;
+  selectOptionsForAppliedThrough: SelectOption[] =
+    selectOptionsForAppliedThrough;
   selectOptionsForYear: SelectOption[] = [];
   CandidateModel = candidateControl;
   colleges: SelectOption[] = [];
@@ -27,14 +31,22 @@ export class PersonalInfoComponent {
   states: SelectOption[] = [];
   form: FormGroup;
   @Input() candidateData: UserData;
+  @Input() isAdmin: boolean;
 
-  constructor(private formBuilder: FormBuilder, private candidateService: CandidateService,) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private candidateService: CandidateService
+  ) {}
 
   ngOnInit() {
     this.createForm();
     this.getDropdowns();
     if (this.candidateData) {
       this.form.patchValue(this.candidateData);
+    }
+    if (!this.isAdmin) {
+      this.form.get('userGroup')?.clearValidators();
+      this.form.get('userGroup')?.updateValueAndValidity();
     }
   }
 
@@ -49,14 +61,20 @@ export class PersonalInfoComponent {
       firstName: ['', Validators.required],
       lastName: [''],
       fatherName: [''],
-      email: ['', [
-        Validators.required,
-        Validators.pattern(validations.common.emailREGEX),
-      ]],
-      phoneNumber: ['', [
-        Validators.required,
-        Validators.pattern(validations.common.mobileNumberREGEX),
-      ]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.emailREGEX),
+        ],
+      ],
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.mobileNumberREGEX),
+        ],
+      ],
       userGroup: ['', Validators.required],
       userCollege: ['', Validators.required],
       gender: [''],
@@ -68,48 +86,59 @@ export class PersonalInfoComponent {
       cityName: [''],
       permanentAddress1: [''],
       state: [''],
-      dateOfBirth: ['']
+      dateOfBirth: [''],
     });
   }
 
   getDropdowns() {
-    this.candidateService.getCollegesForDropDown().subscribe((colleges) => {
-      this.colleges = colleges.map((college) => ({
-        id: college.id,
-        key: college.name,
-        value: college.name,
-      }));
-    });
+    this.candidateService
+      .getCollegesForDropDown(this.isAdmin)
+      .subscribe((colleges) => {
+        this.colleges = colleges.map((college) => ({
+          id: college.id,
+          key: college.name,
+          value: college.name,
+        }));
+      });
 
-    this.candidateService.getGroupsForDropDown().subscribe((groups) => {
-      this.groups = groups.map((groups) => ({
-        id: groups.id,
-        key: groups.name,
-        value: groups.name,
-      }));
-    });
+    if (this.isAdmin) {
+      this.candidateService.getGroupsForDropDown().subscribe((groups) => {
+        this.groups = groups.map((groups) => ({
+          id: groups.id,
+          key: groups.name,
+          value: groups.name,
+        }));
+      });
+    }
 
-    this.candidateService.getProfilesForDropDown().subscribe((profiles) => {
-      this.profiles = profiles.map((profiles) => ({
-        id: profiles.id,
-        key: profiles.name,
-        value: profiles.name,
-      }));
-    });
+    this.candidateService
+      .getProfilesForDropDown(this.isAdmin)
+      .subscribe((profiles) => {
+        this.profiles = profiles.map((profiles) => ({
+          id: profiles.id,
+          key: profiles.name,
+          value: profiles.name,
+        }));
+      });
 
-    this.candidateService.getStateForDropDown().subscribe((states) => {
-      this.states = states.map((states) => ({
-        id: states.id,
-        key: states.name,
-        value: states.name,
-      }));
-    });
+    this.candidateService
+      .getStateForDropDown(this.isAdmin)
+      .subscribe((states) => {
+        this.states = states.map((states) => ({
+          id: states.id,
+          key: states.name,
+          value: states.name,
+        }));
+      });
 
     const currentYear = new Date().getFullYear();
     for (let year = 2023; year <= currentYear; year++) {
-      this.selectOptionsForYear.push({ id: year, key: year.toString(), value: year.toString() });
+      this.selectOptionsForYear.push({
+        id: year,
+        key: year.toString(),
+        value: year.toString(),
+      });
     }
-
   }
 
   validateForm() {
@@ -125,7 +154,9 @@ export class PersonalInfoComponent {
   getFormData(): FormGroup {
     const dateOfBirthControl = this.form.get('dateOfBirth');
     if (dateOfBirthControl!.value) {
-      const formattedDateOfBirth = moment(dateOfBirthControl!.value).format('YYYY-MM-DD');
+      const formattedDateOfBirth = moment(dateOfBirthControl!.value).format(
+        'YYYY-MM-DD'
+      );
       dateOfBirthControl!.setValue(formattedDateOfBirth);
     }
     if (dateOfBirthControl!.value == '0001-01-01') {

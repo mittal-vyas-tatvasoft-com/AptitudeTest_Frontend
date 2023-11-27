@@ -1,11 +1,16 @@
-<div class="page-header">
+<div class="page-header {{ isAdmin ? '' : 'register' }}">
   <div class="title-wrap">
     <mat-icon class="page-icon">
-      <img src="./assets/images/candidates-primary.svg" alt="Candidates" />
+      <img
+        src="./assets/images/{{
+          isAdmin ? 'candidates-primary.svg' : 'results-primary.svg'
+        }}"
+        alt="Candidates"
+      />
     </mat-icon>
-    <h4 class="title">Candidate Details</h4>
+    <h4 class="title">{{ isAdmin ? "Candidate Details" : "Register" }}</h4>
   </div>
-  <div class="action-list">
+  <div class="action-list" *ngIf="isAdmin">
     <button
       mat-stroked-button
       class="btn-stroked-default"
@@ -18,15 +23,21 @@
   </div>
 </div>
 
-<app-personal-info [candidateData]="candidateData"></app-personal-info>
+<app-personal-info
+  [candidateData]="candidateData"
+  [isAdmin]="isAdmin"
+></app-personal-info>
 <app-education-details
   [academicDetails]="academicDetails"
+  [isAdmin]="isAdmin"
 ></app-education-details>
 <app-exam-scores [candidateData]="candidateData"></app-exam-scores>
 <app-family-background [familyDetails]="familyDetails"></app-family-background>
 
 <div class="page-action-buttons d-flex justify-content-end">
-  <button mat-flat-button color="primary" (click)="Save()">Save</button>
+  <button mat-flat-button color="primary" (click)="Save()">
+    {{ isAdmin ? "Save" : "Register" }}
+  </button>
   <button
     mat-stroked-button
     color="primary"

@@ -13,7 +13,7 @@ import {
   providedIn: 'root',
 })
 export class CandidateService {
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
   getCandidate(data: GetAllCandidateParams): Observable<CandidateModel[]> {
     let params = new HttpParams()
@@ -115,9 +115,13 @@ export class CandidateService {
       );
   }
 
-  getCollegesForDropDown(): Observable<DropdownItem[]> {
+  getCollegesForDropDown(isAdmin?: boolean): Observable<DropdownItem[]> {
     return this.http
-      .get<DropdownItem[]>(`${environment.baseURL}Colleges/GetActiveColleges`)
+      .get<DropdownItem[]>(
+        `${environment.baseURL}${
+          isAdmin === false && isAdmin !== undefined ? `Common` : `Colleges`
+        }/GetActiveColleges`
+      )
       .pipe(map((response: any) => response.data));
   }
 
@@ -127,20 +131,33 @@ export class CandidateService {
       .pipe(map((response: any) => response.data));
   }
 
-  getProfilesForDropDown(): Observable<DropdownItem[]> {
+  getProfilesForDropDown(isAdmin?: boolean): Observable<DropdownItem[]> {
     return this.http
-      .get<DropdownItem[]>(`${environment.baseURL}Profiles/GetActiveProfiles`)
+      .get<DropdownItem[]>(
+        `${environment.baseURL}${
+          isAdmin === false && isAdmin !== undefined ? `Common` : `Profiles`
+        }/GetActiveProfiles`
+      )
       .pipe(map((response: any) => response.data));
   }
 
-  getDegreeForDropDown(): Observable<DropdownItem[]> {
+  getDegreeForDropDown(isAdmin?: boolean): Observable<DropdownItem[]> {
     return this.http
-      .get<DropdownItem[]>(`${environment.baseURL}Degrees/GetActiveDegrees`)
+      .get<DropdownItem[]>(
+        `${environment.baseURL}${
+          isAdmin === false && isAdmin !== undefined ? `Common` : `Degrees`
+        }/GetActiveDegrees`
+      )
       .pipe(map((response: any) => response.data));
   }
 
-  getStateForDropDown(): Observable<DropdownItem[]> {
-    return this.http.get<DropdownItem[]>(`${environment.baseURL}User/GetAllState`)
+  getStateForDropDown(isAdmin?: boolean): Observable<DropdownItem[]> {
+    return this.http
+      .get<DropdownItem[]>(
+        `${environment.baseURL}${
+          isAdmin === false && isAdmin !== undefined ? `Common` : `User`
+        }/GetAllState`
+      )
       .pipe(map((response: any) => response.data));
   }
 
@@ -154,9 +171,18 @@ export class CandidateService {
     return this.http.put(updateUrl, candidateData);
   }
 
-  getStremForDropDown(): Observable<DropdownItem[]> {
+  registerCandidate(candidateData: any): Observable<any> {
+    const updateUrl = `${environment.baseURL}Common/Register`;
+    return this.http.post(updateUrl, candidateData);
+  }
+
+  getStremForDropDown(isAdmin?: boolean): Observable<DropdownItem[]> {
     return this.http
-      .get<DropdownItem[]>(`${environment.baseURL}Streams/GetAllActiveStreams`)
+      .get<DropdownItem[]>(
+        `${environment.baseURL}${
+          isAdmin === false && isAdmin !== undefined ? `Common` : `Streams`
+        }/GetAllActiveStreams`
+      )
       .pipe(map((response: any) => response.data));
   }
 }
