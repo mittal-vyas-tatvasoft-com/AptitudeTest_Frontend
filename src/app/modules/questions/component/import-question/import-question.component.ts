@@ -8,7 +8,7 @@ import {
   QuestionControls,
   dropzoneConfigCsv,
 } from '../../configs/question.config';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { QuestionsService } from '../../services/questions.service';
@@ -21,15 +21,15 @@ import { QuestionListComponent } from '../question-list/question-list.component'
   templateUrl: './import-question.component.html',
   styleUrls: ['./import-question.component.scss'],
 })
-export class ImportQuestionComponent implements OnInit {
+export class ImportQuestionComponent {
   topics = Topics;
   public message = DragDropInput;
   topicForm: FormGroup;
   questionControls = QuestionControls;
   dropzoneConfig = dropzoneConfigCsv;
   formData: FormData = new FormData();
-  fileName: string = '';
-  isFile: boolean = false;
+  fileName = '';
+  isFile = false;
   isImportSuccess = false;
   count: number;
   @ViewChild(DropzoneComponent, { static: false })
@@ -45,8 +45,6 @@ export class ImportQuestionComponent implements OnInit {
     public snackbarService: SnackbarService,
     private questionService: QuestionsService
   ) {}
-
-  ngOnInit(): void {}
 
   handleBackBtn() {
     this.location.back();

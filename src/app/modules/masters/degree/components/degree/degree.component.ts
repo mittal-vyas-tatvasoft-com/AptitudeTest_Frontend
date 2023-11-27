@@ -33,8 +33,8 @@ export class DegreeComponent implements OnInit {
       action: 'edit',
     },
   ];
-  sortKey: string = '';
-  sortDirection: string = '';
+  sortKey = '';
+  sortDirection = '';
   addDegree: DegreeModel = {
     id: 0,
     name: '',
@@ -128,7 +128,7 @@ export class DegreeComponent implements OnInit {
   }
 
   updateStatus(id: number, newStatus: boolean): void {
-    let status: UpdateStatus = {
+    const status: UpdateStatus = {
       id: id,
       status: newStatus,
     };

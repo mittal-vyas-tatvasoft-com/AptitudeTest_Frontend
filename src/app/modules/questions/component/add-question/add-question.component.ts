@@ -38,7 +38,7 @@ export class AddQuestionComponent implements OnInit {
   public message: string = DragDropInput;
   public Editor = ClassicEditor;
   dropzoneConfig = dropzoneConfig;
-  questionId: number = 0;
+  questionId = 0;
   questionForm: FormGroup;
   topics = Topics;
   difficulty = Difficulty;
@@ -56,9 +56,9 @@ export class AddQuestionComponent implements OnInit {
   optionIds: number[] = [0, 0, 0, 0];
   formData: FormData;
   isDuplicate: boolean;
-  isTopicEditable: boolean = true;
+  isTopicEditable = true;
   question: Question;
-  isEdit: boolean = false;
+  isEdit = false;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
   constructor(
     private location: Location,
@@ -277,8 +277,8 @@ export class AddQuestionComponent implements OnInit {
   }
 
   getCheckboxError() {
-    let questionType = this.questionForm.get('questionType')?.value;
-    let isAnswer = this.questionForm.get('isAnswer');
+    const questionType = this.questionForm.get('questionType')?.value;
+    const isAnswer = this.questionForm.get('isAnswer');
     if (
       questionType == QuestionType.SingleAnswer &&
       this.checkboxValues.length != 1 &&
@@ -312,7 +312,7 @@ export class AddQuestionComponent implements OnInit {
   }
 
   areAnswersValid() {
-    let questionType = this.questionForm.get('questionType')?.value;
+    const questionType = this.questionForm.get('questionType')?.value;
     if (
       (questionType == QuestionType.MultiAnswer &&
         (this.checkboxValues.length < 2 || this.checkboxValues.length > 4)) ||
@@ -341,7 +341,7 @@ export class AddQuestionComponent implements OnInit {
   }
 
   createFormData() {
-    let data = new FormData();
+    const data = new FormData();
     data.append('Id', !this.isEdit ? '0' : this.questionId.toString());
     data.append('TopicId', this.questionForm.get('topicId')?.value);
     data.append('QuestionText', this.questionForm.get('questionText')?.value);
@@ -370,7 +370,7 @@ export class AddQuestionComponent implements OnInit {
   }
 
   getOptionTextError(index: number) {
-    let option = 'optionValue' + this.optionsIndex[index];
+    const option = 'optionValue' + this.optionsIndex[index];
     if (
       (this.questionForm.get(option)?.dirty ||
         this.questionForm.get(option)?.touched) &&

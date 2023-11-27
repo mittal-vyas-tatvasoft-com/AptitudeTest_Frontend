@@ -59,8 +59,8 @@ export class QuestionListComponent implements OnInit {
         );
       });
     }
-    window.addEventListener('scroll', (event: any) => {
-      let percent =
+    window.addEventListener('scroll', () => {
+      const percent =
         (window.innerHeight + window.scrollY) / document.body.offsetHeight;
       this.scrollSubject.next(percent);
     });

@@ -145,7 +145,7 @@
             </div>
             <div class="col-12">
               <div
-                *ngIf="optionType == optionTypes.Text; else elseBlock"
+                *ngIf="optionType === optionTypes.Text; else elseBlock"
                 class="answer-type"
               >
                 <div class="row">
@@ -223,7 +223,7 @@
                   </div>
                 </div>
               </ng-template>
-              <mat-error *ngIf="optionType == optionTypes.Image">{{
+              <mat-error *ngIf="optionType === optionTypes.Image">{{
                 getImageError()
               }}</mat-error>
               <mat-error>{{ getCheckboxError() }}</mat-error>
