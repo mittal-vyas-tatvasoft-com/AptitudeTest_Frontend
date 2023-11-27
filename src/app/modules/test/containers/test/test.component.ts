@@ -142,10 +142,10 @@ export class TestComponent implements OnInit {
       DeleteConfirmationDialogComponent,
       dialogConfig
     );
-    dialogRef?.afterClosed().subscribe((result: any) => {
+    dialogRef?.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.testService.delete(id).subscribe({
-          next: (res: any) => {
+          next: (res: ResponseModel<string>) => {
             if (res.statusCode == StatusCode.Success) {
               this.getTests();
               this.snackbarService.success(res.message);
@@ -158,7 +158,7 @@ export class TestComponent implements OnInit {
     });
   }
 
-  handleEditTest(event: any) {
+  handleEditTest(event: TestData) {
     this.router.navigate(['/admin/tests/create'], {
       queryParams: { id: event.id },
     });

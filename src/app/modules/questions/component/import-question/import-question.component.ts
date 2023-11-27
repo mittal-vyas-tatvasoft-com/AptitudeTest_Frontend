@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { Topics } from '../../static/question.static';
@@ -8,13 +8,14 @@ import {
   QuestionControls,
   dropzoneConfigCsv,
 } from '../../configs/question.config';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormGroup } from '@angular/forms';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { QuestionsService } from '../../services/questions.service';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { DropzoneComponent, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { QuestionListComponent } from '../question-list/question-list.component';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 
 @Component({
   selector: 'app-import-question',
@@ -40,7 +41,6 @@ export class ImportQuestionComponent {
   constructor(
     private location: Location,
     public dialog: MatDialog,
-    private fb: FormBuilder,
     public validation: ValidationService,
     public snackbarService: SnackbarService,
     private questionService: QuestionsService
@@ -75,7 +75,7 @@ export class ImportQuestionComponent {
 
   importQuestions() {
     this.questionService.importQuestions(this.formData).subscribe({
-      next: (res: any) => {
+      next: (res: ResponseModel<number>) => {
         if (res.statusCode == StatusCode.Success) {
           this.questionList.initializeEmptyResponse();
           this.questionList.loadQuestions(
