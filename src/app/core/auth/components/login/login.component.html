@@ -35,7 +35,12 @@
               <mat-checkbox color="primary" class="font14"
                 >Remeber me</mat-checkbox
               >
-              <a class="forgot-password" *ngIf="!isAdmin">Forgot Password?</a>
+              <a
+                class="forgot-password"
+                *ngIf="!isAdmin"
+                routerLink="/forgot-password"
+                >Forgot Password?</a
+              >
             </div>
           </div>
           <div class="col-12 animation-target">
@@ -44,7 +49,9 @@
           <div class="col-12 animation-target mt-5" *ngIf="!isAdmin">
             <p class="account">
               Don't have an account?
-              <a class="register">Register Now!</a>
+              <a class="register" routerLink="/register-password"
+                >Register Now!</a
+              >
             </p>
           </div>
         </div>

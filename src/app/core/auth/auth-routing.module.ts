@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './components/login/login.component';
-import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
-import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { RegisterComponent } from 'src/app/candidate-test/containers/candidate-test/components/register/register.component';
 import { Navigation } from 'src/app/shared/common/enums';
-
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { LoginComponent } from './components/login/login.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 
 const routes: Routes = [
   {
@@ -16,17 +16,21 @@ const routes: Routes = [
     component: LoginComponent,
   },
   {
-    path: 'forgot',
+    path: Navigation.ForgotPassword,
     component: ForgotPasswordComponent,
   },
   {
-    path: 'ResetPassword',
+    path: Navigation.ResetPassword,
     component: ResetPasswordComponent,
-  }
+  },
+  {
+    path: Navigation.RegisterPassword,
+    component: RegisterComponent,
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {}

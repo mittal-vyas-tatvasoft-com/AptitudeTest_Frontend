@@ -22,7 +22,7 @@
         </mat-icon>
       </button>
     </div>
-    <div class="header-right">
+    <div class="header-right" *ngIf="!register">
       <ul class="top-actions">
         <li *ngIf="isAdmin">
           <span class="logged-time">

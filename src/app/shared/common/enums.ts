@@ -2,24 +2,12 @@ export enum Navigation {
   //Common Navigation
   Admin = 'admin/candidate',
   CandidateUser = 'user',
-  Add = 'add',
   Edit = 'edit',
 
   //Auth Navigation
-  Login = 'login',
   ForgotPassword = 'forgot-password',
   ResetPassword = 'reset-password',
-
-  //User Navigation
-  User = 'users',
-
-  //Role Navigation
-  Role = 'roles',
-
-  //Website Navigation
-  Portal = 'portal',
-  clients = 'clients',
-  EditPortal = 'edit',
+  RegisterPassword = 'register-password',
 
   //Manage Masters Navigation
   Masters = 'masters',
@@ -30,11 +18,6 @@ export enum Navigation {
   Technology = 'technology',
   Profile = 'profile',
   Admins = 'admin',
-
-  //Utilities Navigation
-  Utilities = 'utilities',
-  Lookups = 'lookups',
-  Languages = 'languages',
 
   // Candidate Navigation
   Candidate = 'candidate',

@@ -6,4 +6,5 @@ export const Messages = {
   samePasswordError: `Current Password and New Password can't be same!`,
   passwordPattern:
     'A minimum 8 characters password contains a combination of uppercase and lowercase letter and number and special character.',
+  fillRequiredField: 'Please fill all required fields',
 };
