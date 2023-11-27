@@ -12,9 +12,13 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { QuestionCount } from 'src/app/shared/common/interfaces/question-count.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Pagination } from 'src/app/shared/common/interfaces/pagination.interface';
-import { Question } from 'src/app/modules/questions/interfaces/question.interface';
+import {
+  Question,
+  QuestionsCount,
+} from 'src/app/modules/questions/interfaces/question.interface';
 import { Subject } from 'rxjs';
 import { OptionList, Topics } from '../../static/question.static';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 
 @Component({
   selector: 'app-questions',
@@ -23,7 +27,7 @@ import { OptionList, Topics } from '../../static/question.static';
 })
 export class QuestionsComponent implements OnInit {
   optionsList: string[] = OptionList;
-  questions: any[] = [];
+  questions: Question[] = [];
   questionCount: QuestionCount = {
     mathsCount: Numbers.Zero,
     reasoningCount: Numbers.Zero,
@@ -63,7 +67,7 @@ export class QuestionsComponent implements OnInit {
 
   getQuestionCount(topic?: number, status?: boolean) {
     this.questionService.getQuestionCount(topic, status).subscribe({
-      next: (res: any) => {
+      next: (res: ResponseModel<QuestionsCount>) => {
         if (res.statusCode == StatusCode.Success) {
           this.questionCount = res.data;
         } else {

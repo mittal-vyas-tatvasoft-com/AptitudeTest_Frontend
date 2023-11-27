@@ -1,7 +1,10 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Pagination } from 'src/app/shared/common/interfaces/pagination.interface';
-import { Question } from 'src/app/modules/questions/interfaces/question.interface';
+import {
+  Question,
+  QuestionsCount,
+} from 'src/app/modules/questions/interfaces/question.interface';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { UpdateStatus } from 'src/app/shared/common/interfaces/update-status';
 import { environment } from 'src/environments/environment';
@@ -18,18 +21,16 @@ export class QuestionsService {
     topic?: number,
     status?: boolean
   ) {
-    const parameter: any = {
-      pageSize: pageSize,
-      pageIndex: pageIndex,
-    };
+    let parameter = new HttpParams();
+    parameter = parameter.set('pageSize', pageSize);
+    parameter = parameter.set('pageIndex', pageIndex);
     if (typeof topic != 'undefined') {
-      parameter.topic = topic;
+      parameter = parameter.set('topic', topic);
     }
     if (typeof status != 'undefined') {
-      parameter.status = status;
+      parameter = parameter.set('status', status);
     }
-    //let url = `${environment.baseURL}Questions` + this.createUrl(topic, status);
-    return this.httpClient.get<Pagination<Question>>(
+    return this.httpClient.get<ResponseModel<Pagination<Question>>>(
       `${environment.baseURL}Questions`,
       {
         params: parameter,
@@ -47,38 +48,38 @@ export class QuestionsService {
     const url =
       `${environment.baseURL}Questions/GetQuestionCount` +
       this.createUrl(topic, status);
-    return this.httpClient.get(url);
+    return this.httpClient.get<ResponseModel<QuestionsCount>>(url);
   }
 
   updateStatus(status: UpdateStatus) {
-    return this.httpClient.put(
+    return this.httpClient.put<ResponseModel<number>>(
       `${environment.baseURL}Questions/UpdateStatus`,
       status
     );
   }
 
   delete(id: number) {
-    return this.httpClient.delete(
+    return this.httpClient.delete<ResponseModel<null>>(
       `${environment.baseURL}Questions/Delete?id=${id}`
     );
   }
 
   create(questionFormData: FormData) {
-    return this.httpClient.post(
+    return this.httpClient.post<ResponseModel<null>>(
       `${environment.baseURL}Questions/Create`,
       questionFormData
     );
   }
 
   update(questionFormData: FormData) {
-    return this.httpClient.put(
+    return this.httpClient.put<ResponseModel<null>>(
       `${environment.baseURL}Questions/Update`,
       questionFormData
     );
   }
 
   importQuestions(questionData: FormData) {
-    return this.httpClient.post(
+    return this.httpClient.post<ResponseModel<number>>(
       `${environment.baseURL}Questions/ImportQuestions`,
       questionData
     );

@@ -9,4 +9,5 @@ export interface DegreeModel {
   updatedDate?: string | null;
   updatedBy?: number | null;
   isDeleted?: boolean;
+  isEditable?: boolean;
 }
