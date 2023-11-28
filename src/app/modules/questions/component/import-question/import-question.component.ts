@@ -14,7 +14,11 @@ import {
   dropzoneConfigCsv,
 } from '../../configs/question.config';
 import { QuestionsService } from '../../services/questions.service';
-import { Topics } from '../../static/question.static';
+import {
+  Topics,
+  importQuestionSampleFileName,
+  importQuestionSampleFilePath,
+} from '../../static/question.static';
 import { QuestionListComponent } from '../question-list/question-list.component';
 
 @Component({
@@ -106,10 +110,10 @@ export class ImportQuestionComponent {
   }
 
   downloadSampleFile() {
-    const filePath = '/assets/import-sample/import questions sample .csv';
+    const filePath = importQuestionSampleFilePath;
     const link = document.createElement('a');
     link.href = filePath;
-    link.download = 'import questions sample.csv';
+    link.download = importQuestionSampleFileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);

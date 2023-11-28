@@ -29,7 +29,11 @@ import {
   GetAllCandidateParams,
 } from '../../interfaces/candidate.interface';
 import { CandidateService } from '../../services/candidate.service';
-import { DragDropInput, dropzoneConfig } from '../../static/candidate.static';
+import {
+  DragDropInput,
+  dropzoneConfig,
+  importCandidateSampleFilePath,
+} from '../../static/candidate.static';
 
 @Component({
   selector: 'app-import-candidate',
@@ -404,10 +408,10 @@ export class ImportCandidateComponent implements OnInit {
   }
 
   downloadSampleFile() {
-    const filePath = '/assets/import-sample/import candidate sample.csv';
+    const filePath = importCandidateSampleFilePath;
     const link = document.createElement('a');
     link.href = filePath;
-    link.download = 'import candidate sample.csv';
+    link.download = importCandidateSampleFileName;
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
