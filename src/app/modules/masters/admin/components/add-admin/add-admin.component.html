@@ -66,13 +66,15 @@
   </form>
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="dialog-footer">
-  <app-button
-    [color]="'primary'"
-    [type]="'submit'"
-    [label]="isEditMode ? 'Save' : 'Add'"
-    [isDisabled]="!form.valid"
+  <button
+    mat-raised-button
+    color="primary"
+    label="isEditMode ? 'Save' : 'Add'"
+    [disabled]="!form.valid"
     [mat-dialog-close]="form.value"
-  ></app-button>
+  >
+    {{ isEditMode ? "Save" : "Add" }}
+  </button>
   <button mat-stroked-button color="primary" [mat-dialog-close]="false">
     Cancel
   </button>
