@@ -1,0 +1,19 @@
+<div class="container">
+  <div class="not-found">
+    <div class="image">
+      <img src="assets/images/404.svg" />
+    </div>
+    <p class="page-not-found">Page Not Found</p>
+    <p class="not-found-text">
+      We're sorry the page you requested could not be found
+    </p>
+    <app-button
+      class="back-button"
+      [color]="'primary'"
+      [type]="'submit'"
+      [label]="'Back'"
+      [isDisabled]="false"
+      (click)="determineRole()"
+    ></app-button>
+  </div>
+</div>
