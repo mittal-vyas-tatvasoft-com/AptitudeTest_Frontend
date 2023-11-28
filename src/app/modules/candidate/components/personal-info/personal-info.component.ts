@@ -1,4 +1,10 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
@@ -18,7 +24,7 @@ import { CandidateService } from '../../services/candidate.service';
   templateUrl: './personal-info.component.html',
   styleUrls: ['./personal-info.component.scss'],
 })
-export class PersonalInfoComponent {
+export class PersonalInfoComponent implements OnInit, OnChanges {
   selectOptionsForGender: SelectOption[] = selectOptionsForGender;
   selectOptionsForStatus: SelectOption[] = selectOptionsForStatus;
   selectOptionsForAppliedThrough: SelectOption[] =

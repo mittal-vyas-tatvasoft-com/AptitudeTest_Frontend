@@ -1,25 +1,33 @@
-import { Component, EventEmitter, Input, Output, SimpleChanges } from '@angular/core';
+import {
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
 import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
-import { candidateControl, selectOptionsForRelationship } from '../../configs/candidate.configs';
+import {
+  candidateControl,
+  selectOptionsForRelationship,
+} from '../../configs/candidate.configs';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 
 @Component({
   selector: 'app-family-background',
   templateUrl: './family-background.component.html',
-  styleUrls: ['./family-background.component.scss']
+  styleUrls: ['./family-background.component.scss'],
 })
-export class FamilyBackgroundComponent {
+export class FamilyBackgroundComponent implements OnInit, OnChanges {
   CandidateModel = candidateControl;
   selectOptionsForRelationship: SelectOption[] = selectOptionsForRelationship;
   form: FormGroup;
   @Input() familyDetails: any[];
 
-  constructor(private formBuilder: FormBuilder) { }
+  constructor(private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.createForm();
     this.populateForm();
-
   }
 
   ngOnChanges(changes: SimpleChanges) {

@@ -1,5 +1,5 @@
-<label>{{ formControlModel.label }}</label>
 <div [formGroup]="form">
+  <label>{{ formControlModel.label }}</label>
   <mat-radio-group [formControlName]="formControlModel.key">
     <mat-radio-button *ngFor="let option of options" [value]="option.value">
       {{ option.label }}

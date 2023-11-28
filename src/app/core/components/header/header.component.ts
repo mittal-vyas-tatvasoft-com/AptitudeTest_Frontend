@@ -28,7 +28,7 @@ export class HeaderComponent {
   public mobileScreen: boolean = window.innerWidth < 575;
   @Input() register: boolean;
   @Input() isHandset: boolean | null | undefined;
-  @Output() onMenuIconClick = new EventEmitter();
+  @Output() menuIconClickEvent = new EventEmitter();
   private ngUnsubscribe$ = new Subject<void>();
 
   constructor(
@@ -71,7 +71,7 @@ export class HeaderComponent {
   }
 
   onClick() {
-    this.onMenuIconClick.emit();
+    this.menuIconClickEvent.emit();
   }
 
   updateTime() {
@@ -95,7 +95,7 @@ export class HeaderComponent {
   }
 
   toggleSidebar() {
-    this.onMenuIconClick.emit();
+    this.menuIconClickEvent.emit();
     this.isSidebarOpen = !this.isSidebarOpen;
     this.loginService.saveStateToLocalStorage(this.isSidebarOpen);
   }

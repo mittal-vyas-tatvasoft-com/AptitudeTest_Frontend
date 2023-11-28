@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginModel } from '../interfaces/login.interface';
-import { BehaviorSubject, Observable, catchError, filter, map, of, switchMap, take, tap, throwError } from 'rxjs';
+import {
+  BehaviorSubject,
+  Observable,
+  filter,
+  map,
+  take,
+  throwError,
+} from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { ForgotPasswordModel } from '../interfaces/forgot-password.interface';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
@@ -21,11 +28,11 @@ export class LoginService {
   private storageRefreshToken = 'refreshToken';
   private storageTokenExpiry = 'tokenExpiry';
   private sidebarStateKey = 'sidebarState';
-  private userData: any;
-  private sessionTimeoutInMinutes = 20; // Adjust as needed
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
+    null
+  );
   private isRefreshing = false;
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private http: HttpClient, private router: Router) {}
 
   setToken(token: string): void {
     localStorage.setItem(this.storageToken, token);
@@ -109,13 +116,13 @@ export class LoginService {
 
   getUserRole(): string {
     const data = this.decodeToken();
-    const role = data.Role
+    const role = data.Role;
     return role;
   }
 
   hasAnyRole(allowedRoles: string[]): boolean {
     const userRoles = this.getUserRole();
-    return allowedRoles.some(role => userRoles.includes(role));
+    return allowedRoles.some((role) => userRoles.includes(role));
   }
 
   forgotPassword(
@@ -169,29 +176,31 @@ export class LoginService {
       const payload = {
         refreshToken: refreshToken,
         accessToken: token,
-        refreshTokenExpiryTime: tokenExpiry != null ? tokenExpiry : DateTime.now(),
+        refreshTokenExpiryTime:
+          tokenExpiry != null ? tokenExpiry : DateTime.now(),
       };
-      return this.http.post<ResponseModel<string>>(
-        `${environment.baseURL}AdminAuthentication/RefreshToken`,
-        payload
-      ).pipe(
-        map((res: any) => {
-          if (res.result) {
-            this.setToken(res.data.accessToken);
-            this.setRefreshToken(res.data.refreshToken);
-            this.setTokenExpiry(res.data.refreshTokenExpiryTime);
-          }
-          return res;
-        }),
-      );
+      return this.http
+        .post<ResponseModel<string>>(
+          `${environment.baseURL}AdminAuthentication/RefreshToken`,
+          payload
+        )
+        .pipe(
+          map((res: any) => {
+            if (res.result) {
+              this.setToken(res.data.accessToken);
+              this.setRefreshToken(res.data.refreshToken);
+              this.setTokenExpiry(res.data.refreshTokenExpiryTime);
+            }
+            return res;
+          })
+        );
     } else {
       return this.refreshTokenSubject.pipe(
-        filter(result => result !== null),
+        filter((result) => result !== null),
         take(1)
       );
     }
   }
-
 
   refreshToken(): Observable<ResponseModel<string>> {
     if (!this.isRefreshing) {
@@ -210,24 +219,27 @@ export class LoginService {
       const payload = {
         refreshToken: refreshToken,
         accessToken: token,
-        refreshTokenExpiryTime: tokenExpiry != null ? tokenExpiry : DateTime.now(),
+        refreshTokenExpiryTime:
+          tokenExpiry != null ? tokenExpiry : DateTime.now(),
       };
-      return this.http.post<ResponseModel<string>>(
-        `${environment.baseURL}UserAuthentication/RefreshToken`,
-        payload
-      ).pipe(
-        map((res: any) => {
-          if (res.result) {
-            this.setToken(res.data.accessToken);
-            this.setRefreshToken(res.data.refreshToken);
-            this.setTokenExpiry(res.data.refreshTokenExpiryTime);
-          }
-          return res;
-        }),
-      );
+      return this.http
+        .post<ResponseModel<string>>(
+          `${environment.baseURL}UserAuthentication/RefreshToken`,
+          payload
+        )
+        .pipe(
+          map((res: any) => {
+            if (res.result) {
+              this.setToken(res.data.accessToken);
+              this.setRefreshToken(res.data.refreshToken);
+              this.setTokenExpiry(res.data.refreshTokenExpiryTime);
+            }
+            return res;
+          })
+        );
     } else {
       return this.refreshTokenSubject.pipe(
-        filter(result => result !== null),
+        filter((result) => result !== null),
         take(1)
       );
     }

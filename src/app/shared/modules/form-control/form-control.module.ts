@@ -4,12 +4,7 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { SharedMaterialModule } from '../../material/shared-material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import {
-  DateAdapter,
-  MAT_DATE_FORMATS,
-  MAT_DATE_LOCALE,
-} from '@angular/material/core';
-import { DATE_FORMAT } from './static/date-format';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { TimePickerComponent } from './components/time-picker/time-picker.component';
 import { RadioGroupComponent } from './components/radio-group/radio-group.component';
 import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-group.component';

@@ -24,8 +24,8 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
   familyDetails: any[];
   academicDetails: any[];
   form: FormGroup;
-  isAdmin: boolean = false;
-  validForm: boolean = false;
+  isAdmin = false;
+  validForm = false;
   private ngUnsubscribe$ = new Subject<void>();
   @ViewChild(PersonalInfoComponent)
   personalInfoComponent: PersonalInfoComponent;

@@ -1,4 +1,4 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoginService } from 'src/app/core/auth/services/login.service';
@@ -19,7 +19,7 @@ import { CandidateService } from '../../services/candidate.service';
   templateUrl: './add-candidate.component.html',
   styleUrls: ['./add-candidate.component.scss'],
 })
-export class AddCandidateComponent {
+export class AddCandidateComponent implements OnInit {
   selectOptionsForGender: SelectOption[] = selectOptionsForGender;
   selectOptionsForStatus: SelectOption[] = selectOptionsForStatus;
   CandidateModel = candidateControl;

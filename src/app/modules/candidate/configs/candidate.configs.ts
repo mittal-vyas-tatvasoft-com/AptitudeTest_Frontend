@@ -1,5 +1,3 @@
-import { Numbers } from 'src/app/shared/common/enums';
-
 export const candidateControl = {
   firstName: {
     value: '',

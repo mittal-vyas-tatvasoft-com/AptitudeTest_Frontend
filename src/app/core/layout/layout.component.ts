@@ -1,12 +1,12 @@
 import { BreakpointObserver } from '@angular/cdk/layout';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { map, Observable, shareReplay } from 'rxjs';
 import { LoginService } from '../auth/services/login.service';
 
 @Component({
   selector: 'app-layout',
   templateUrl: './layout.component.html',
-  styleUrls: ['./layout.component.scss']
+  styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
   isSidebarOpen!: boolean;
@@ -14,11 +14,13 @@ export class LayoutComponent implements OnInit {
     .observe(['(max-width: 1199px)'])
     .pipe(
       map((result) => result.matches),
-      shareReplay(),
+      shareReplay()
     );
 
-  constructor(private breakpointObserver: BreakpointObserver,
-    private loginService: LoginService) {}
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    private loginService: LoginService
+  ) {}
 
   ngOnInit(): void {
     this.isSidebarOpen = this.loginService.getStateFromLocalStorage();
