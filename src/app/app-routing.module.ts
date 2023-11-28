@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { RoleGuard } from './core/guards/role/role.guard';
 import { Navigation } from './shared/common/enums';
 import { AuthGuard } from './core/guards/auth/auth.guard';
+import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,8 @@ const routes: Routes = [
     canActivate: [AuthGuard, RoleGuard],
     data: { allowedRoles: [Navigation.RoleUser] },
   },
+  { path: '404', component: PageNotFoundComponent },
+  { path: '**', redirectTo: '404' },
 ];
 
 @NgModule({
