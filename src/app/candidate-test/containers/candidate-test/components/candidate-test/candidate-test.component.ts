@@ -3,8 +3,6 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'app-candidate-test',
   templateUrl: './candidate-test.component.html',
-  styleUrls: ['./candidate-test.component.scss']
+  styleUrls: ['./candidate-test.component.scss'],
 })
-export class CandidateTestComponent {
-
-}
+export class CandidateTestComponent {}
