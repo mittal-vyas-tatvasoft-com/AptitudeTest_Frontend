@@ -24,7 +24,7 @@
   <div class="imported-question-wrapper">
     <app-test-questions-listing
       (handleDeleteQuestionsDialog)="handleDeleteQuestionsDialog($event)"
-      (handleDeleteAllQuestionsDialog)="handleDeleteAllQuestionsDialog()"
+      (handleDeleteAllQuestionsDialog)="handleDeleteQuestionsDialog(0)"
       (handleEditQuestionsDialog)="handleEditQuestionsDialog()"
       [allInsertedQuestions]="allInsertedQuestions"
     ></app-test-questions-listing>

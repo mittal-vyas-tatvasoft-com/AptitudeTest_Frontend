@@ -1,4 +1,10 @@
-import { Component, HostListener, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  HostListener,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
@@ -39,7 +45,7 @@ export interface CandidateData {
   templateUrl: './create-test.component.html',
   styleUrls: ['./create-test.component.scss'],
 })
-export class CreateTestComponent {
+export default class CreateTestComponent implements OnInit, AfterViewInit {
   optionsList: SelectOption[] = [
     { value: 'Select', id: '' },
     { value: 'Draft', id: 1 },
@@ -51,12 +57,12 @@ export class CreateTestComponent {
   currentPageIndex = 0;
   totalItemsCount: number;
   pageNumbers: number[] = [];
-  sortKey: string = '';
-  sortDirection: string = '';
+  sortKey = '';
+  sortDirection = '';
   minDate: Date = new Date();
-  startEndTimeDifferenceValid: boolean = true;
-  isPagination: boolean = false;
-  testId: number = 0;
+  startEndTimeDifferenceValid = true;
+  isPagination = false;
+  testId = 0;
   colleges: SelectOption[] = [];
   groups: SelectOption[] = [];
   selectedMarkOption = '1';
@@ -76,7 +82,7 @@ export class CreateTestComponent {
   testGroupFormModel = testGroupFormModel;
   testGroupFilterModel = testGroupFilterModel;
   allInsertedQuestions: AllInsertedQuestionModel[] = [];
-  totalMarksQuestionsAdded: number = 0;
+  totalMarksQuestionsAdded = 0;
   startTime: Date;
   endTime: Date;
   testQuestionsCountData: TopicWiseQuestionData[] = [];

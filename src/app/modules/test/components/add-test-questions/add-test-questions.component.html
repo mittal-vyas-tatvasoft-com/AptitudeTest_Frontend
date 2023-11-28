@@ -116,7 +116,7 @@
             </p>
           </div>
           <button
-            [disabled]="form.invalid || isDataValid == false"
+            [disabled]="form.invalid || isDataValid === false"
             mat-flat-button
             color="primary"
             class="w-lg-100 mt-lg-auto mb-lg-0 my-auto"
@@ -128,7 +128,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="isDataValid == false">
+  <div *ngIf="isDataValid === false">
     <mat-error>{{ validationMSG }}</mat-error>
   </div>
 </form>

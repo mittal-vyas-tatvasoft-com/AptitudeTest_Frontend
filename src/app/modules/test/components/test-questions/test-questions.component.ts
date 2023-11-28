@@ -1,4 +1,5 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   EventEmitter,
@@ -35,7 +36,7 @@ import {
   templateUrl: './test-questions.component.html',
   styleUrls: ['./test-questions.component.scss'],
 })
-export class TestQuestionsComponent implements OnInit {
+export class TestQuestionsComponent implements OnInit, AfterViewInit {
   optionsList: SelectOption[] = [
     { value: 'Select', id: '' },
     { value: 'Draft', id: 1 },
@@ -43,13 +44,13 @@ export class TestQuestionsComponent implements OnInit {
     { value: 'Completed', id: 3 },
   ];
 
-  topicId: number = 0;
+  topicId = 0;
   @Input() optionList: SelectOption[] = [];
   @Input() topics: QuestionTopics[] = [];
   @Input() testQuestionsCountData: TopicWiseQuestionData[] = [];
   @Input() allInsertedQuestions: AllInsertedQuestionModel[] = [];
-  @Input() totalMarksQuestionsAdded: number = 0;
-  @Input() totalQuestionsSelected: number = 0;
+  @Input() totalMarksQuestionsAdded = 0;
+  @Input() totalQuestionsSelected = 0;
   @Input() testId: number;
   @Input() basicTestDetailForm: FormGroup;
   @Input() existingQuestionsTopicId: number[];
@@ -57,12 +58,12 @@ export class TestQuestionsComponent implements OnInit {
   @Output() deleteTopicWiseQuestions = new EventEmitter<number>();
   @Output() deleteAllQuestions = new EventEmitter();
   form: FormGroup;
-  validationMSG: string = '';
-  isDataValid: boolean = true;
-  singleAnswerQuestionTotalCountTopicWise: number = 0;
-  multiAnswerQuestionTotalCountTopicWise: number = 0;
-  totalSelectedQuestionsWhileInsert: number = 0;
-  totalMarksWhileInsert: number = 0;
+  validationMSG = '';
+  isDataValid = true;
+  singleAnswerQuestionTotalCountTopicWise = 0;
+  multiAnswerQuestionTotalCountTopicWise = 0;
+  totalSelectedQuestionsWhileInsert = 0;
+  totalMarksWhileInsert = 0;
   selectedMarkOption = '1';
   singleMarksDropDownData = new BehaviorSubject<any>([]);
   multiMarksDropDownData = new BehaviorSubject<any>([]);
@@ -120,7 +121,6 @@ export class TestQuestionsComponent implements OnInit {
       fiveMarkQuestionMultiAnswer: 0,
     });
   }
-  ngOnChanges() {}
 
   setQuestionCounts() {
     this.testQuestionsCountData.map((res) => {
@@ -166,31 +166,31 @@ export class TestQuestionsComponent implements OnInit {
   }
 
   handleDeleteQuestionsDialog(topicId: number) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ['confirmation-dialog'];
-    dialogConfig.autoFocus = false;
-    this.dialog
-      .open(DeleteConfirmationDialogComponent, dialogConfig)
-      .afterClosed()
-      .subscribe((res) => {
-        if (res == true) {
-          this.deleteTopicWiseQuestions.emit(topicId);
-        }
-      });
-  }
-
-  handleDeleteAllQuestionsDialog() {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.panelClass = ['confirmation-dialog'];
-    dialogConfig.autoFocus = false;
-    this.dialog
-      .open(DeleteConfirmationDialogComponent, dialogConfig)
-      .afterClosed()
-      .subscribe((res) => {
-        if (res == true) {
-          this.deleteAllQuestions.emit();
-        }
-      });
+    if (topicId !== 0) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.panelClass = ['confirmation-dialog'];
+      dialogConfig.autoFocus = false;
+      this.dialog
+        .open(DeleteConfirmationDialogComponent, dialogConfig)
+        .afterClosed()
+        .subscribe((res) => {
+          if (res == true) {
+            this.deleteTopicWiseQuestions.emit(topicId);
+          }
+        });
+    } else {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.panelClass = ['confirmation-dialog'];
+      dialogConfig.autoFocus = false;
+      this.dialog
+        .open(DeleteConfirmationDialogComponent, dialogConfig)
+        .afterClosed()
+        .subscribe((res) => {
+          if (res == true) {
+            this.deleteAllQuestions.emit();
+          }
+        });
+    }
   }
 
   handleValidateSelectedMarks(
@@ -210,7 +210,7 @@ export class TestQuestionsComponent implements OnInit {
   }
 
   handleSumOfMarks() {
-    let data = this.testService.CheckSumAndSelectedQuestions(this.form);
+    const data = this.testService.CheckSumAndSelectedQuestions(this.form);
     this.totalSelectedQuestionsWhileInsert = data.totalQuestionsSelected;
     this.totalMarksWhileInsert = data.sum;
     this.totalQuestionsSelected = data.totalQuestionsSelected;

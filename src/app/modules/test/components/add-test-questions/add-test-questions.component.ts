@@ -11,25 +11,22 @@ import { MarksAvailable } from '../../static/test.static';
 })
 export class AddTestQuestionsComponent {
   @Input() form: FormGroup;
-  @Input() singleAnswerQuestionTotalCountTopicWise: number = 0;
-  @Input() multiAnswerQuestionTotalCountTopicWise: number = 0;
+  @Input() singleAnswerQuestionTotalCountTopicWise = 0;
+  @Input() multiAnswerQuestionTotalCountTopicWise = 0;
   @Input() singleMarksDropDownData = new BehaviorSubject<any>([]);
   @Input() multiMarksDropDownData = new BehaviorSubject<any>([]);
   @Input() topics: QuestionTopics[] = [];
   @Input() isEditMode: boolean;
-  @Input() totalSelectedQuestions: number = 0;
-  @Input() totalSelectedQuestionsMarks: number = 0;
+  @Input() totalSelectedQuestions = 0;
+  @Input() totalSelectedQuestionsMarks = 0;
   @Input() isDataValid: boolean;
-  @Input() validationMSG: string = '';
+  @Input() validationMSG = '';
   @Input() existingQuestionsTopicId: number[] = [];
 
   @Output() handleValidateSelectedMarks = new EventEmitter();
   @Output() handleMarksSum = new EventEmitter();
   @Output() addQuestions = new EventEmitter();
   MarksAvailable = MarksAvailable;
-  ngOnInit() {}
-
-  ngAfterViewInit() {}
 
   handleValidateMarks() {
     this.handleValidateSelectedMarks.emit();
