@@ -20,12 +20,8 @@
 
 <mat-card class="default-card overflow-hidden">
   <mat-card-content>
-    <mat-stepper [linear]="false" #stepper class="primary-stepper mt-md-0 mt-1">
-      <mat-step
-        [completed]="false"
-        label="Test Details"
-        [stepControl]="basicTestDetails"
-      >
+    <mat-stepper [linear]="true" #stepper class="primary-stepper mt-md-0 mt-1">
+      <mat-step label="Test Details" [stepControl]="basicTestDetails">
         <app-basic-details
           [basicTestDetails]="basicTestDetails"
           [testBasicDetailFormModel]="testBasicDetailFormModel"
@@ -34,7 +30,7 @@
           (saveDetails)="saveBasicDetails()"
         ></app-basic-details>
       </mat-step>
-      <mat-step [completed]="false" label="Candidates">
+      <mat-step label="Candidates">
         <app-test-group
           [testGroupForm]="testGroupForm"
           [testGroupFormModel]="testGroupFormModel"
@@ -56,7 +52,7 @@
           (updateGroup)="updateTestGroup()"
         ></app-test-group>
       </mat-step>
-      <mat-step [completed]="false" label="Questions">
+      <mat-step label="Questions">
         <div class="container-900">
           <div class="row">
             <div class="col-md-6">
