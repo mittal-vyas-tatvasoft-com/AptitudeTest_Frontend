@@ -15,9 +15,11 @@ import {
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
+import { FormControlModule } from './shared/modules/form-control/form-control.module';
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, PageNotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,6 +29,7 @@ import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
     CoreModule,
     HttpClientModule,
     CandidateModule,
+    FormControlModule,
   ],
   providers: [
     {

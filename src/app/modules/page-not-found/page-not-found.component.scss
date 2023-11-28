@@ -1,0 +1,38 @@
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.image {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 10px;
+}
+.page-not-found {
+  font-size: 48px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 64px;
+  color: #51545f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.not-found-text {
+  color: #51545f;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 400;
+  line-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
