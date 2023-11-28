@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
-import { Subject, takeUntil, catchError, throwError, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { AddCollegeComponent } from 'src/app/modules/masters/college/components/add-college/add-college.component';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
@@ -64,7 +64,7 @@ export class CandidatesComponent {
     private router: Router,
     private candidateService: CandidateService,
     private snackbarService: SnackbarService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<CandidateModel>([]);

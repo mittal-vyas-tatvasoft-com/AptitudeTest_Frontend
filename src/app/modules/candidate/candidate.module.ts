@@ -1,21 +1,19 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { CandidateRoutingModule } from './candidate-routing.module';
+import { NgModule } from '@angular/core';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SharedMaterialModule } from 'src/app/shared/material/shared-material.module';
-import { CandidateService } from './services/candidate.service';
-import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
+import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
 import { TablesModule } from 'src/app/shared/modules/tables/tables.module';
-import { EditCandidateComponent } from './containers/edit-candidate/edit-candidate.component';
-import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
+import { CandidateRoutingModule } from './candidate-routing.module';
 import { EducationDetailsComponent } from './components/education-details/education-details.component';
 import { ExamScoresComponent } from './components/exam-scores/exam-scores.component';
 import { FamilyBackgroundComponent } from './components/family-background/family-background.component';
+import { PersonalInfoComponent } from './components/personal-info/personal-info.component';
 import { AddCandidateComponent } from './containers/add-candidate/add-candidate.component';
 import { CandidatesComponent } from './containers/candidates/candidates.component';
+import { EditCandidateComponent } from './containers/edit-candidate/edit-candidate.component';
 import { ImportCandidateComponent } from './containers/import-candidate/import-candidate.component';
-import { ReactiveFormsModule } from '@angular/forms';
-import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
+import { CandidateService } from './services/candidate.service';
 
 @NgModule({
   declarations: [
@@ -37,5 +35,6 @@ import { FormControlModule } from 'src/app/shared/modules/form-control/form-cont
     FormControlModule,
   ],
   providers: [CandidateService],
+  exports: [EditCandidateComponent],
 })
 export class CandidateModule {}

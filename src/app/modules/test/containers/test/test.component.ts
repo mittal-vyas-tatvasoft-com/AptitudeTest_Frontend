@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatTableDataSource } from '@angular/material/table';
-import { Sort, MatSortModule, MatSort } from '@angular/material/sort';
+import { Sort, MatSort } from '@angular/material/sort';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { Router } from '@angular/router';
 import { TestService } from '../../services/test.service';
@@ -14,7 +14,6 @@ import { debounceTime } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { testFilterModel } from '../../config/test.configs';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
-import * as moment from 'moment';
 import { DropdownData } from 'src/app/shared/common/interfaces/dropdown-data.interface';
 
 @Component({
@@ -26,8 +25,8 @@ export class TestComponent implements OnInit {
   pageSize = 10;
   currentPageIndex = 0;
   totalItemsCount: number;
-  sortField: string = '';
-  sortOrder: string = '';
+  sortField = '';
+  sortOrder = '';
   pageNumbers: number[] = [];
   form: FormGroup;
   formData = testFilterModel;
@@ -63,7 +62,7 @@ export class TestComponent implements OnInit {
     private testService: TestService,
     private snackbarService: SnackbarService,
     private formBuilder: FormBuilder
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -82,7 +81,7 @@ export class TestComponent implements OnInit {
     this.dataSource = new MatTableDataSource<TestData>([]);
     this.getTests();
     this.form.valueChanges.pipe(debounceTime(Numbers.Debounce)).subscribe({
-      next: (res) => {
+      next: () => {
         this.currentPageIndex = 0;
         this.pageSize = 10;
         this.sortField = '';
@@ -106,7 +105,7 @@ export class TestComponent implements OnInit {
     const groupId = this.form.get('groupId')?.value;
     const status = this.form.get('status')?.value;
     const date = this.form.get('date')?.value;
-    var filterDate: Date | null = null;
+    let filterDate: Date | null = null;
     if (date != null && date != '') {
       filterDate = date.toDate();
     }
@@ -143,10 +142,10 @@ export class TestComponent implements OnInit {
       DeleteConfirmationDialogComponent,
       dialogConfig
     );
-    dialogRef?.afterClosed().subscribe((result: any) => {
+    dialogRef?.afterClosed().subscribe((result: boolean) => {
       if (result) {
         this.testService.delete(id).subscribe({
-          next: (res: any) => {
+          next: (res: ResponseModel<string>) => {
             if (res.statusCode == StatusCode.Success) {
               this.getTests();
               this.snackbarService.success(res.message);
@@ -159,7 +158,7 @@ export class TestComponent implements OnInit {
     });
   }
 
-  handleEditTest(event: any) {
+  handleEditTest(event: TestData) {
     this.router.navigate(['/admin/tests/create'], {
       queryParams: { id: event.id },
     });

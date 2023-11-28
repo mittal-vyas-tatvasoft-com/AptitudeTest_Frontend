@@ -1,24 +1,26 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { FormControlModel } from '../../interfaces/form-control-model';
 import { ValidationService } from '../../services/validation.service';
 import { MatIconRegistry } from '@angular/material/icon';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-text-control',
   templateUrl: './text-control.component.html',
   styleUrls: ['./text-control.component.scss'],
 })
-export class TextControlComponent {
+export class TextControlComponent implements OnInit {
   @Input() form!: FormGroup;
   @Input() formControlModel!: FormControlModel;
   @Output() iconClick = new EventEmitter<Event>();
-  @Output() keyup = new EventEmitter();
+  @Output() keyupEvent = new EventEmitter();
 
-  constructor(public validationService: ValidationService,
+  constructor(
+    public validationService: ValidationService,
     private domSanitizer: DomSanitizer,
-    private matIconRegistry: MatIconRegistry) { }
+    private matIconRegistry: MatIconRegistry
+  ) {}
 
   ngOnInit() {
     this.registerCustomSvgIcon();
@@ -34,7 +36,7 @@ export class TextControlComponent {
     if (iconName && iconName.endsWith('.svg')) {
       return this.formControlModel ? this.formControlModel.iconName || '' : '';
     }
-    return ''
+    return '';
   }
   private registerCustomSvgIcon() {
     const iconName = this.formControlModel.iconName;

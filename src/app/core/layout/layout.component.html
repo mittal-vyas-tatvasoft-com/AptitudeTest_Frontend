@@ -1,21 +1,26 @@
 <div class="wrapper">
-    <mat-sidenav-container class="layout-sidenav-container">
-        <mat-sidenav #drawer [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
-            [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="isSidebarOpen && (isHandset$ | async) === false">
-            <app-sidebar [isSidebarOpen]="isSidebarOpen"></app-sidebar>
-        </mat-sidenav>
-        <mat-sidenav-content>
-            <!-- Start Header -->
-            <app-header [isHandset]="isHandset$ | async" (onMenuIconClick)="drawer.toggle()"></app-header>
-            <!-- End Header -->
+  <mat-sidenav-container class="layout-sidenav-container">
+    <mat-sidenav
+      #drawer
+      [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isHandset$ | async) ? 'over' : 'side'"
+      [opened]="isSidebarOpen && (isHandset$ | async) === false"
+    >
+      <app-sidebar [isSidebarOpen]="isSidebarOpen"></app-sidebar>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <!-- Start Header -->
+      <app-header
+        [isHandset]="isHandset$ | async"
+        (menuIconClickEvent)="drawer.toggle()"
+      ></app-header>
+      <!-- End Header -->
 
-            <!-- Main Content -->
-            <main class="main-content">
-                <router-outlet>
-                </router-outlet>
-            </main>
-            <!-- End Main Content -->
-
-        </mat-sidenav-content>
-    </mat-sidenav-container>
+      <!-- Main Content -->
+      <main class="main-content">
+        <router-outlet> </router-outlet>
+      </main>
+      <!-- End Main Content -->
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

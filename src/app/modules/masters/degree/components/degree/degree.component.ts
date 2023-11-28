@@ -9,6 +9,7 @@ import { StatusCode } from 'src/app/shared/common/enums';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { DegreeModel } from '../../interfaces/degree.interface';
 import { Sort } from '@angular/material/sort';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 
 export interface UpdateStatus {
   id: number;
@@ -33,8 +34,8 @@ export class DegreeComponent implements OnInit {
       action: 'edit',
     },
   ];
-  sortKey: string = '';
-  sortDirection: string = '';
+  sortKey = '';
+  sortDirection = '';
   addDegree: DegreeModel = {
     id: 0,
     name: '',
@@ -43,7 +44,7 @@ export class DegreeComponent implements OnInit {
     streams: [],
   };
   dataSource!: MatTableDataSource<DegreeModel>;
-  degreeData: any;
+  degreeData: DegreeModel[];
   constructor(
     public dialog: MatDialog,
     private degreeService: DegreeService,
@@ -57,7 +58,7 @@ export class DegreeComponent implements OnInit {
   getAllDegrees() {
     this.degreeService
       .degrees(this.sortKey, this.sortDirection)
-      .subscribe((response: any) => {
+      .subscribe((response: ResponseModel<DegreeModel[]>) => {
         this.dataSource = new MatTableDataSource(response.data);
         this.degreeData = response.data;
       });
@@ -75,7 +76,7 @@ export class DegreeComponent implements OnInit {
         if (data != null) {
           if (data.id == 0) {
             this.degreeService.create(data).subscribe({
-              next: (res: any) => {
+              next: (res: ResponseModel<null>) => {
                 if (res.statusCode == StatusCode.Success) {
                   this.getAllDegrees();
                   this.snackbarService.success(res.message);
@@ -86,7 +87,7 @@ export class DegreeComponent implements OnInit {
             });
           } else {
             this.degreeService.update(data).subscribe({
-              next: (res: any) => {
+              next: (res: ResponseModel<null>) => {
                 if (res.statusCode == StatusCode.Success) {
                   this.snackbarService.success(res.message);
                   this.getAllDegrees();
@@ -110,7 +111,7 @@ export class DegreeComponent implements OnInit {
       .subscribe((res: boolean) => {
         if (res) {
           this.degreeService.delete(id).subscribe({
-            next: (res: any) => {
+            next: (res: ResponseModel<null>) => {
               if (res.statusCode == StatusCode.Success) {
                 this.snackbarService.success(res.message);
                 this.getAllDegrees();
@@ -120,7 +121,7 @@ export class DegreeComponent implements OnInit {
             },
           });
           this.degreeData = this.degreeData.filter(
-            (data: any) => data.id != id
+            (data: DegreeModel) => data.id != id
           );
           this.dataSource = new MatTableDataSource(this.degreeData);
         }
@@ -128,19 +129,21 @@ export class DegreeComponent implements OnInit {
   }
 
   updateStatus(id: number, newStatus: boolean): void {
-    let status: UpdateStatus = {
+    const status: UpdateStatus = {
       id: id,
       status: newStatus,
     };
 
-    this.degreeService.updateStatus(status).subscribe((res: any) => {
-      if (res.statusCode == StatusCode.Success) {
-        this.getAllDegrees();
-        this.snackbarService.success(res.message);
-      } else {
-        this.snackbarService.error(res.message);
-      }
-    });
+    this.degreeService
+      .updateStatus(status)
+      .subscribe((res: ResponseModel<number>) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.getAllDegrees();
+          this.snackbarService.success(res.message);
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      });
   }
 
   handleDataSorting(event: Sort) {

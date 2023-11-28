@@ -7,11 +7,7 @@ import {
 } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import {
-  MatChipEditedEvent,
-  MatChipInputEvent,
-  MatChipsModule,
-} from '@angular/material/chips';
+import { MatChipEditedEvent, MatChipInputEvent } from '@angular/material/chips';
 import { LiveAnnouncer } from '@angular/cdk/a11y';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { FormControls } from '../../config/degree.config';
@@ -20,6 +16,8 @@ import { DegreeService } from '../../services/degree.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { Messages } from 'src/app/shared/messages/messages.static';
 import { StatusCode } from 'src/app/shared/common/enums';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { DegreeModel } from '../../interfaces/degree.interface';
 
 export interface Stream {
   name: string;
@@ -51,7 +49,7 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
     { key: 'InActive', value: false },
   ];
   fromControls = FormControls;
-  data: any;
+  data: DegreeModel;
   form!: FormGroup;
   constructor(
     public dialogRef: MatDialogRef<AddDegreeComponent>,
@@ -88,11 +86,10 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (this.id != 0) {
       this.degreeService.get(this.id).subscribe({
-        next: (res: any) => {
+        next: (res: ResponseModel<DegreeModel>) => {
           if (res.statusCode == StatusCode.Success) {
             this.data = res.data;
             this.setFormValues();
-          } else {
           }
         },
       });
@@ -124,7 +121,7 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
       }
     }
     // Clear the input value
-    event.chipInput!.clear();
+    event.chipInput.clear();
   }
 
   remove(fruit: string): void {

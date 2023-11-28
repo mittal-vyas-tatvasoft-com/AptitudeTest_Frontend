@@ -1,5 +1,12 @@
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, Subject } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
@@ -9,10 +16,9 @@ import { navBarRoutes } from '../../configs/side-nav-routes.config';
 @Component({
   selector: 'app-sidebar',
   templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+  styleUrls: ['./sidebar.component.scss'],
 })
-
-export class SidebarComponent implements OnInit,OnDestroy{
+export class SidebarComponent implements OnInit, OnDestroy {
   ngUnsubscribe$ = new Subject<void>();
   expandBtn = '+';
   collapseBtn = '-';
@@ -22,31 +28,32 @@ export class SidebarComponent implements OnInit,OnDestroy{
   collapse!: -1;
   currentlyOpenAccordion: number | null = null;
   @Input() isSidebarOpen!: boolean;
-  @Output() onMenuIconClick = new EventEmitter();
+  @Output() menuIconClickEvent = new EventEmitter();
   isHandset$: Observable<boolean> = this.breakpointObserver
-  .observe(Breakpoints.Handset)
-  .pipe(
-    map((result) => result.matches),
-    shareReplay(),
-  );
+    .observe(Breakpoints.Handset)
+    .pipe(
+      map((result) => result.matches),
+      shareReplay()
+    );
 
   constructor(
     private breakpointObserver: BreakpointObserver,
     private loginService: LoginService,
-    private router: Router,
-  ) { }
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.isLoggedIn = this.loginService.isLoggedIn();
-     this.isSidebarOpen = this.loginService.getStateFromLocalStorage();
+    this.isSidebarOpen = this.loginService.getStateFromLocalStorage();
   }
 
   toggleAccordion(index: number) {
-    this.currentlyOpenAccordion = this.currentlyOpenAccordion === index ? null : index;
+    this.currentlyOpenAccordion =
+      this.currentlyOpenAccordion === index ? null : index;
   }
 
   onClick() {
-    this.onMenuIconClick.emit();
+    this.menuIconClickEvent.emit();
   }
 
   ngOnDestroy() {

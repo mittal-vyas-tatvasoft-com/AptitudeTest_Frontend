@@ -4,11 +4,10 @@ import { LoginService } from '../../services/login.service';
 import { loginControl } from '../../configs/login.config';
 import { Subject, takeUntil } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { Navigation } from 'src/app/shared/common/enums';
-import { FormControlModel } from 'src/app/shared/modules/form-control/interfaces/form-control-model';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +17,7 @@ import { FormControlModel } from 'src/app/shared/modules/form-control/interfaces
 export class LoginComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   loginModel = loginControl;
-  isAdmin: boolean = false;
+  isAdmin = false;
   private ngUnsubscribe$ = new Subject<void>();
 
   constructor(
@@ -27,7 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.isAdmin = this.isRouteAdmin(this.activatedRoute);
@@ -39,10 +38,15 @@ export class LoginComponent implements OnInit, OnDestroy {
           Validators.pattern(validations.common.emailREGEX),
         ],
       ],
-      password: ['', [Validators.required,
-      Validators.pattern(validations.common.passwordREGEX)]],
+      password: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.passwordREGEX),
+        ],
+      ],
     });
-    this.getToken()
+    this.getToken();
   }
 
   login() {
@@ -52,7 +56,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         password: this.form.value.password,
       };
       this.loginModel.passwordField.inputType = 'password';
-      this.loginModel.passwordField.iconName = 'password-visibility-show-dark.svg';
+      this.loginModel.passwordField.iconName =
+        'password-visibility-show-dark.svg';
       if (this.isAdmin) {
         this.loginService
           .Adminlogin(payload)
@@ -69,8 +74,7 @@ export class LoginComponent implements OnInit, OnDestroy {
               this.snackbarService.error(error.message);
             },
           });
-      }
-      else {
+      } else {
         this.loginService
           .login(payload)
           .pipe(takeUntil(this.ngUnsubscribe$))
@@ -96,7 +100,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (!route) {
       return false;
     }
-    if (route.snapshot.url.some(segment => segment.path === 'login')) {
+    if (route.snapshot.url.some((segment) => segment.path === 'login')) {
       return true;
     }
   }

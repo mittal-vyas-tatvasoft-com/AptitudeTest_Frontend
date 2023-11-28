@@ -1,11 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { LoginService } from '../../services/login.service';
 import { Subject, takeUntil } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { validations } from 'src/app/shared/messages/validation.static';
-import { forgotControl } from '../../configs/forgot-password.config';
 import { resetPasswordControl } from '../../configs/reset-password.config';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 
@@ -14,52 +12,44 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
   templateUrl: './reset-password.component.html',
   styleUrls: ['./reset-password.component.scss'],
 })
-export class ResetPasswordComponent {
-
+export class ResetPasswordComponent implements OnInit, OnDestroy {
   form!: FormGroup;
   disable = false;
   resetModel = resetPasswordControl;
   resetFailed = false;
-  passwordsDoNotMatch: boolean = false;
+  passwordsDoNotMatch = false;
   encryptedEmail!: string;
   private ngUnsubscribe$ = new Subject<void>();
 
   constructor(
     private fb: FormBuilder,
-    private loginService: LoginService, 
+    private loginService: LoginService,
     private router: Router,
     private route: ActivatedRoute,
     private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
-    this.route.queryParams.subscribe(params => {
+    this.route.queryParams.subscribe((params) => {
       this.encryptedEmail = params['email'];
     });
     this.createForm();
   }
 
   createForm() {
-    this.form = this.fb.group({
-      newPassword: [
-        '',
-        [
-          Validators.required,
-        ],
-      ],
-      confirmPassword: [
-        '',
-        [
-          Validators.required,
-        ],
-      ]
-    } ,{ validators: this.passwordsMatchValidator });
+    this.form = this.fb.group(
+      {
+        newPassword: ['', [Validators.required]],
+        confirmPassword: ['', [Validators.required]],
+      },
+      { validators: this.passwordsMatchValidator }
+    );
   }
 
   resetPassword() {
     const payload = {
       newPassword: this.form.value.newPassword,
-      encryptedEmail: this.encryptedEmail
+      encryptedEmail: this.encryptedEmail,
     };
     if (this.form.valid) {
       this.disable = true;

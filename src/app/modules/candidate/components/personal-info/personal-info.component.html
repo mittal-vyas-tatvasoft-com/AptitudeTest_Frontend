@@ -26,7 +26,7 @@
             class="w-100"
           ></app-text-control>
         </div>
-        <div class="col-sm-6 col-md-4 col-lg-3 w-xl-40">
+        <div class="col-sm-6 col-md-4 col-lg-3 w-xl-40" *ngIf="isAdmin">
           <app-select
             [formControlModel]="CandidateModel.userGroup"
             [form]="form"
@@ -40,14 +40,14 @@
             [options]="colleges"
           ></app-select>
         </div>
-        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl" *ngIf="isAdmin">
           <app-select
             [formControlModel]="CandidateModel.status"
             [form]="form"
             [options]="selectOptionsForStatus"
           ></app-select>
         </div>
-        <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl" *ngIf="isAdmin">
           <app-text-control
             aria-readonly="true"
             [formControlModel]="CandidateModel.year"

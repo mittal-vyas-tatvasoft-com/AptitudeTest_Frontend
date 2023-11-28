@@ -38,7 +38,10 @@
             <div class="col-lg-4">
               <mat-form-field appearance="outline">
                 <mat-label>Topic</mat-label>
-                <mat-select formControlName="topicId">
+                <mat-select
+                  formControlName="topicId"
+                  [disabled]="!isTopicEditable"
+                >
                   <mat-option *ngFor="let topic of topics" [value]="topic.id">
                     {{ topic.name }}
                   </mat-option>
@@ -142,7 +145,7 @@
             </div>
             <div class="col-12">
               <div
-                *ngIf="optionType == optionTypes.Text; else elseBlock"
+                *ngIf="optionType === optionTypes.Text; else elseBlock"
                 class="answer-type"
               >
                 <div class="row">
@@ -220,7 +223,7 @@
                   </div>
                 </div>
               </ng-template>
-              <mat-error *ngIf="optionType == optionTypes.Image">{{
+              <mat-error *ngIf="optionType === optionTypes.Image">{{
                 getImageError()
               }}</mat-error>
               <mat-error>{{ getCheckboxError() }}</mat-error>

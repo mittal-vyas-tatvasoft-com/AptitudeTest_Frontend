@@ -1,21 +1,25 @@
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CandidateService } from '../../services/candidate.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
+import { Numbers } from 'src/app/shared/common/enums';
 import { validations } from 'src/app/shared/messages/validation.static';
-import { CandidateModel } from '../../interfaces/candidate.interface';
-import { candidateControl, selectOptionsForGender, selectOptionsForStatus } from '../../configs/candidate.configs';
-import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
-import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
+import {
+  candidateControl,
+  selectOptionsForGender,
+  selectOptionsForStatus,
+} from '../../configs/candidate.configs';
+import { CandidateModel } from '../../interfaces/candidate.interface';
+import { CandidateService } from '../../services/candidate.service';
 
 @Component({
   selector: 'app-add-candidate',
   templateUrl: './add-candidate.component.html',
-  styleUrls: ['./add-candidate.component.scss']
+  styleUrls: ['./add-candidate.component.scss'],
 })
-export class AddCandidateComponent {
+export class AddCandidateComponent implements OnInit {
   selectOptionsForGender: SelectOption[] = selectOptionsForGender;
   selectOptionsForStatus: SelectOption[] = selectOptionsForStatus;
   CandidateModel = candidateControl;
@@ -31,7 +35,8 @@ export class AddCandidateComponent {
     private formBuilder: FormBuilder,
     private candidateService: CandidateService,
     private loginService: LoginService,
-    public _formValidators: ValidationService) { }
+    public _formValidators: ValidationService
+  ) {}
 
   ngOnInit(): void {
     this.getDropdowns();
@@ -48,18 +53,24 @@ export class AddCandidateComponent {
       firstName: ['', Validators.required],
       lastName: [''],
       fatherName: [''],
-      email: ['', [
-        Validators.required,
-        Validators.pattern(validations.common.emailREGEX),
-      ]],
-      phoneNumber: ['', [
-        Validators.required,
-        Validators.pattern(validations.common.mobileNumberREGEX),
-      ]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.emailREGEX),
+        ],
+      ],
+      phoneNumber: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.mobileNumberREGEX),
+        ],
+      ],
       groupId: ['', Validators.required],
       collegeId: ['', Validators.required],
       gender: [''],
-      status: [candidateControl.status.value]
+      status: [candidateControl.status.value],
     });
   }
 
@@ -77,7 +88,7 @@ export class AddCandidateComponent {
         id: groups.id,
         key: groups.name,
         value: groups.name,
-      }));;
+      }));
     });
   }
 
@@ -94,16 +105,20 @@ export class AddCandidateComponent {
       this.isLoading = true;
       const candidateData: CandidateModel = this.form.value;
       candidateData.status = this.form.value.status === 'Active' ? true : false;
-      candidateData.gender = this.form.value.gender === 'Male' ? Numbers.One : Numbers.Two;
+      candidateData.gender =
+        this.form.value.gender === 'Male' ? Numbers.One : Numbers.Two;
       candidateData.createdBy = this.userId;
-      this.candidateService.addCandidate(candidateData).subscribe(
-        (response) => {
+      this.candidateService
+        .addCandidate(candidateData)
+        .subscribe((response) => {
           this.isLoading = true;
-          this.dialogRef.close({ refreshTable: true, message: response.message, status: response.statusCode });
-        }
-      );
-    }
-    else {
+          this.dialogRef.close({
+            refreshTable: true,
+            message: response.message,
+            status: response.statusCode,
+          });
+        });
+    } else {
       this.form.markAllAsTouched();
     }
   }

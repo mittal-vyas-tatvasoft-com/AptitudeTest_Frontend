@@ -25,9 +25,14 @@ import {
   QuestionType,
   StatusCode,
 } from 'src/app/shared/common/enums';
-import { Question } from 'src/app/modules/questions/interfaces/question.interface';
+import {
+  Params,
+  Question,
+} from 'src/app/modules/questions/interfaces/question.interface';
 import { environment } from 'src/environments/environment';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-add-question',
@@ -38,7 +43,7 @@ export class AddQuestionComponent implements OnInit {
   public message: string = DragDropInput;
   public Editor = ClassicEditor;
   dropzoneConfig = dropzoneConfig;
-  questionId: number = 0;
+  questionId = 0;
   questionForm: FormGroup;
   topics = Topics;
   difficulty = Difficulty;
@@ -56,8 +61,9 @@ export class AddQuestionComponent implements OnInit {
   optionIds: number[] = [0, 0, 0, 0];
   formData: FormData;
   isDuplicate: boolean;
+  isTopicEditable = true;
   question: Question;
-  isEdit: boolean = false;
+  isEdit = false;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
   constructor(
     private location: Location,
@@ -71,33 +77,40 @@ export class AddQuestionComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.route.queryParams.subscribe((param: any) => {
+    this.route.queryParams.subscribe((param: Params) => {
       if (param.id) {
         this.questionId = param.id;
         this.isDuplicate = param.isDuplicate === 'true';
         this.isEdit = !this.isDuplicate;
-        this.questionService.get(param.id).subscribe((data: any) => {
-          this.question = data.data;
-          this.setFormValues();
-        });
+        this.questionService
+          .get(param.id)
+          .subscribe((data: ResponseModel<Question>) => {
+            this.question = data.data;
+            if (this.question.parentId != null && this.question.parentId != 0) {
+              this.isTopicEditable = false;
+            } else {
+              this.isTopicEditable = !this.isDuplicate;
+            }
+            this.setFormValues();
+          });
+      }
+    });
+
+    this.questionForm.get('questionType')?.valueChanges.subscribe(() => {
+      if (this.isEdit || this.isDuplicate) {
+        this.questionForm.get('isAnswer')?.markAsTouched();
       }
     });
 
     this.questionForm
-      .get('questionType')
-      ?.valueChanges.subscribe((data: any) => {
-        if (this.isEdit || this.isDuplicate) {
-          this.questionForm.get('isAnswer')?.markAsTouched();
+      .get('optionType')
+      ?.valueChanges.subscribe((data: number) => {
+        if (data == this.optionTypes.Image) {
+          this.removeOptionValidators();
+        } else {
+          this.setOptionValidators();
         }
       });
-
-    this.questionForm.get('optionType')?.valueChanges.subscribe((data: any) => {
-      if (data == this.optionTypes.Image) {
-        this.removeOptionValidators();
-      } else {
-        this.setOptionValidators();
-      }
-    });
   }
 
   handleBackBtn() {
@@ -152,7 +165,7 @@ export class AddQuestionComponent implements OnInit {
       this.isAnswer[i] = this.question.options[i].isAnswer;
       if (this.question.optionType == this.optionTypes.Image) {
         this.previewImages[i] =
-          this.baseImageUrl + this.question.options[i].optionValue!;
+          this.baseImageUrl + this.question.options[i].optionValue;
         this.optionImageFlag[i] = true;
       }
       if (this.question.options[i].isAnswer == true) {
@@ -224,7 +237,7 @@ export class AddQuestionComponent implements OnInit {
       this.formData = this.createFormData();
       if (this.isEdit) {
         this.questionService.update(this.formData).subscribe({
-          next: (res: any) => {
+          next: (res: ResponseModel<null>) => {
             if (res.statusCode == StatusCode.Success) {
               this.snackbarService.success(res.message);
               this.router.navigate(['admin/questions']);
@@ -235,7 +248,7 @@ export class AddQuestionComponent implements OnInit {
         });
       } else {
         this.questionService.create(this.formData).subscribe({
-          next: (res: any) => {
+          next: (res: ResponseModel<null>) => {
             if (res.statusCode == StatusCode.Success) {
               this.snackbarService.success(res.message);
               this.router.navigate(['admin/questions']);
@@ -252,7 +265,7 @@ export class AddQuestionComponent implements OnInit {
     }
   }
 
-  checkboxChanged(event: any) {
+  checkboxChanged(event: MatCheckboxChange) {
     this.questionForm.get('isAnswer')?.markAsTouched();
     if (event.checked) {
       this.isAnswer[Number(event.source.value)] = true;
@@ -269,8 +282,8 @@ export class AddQuestionComponent implements OnInit {
   }
 
   getCheckboxError() {
-    let questionType = this.questionForm.get('questionType')?.value;
-    let isAnswer = this.questionForm.get('isAnswer');
+    const questionType = this.questionForm.get('questionType')?.value;
+    const isAnswer = this.questionForm.get('isAnswer');
     if (
       questionType == QuestionType.SingleAnswer &&
       this.checkboxValues.length != 1 &&
@@ -304,7 +317,7 @@ export class AddQuestionComponent implements OnInit {
   }
 
   areAnswersValid() {
-    let questionType = this.questionForm.get('questionType')?.value;
+    const questionType = this.questionForm.get('questionType')?.value;
     if (
       (questionType == QuestionType.MultiAnswer &&
         (this.checkboxValues.length < 2 || this.checkboxValues.length > 4)) ||
@@ -333,7 +346,7 @@ export class AddQuestionComponent implements OnInit {
   }
 
   createFormData() {
-    let data = new FormData();
+    const data = new FormData();
     data.append('Id', !this.isEdit ? '0' : this.questionId.toString());
     data.append('TopicId', this.questionForm.get('topicId')?.value);
     data.append('QuestionText', this.questionForm.get('questionText')?.value);
@@ -362,7 +375,7 @@ export class AddQuestionComponent implements OnInit {
   }
 
   getOptionTextError(index: number) {
-    let option = 'optionValue' + this.optionsIndex[index];
+    const option = 'optionValue' + this.optionsIndex[index];
     if (
       (this.questionForm.get(option)?.dirty ||
         this.questionForm.get(option)?.touched) &&

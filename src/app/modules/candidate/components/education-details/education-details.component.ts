@@ -1,15 +1,37 @@
-import { Component, Input, SimpleChanges } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl, Validators, AbstractControl } from '@angular/forms';
-import { ErrorMessageForEductionDetail, candidateControl, labelNameForCollege, labelNameForDegree, selectOptionsForStream } from '../../configs/candidate.configs';
-import { CandidateService } from '../../services/candidate.service';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnChanges,
+  OnInit,
+  SimpleChanges,
+} from '@angular/core';
+import {
+  AbstractControl,
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import {
+  ErrorMessageForEductionDetail,
+  candidateControl,
+  labelNameForCollege,
+  labelNameForDegree,
+  selectOptionsForStream,
+} from '../../configs/candidate.configs';
+import { CandidateService } from '../../services/candidate.service';
 
 @Component({
   selector: 'app-education-details',
   templateUrl: './education-details.component.html',
-  styleUrls: ['./education-details.component.scss']
+  styleUrls: ['./education-details.component.scss'],
 })
-export class EducationDetailsComponent {
+export class EducationDetailsComponent
+  implements OnInit, AfterViewInit, OnChanges
+{
   CandidateModel = candidateControl;
   form: FormGroup;
   selectOptionsForStream: SelectOption[] = selectOptionsForStream;
@@ -27,18 +49,24 @@ export class EducationDetailsComponent {
   labelNameForCollege: string[] = labelNameForCollege;
   ErrorMessage = ErrorMessageForEductionDetail;
   @Input() academicDetails: any[];
+  @Input() isAdmin: boolean;
 
-  constructor(private formBuilder: FormBuilder,
-    private candidateService: CandidateService) { }
+  constructor(
+    private formBuilder: FormBuilder,
+    private candidateService: CandidateService
+  ) {}
 
   ngOnInit() {
-    this.getDropdowns();
     this.createForm();
+  }
+
+  ngAfterViewInit() {
+    this.getDropdowns();
     this.setAcademicsDetails();
     this.populateForm();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
+  ngOnChanges() {
     if (this.academicDetails) {
       this.populateForm();
     }
@@ -46,79 +74,81 @@ export class EducationDetailsComponent {
   }
 
   getDropdowns() {
-    this.candidateService.getDegreeForDropDown().subscribe((Degrees) => {
-      Degrees.forEach((degree) => {
-        if (degree.level === 1) {
-          this.degreeSpecialization.push({
-            id: degree.id,
-            key: degree.name,
-            value: degree.name,
-          });
-        } else if (degree.level === 2) {
-          this.HSCDiploma.push({
-            id: degree.id,
-            key: degree.name,
-            value: degree.name,
-          });
-        }
-        else if (degree.level === 3) {
-          this.bachelorDegree.push({
-            id: degree.id,
-            key: degree.name,
-            value: degree.name,
-          });
-        } else if (degree.level === 4) {
-          this.masterDegree.push({
-            id: degree.id,
-            key: degree.name,
-            value: degree.name,
-          });
-        } else if (degree.level === 5) {
-          this.otherDegree.push({
-            id: degree.id,
-            key: degree.name,
-            value: degree.name,
-          });
-        }
+    this.candidateService
+      .getDegreeForDropDown(this.isAdmin)
+      .subscribe((Degrees) => {
+        Degrees.forEach((degree) => {
+          if (degree.level === 1) {
+            this.degreeSpecialization.push({
+              id: degree.id,
+              key: degree.name,
+              value: degree.name,
+            });
+          } else if (degree.level === 2) {
+            this.HSCDiploma.push({
+              id: degree.id,
+              key: degree.name,
+              value: degree.name,
+            });
+          } else if (degree.level === 3) {
+            this.bachelorDegree.push({
+              id: degree.id,
+              key: degree.name,
+              value: degree.name,
+            });
+          } else if (degree.level === 4) {
+            this.masterDegree.push({
+              id: degree.id,
+              key: degree.name,
+              value: degree.name,
+            });
+          } else if (degree.level === 5) {
+            this.otherDegree.push({
+              id: degree.id,
+              key: degree.name,
+              value: degree.name,
+            });
+          }
+        });
       });
-    });
 
-    this.candidateService.getStremForDropDown().subscribe((Streams) => {
-      Streams.forEach((stream) => {
-        if (stream.level === 1) {
-          this.streamSpecialization.push({
-            id: stream.id,
-            key: stream.name,
-            value: stream.name,
-          });
-        } else if (stream.level === 2) {
-          this.HSCDiplomaStream.push({
-            id: stream.id,
-            key: stream.name,
-            value: stream.name,
-          });
-        }
-        else if (stream.level === 3) {
-          this.bachelorStream.push({
-            id: stream.id,
-            key: stream.name,
-            value: stream.name,
-          });
-        } else if (stream.level === 4) {
-          this.masterStream.push({
-            id: stream.id,
-            key: stream.name,
-            value: stream.name,
-          });
-        } else if (stream.level === 5) {
-          this.otherStream.push({
-            id: stream.id,
-            key: stream.name,
-            value: stream.name,
-          });
-        }
+    this.candidateService
+      .getStremForDropDown(this.isAdmin)
+      .subscribe((Streams) => {
+        Streams.forEach((stream) => {
+          if (stream.level === 1) {
+            this.streamSpecialization.push({
+              id: stream.id,
+              key: stream.name,
+              value: stream.name,
+            });
+          } else if (stream.level === 2) {
+            this.HSCDiplomaStream.push({
+              id: stream.id,
+              key: stream.name,
+              value: stream.name,
+            });
+          } else if (stream.level === 3) {
+            this.bachelorStream.push({
+              id: stream.id,
+              key: stream.name,
+              value: stream.name,
+            });
+          } else if (stream.level === 4) {
+            this.masterStream.push({
+              id: stream.id,
+              key: stream.name,
+              value: stream.name,
+            });
+          } else if (stream.level === 5) {
+            this.otherStream.push({
+              id: stream.id,
+              key: stream.name,
+              value: stream.name,
+            });
+          }
+        });
       });
-    });
   }
 
   getFormData(): FormGroup {
@@ -128,7 +158,11 @@ export class EducationDetailsComponent {
   setAcademicsDetails() {
     if (this.academicDetails) {
       const academicDetails = this.academicDetails;
-      for (let index = 0; index < this.educationDetailsArray.controls.length; index++) {
+      for (
+        let index = 0;
+        index < this.educationDetailsArray.controls.length;
+        index++
+      ) {
         const control = this.educationDetailsArray.controls[index] as FormGroup;
         control.patchValue({
           degreeId: '',
@@ -140,9 +174,13 @@ export class EducationDetailsComponent {
         });
       }
       academicDetails.forEach((academicDetail: any) => {
-        const index = this.findFormArrayIndexByDegreeLevel(academicDetail.degreeLevel);
+        const index = this.findFormArrayIndexByDegreeLevel(
+          academicDetail.degreeLevel
+        );
         if (index >= 0 && index < this.educationDetailsArray.controls.length) {
-          const control = this.educationDetailsArray.controls[index] as FormGroup;
+          const control = this.educationDetailsArray.controls[
+            index
+          ] as FormGroup;
 
           control.patchValue({
             degreeId: academicDetail.degreeId,

@@ -17,15 +17,16 @@ import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
 import { Subject, debounceTime } from 'rxjs';
 import { Pagination } from 'src/app/shared/common/interfaces/pagination.interface';
-import { Question } from '../../interfaces/question.interface';
 import { FormGroup } from '@angular/forms';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { Question } from '../../interfaces/question.interface';
 @Component({
   selector: 'app-question-list',
   templateUrl: './question-list.component.html',
   styleUrls: ['./question-list.component.scss'],
 })
 export class QuestionListComponent implements OnInit {
-  questions: any[] = [];
+  questions: Question[] = [];
   @Input() filterForm?: FormGroup;
   optionType = OptionType;
   questionTopic = QuestionTopic;
@@ -59,8 +60,8 @@ export class QuestionListComponent implements OnInit {
         );
       });
     }
-    window.addEventListener('scroll', (event: any) => {
-      let percent =
+    window.addEventListener('scroll', () => {
+      const percent =
         (window.innerHeight + window.scrollY) / document.body.offsetHeight;
       this.scrollSubject.next(percent);
     });
@@ -93,7 +94,7 @@ export class QuestionListComponent implements OnInit {
     this.questionService
       .questions(pageSize, pageIndex, topic, status)
       .subscribe({
-        next: (res: any) => {
+        next: (res: ResponseModel<Pagination<Question>>) => {
           if (res.statusCode == StatusCode.Success) {
             this.response = res.data;
             this.questions = [...this.questions, ...this.response.entityList];
@@ -110,7 +111,7 @@ export class QuestionListComponent implements OnInit {
 
   updateStatus(status: UpdateStatus) {
     this.questionService.updateStatus(status).subscribe({
-      next: (res: any) => {
+      next: (res: ResponseModel<number>) => {
         if (res.statusCode == StatusCode.Success) {
           this.questions = this.questions.map((q) => {
             if (q.id == status.id) {
@@ -137,10 +138,10 @@ export class QuestionListComponent implements OnInit {
       .subscribe((res: boolean) => {
         if (res) {
           this.questionService.delete(id).subscribe({
-            next: (res: any) => {
+            next: (res: ResponseModel<null>) => {
               if (res.statusCode == StatusCode.Success) {
                 this.questions = this.questions.filter(
-                  (data: any) => data.id != id
+                  (data: Question) => data.id != id
                 );
                 this.snackbarService.success(res.message);
               } else {

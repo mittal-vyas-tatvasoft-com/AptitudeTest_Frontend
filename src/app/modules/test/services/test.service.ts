@@ -178,7 +178,7 @@ export class TestService {
       );
   }
 
-  delete(id: any) {
+  delete(id: number) {
     return this.http.delete<ResponseModel<string>>(
       `${environment.baseURL}Tests/DeleteTest/${id}`
     );
