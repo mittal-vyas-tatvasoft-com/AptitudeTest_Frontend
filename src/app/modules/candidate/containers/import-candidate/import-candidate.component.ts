@@ -32,6 +32,7 @@ import { CandidateService } from '../../services/candidate.service';
 import {
   DragDropInput,
   dropzoneConfig,
+  importCandidateSampleFileName,
   importCandidateSampleFilePath,
 } from '../../static/candidate.static';
 
