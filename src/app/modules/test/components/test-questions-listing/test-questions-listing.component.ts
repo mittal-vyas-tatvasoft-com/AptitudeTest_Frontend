@@ -5,7 +5,10 @@ import {
   Input,
   Output,
 } from '@angular/core';
-import { AllInsertedQuestionModel } from '../../interfaces/test.interface';
+import {
+  AllInsertedQuestionModel,
+  TopicWiseQuestionData,
+} from '../../interfaces/test.interface';
 
 @Component({
   selector: 'app-test-questions-listing',
@@ -18,6 +21,7 @@ export class TestQuestionsListingComponent {
   @Output() handleDeleteQuestionsDialog = new EventEmitter();
   @Output() handleDeleteAllQuestionsDialog = new EventEmitter();
   dataToShow: AllInsertedQuestionModel[] = [];
+  marksChipData: TopicWiseQuestionData[] = [];
   constructor(private cdr: ChangeDetectorRef) {}
   handleEditDialog() {
     this.handleEditQuestionsDialog.emit();
@@ -33,6 +37,7 @@ export class TestQuestionsListingComponent {
   ngAfterViewInit() {
     this.cdr.detectChanges();
   }
+
   ngAfterChanges() {
     this.dataToShow = this.allInsertedQuestions;
     this.cdr.detectChanges();

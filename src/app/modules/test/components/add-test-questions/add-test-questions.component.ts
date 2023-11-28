@@ -2,6 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { BehaviorSubject } from 'rxjs';
 import { QuestionTopics } from '../../interfaces/test.interface';
+import { MarksAvailable } from '../../static/test.static';
 
 @Component({
   selector: 'app-add-test-questions',
@@ -25,7 +26,7 @@ export class AddTestQuestionsComponent {
   @Output() handleValidateSelectedMarks = new EventEmitter();
   @Output() handleMarksSum = new EventEmitter();
   @Output() addQuestions = new EventEmitter();
-
+  MarksAvailable = MarksAvailable;
   ngOnInit() {}
 
   ngAfterViewInit() {}

@@ -52,11 +52,7 @@
           <table>
             <thead>
               <th [width]="200">Type of Question</th>
-              <th>1 marks</th>
-              <th>2 marks</th>
-              <th>3 marks</th>
-              <th>4 marks</th>
-              <th>5 marks</th>
+              <th *ngFor="let item of MarksAvailable">{{ item }} marks</th>
             </thead>
             <tbody>
               <tr>

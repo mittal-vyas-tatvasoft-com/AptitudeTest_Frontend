@@ -66,8 +66,8 @@
           [existingQuestionsTopicId]="existingQuestionsTopicId"
           [testId]="testId"
           (questionsAddedSuccess)="questionsAddedSuccess()"
-          (deleteTopicWiseQuestions)="deleteTopicWiseQuestions($event)"
-          (deleteAllQuestions)="deleteAllQuestions()"
+          (deleteTopicWiseQuestions)="deleteQuestions($event)"
+          (deleteAllQuestions)="deleteQuestions(0)"
         ></app-test-questions>
       </mat-step>
     </mat-stepper>

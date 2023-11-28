@@ -327,36 +327,36 @@ export class CreateTestComponent {
     this.fetchAllInsertedQuestions();
   }
 
-  deleteTopicWiseQuestions(topicId: number) {
-    this.testService
-      .DeleteTopicWiseTestQuestions(this.testId, topicId)
-      .subscribe({
+  deleteQuestions(topicId: number) {
+    if (topicId != 0) {
+      this.testService
+        .DeleteTopicWiseTestQuestions(this.testId, topicId)
+        .subscribe({
+          next: (res) => {
+            this.allInsertedQuestions = [];
+            this.existingQuestionsTopicId = [];
+            this.fetchAllInsertedQuestions();
+            if (res.statusCode == StatusCode.Success) {
+              this.snackbarService.success(res.message);
+            } else {
+              this.snackbarService.error(res.message);
+            }
+          },
+        });
+    } else {
+      this.testService.DeleteAllTestQuestions(this.testId).subscribe({
         next: (res) => {
-          this.allInsertedQuestions = [];
-          this.existingQuestionsTopicId = [];
-          this.fetchAllInsertedQuestions();
           if (res.statusCode == StatusCode.Success) {
+            this.allInsertedQuestions = [];
+            this.existingQuestionsTopicId = [];
+            this.fetchAllInsertedQuestions();
             this.snackbarService.success(res.message);
           } else {
             this.snackbarService.error(res.message);
           }
         },
       });
-  }
-
-  deleteAllQuestions() {
-    this.testService.DeleteAllTestQuestions(this.testId).subscribe({
-      next: (res) => {
-        if (res.statusCode == StatusCode.Success) {
-          this.allInsertedQuestions = [];
-          this.existingQuestionsTopicId = [];
-          this.fetchAllInsertedQuestions();
-          this.snackbarService.success(res.message);
-        } else {
-          this.snackbarService.error(res.message);
-        }
-      },
-    });
+    }
   }
 
   handlePageSizeChange(pageSize: number) {

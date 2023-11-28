@@ -84,48 +84,36 @@
           <div class="col-sm">
             <div class="questions-meta">
               <p class="title">Single Answer ({{ item.singleAnswerCount }})</p>
-              <div class="question-weightage-chips">
-                <mat-chip
-                  class="weightage-chip"
-                  *ngIf="item.singleAnswer.oneMarkQuestion != 0"
-                  disableRipple
-                >
-                  1 Mark<span class="mark">{{
-                    item.singleAnswer.oneMarkQuestion
-                  }}</span>
-                </mat-chip>
-                <mat-chip
-                  class="weightage-chip"
-                  *ngIf="item.singleAnswer.twoMarkQuestion != 0"
-                  disableRipple
-                >
-                  2 Mark<span class="mark">{{
-                    item.singleAnswer.oneMarkQuestion
-                  }}</span>
-                </mat-chip>
-                <mat-chip
-                  class="weightage-chip"
-                  *ngIf="item.singleAnswer.threeMarkQuestion != 0"
-                  disableRipple
-                >
-                  3 Mark<span class="mark">{{
-                    item.singleAnswer.oneMarkQuestion
-                  }}</span>
-                </mat-chip>
-                <mat-chip
-                  class="weightage-chip"
-                  *ngIf="item.singleAnswer.fourMarkQuestion != 0"
-                  disableRipple
-                >
-                  4 Mark<span class="mark">02</span>
-                </mat-chip>
-                <mat-chip
-                  class="weightage-chip"
-                  *ngIf="item.singleAnswer.fiveMarkQuestion != 0"
-                  disableRipple
-                >
-                  5 Mark<span class="mark">01</span>
-                </mat-chip>
+              <div
+                class="question-weightage-chips"
+                *ngIf="item.singleAnswer != null"
+              >
+                <ng-container *ngFor="let data of item.singleAnswer | keyvalue">
+                  <mat-chip
+                    class="weightage-chip"
+                    *ngIf="
+                      (data.key === 'fiveMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'fourMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'oneMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'threeMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'twoMarkQuestion' && data.value !== 0)
+                    "
+                    disableRipple
+                  >
+                    {{
+                      data.key === "fiveMarkQuestion" && data.value !== 0
+                        ? "5"
+                        : data.key === "fourMarkQuestion" && data.value !== 0
+                        ? "4"
+                        : data.key === "twoMarkQuestion" && data.value !== 0
+                        ? "2"
+                        : data.key === "threeMarkQuestion" && data.value !== 0
+                        ? "3"
+                        : "1"
+                    }}
+                    Mark<span class="mark">{{ data.value }}</span>
+                  </mat-chip>
+                </ng-container>
               </div>
             </div>
           </div>

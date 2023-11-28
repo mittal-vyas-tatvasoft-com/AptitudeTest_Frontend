@@ -39,3 +39,5 @@ export const CanNotAddMoreQuestions: string =
   "All marks are occupied you can't add more questions";
 export const SelectValidQuestionCount: string =
   'Please select valid number of questions';
+
+export const MarksAvailable: number[] = [1, 2, 3, 4, 5];

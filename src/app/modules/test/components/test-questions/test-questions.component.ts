@@ -11,7 +11,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { BehaviorSubject } from 'rxjs';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
-import { StatusCode } from 'src/app/shared/common/enums';
+import { QuestionType, StatusCode } from 'src/app/shared/common/enums';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
@@ -90,20 +90,7 @@ export class TestQuestionsComponent implements OnInit {
       this.handleSumOfMarks();
     });
     this.form.get('topicId')?.valueChanges.subscribe((res) => {
-      this.form.patchValue({
-        numberOfQuestions: '',
-        weightage: '',
-        oneMarkQuestionSingleAnswer: 0,
-        twoMarkQuestionSingleAnswer: 0,
-        threeMarkQuestionSingleAnswer: 0,
-        fourMarkQuestionSingleAnswer: 0,
-        fiveMarkQuestionSingleAnswer: 0,
-        oneMarkQuestionMultiAnswer: 0,
-        twoMarkQuestionMultiAnswer: 0,
-        threeMarkQuestionMultiAnswer: 0,
-        fourMarkQuestionMultiAnswer: 0,
-        fiveMarkQuestionMultiAnswer: 0,
-      });
+      this.resetFields();
       if (res) {
         this.topicId = res;
         this.setQuestionCounts();
@@ -117,6 +104,22 @@ export class TestQuestionsComponent implements OnInit {
     this.cdr.detectChanges();
   }
 
+  resetFields() {
+    this.form.patchValue({
+      numberOfQuestions: '',
+      weightage: '',
+      oneMarkQuestionSingleAnswer: 0,
+      twoMarkQuestionSingleAnswer: 0,
+      threeMarkQuestionSingleAnswer: 0,
+      fourMarkQuestionSingleAnswer: 0,
+      fiveMarkQuestionSingleAnswer: 0,
+      oneMarkQuestionMultiAnswer: 0,
+      twoMarkQuestionMultiAnswer: 0,
+      threeMarkQuestionMultiAnswer: 0,
+      fourMarkQuestionMultiAnswer: 0,
+      fiveMarkQuestionMultiAnswer: 0,
+    });
+  }
   ngOnChanges() {}
 
   setQuestionCounts() {
@@ -236,7 +239,7 @@ export class TestQuestionsComponent implements OnInit {
       weightage: this.form.get('weightage')?.value,
       testQuestionsCount: [
         {
-          questionType: 1,
+          questionType: QuestionType.SingleAnswer,
           oneMarkQuestion: this.form.get('oneMarkQuestionSingleAnswer')?.value,
           twoMarkQuestion: this.form.get('twoMarkQuestionSingleAnswer')?.value,
           threeMarkQuestion: this.form.get('threeMarkQuestionSingleAnswer')
@@ -247,7 +250,7 @@ export class TestQuestionsComponent implements OnInit {
             ?.value,
         },
         {
-          questionType: 2,
+          questionType: QuestionType.MultiAnswer,
           oneMarkQuestion: this.form.get('oneMarkQuestionMultiAnswer')?.value,
           twoMarkQuestion: this.form.get('twoMarkQuestionMultiAnswer')?.value,
           threeMarkQuestion: this.form.get('threeMarkQuestionMultiAnswer')
@@ -263,7 +266,6 @@ export class TestQuestionsComponent implements OnInit {
       next: (res) => {
         if (res.statusCode == StatusCode.Success) {
           this.snackbarService.success(res.message);
-          this.form.reset();
           this.questionsAddedSuccess.emit();
         } else {
           this.snackbarService.error(res.message);
