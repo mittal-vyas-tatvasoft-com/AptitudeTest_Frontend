@@ -1,0 +1,4 @@
+topic,difficulty,status,questiontext,questiontype,optiontype,optiondata1,isanswer1,optiondata2,isanswer2,optiondata3,isanswer3,optiondata4,isanswer4
+maths,1,FALSE,question iota Testing import?,1,1,11,FALSE,22,TRUE,33,FALSE,65,FALSE
+reasoning,1,FALSE,question iota Testing import?,1,1,11,FALSE,22,TRUE,33,FALSE,65,FALSE
+technical,1,FALSE,question iota Testing import?,1,1,11,FALSE,22,TRUE,33,FALSE,65,FALSE
