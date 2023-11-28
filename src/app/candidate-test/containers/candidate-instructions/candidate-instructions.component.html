@@ -155,7 +155,7 @@
     class="page-action-buttons d-md-flex justify-content-between align-items-center"
   >
     <div class="mb-2 mb-md-0">
-      <mat-checkbox color="primary" class="font14"
+      <mat-checkbox color="primary" class="font14" [(ngModel)]="isChecked"
         >Lorem ipsum veniam sed tempor nostrud ex elit minim cupidatat
       </mat-checkbox>
     </div>
@@ -164,6 +164,7 @@
         mat-flat-button
         mat-dialog-close
         color="primary"
+        [disabled]="!isChecked"
         routerLink="/user/test"
       >
         Start Test
