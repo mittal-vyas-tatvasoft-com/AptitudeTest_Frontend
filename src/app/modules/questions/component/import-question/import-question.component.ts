@@ -1,21 +1,21 @@
 import { Location } from '@angular/common';
 import { Component, ViewChild } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { DropzoneComponent, DropzoneDirective } from 'ngx-dropzone-wrapper';
+import { StatusCode } from 'src/app/shared/common/enums';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { Topics } from '../../static/question.static';
+import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
   DragDropInput,
   QuestionControls,
   dropzoneConfigCsv,
 } from '../../configs/question.config';
-import { FormGroup } from '@angular/forms';
-import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { QuestionsService } from '../../services/questions.service';
-import { StatusCode } from 'src/app/shared/common/enums';
-import { DropzoneComponent, DropzoneDirective } from 'ngx-dropzone-wrapper';
+import { Topics } from '../../static/question.static';
 import { QuestionListComponent } from '../question-list/question-list.component';
-import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 
 @Component({
   selector: 'app-import-question',
@@ -103,5 +103,15 @@ export class ImportQuestionComponent {
     this.isFile = false;
     this.fileName = '';
     this.formData.delete('file');
+  }
+
+  downloadSampleFile() {
+    const filePath = '/assets/import-sample/import questions sample .csv';
+    const link = document.createElement('a');
+    link.href = filePath;
+    link.download = 'import questions sample.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }

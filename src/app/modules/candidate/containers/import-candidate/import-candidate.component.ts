@@ -1,45 +1,35 @@
-import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import {
-  CandidateModel,
-  DropdownItem,
-  GetAllCandidateParams,
-} from '../../interfaces/candidate.interface';
 import { SelectionModel } from '@angular/cdk/collections';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { AddCandidateComponent } from '../add-candidate/add-candidate.component';
-import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { AddGroupComponent } from 'src/app/modules/groups/containers/add-group/add-group.component';
-import { DragDropInput, dropzoneConfig } from '../../static/candidate.static';
-import { CandidateService } from '../../services/candidate.service';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { DropzoneComponent, DropzoneDirective } from 'ngx-dropzone-wrapper';
+import { Subject, debounceTime } from 'rxjs';
+import { AddGroupComponent } from 'src/app/modules/groups/containers/add-group/add-group.component';
+import { GroupsService } from 'src/app/modules/groups/services/groups.service';
 import {
   Numbers,
   StaticMessages,
   StatusCode,
 } from 'src/app/shared/common/enums';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
-import { Router } from '@angular/router';
-import { Subject, debounceTime } from 'rxjs';
-import {
-  DropzoneComponent,
-  DropzoneDirective,
-  DropzoneMethodFunction,
-  DropzoneModule,
-} from 'ngx-dropzone-wrapper';
-import {
-  DropzoneEvent,
-  DropzoneFallbackFunction,
-} from 'ngx-dropzone-wrapper/lib/dropzone.interfaces';
-import { Sort } from '@angular/material/sort';
-import { GroupsService } from 'src/app/modules/groups/services/groups.service';
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
   candidateFilterFormConfig,
   importCandidateFormConfig,
 } from '../../configs/candidate.configs';
+import {
+  CandidateModel,
+  DropdownItem,
+  GetAllCandidateParams,
+} from '../../interfaces/candidate.interface';
+import { CandidateService } from '../../services/candidate.service';
+import { DragDropInput, dropzoneConfig } from '../../static/candidate.static';
 
 @Component({
   selector: 'app-import-candidate',
@@ -411,5 +401,15 @@ export class ImportCandidateComponent implements OnInit {
         break;
     }
     this.fetchCandidate();
+  }
+
+  downloadSampleFile() {
+    const filePath = '/assets/import-sample/import candidate sample.csv';
+    const link = document.createElement('a');
+    link.href = filePath;
+    link.download = 'import candidate sample.csv';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
   }
 }
