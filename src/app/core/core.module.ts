@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { CoreComponent } from './core.component';
 import { LayoutComponent } from './layout/layout.component';
 import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { LoaderComponent } from './components/loader/loader.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
     SidebarComponent,
     LayoutComponent,
     SidebarComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,

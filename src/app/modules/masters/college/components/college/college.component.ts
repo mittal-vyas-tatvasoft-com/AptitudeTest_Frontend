@@ -31,10 +31,10 @@ export class CollegeComponent implements OnInit {
   pageNumbers: number[] = [];
   dataSource: MatTableDataSource<CollegeModel>;
   columns: TableColumn<CollegeModel>[] = [
-    { columnDef: 'name', header: 'Name of College' },
-    { columnDef: 'abbreviation', header: 'Abbreviation' },
-    { columnDef: 'status', header: 'Status' },
-    { columnDef: 'action', header: 'Action', isAction: true },
+    { columnDef: 'name', header: 'Name of College', width: '40%' },
+    { columnDef: 'abbreviation', header: 'Abbreviation', width: '30%' },
+    { columnDef: 'status', header: 'Status', width: '15%' },
+    { columnDef: 'action', header: 'Action', isAction: true, width: '15%' },
   ];
   private ngUnsubscribe$: Subject<void> = new Subject();
 

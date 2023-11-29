@@ -17,13 +17,14 @@ import { AddProfileComponent } from '../add-profile/add-profile.component';
 })
 export class ProfileComponent implements OnInit {
   displayedColumns: TableColumn<ProfileModel>[] = [
-    { columnDef: 'name', header: 'Profile Name' },
-    { columnDef: 'status', header: 'Status' },
+    { columnDef: 'name', header: 'Profile Name', width: '50%' },
+    { columnDef: 'status', header: 'Status', width: '25%' },
     {
       columnDef: 'editAction',
       header: 'Action',
       isAction: true,
       action: 'edit',
+      width: '25%'
     },
   ];
   addProfile: ProfileModel = {

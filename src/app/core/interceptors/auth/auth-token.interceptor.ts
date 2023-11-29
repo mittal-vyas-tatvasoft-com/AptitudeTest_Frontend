@@ -2,16 +2,15 @@ import {
   HttpInterceptor,
   HttpRequest,
   HttpHandler,
-  HttpEvent,
   HttpErrorResponse,
+  HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, switchMap, takeUntil, throwError } from 'rxjs';
+import { Observable, catchError, map, switchMap, takeUntil, tap, throwError } from 'rxjs';
 import { LoginService } from '../../auth/services/login.service';
 import { Navigation, StatusCode } from 'src/app/shared/common/enums';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { Messages } from 'src/app/shared/messages/messages.static';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { LoaderService } from '../../services/loader.service';
 
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
@@ -19,7 +18,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
   constructor(
     private loginService: LoginService,
-    public snackbar: SnackbarService
+    private loaderService: LoaderService
   ) { }
 
   private handleTokenRefresh(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
@@ -51,6 +50,8 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   }
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
+    // set loader to true 
+    this.loaderService.setLoading(true, req.url);
     const token = this.loginService.getToken();
     if (token) {
       req = req.clone({
@@ -60,7 +61,13 @@ export class AuthTokenInterceptor implements HttpInterceptor {
       });
     }
     return next.handle(req).pipe(
+      tap(res => {
+        if (res instanceof HttpResponse) {
+          this.loaderService.setLoading(false, req.url);
+        }
+      }),
       catchError((error) => {
+        this.loaderService.setLoading(false, req.url);
         if (
           error instanceof HttpErrorResponse &&
           error.status === StatusCode.Unauthorized

@@ -32,18 +32,19 @@ export class TestComponent implements OnInit {
   formData = testFilterModel;
   dataSource!: MatTableDataSource<TestData>;
   displayedColumns: TableColumn<TestData>[] = [
-    { columnDef: 'testName', header: 'Test' },
-    { columnDef: 'groupName', header: 'Group' },
-    { columnDef: 'testTime', header: 'Test Time' },
-    { columnDef: 'startTime', header: 'Start Time' },
-    { columnDef: 'endTime', header: 'End Time' },
-    { columnDef: 'noOfCandidates', header: 'No. Of Candidates' },
-    { columnDef: 'status', header: 'Status' },
+    { columnDef: 'testName', header: 'Test', width: '20%' },
+    { columnDef: 'groupName', header: 'Group', width: '15%' },
+    { columnDef: 'testTime', header: 'Test Time', width: '10%' },
+    { columnDef: 'startTime', header: 'Start Time', width: '15%' },
+    { columnDef: 'endTime', header: 'End Time', width: '15%' },
+    { columnDef: 'noOfCandidates', header: 'No. Of Candidates', width: '10%' },
+    { columnDef: 'status', header: 'Status', width: '10%' },
     {
       columnDef: 'editAction',
       header: 'Action',
       isAction: true,
       action: 'edit',
+      width: '5%'
     },
   ];
 
