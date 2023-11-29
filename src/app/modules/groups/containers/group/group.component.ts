@@ -12,6 +12,7 @@ import { AddGroupComponent } from '../add-group/add-group.component';
 import { CollegeModel } from 'src/app/modules/masters/college/interfaces/college.interface';
 import { debounceTime, Observable, Subject } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { L } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-group',
@@ -80,9 +81,16 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  getFilteredGroupsFromCollege(search: string, collegeId: number) {
+  getFilteredGroupsFromCollege(search: string) {
+    const collegeId = this.form.get('searchedCollege')?.value;
     this.groupsService.groups(search, collegeId).subscribe((groups) => {
-      this.groupList = groups;
+      if (groups === null) {
+        this.groupList.length = 0;
+        this.groupList = [];
+        return;
+      } else if (groups.length > 0) {
+        this.groupList = groups;
+      }
     });
   }
 
