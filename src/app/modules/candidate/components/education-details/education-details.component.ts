@@ -12,6 +12,7 @@ import {
   FormBuilder,
   FormControl,
   FormGroup,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
@@ -24,6 +25,7 @@ import {
   selectOptionsForStream,
 } from '../../configs/candidate.configs';
 import { CandidateService } from '../../services/candidate.service';
+import { validations } from 'src/app/shared/messages/validation.static';
 
 @Component({
   selector: 'app-education-details',
@@ -33,6 +35,7 @@ import { CandidateService } from '../../services/candidate.service';
 export class EducationDetailsComponent
   implements OnInit, AfterViewInit, OnChanges
 {
+  validations = validations;
   CandidateModel = candidateControl;
   form: FormGroup;
   selectOptionsForStream: SelectOption[] = selectOptionsForStream;
