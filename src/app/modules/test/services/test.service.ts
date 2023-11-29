@@ -241,7 +241,7 @@ export class TestService {
   GetAllInsertedQuestions(testId: number) {
     return this.http
       .get<ResponseModel<AllInsertedQuestionModel>>(
-        `${environment.baseURL}Tests/GetQuestinsMarksCount/${testId}`
+        `${environment.baseURL}Tests/GetQuestionsMarksCount/${testId}`
       )
       .pipe(
         map((res: ResponseModel<AllInsertedQuestionModel>) => {

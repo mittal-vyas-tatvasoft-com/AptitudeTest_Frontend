@@ -2,6 +2,7 @@ export interface AdminModel {
   id: number;
   firstName: string;
   middleName: string;
+  fatherName?: string;
   lastName: string;
   email: string;
   phoneNumber: number;

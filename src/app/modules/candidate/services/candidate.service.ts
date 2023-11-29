@@ -61,14 +61,14 @@ export class CandidateService {
       );
   }
 
-  importCandidate(data: any): Observable<ResponseModel<string>> {
+  importCandidate(data: FormData): Observable<ResponseModel<number>> {
     return this.http
-      .post<ResponseModel<string>>(
+      .post<ResponseModel<number>>(
         `${environment.baseURL}User/ImportUsers`,
         data
       )
       .pipe(
-        map((res: ResponseModel<string>) => {
+        map((res: ResponseModel<number>) => {
           return res;
         })
       );
@@ -89,7 +89,7 @@ export class CandidateService {
         { headers }
       )
       .pipe(
-        catchError((error: any) => {
+        catchError((error: Error) => {
           return throwError(error);
         })
       );

@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { environment } from 'src/environments/environment';
+import { ProfileModel } from '../interfaces/profile.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -13,11 +15,23 @@ export class ProfileService {
       sortField,
       sortOrder,
     };
-    return this.http.get(`${environment.baseURL}Profiles`, { params });
+    return this.http
+      .get<ResponseModel<ProfileModel[]>>(`${environment.baseURL}Profiles`, {
+        params,
+      })
+      .pipe((res) => {
+        return res;
+      });
   }
 
   GetProfileById(id: number) {
-    return this.http.get(`${environment.baseURL}Profiles/Get/${id}`);
+    return this.http
+      .get<ResponseModel<ProfileModel>>(
+        `${environment.baseURL}Profiles/Get/${id}`
+      )
+      .pipe((res) => {
+        return res;
+      });
   }
 
   ChangeSingleProfileStatus(id: number, status: boolean) {
@@ -26,21 +40,42 @@ export class ProfileService {
       status: status,
     };
 
-    return this.http.put(
-      `${environment.baseURL}Profiles/UpdateStatus`,
-      payload
-    );
+    return this.http
+      .put<ResponseModel<string>>(
+        `${environment.baseURL}Profiles/UpdateStatus`,
+        payload
+      )
+      .pipe((res) => {
+        return res;
+      });
   }
 
-  AddNewProfile(data: any) {
-    return this.http.post(`${environment.baseURL}Profiles/Create`, data);
+  AddNewProfile(data: ProfileModel) {
+    return this.http
+      .post<ResponseModel<string>>(
+        `${environment.baseURL}Profiles/Create`,
+        data
+      )
+      .pipe((res) => {
+        return res;
+      });
   }
 
-  UpdateProfile(data: any) {
-    return this.http.put(`${environment.baseURL}Profiles/Update`, data);
+  UpdateProfile(data: ProfileModel) {
+    return this.http
+      .put<ResponseModel<string>>(`${environment.baseURL}Profiles/Update`, data)
+      .pipe((res) => {
+        return res;
+      });
   }
 
   DeleteProfile(id: number) {
-    return this.http.delete(`${environment.baseURL}Profiles/Delete?id=${id}`);
+    return this.http
+      .delete<ResponseModel<string>>(
+        `${environment.baseURL}Profiles/Delete?id=${id}`
+      )
+      .pipe((res) => {
+        return res;
+      });
   }
 }
