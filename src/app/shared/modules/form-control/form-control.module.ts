@@ -19,6 +19,9 @@ import {
 } from '@angular/material-moment-adapter';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
+import { CharactersOnlyDirective } from './directives/characters-only.directive';
+import { TextControlCharacterComponent } from './components/text-control-character/text-control-character.component';
+import { MaxLengthDirective } from './directives/max-length.directive';
 
 @NgModule({
   declarations: [
@@ -32,6 +35,9 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     TextControlComponent,
     TextControlNumberComponent,
     ButtonComponent,
+    CharactersOnlyDirective,
+    TextControlCharacterComponent,
+    MaxLengthDirective,
   ],
   providers: [
     {
@@ -56,7 +62,10 @@ import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
     TextControlNumberComponent,
     TimePickerComponent,
     NumbersOnlyDirective,
+    CharactersOnlyDirective,
+    MaxLengthDirective,
     DatePickerComponent,
+    TextControlCharacterComponent,
   ],
 })
 export class FormControlModule {}

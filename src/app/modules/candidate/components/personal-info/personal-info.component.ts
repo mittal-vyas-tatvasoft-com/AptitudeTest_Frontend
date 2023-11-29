@@ -88,7 +88,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       createdYear: [{ value: '', disabled: true }],
       appliedThrough: [''],
       technologyInterestedIn: [''],
-      pincode: [''],
+      pincode: ['', [Validators.pattern(validations.common.pinCodeREGEX)]],
       cityName: [''],
       permanentAddress1: [''],
       state: [''],

@@ -125,6 +125,8 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
+    patternErrMsg: 'Please enter valid pin code',
+    maxLength: 6,
   },
   state: {
     value: '',
@@ -144,24 +146,29 @@ export const candidateControl = {
     key: 'acpcMeritRank',
     label: 'ACPC Merit Rank',
     required: false,
-    inputType: 'number',
+    inputType: 'text',
     displayIcon: false,
+    maxLength: 6,
   },
   gujcetScore: {
     value: '',
     key: 'gujcetScore',
     label: 'Gujcet Score (Out of 120)',
     required: false,
-    inputType: 'number',
+    inputType: 'text',
     displayIcon: false,
+    maxLength: 3,
+    maxErrMsg: 'Invalid Score',
   },
   jeeScore: {
     value: '',
     key: 'jeeScore',
     label: 'Jee Score (Percentile)',
     required: false,
-    inputType: 'number',
+    inputType: 'text',
     displayIcon: false,
+    maxLength: 3,
+    maxErrMsg: 'InValid Percentile',
   },
   familyPerson: {
     value: '',
@@ -336,4 +343,11 @@ export const ErrorMessageForEductionDetail = {
   Percentage: 'Required',
   Maths: 'Required',
   Physics: 'Required',
+  Max: 'Max 100',
+  Min: 'Min 0',
+};
+
+export const MinMaxValue = {
+  Max: 100,
+  Min: 0,
 };

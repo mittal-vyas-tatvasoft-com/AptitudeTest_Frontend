@@ -6,9 +6,10 @@ import {
   SimpleChanges,
 } from '@angular/core';
 import { candidateControl } from '../../configs/candidate.configs';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CandidateService } from '../../services/candidate.service';
 import { UserData } from '../../interfaces/candidate.interface';
+import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 
 @Component({
   selector: 'app-exam-scores',
@@ -38,8 +39,8 @@ export class ExamScoresComponent implements OnInit, OnChanges {
   createForm() {
     this.form = this.formBuilder.group({
       acpcMeritRank: [''],
-      gujcetScore: [''],
-      jeeScore: [''],
+      gujcetScore: ['', [Validators.max(120), Validators.min(0)]],
+      jeeScore: ['', [Validators.max(100), Validators.min(0)]],
     });
   }
 
