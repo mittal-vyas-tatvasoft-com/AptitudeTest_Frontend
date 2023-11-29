@@ -111,9 +111,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.createForms();
-    this.activatedRoute.queryParams.subscribe((res) => {
-      console.log(res);
-    });
+
     this.testGroupForm.get('groupId')?.valueChanges.subscribe((res) => {
       if (res != null) {
         this.fetchTestCandidates();
