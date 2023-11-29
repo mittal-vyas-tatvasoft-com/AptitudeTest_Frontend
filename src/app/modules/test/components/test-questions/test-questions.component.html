@@ -1,1 +1,32 @@
-<p>test-questions works!</p>
+<div class="container-900">
+  <app-add-test-questions
+    [form]="form"
+    [singleAnswerQuestionTotalCountTopicWise]="
+      singleAnswerQuestionTotalCountTopicWise
+    "
+    [multiAnswerQuestionTotalCountTopicWise]="
+      multiAnswerQuestionTotalCountTopicWise
+    "
+    [singleMarksDropDownData]="singleMarksDropDownData"
+    [multiMarksDropDownData]="multiMarksDropDownData"
+    [topics]="topics"
+    [totalSelectedQuestionsMarks]="totalMarksWhileInsert"
+    [totalSelectedQuestions]="totalSelectedQuestionsWhileInsert"
+    (handleValidateSelectedMarks)="handleSumOfMarks()"
+    (handleMarksSum)="handleSumOfMarks()"
+    [isDataValid]="isDataValid"
+    [validationMSG]="validationMSG"
+    [existingQuestionsTopicId]="existingQuestionsTopicId"
+    (addQuestions)="addQuestions()"
+  >
+  </app-add-test-questions>
+  <div></div>
+  <div class="imported-question-wrapper">
+    <app-test-questions-listing
+      (handleDeleteQuestionsDialog)="handleDeleteQuestionsDialog($event)"
+      (handleDeleteAllQuestionsDialog)="handleDeleteQuestionsDialog(0)"
+      (handleEditQuestionsDialog)="handleEditQuestionsDialog()"
+      [allInsertedQuestions]="allInsertedQuestions"
+    ></app-test-questions-listing>
+  </div>
+</div>

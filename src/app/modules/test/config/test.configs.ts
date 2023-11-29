@@ -1,3 +1,6 @@
+import { QuestionCountInitial } from '../static/test.static';
+
+import { TestService } from '../services/test.service';
 export const testBasicDetailFormModel = {
   testName: {
     value: '',

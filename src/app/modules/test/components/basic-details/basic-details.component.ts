@@ -1,6 +1,5 @@
-import { Component, EventEmitter, Input, Output, Pipe } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { FormControlModel } from 'src/app/shared/modules/form-control/interfaces/form-control-model';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 
@@ -14,7 +13,7 @@ export class BasicDetailsComponent {
   @Input() testBasicDetailFormModel: any;
   @Input() optionsList: SelectOption[];
   @Input() minDate: Date;
-  startEndTimeDifferenceValid: boolean = true;
+  startEndTimeDifferenceValid = true;
   @Output() saveDetails = new EventEmitter();
   minStartDate = new Date();
   constructor(public validationService: ValidationService) {}
@@ -44,7 +43,9 @@ export class BasicDetailsComponent {
       const startTime = this.onTimeSet(
         this.basicTestDetails.get('startTime')?.value
       );
-      let endTime = this.onTimeSet(this.basicTestDetails.get('endTime')?.value);
+      const endTime = this.onTimeSet(
+        this.basicTestDetails.get('endTime')?.value
+      );
 
       const difference = Math.floor(
         Math.abs((startTime.getTime() - endTime.getTime()) / (1000 * 60))
@@ -87,7 +88,7 @@ export class BasicDetailsComponent {
       hours = hours % 12;
       hours = hours ? hours : 12;
 
-      var formattedString = hours + ':' + minute + ' ' + ampm;
+      const formattedString = hours + ':' + minute + ' ' + ampm;
       this.basicTestDetails.get('endTime')?.setValue(formattedString);
       return formattedString;
     } else {

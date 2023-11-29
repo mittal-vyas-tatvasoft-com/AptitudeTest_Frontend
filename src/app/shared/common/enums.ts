@@ -1,6 +1,6 @@
 export enum Navigation {
   //Common Navigation
-  Admin = 'admin/candidate',
+  Admin = 'admin',
   CandidateUser = 'user',
   Edit = 'edit',
 

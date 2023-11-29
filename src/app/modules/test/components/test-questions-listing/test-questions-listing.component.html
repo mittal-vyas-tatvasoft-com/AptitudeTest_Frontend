@@ -1,0 +1,161 @@
+<div class="row">
+  <div
+    class="col-md-auto d-flex align-items-center justify-content-between mb-sm-0 mb-1"
+  >
+    <h4 class="title">Questions imported</h4>
+    <button mat-stroked-button color="primary" class="d-md-none d-block">
+      Delete All
+    </button>
+  </div>
+
+  <div
+    class="col-md d-md-block d-none"
+    *ngFor="let item of allInsertedQuestions"
+  >
+    <div class="title-action">
+      <p class="question-marks">
+        Total Questions:
+        <span>{{ item.totalQuestions }}</span>
+      </p>
+      <p class="question-marks">
+        Total Marks: <span>{{ item.totalMarks }}</span>
+      </p>
+      <button mat-stroked-button color="primary" (click)="deleteAllQuestions()">
+        Delete All
+      </button>
+    </div>
+  </div>
+  <div
+    class="col-12 d-md-none d-block"
+    *ngFor="let item of allInsertedQuestions"
+  >
+    <div class="title-action">
+      <p class="question-marks">
+        Total Questions:
+        <span>{{ item.totalQuestions }}</span>
+      </p>
+      <p class="question-marks">
+        Total Marks: <span>{{ item.totalMarks }}</span>
+      </p>
+    </div>
+  </div>
+</div>
+<ng-container *ngIf="allInsertedQuestions.length > 0; else noDataFound">
+  <ul class="imported-question-listing" *ngIf="allInsertedQuestions.length > 0">
+    <li
+      class="imported-question"
+      *ngFor="let item of allInsertedQuestions[0].questionsCount"
+    >
+      <div class="card-header">
+        <div class="left">
+          <h6 class="title">
+            {{
+              item.topicId === 1
+                ? "Maths"
+                : item.topicId === 2
+                ? "Reasoning"
+                : "Technical"
+            }}
+          </h6>
+          <p class="question-marks">
+            {{ item.totalQuestions }} <span>Questions</span>
+          </p>
+          <p class="question-marks">{{ item.totalMarks }} <span>Marks</span></p>
+        </div>
+        <div class="right">
+          <button mat-fab class="btn-sm" (click)="handleEditDialog()">
+            <mat-icon>
+              <img src="./assets/images/edit.svg" alt="Edit" />
+            </mat-icon>
+          </button>
+          <button
+            mat-fab
+            class="btn-sm"
+            (click)="handleDeleteDialog(item.topicId)"
+          >
+            <mat-icon>
+              <img src="./assets/images/delete.svg" alt="Delete" />
+            </mat-icon>
+          </button>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-sm">
+            <div class="questions-meta">
+              <p class="title">Single Answer ({{ item.singleAnswerCount }})</p>
+              <div
+                class="question-weightage-chips"
+                *ngIf="item.singleAnswer !== null"
+              >
+                <ng-container *ngFor="let data of item.singleAnswer | keyvalue">
+                  <mat-chip
+                    class="weightage-chip"
+                    *ngIf="
+                      (data.key === 'fiveMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'fourMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'oneMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'threeMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'twoMarkQuestion' && data.value !== 0)
+                    "
+                    disableRipple
+                  >
+                    {{
+                      data.key === "fiveMarkQuestion" && data.value !== 0
+                        ? "5"
+                        : data.key === "fourMarkQuestion" && data.value !== 0
+                        ? "4"
+                        : data.key === "twoMarkQuestion" && data.value !== 0
+                        ? "2"
+                        : data.key === "threeMarkQuestion" && data.value !== 0
+                        ? "3"
+                        : "1"
+                    }}
+                    Mark<span class="mark">{{ data.value }}</span>
+                  </mat-chip>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+          <div class="col-sm">
+            <div class="questions-meta">
+              <p class="title">Multiple Answer ({{ item.multiAnswerCount }})</p>
+              <div class="question-weightage-chips">
+                <ng-container *ngFor="let data of item.multiAnswer | keyvalue">
+                  <mat-chip
+                    class="weightage-chip"
+                    *ngIf="
+                      (data.key === 'fiveMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'fourMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'oneMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'threeMarkQuestion' && data.value !== 0) ||
+                      (data.key === 'twoMarkQuestion' && data.value !== 0)
+                    "
+                    disableRipple
+                  >
+                    {{
+                      data.key === "fiveMarkQuestion" && data.value !== 0
+                        ? "5"
+                        : data.key === "fourMarkQuestion" && data.value !== 0
+                        ? "4"
+                        : data.key === "twoMarkQuestion" && data.value !== 0
+                        ? "2"
+                        : data.key === "threeMarkQuestion" && data.value !== 0
+                        ? "3"
+                        : "1"
+                    }}
+                    Mark<span class="mark">{{ data.value }}</span>
+                  </mat-chip>
+                </ng-container>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul></ng-container
+>
+
+<ng-template #noDataFound>
+  <div class="no-data-message">No Questions Added</div>
+</ng-template>
