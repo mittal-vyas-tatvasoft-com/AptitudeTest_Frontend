@@ -40,7 +40,7 @@ export class CharactersOnlyDirective {
       return;
     }
 
-    if (!(e.keyCode > 65 && e.keyCode < 90)) {
+    if (!(e.keyCode > 64 && e.keyCode < 91)) {
       e.preventDefault();
     }
   }
