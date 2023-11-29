@@ -50,6 +50,7 @@
             [ngClass]="{
               'text-center': column.columnDef === 'status' || column.isAction
             }"
+            [width]="column.width ? column.width : 'auto'"
           >
             <ng-container *ngIf="!column.isAction; else actionTemplate">
               <ng-container

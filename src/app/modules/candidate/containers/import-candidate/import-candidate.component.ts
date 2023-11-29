@@ -72,15 +72,15 @@ export class ImportCandidateComponent implements OnInit {
     { value: 'InActive', id: false },
   ];
   columns: TableColumn<CandidateModel>[] = [
-    { columnDef: 'select', header: '' },
-    { columnDef: 'name', header: 'Name' },
-    { columnDef: 'collegeName', header: 'College' },
-    { columnDef: 'groupName', header: 'Group' },
-    { columnDef: 'email', header: 'Email ID' },
-    { columnDef: 'phoneNumber', header: 'Contact No.' },
-    { columnDef: 'createdYear', header: 'Year Added' },
-    { columnDef: 'status', header: 'Status' },
-    { columnDef: 'action', header: 'Action', isAction: true },
+    { columnDef: 'select', header: '', width: '5%'  },
+    { columnDef: 'name', header: 'Name', width: '15%' },
+    { columnDef: 'collegeName', header: 'College', width: '15%' },
+    { columnDef: 'groupName', header: 'Group', width: '15%' },
+    { columnDef: 'email', header: 'Email ID', width: '20%' },
+    { columnDef: 'phoneNumber', header: 'Contact No.', width: '10%' },
+    { columnDef: 'createdYear', header: 'Year Added', width: '5%' },
+    { columnDef: 'status', header: 'Status', width: '10%' },
+    { columnDef: 'action', header: 'Action', isAction: true, width: '5%' },
   ];
   @ViewChild('myTable') myTable: TableComponent<any>;
   @ViewChild('dropzone') dropzone: DropzoneDirective;
