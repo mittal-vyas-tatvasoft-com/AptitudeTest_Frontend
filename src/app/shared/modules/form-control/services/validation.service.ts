@@ -31,6 +31,12 @@ export class ValidationService {
         if (formControl.errors['newPassword']) {
           return Messages.samePasswordError;
         }
+        if (formControl.errors['max']) {
+          return formControlModel.maxErrMsg;
+        }
+        if (formControl.errors['min']) {
+          return formControlModel.minErrMsg;
+        }
       }
     }
     return null;

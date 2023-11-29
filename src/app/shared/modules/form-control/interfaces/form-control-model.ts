@@ -11,4 +11,6 @@ export interface FormControlModel {
   iconName?: string;
   accept?: string[];
   maxLength?: number;
+  maxErrMsg?: string;
+  minErrMsg?: string;
 }
