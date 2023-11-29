@@ -51,7 +51,9 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     // set loader to true 
-    this.loaderService.setLoading(true, req.url);
+    if (req.url.toLowerCase().indexOf('/api/') > -1) {
+      this.loaderService.setLoading(true, req.url);
+    }
     const token = this.loginService.getToken();
     if (token) {
       req = req.clone({
