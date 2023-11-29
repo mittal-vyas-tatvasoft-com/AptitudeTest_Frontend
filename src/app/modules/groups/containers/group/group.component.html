@@ -31,14 +31,11 @@
       <div class="col-lg-3 col-sm-6">
         <mat-form-field appearance="outline">
           <mat-label>College</mat-label>
-          <mat-select formControlName="searchedCollege">
-            <mat-option
-              *ngFor="let college of colleges"
-              [value]="college"
-              (onSelectionChange)="
-                getFilteredGroupsFromCollege(filter.value, college.id)
-              "
-            >
+          <mat-select
+            formControlName="searchedCollege"
+            (selectionChange)="getFilteredGroupsFromCollege(filter.value)"
+          >
+            <mat-option *ngFor="let college of colleges" [value]="college.id">
               {{ college.name }}
             </mat-option>
           </mat-select>
