@@ -3,6 +3,7 @@ export interface TableColumn<T> {
   header: string;
   isAction?: boolean;
   action?: string;
+  width?: string;
 }
 
 

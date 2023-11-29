@@ -46,16 +46,17 @@ export class AdminComponent implements OnInit, AfterViewInit {
     status: true,
   };
   columns: TableColumn<AdminModel>[] = [
-    { columnDef: 'firstName', header: 'First Name' },
-    { columnDef: 'lastName', header: 'Last Name' },
-    { columnDef: 'email', header: 'Email' },
-    { columnDef: 'phoneNumber', header: 'Phone Number' },
-    { columnDef: 'status', header: 'Status' },
+    { columnDef: 'firstName', header: 'First Name', width: '20%' },
+    { columnDef: 'lastName', header: 'Last Name', width: '20%' },
+    { columnDef: 'email', header: 'Email', width: '25%' },
+    { columnDef: 'phoneNumber', header: 'Phone Number', width: '15%' },
+    { columnDef: 'status', header: 'Status', width: '10%' },
     {
       columnDef: 'editAction',
       header: 'Action',
       isAction: true,
       action: 'edit',
+      width: '10%'
     },
   ];
   form: FormGroup;

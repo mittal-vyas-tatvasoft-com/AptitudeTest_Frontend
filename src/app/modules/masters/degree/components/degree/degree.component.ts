@@ -23,15 +23,16 @@ export interface UpdateStatus {
 })
 export class DegreeComponent implements OnInit {
   displayedColumns: TableColumn<DegreeModel>[] = [
-    { columnDef: 'name', header: 'Degree Name' },
-    { columnDef: 'level', header: 'Degree Level' },
-    { columnDef: 'streams', header: 'Stream' },
-    { columnDef: 'status', header: 'Status' },
+    { columnDef: 'name', header: 'Degree Name', width: '30%' },
+    { columnDef: 'level', header: 'Degree Level', width: '15%' },
+    { columnDef: 'streams', header: 'Stream', width: '25%' },
+    { columnDef: 'status', header: 'Status', width: '15%' },
     {
       columnDef: 'editAction',
       header: 'Action',
       isAction: true,
       action: 'edit',
+      width: '15%'
     },
   ];
   sortKey = '';
