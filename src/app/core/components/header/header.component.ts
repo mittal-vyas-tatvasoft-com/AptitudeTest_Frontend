@@ -3,6 +3,8 @@ import {
   EventEmitter,
   HostListener,
   Input,
+  OnDestroy,
+  OnInit,
   Output,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -17,13 +19,13 @@ import { LoginService } from '../../auth/services/login.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss'],
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit, OnDestroy {
   currentTime!: Date;
   userName!: string;
   email: string;
   isSidebarOpen!: boolean;
-  isAuthenticated: boolean = false;
-  isAdmin: boolean = false;
+  isAuthenticated = false;
+  isAdmin = false;
   role: string | null;
   public mobileScreen: boolean = window.innerWidth < 575;
   @Input() register: boolean;

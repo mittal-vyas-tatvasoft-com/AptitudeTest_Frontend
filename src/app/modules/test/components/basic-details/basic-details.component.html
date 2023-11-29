@@ -42,6 +42,7 @@
         <app-time-picker
           [form]="basicTestDetails"
           [timePickerModel]="testBasicDetailFormModel.startTime"
+          [minTime]="getCurrentTime()"
           (timeChanged)="
             setEndDate($event, basicTestDetails.get('testDuration')?.value)
           "

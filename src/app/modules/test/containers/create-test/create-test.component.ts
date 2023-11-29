@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
+import { ActivatedRoute } from '@angular/router';
 import * as moment from 'moment';
 import { Subject, debounceTime } from 'rxjs';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
@@ -104,12 +105,15 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     public validationService: ValidationService,
     private testService: TestService,
     private snackbarService: SnackbarService,
-    private candidateService: CandidateService
+    private candidateService: CandidateService,
+    private activatedRoute: ActivatedRoute
   ) {}
 
   ngOnInit() {
     this.createForms();
-
+    this.activatedRoute.queryParams.subscribe((res) => {
+      console.log(res);
+    });
     this.testGroupForm.get('groupId')?.valueChanges.subscribe((res) => {
       if (res != null) {
         this.fetchTestCandidates();

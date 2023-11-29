@@ -1,16 +1,10 @@
-import {
-  AfterViewInit,
-  Component,
-  Inject,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { AdminService } from '../../services/admin.service';
-import { FormBuilder, FormGroup, NgForm, Validators } from '@angular/forms';
-import { AdminControl } from '../../configs/admin.configs';
-import { validations } from 'src/app/shared/messages/validation.static';
 import { Numbers } from 'src/app/shared/common/enums';
+import { validations } from 'src/app/shared/messages/validation.static';
+import { AdminControl } from '../../configs/admin.configs';
+import { AdminService } from '../../services/admin.service';
 
 @Component({
   selector: 'app-add-admin',
@@ -22,7 +16,7 @@ export class AddAdminComponent implements OnInit, AfterViewInit {
     { key: 'Active', value: true },
     { key: 'InActive', value: false },
   ];
-  isEditMode: boolean = false;
+  isEditMode = false;
   form: FormGroup;
   AdminModel = AdminControl;
 
@@ -45,7 +39,7 @@ export class AddAdminComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (this.data != Numbers.Zero) {
       this.adminService.getAdminById(this.data).subscribe({
-        next: (res: any) => {
+        next: (res) => {
           this.form.setValue({
             firstName: res.data.firstName,
             middleName: res.data.fatherName,

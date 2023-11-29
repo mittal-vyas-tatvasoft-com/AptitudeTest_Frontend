@@ -1,26 +1,26 @@
 import { Component, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { AddCollegeComponent } from 'src/app/modules/masters/college/components/add-college/add-college.component';
-import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
-import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import {
-  DropdownItem,
-  CandidateModel,
-  GetAllCandidateParams,
-} from '../../interfaces/candidate.interface';
-import { CandidateService } from '../../services/candidate.service';
-import { AddCandidateComponent } from '../add-candidate/add-candidate.component';
 import {
   Numbers,
   StaticMessages,
   StatusCode,
 } from 'src/app/shared/common/enums';
-import { Sort } from '@angular/material/sort';
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import {
+  CandidateModel,
+  DropdownItem,
+  GetAllCandidateParams,
+} from '../../interfaces/candidate.interface';
+import { CandidateService } from '../../services/candidate.service';
+import { AddCandidateComponent } from '../add-candidate/add-candidate.component';
 
 @Component({
   selector: 'app-candidates',

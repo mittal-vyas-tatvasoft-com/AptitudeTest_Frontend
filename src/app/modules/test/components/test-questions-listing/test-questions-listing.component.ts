@@ -1,8 +1,10 @@
 import {
+  AfterViewInit,
   ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
 } from '@angular/core';
 import {
@@ -15,7 +17,7 @@ import {
   templateUrl: './test-questions-listing.component.html',
   styleUrls: ['./test-questions-listing.component.scss'],
 })
-export class TestQuestionsListingComponent {
+export class TestQuestionsListingComponent implements OnInit, AfterViewInit {
   @Input() allInsertedQuestions: AllInsertedQuestionModel[] = [];
   @Output() handleEditQuestionsDialog = new EventEmitter();
   @Output() handleDeleteQuestionsDialog = new EventEmitter();

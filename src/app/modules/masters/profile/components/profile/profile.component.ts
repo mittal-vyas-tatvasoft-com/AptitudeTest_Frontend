@@ -1,14 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { AddProfileComponent } from '../add-profile/add-profile.component';
-import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { ProfileService } from '../../services/profile.service';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { StatusCode } from 'src/app/shared/common/enums';
-import { ProfileModel } from '../../interfaces/profile.interface';
-import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { StatusCode } from 'src/app/shared/common/enums';
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { ProfileModel } from '../../interfaces/profile.interface';
+import { ProfileService } from '../../services/profile.service';
+import { AddProfileComponent } from '../add-profile/add-profile.component';
 
 @Component({
   selector: 'app-profile',
@@ -31,8 +31,8 @@ export class ProfileComponent implements OnInit {
     name: '',
     status: true,
   };
-  sortKey: string = '';
-  sortDirection: string = '';
+  sortKey = '';
+  sortDirection = '';
   dataSource!: MatTableDataSource<any>;
   constructor(
     public dialog: MatDialog,
@@ -48,7 +48,7 @@ export class ProfileComponent implements OnInit {
     this.profileService
       .GetAllProfiles(this.sortKey, this.sortDirection)
       .subscribe({
-        next: (res: any) => {
+        next: (res) => {
           this.dataSource = new MatTableDataSource(res.data);
         },
       });
@@ -67,7 +67,7 @@ export class ProfileComponent implements OnInit {
         if (res) {
           if (res.id == 0) {
             this.profileService.AddNewProfile(res).subscribe({
-              next: (res: any) => {
+              next: (res) => {
                 if (res.statusCode == StatusCode.Success) {
                   this.getAllProfileData();
                   this.snackbarService.success(res.message);
@@ -78,7 +78,7 @@ export class ProfileComponent implements OnInit {
             });
           } else {
             this.profileService.UpdateProfile(res).subscribe({
-              next: (res: any) => {
+              next: (res) => {
                 if (res.statusCode == StatusCode.Success) {
                   this.getAllProfileData();
                   this.snackbarService.success(res.message);
@@ -102,7 +102,7 @@ export class ProfileComponent implements OnInit {
       .subscribe((res) => {
         if (res == true) {
           this.profileService.DeleteProfile(id).subscribe({
-            next: (res: any) => {
+            next: (res) => {
               if (res.statusCode == StatusCode.Success) {
                 this.getAllProfileData();
                 this.snackbarService.success(res.message);
@@ -117,7 +117,7 @@ export class ProfileComponent implements OnInit {
 
   changeSingleProfileStatus(id: number, status: boolean) {
     this.profileService.ChangeSingleProfileStatus(id, status).subscribe({
-      next: (res: any) => {
+      next: (res) => {
         if (res.statusCode == StatusCode.Success) {
           this.getAllProfileData();
           this.snackbarService.success(res.message);

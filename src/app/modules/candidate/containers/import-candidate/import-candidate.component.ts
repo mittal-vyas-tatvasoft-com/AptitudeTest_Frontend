@@ -57,10 +57,10 @@ export class ImportCandidateComponent implements OnInit {
   pageSize = Numbers.Ten;
   sortKey: string;
   sortDirection: string;
-  fileName: string = '';
+  fileName = '';
   formData = new FormData();
-  noFileSet: boolean = true;
-  importSuccessFully: boolean = false;
+  noFileSet = true;
+  importSuccessFully = false;
   importCount: number;
   private searchInputValue = new Subject<string>();
   public message: string = DragDropInput;
@@ -246,7 +246,7 @@ export class ImportCandidateComponent implements OnInit {
     this.handleDeleteCandidateDialog(idArray);
   }
 
-  setPayloadForImportCandidate(event: any) {
+  setPayloadForImportCandidate(event: File) {
     this.formData.append('file', event);
 
     this.formData.append('groupId', this.form.get('groupId')?.value ?? null);
@@ -262,13 +262,13 @@ export class ImportCandidateComponent implements OnInit {
 
   handleImportCandidate() {
     this.candidateService.importCandidate(this.formData).subscribe({
-      next: (res: any) => {
+      next: (res) => {
         this.componentRef?.directiveRef?.reset();
         this.fileName = '';
         this.noFileSet = true;
         if (res.statusCode == StatusCode.Success) {
           this.fetchCandidate();
-          this.importCount = res.data;
+          this.importCount = +res.data;
           this.importSuccessFully = true;
           setTimeout(() => {
             this.importSuccessFully = false;

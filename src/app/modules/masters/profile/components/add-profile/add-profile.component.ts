@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject, AfterViewInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ProfileService } from '../../services/profile.service';
-import { formControls } from '../../config/profile.config';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
+import { formControls } from '../../config/profile.config';
+import { ProfileService } from '../../services/profile.service';
 
 @Component({
   selector: 'app-add-profile',
@@ -13,7 +13,7 @@ import { ValidationService } from 'src/app/shared/modules/form-control/services/
 export class AddProfileComponent implements OnInit, AfterViewInit {
   form!: FormGroup;
   formControl = formControls;
-  optionsList: any[] = [
+  optionsList = [
     { key: 'Active', value: true },
     { key: 'InActive', value: false },
   ];
@@ -32,7 +32,7 @@ export class AddProfileComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {
     if (this.data != 0) {
       this.profileService.GetProfileById(this.data).subscribe({
-        next: (res: any) => {
+        next: (res) => {
           this.form.setValue({
             name: res.data.name,
             id: res.data.id,

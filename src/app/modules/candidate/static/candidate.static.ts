@@ -1,4 +1,4 @@
-export const DragDropInput: string =
+export const DragDropInput =
   'Drag & Drop or <span class="link-primary ml-4p">Browse</span>';
 
 export const dropzoneConfig = {

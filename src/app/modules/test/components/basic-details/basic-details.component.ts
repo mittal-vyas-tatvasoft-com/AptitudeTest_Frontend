@@ -63,12 +63,17 @@ export class BasicDetailsComponent {
     }
   }
 
+  getCurrentTime(): string {
+    const now = new Date();
+    return `${now.getHours()}:${now.getMinutes()}`;
+  }
+
   setEndDate(startTime: string, duration: string) {
     if (startTime != '' && duration != '') {
-      var timeComponents = startTime.split(':');
-      var hours = parseInt(timeComponents[0], 10);
-      var minutes = parseInt(timeComponents[1].split(' ')[0], 10);
-      var ampm = timeComponents[1].split(' ')[1];
+      const timeComponents = startTime.split(':');
+      let hours = parseInt(timeComponents[0], 10);
+      const minutes = parseInt(timeComponents[1].split(' ')[0], 10);
+      let ampm = timeComponents[1].split(' ')[1];
 
       if (ampm === 'PM' && hours < 12) {
         hours += 12;
@@ -76,14 +81,14 @@ export class BasicDetailsComponent {
         hours = 0;
       }
 
-      var dateObject = new Date();
+      const dateObject = new Date();
       dateObject.setHours(hours);
       dateObject.setMinutes(minutes);
       dateObject.setMinutes(dateObject.getMinutes() + Number(duration));
 
-      var hours = dateObject.getHours();
-      var minute = ('0' + dateObject.getMinutes()).slice(-2);
-      var ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = dateObject.getHours();
+      const minute = ('0' + dateObject.getMinutes()).slice(-2);
+      ampm = hours >= 12 ? 'PM' : 'AM';
 
       hours = hours % 12;
       hours = hours ? hours : 12;

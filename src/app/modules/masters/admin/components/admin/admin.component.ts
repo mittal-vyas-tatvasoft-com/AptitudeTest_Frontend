@@ -1,18 +1,18 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { AddAdminComponent } from '../add-admin/add-admin.component';
-import { AdminService } from '../../services/admin.service';
-import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { AdminModel, searchModel } from '../../interfaces/admin.interface';
-import { Subject, debounceTime } from 'rxjs';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
-import { adminFilterFormConfig } from '../../configs/admin.configs';
+import { MatTableDataSource } from '@angular/material/table';
+import { Subject, debounceTime } from 'rxjs';
+import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { adminFilterFormConfig } from '../../configs/admin.configs';
+import { AdminModel, searchModel } from '../../interfaces/admin.interface';
+import { AdminService } from '../../services/admin.service';
+import { AddAdminComponent } from '../add-admin/add-admin.component';
 
 @Component({
   selector: 'app-master-admin',
@@ -25,8 +25,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
   totalItemsCount: number;
   pageNumbers: number[] = [];
   hasData: boolean;
-  sortKey: string = '';
-  sortDirection: string = '';
+  sortKey = '';
+  sortDirection = '';
   optionsList: SelectOption[] = [
     { value: 'Select', id: '' },
     { value: 'Active', id: true },
@@ -275,6 +275,5 @@ export class AdminComponent implements OnInit, AfterViewInit {
     const searchValue = this.form.get('searchField')?.value;
     const statusValue = this.form.get('statusField')?.value;
     this.fetchAdmin(searchValue, statusValue);
-    //this.searchAdmin();
   }
 }

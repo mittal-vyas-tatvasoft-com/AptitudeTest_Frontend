@@ -10,7 +10,7 @@
               [value]="item.id"
             >
               {{ item.name }}
-              <span *ngIf="item.questionCount != 0">{{
+              <span *ngIf="item.questionCount !== 0">{{
                 "(" + item.questionCount + ")"
               }}</span>
             </mat-option>
