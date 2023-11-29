@@ -14,6 +14,7 @@ import { DashboardComponent } from './containers/dashboard/dashboard.component';
 import { LayoutComponent } from './containers/layout/layout.component';
 import { TestSubmittedComponent } from './containers/test-submitted/test-submitted.component';
 import { ListOfQuestionsComponent } from './containers/candidate-test/components/list-of-questions/list-of-questions.component';
+import { McqQuestionComponent } from './containers/candidate-test/components/mcq-question/mcq-question.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +26,7 @@ import { ListOfQuestionsComponent } from './containers/candidate-test/components
     LayoutComponent,
     RegisterComponent,
     ListOfQuestionsComponent,
+    McqQuestionComponent,
   ],
   imports: [
     CommonModule,
