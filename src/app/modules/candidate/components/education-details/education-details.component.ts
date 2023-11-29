@@ -17,6 +17,7 @@ import {
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import {
   ErrorMessageForEductionDetail,
+  MinMaxValue,
   candidateControl,
   labelNameForCollege,
   labelNameForDegree,
@@ -48,6 +49,7 @@ export class EducationDetailsComponent
   labelNameForDegree: string[] = labelNameForDegree;
   labelNameForCollege: string[] = labelNameForCollege;
   ErrorMessage = ErrorMessageForEductionDetail;
+  MinMaxValue = MinMaxValue;
   @Input() academicDetails: any[];
   @Input() isAdmin: boolean;
 
@@ -283,6 +285,21 @@ export class EducationDetailsComponent
           }
         });
       }
+    }
+  }
+
+  getError(formControlName: AbstractControl<any, any> | null) {
+    if (formControlName == null || formControlName?.errors == null) {
+      return '';
+    } else {
+      if (formControlName?.errors!['required'] && formControlName?.touched) {
+        return this.ErrorMessage.Percentage;
+      } else if (formControlName?.errors!['min'] && formControlName?.touched) {
+        return this.ErrorMessage.Min;
+      } else if (formControlName?.errors!['max'] && formControlName?.touched) {
+        return this.ErrorMessage.Max;
+      }
+      return '';
     }
   }
 }

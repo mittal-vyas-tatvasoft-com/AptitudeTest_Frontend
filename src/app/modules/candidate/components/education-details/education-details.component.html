@@ -100,15 +100,21 @@
                   matInput
                   type="number"
                   formControlName="grade"
+                  appNumbersOnly
+                  appMaxLength
+                  [maxLength]="3"
+                  [min]="MinMaxValue.Min"
+                  [max]="MinMaxValue.Max"
                   [required]="i < 3"
                 />
+
                 <mat-error
                   *ngIf="
-                    educationDetail.get('grade')?.invalid &&
+                    educationDetail.get('grade')?.getError &&
                     educationDetail.get('grade')?.touched
                   "
                 >
-                  {{ ErrorMessage.Percentage }}
+                  {{ getError(educationDetail.get("grade")) }}
                 </mat-error>
               </mat-form-field>
             </div>
@@ -118,6 +124,11 @@
                 <input
                   matInput
                   type="number"
+                  appMaxLength
+                  [maxLength]="3"
+                  appNumbersOnly
+                  [min]="MinMaxValue.Min"
+                  [max]="MinMaxValue.Max"
                   formControlName="maths"
                   [required]="i < 3"
                 />
@@ -127,7 +138,7 @@
                     educationDetail.get('maths')?.touched
                   "
                 >
-                  {{ ErrorMessage.Maths }}
+                  {{ getError(educationDetail.get("maths")) }}
                 </mat-error>
               </mat-form-field>
             </div>
@@ -137,6 +148,11 @@
                 <input
                   matInput
                   type="number"
+                  appNumbersOnly
+                  appMaxLength
+                  [maxLength]="3"
+                  [min]="MinMaxValue.Min"
+                  [max]="MinMaxValue.Max"
                   formControlName="physics"
                   [required]="i < 3"
                 />
@@ -146,7 +162,7 @@
                     educationDetail.get('physics')?.touched
                   "
                 >
-                  {{ ErrorMessage.Physics }}
+                  {{ getError(educationDetail.get("physics")) }}
                 </mat-error>
               </mat-form-field>
             </div>

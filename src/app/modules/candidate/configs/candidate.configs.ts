@@ -125,6 +125,8 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
+    patternErrMsg: 'Please enter valid pin code',
+    maxLength: 6,
   },
   state: {
     value: '',
@@ -146,6 +148,7 @@ export const candidateControl = {
     required: false,
     inputType: 'number',
     displayIcon: false,
+    maxLength: 6,
   },
   gujcetScore: {
     value: '',
@@ -154,6 +157,7 @@ export const candidateControl = {
     required: false,
     inputType: 'number',
     displayIcon: false,
+    maxLength: 3,
   },
   jeeScore: {
     value: '',
@@ -162,6 +166,7 @@ export const candidateControl = {
     required: false,
     inputType: 'number',
     displayIcon: false,
+    maxLength: 3,
   },
   familyPerson: {
     value: '',
@@ -336,4 +341,11 @@ export const ErrorMessageForEductionDetail = {
   Percentage: 'Required',
   Maths: 'Required',
   Physics: 'Required',
+  Max: 'Max 100',
+  Min: 'Min 0',
+};
+
+export const MinMaxValue = {
+  Max: 100,
+  Min: 0,
 };

@@ -6,25 +6,25 @@
     <form [formGroup]="form">
       <div class="row row-cols-xl-5">
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
-          <app-text-control
+          <app-text-control-character
             [formControlModel]="CandidateModel.firstName"
             [form]="form"
             class="w-100"
-          ></app-text-control>
+          ></app-text-control-character>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
-          <app-text-control
+          <app-text-control-character
             [formControlModel]="CandidateModel.fatherName"
             [form]="form"
             class="w-100"
-          ></app-text-control>
+          ></app-text-control-character>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
-          <app-text-control
+          <app-text-control-character
             [formControlModel]="CandidateModel.lastName"
             [form]="form"
             class="w-100"
-          ></app-text-control>
+          ></app-text-control-character>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 w-xl-40" *ngIf="isAdmin">
           <app-select
@@ -104,18 +104,20 @@
           ></app-text-control>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
-          <app-text-control
+          <app-text-control-character
             [formControlModel]="CandidateModel.cityName"
             [form]="form"
             class="w-100"
-          ></app-text-control>
+          ></app-text-control-character>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
-          <app-text-control
+          <app-text-control-number
             [formControlModel]="CandidateModel.pincode"
             [form]="form"
             class="w-100"
-          ></app-text-control>
+            maxlength="6"
+          >
+          </app-text-control-number>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
           <app-select
