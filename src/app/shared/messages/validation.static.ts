@@ -6,5 +6,6 @@ export const validations = {
     ),
     mobileNumberREGEX: new RegExp(/^[6-9]{1}[0-9]{9}$/),
     pinCodeREGEX: new RegExp(/^[1-9]{1}[0-9]{2}[0-9]{3}$/),
+    whitespaceREGEX: new RegExp(/^(\s+\S+\s*)*(?!\s).*$/),
   },
 };
