@@ -12,8 +12,8 @@ export class DashboardComponent implements OnInit {
   constructor(public loginService: LoginService) {}
 
   ngOnInit(): void {
-    const s = this.loginService.decodeToken();
-    this.firstName = s.FirstName;
-    this.lastName = s.Name;
+    const candidateDetails = this.loginService.decodeToken();
+    this.firstName = candidateDetails.FirstName;
+    this.lastName = candidateDetails.Name;
   }
 }

@@ -1,0 +1,32 @@
+<h4 class="question">
+  {{ question.questionText }}
+</h4>
+<div class="row">
+  <div class="col-md-6" *ngFor="let option of question.options; let i = index">
+    <div
+      class="qa-answer-type-text-option"
+      [ngClass]="{ selected: answers[i] }"
+      (click)="toggleCheckbox(i)"
+    >
+      <span class="answer-option">{{ optionIndex[i] }}</span>
+      <p class="answer-text">{{ option }}</p>
+      <!-- <p class="answer-text"><img src="./assets/images/circle-grey.svg" /></p> -->
+      <mat-checkbox
+        class="rounded-check"
+        color="primary"
+        [(ngModel)]="answers[i]"
+        (change)="toggleCheckbox(i)"
+      >
+      </mat-checkbox>
+    </div>
+  </div>
+</div>
+<div class="action-footer">
+  <button mat-stroked-button color="primary" (click)="clearAnswer()">
+    Clear Answer
+  </button>
+  <button mat-flat-button color="primary" (click)="save()">
+    <!--  routerLink="/user/submitted" -->
+    Save &amp; Next
+  </button>
+</div>

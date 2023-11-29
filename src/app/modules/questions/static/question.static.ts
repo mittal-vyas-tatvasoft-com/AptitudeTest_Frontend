@@ -32,3 +32,7 @@ export const OptionType = [
 export const MaxImageSize = 100 * 1024;
 export const ImageSizeErrorMsg = 'Maximum 100kb allowed';
 export const ImageTypeErrorMsg = 'Only png, jpg, jpeg allowed';
+
+export const importQuestionSampleFilePath =
+  '/assets/import-sample/import questions sample .csv';
+export const importQuestionSampleFileName = 'import questions sample.csv';

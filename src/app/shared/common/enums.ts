@@ -140,3 +140,10 @@ export enum TestStatus {
   Active = 2,
   Completed = 3,
 }
+
+//Question Answered Status
+export enum QuestionStatus {
+  Unvisited = 0,
+  Answered = 1,
+  Skipped = 2,
+}
