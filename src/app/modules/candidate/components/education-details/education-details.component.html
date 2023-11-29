@@ -61,6 +61,7 @@
                   matInput
                   formControlName="university"
                   [required]="i < 3"
+                  [pattern]="i < 3 ? validations.common.whitespaceREGEX : ''"
                 />
                 <mat-error
                   *ngIf="
