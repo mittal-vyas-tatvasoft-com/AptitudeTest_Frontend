@@ -76,7 +76,8 @@ export class GroupComponent implements OnInit {
 
   getFilteredGroups() {
     const search = this.form.get('searchedGroup')?.value;
-    this.groupsService.groups(search).subscribe((groups) => {
+    const collegeId = this.form.get('searchedCollege')?.value;
+    this.groupsService.groups(search, collegeId).subscribe((groups) => {
       this.groupList = groups;
     });
   }
@@ -172,6 +173,6 @@ export class GroupComponent implements OnInit {
   clearSearchAndFilter() {
     this.getGroups();
     this.form.get('searchedGroup')?.setValue('');
-    this.form.get('searchedCollege')?.setValue(null);
+    this.form.get('searchedCollege')?.setValue('');
   }
 }
