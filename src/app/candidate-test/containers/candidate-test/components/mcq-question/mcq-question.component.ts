@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Question } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { OptionsIndex } from 'src/app/modules/questions/static/question.static';
-import { QuestionType } from 'src/app/shared/common/enums';
+import { OptionType, QuestionType } from 'src/app/shared/common/enums';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-mcq-question',
@@ -13,6 +14,8 @@ export class McqQuestionComponent {
   @Output() saveAnswer = new EventEmitter<boolean[]>();
   optionIndex = OptionsIndex;
   answers: boolean[] = [false, false, false, false];
+  optionType = OptionType;
+  baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
 
   toggleCheckbox(index: number) {
     if (this.question.questionType == QuestionType.SingleAnswer) {
@@ -35,5 +38,6 @@ export class McqQuestionComponent {
 
   save() {
     this.saveAnswer.emit(this.answers);
+    this.answers = [false, false, false, false];
   }
 }
