@@ -266,6 +266,7 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
       next: (res) => {
         if (res.statusCode == StatusCode.Success) {
           this.snackbarService.success(res.message);
+          this.form.get('topicId')?.setValue('');
           this.questionsAddedSuccess.emit();
         } else {
           this.snackbarService.error(res.message);

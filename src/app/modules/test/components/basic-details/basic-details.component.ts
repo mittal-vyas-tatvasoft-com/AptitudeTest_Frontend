@@ -13,7 +13,10 @@ export class BasicDetailsComponent {
   @Input() testBasicDetailFormModel: any;
   @Input() optionsList: SelectOption[];
   @Input() minDate: Date;
+  @Input() isEditMode: boolean;
+  @Input() getCurrentTime: string;
   startEndTimeDifferenceValid = true;
+  currentTime: string;
   @Output() saveDetails = new EventEmitter();
   minStartDate = new Date();
   constructor(public validationService: ValidationService) {}
@@ -38,7 +41,8 @@ export class BasicDetailsComponent {
   checkDifference() {
     if (
       !this.basicTestDetails.get('startTime')?.hasError('required') &&
-      !this.basicTestDetails.get('endTime')?.hasError('required')
+      !this.basicTestDetails.get('endTime')?.hasError('required') &&
+      this.isEditMode === false
     ) {
       const startTime = this.onTimeSet(
         this.basicTestDetails.get('startTime')?.value
@@ -60,12 +64,9 @@ export class BasicDetailsComponent {
       } else {
         this.startEndTimeDifferenceValid = true;
       }
+    } else {
+      this.startEndTimeDifferenceValid = true;
     }
-  }
-
-  getCurrentTime(): string {
-    const now = new Date();
-    return `${now.getHours()}:${now.getMinutes()}`;
   }
 
   setEndDate(startTime: string, duration: string) {
