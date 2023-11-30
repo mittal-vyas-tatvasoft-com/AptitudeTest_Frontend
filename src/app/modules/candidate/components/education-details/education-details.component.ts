@@ -156,14 +156,19 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
       console.log(event);
 
       if (event > 0) {
+        data.get('university').touched = true;
         data.get('university').setValidators(Validators.required);
         data.get('university').updateValueAndValidity();
+        data.get('streamId').touched = true;
         data.get('streamId').setValidators(Validators.required);
         data.get('streamId').updateValueAndValidity();
+        data.get('grade').touched = true;
         data.get('grade').setValidators(Validators.required);
         data.get('grade').updateValueAndValidity();
+        data.get('maths').touched = true;
         data.get('maths').setValidators(Validators.required);
         data.get('maths').updateValueAndValidity();
+        data.get('physics').touched = true;
         data.get('physics').setValidators(Validators.required);
         data.get('physics').updateValueAndValidity();
       } else {
