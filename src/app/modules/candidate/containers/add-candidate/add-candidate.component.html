@@ -1,6 +1,11 @@
 <div class="dialog-header">
   <h2 mat-dialog-title>Candidate Details</h2>
-  <button mat-icon-button class="dialog-close" (click)="closeModal()">
+  <button
+    mat-icon-button
+    class="dialog-close"
+    (click)="closeModal()"
+    matTooltip="Close"
+  >
     <mat-icon>
       <img src="./assets/images/close-grey.svg" alt="Close" />
     </mat-icon>
@@ -86,8 +91,14 @@
     [isDisabled]="!form.valid"
     (btnClick)="onSaveClick()"
     [class]="'button'"
+    [matTooltip]="'Add'"
   ></app-button>
-  <button mat-stroked-button color="primary" [mat-dialog-close]="true">
+  <button
+    mat-stroked-button
+    color="primary"
+    [mat-dialog-close]="true"
+    matTooltip="Cancel"
+  >
     Cancel
   </button>
 </mat-dialog-actions>

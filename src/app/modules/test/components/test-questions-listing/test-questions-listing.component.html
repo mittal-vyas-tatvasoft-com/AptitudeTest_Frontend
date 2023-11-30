@@ -3,7 +3,12 @@
     class="col-md-auto d-flex align-items-center justify-content-between mb-sm-0 mb-1"
   >
     <h4 class="title">Questions imported</h4>
-    <button mat-stroked-button color="primary" class="d-md-none d-block">
+    <button
+      mat-stroked-button
+      color="primary"
+      class="d-md-none d-block"
+      matTooltip="Delete All"
+    >
       Delete All
     </button>
   </div>
@@ -20,7 +25,12 @@
       <p class="question-marks">
         Total Marks: <span>{{ item.totalMarks }}</span>
       </p>
-      <button mat-stroked-button color="primary" (click)="deleteAllQuestions()">
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="deleteAllQuestions()"
+        matTooltip="Delete All"
+      >
         Delete All
       </button>
     </div>
@@ -63,7 +73,12 @@
           <p class="question-marks">{{ item.totalMarks }} <span>Marks</span></p>
         </div>
         <div class="right">
-          <button mat-fab class="btn-sm" (click)="handleEditDialog()">
+          <button
+            mat-fab
+            class="btn-sm"
+            (click)="handleEditDialog()"
+            matTooltip="Edit"
+          >
             <mat-icon>
               <img src="./assets/images/edit.svg" alt="Edit" />
             </mat-icon>
@@ -72,6 +87,7 @@
             mat-fab
             class="btn-sm"
             (click)="handleDeleteDialog(item.topicId)"
+            matTooltip="Delete"
           >
             <mat-icon>
               <img src="./assets/images/delete.svg" alt="Delete" />

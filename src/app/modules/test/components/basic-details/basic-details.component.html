@@ -173,10 +173,16 @@
         [disabled]="basicTestDetails.invalid || !startEndTimeDifferenceValid"
         color="primary"
         (click)="saveBasicDetails()"
+        matTooltip="Save"
       >
         Save
       </button>
-      <button mat-stroked-button color="primary" routerLink="/admin/test">
+      <button
+        mat-stroked-button
+        color="primary"
+        routerLink="/admin/test"
+        matTooltip="Cancel"
+      >
         Cancel
       </button>
     </div>

@@ -6,7 +6,12 @@
     <h4 class="title">Group</h4>
   </div>
   <div class="action-list">
-    <button mat-fab color="primary" (click)="handleAddGroupDialog(addGroup)">
+    <button
+      mat-fab
+      color="primary"
+      (click)="handleAddGroupDialog(addGroup)"
+      matTooltip="Add"
+    >
       <mat-icon
         ><img src="./assets/images/add-white-full.svg" alt="Add"
       /></mat-icon>
@@ -46,6 +51,7 @@
           mat-stroked-button
           color="primary"
           (click)="clearSearchAndFilter()"
+          matTooltip="Clear"
         >
           Clear
         </button>

@@ -22,10 +22,15 @@
   </div>
 </div>
 <div class="action-footer">
-  <button mat-stroked-button color="primary" (click)="clearAnswer()">
+  <button
+    mat-stroked-button
+    color="primary"
+    (click)="clearAnswer()"
+    matTooltip="Clear"
+  >
     Clear Answer
   </button>
-  <button mat-flat-button color="primary" (click)="save()">
+  <button mat-flat-button color="primary" (click)="save()" matTooltip="Save">
     <!--  routerLink="/user/submitted" -->
     Save &amp; Next
   </button>

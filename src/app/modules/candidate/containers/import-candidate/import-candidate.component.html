@@ -10,6 +10,7 @@
       mat-stroked-button
       class="btn-stroked-default"
       routerLink="/admin/candidate"
+      matTooltip="Back"
     >
       <mat-icon>
         <img src="./assets/images/back-arrow.svg" alt="Action" />
@@ -39,6 +40,7 @@
                     mat-stroked-button
                     class="form-group-btn"
                     (click)="handleAddGroupDialog()"
+                    matTooltip="Add"
                   >
                     <mat-icon>
                       <img src="./assets/images/add-grey.svg" alt="Back" />
@@ -60,6 +62,7 @@
                 mat-raised-button
                 color="primary"
                 (click)="downloadSampleFile()"
+                matTooltip="Download"
               >
                 download Sample File
               </button>
@@ -82,6 +85,7 @@
                 color="primary"
                 (click)="handleImportCandidate()"
                 [disabled]="noFileSet"
+                matTooltip="Import Candidates"
               >
                 Import
               </button>
@@ -113,6 +117,7 @@
         mat-stroked-button
         class="card-header-btn"
         (click)="handleActiveInactiveSelected(true)"
+        matTooltip="Active"
       >
         <mat-icon>
           <img src="./assets/images/active.svg" alt="Active" />
@@ -122,6 +127,7 @@
         mat-stroked-button
         class="card-header-btn"
         (click)="handleActiveInactiveSelected(false)"
+        matTooltip="Inactive"
       >
         <mat-icon>
           <img src="./assets/images/inactive.svg" alt="Inactive" />
@@ -131,6 +137,7 @@
         mat-stroked-button
         class="card-header-btn"
         (click)="handleDeleteSelected()"
+        matTooltip="Delete"
       >
         <mat-icon>
           <img src="./assets/images/delete.svg" alt="Delete" />
@@ -174,7 +181,12 @@
       </form>
     </div>
     <div class="col-sm-auto pb-2 pb-sm-0">
-      <button mat-stroked-button color="primary" (click)="clearFilters()">
+      <button
+        mat-stroked-button
+        color="primary"
+        (click)="clearFilters()"
+        matTooltip="Clear"
+      >
         clear
       </button>
     </div>

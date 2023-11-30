@@ -27,6 +27,7 @@
             mat-mini-fab
             class="btn-sm"
             [matMenuTriggerFor]="questionActionMenu"
+            matTooltip="Action"
           >
             <mat-icon>
               <img src="./assets/images/more-black.svg" alt="Action" />
@@ -37,13 +38,14 @@
               mat-menu-item
               (click)="createDuplicate(question.id)"
               *ngIf="question.parentId === null || question.parentId === 0"
+              matTooltip="Duplicate"
             >
               <mat-icon>
                 <img src="./assets/images/duplicate-grey.svg" alt="Duplicate" />
               </mat-icon>
               Duplicate
             </button>
-            <button mat-menu-item (click)="edit(question.id)">
+            <button mat-menu-item (click)="edit(question.id)" matTooltip="Edit">
               <mat-icon>
                 <img src="./assets/images/edit.svg" alt="Edit" />
               </mat-icon>
@@ -70,6 +72,7 @@
             <button
               mat-menu-item
               (click)="handleDeleteProfileDialog(question.id)"
+              matTooltip="Delete"
             >
               <mat-icon>
                 <img src="./assets/images/delete.svg" alt="Delete" />

@@ -32,6 +32,7 @@ import { MatStepperModule } from '@angular/material/stepper';
 import { MatTableModule } from '@angular/material/table';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatTreeModule } from '@angular/material/tree';
 import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import {
@@ -63,6 +64,7 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     MatTabsModule,
     MatIconModule,
     FormsModule,
+    MatTooltipModule,
   ],
   exports: [
     MatChipsModule,
@@ -98,6 +100,8 @@ const DEFAULT_DROPZONE_CONFIG: DropzoneConfigInterface = {
     DropzoneModule,
     CKEditorModule,
     MatMomentDateModule,
+    MatTableModule,
+    MatTooltipModule,
   ],
   providers: [
     {

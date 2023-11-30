@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
+import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-button',
@@ -12,6 +13,7 @@ export class ButtonComponent {
   @Input() isDisabled = false;
   @Input() label!: string;
   @Input() class = '';
+  @Input() toolTipText: string;
   @Output() btnClick = new EventEmitter<Event>();
 
   onClick(event: Event) {
