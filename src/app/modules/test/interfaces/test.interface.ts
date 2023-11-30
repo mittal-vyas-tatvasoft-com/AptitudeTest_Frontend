@@ -1,9 +1,8 @@
-import { DateTime } from 'luxon';
-
 export interface createTestModel {
+  id?: number;
   name: string;
   testDuration: number;
-  date: DateTime;
+  date: Date;
   startTime: Date;
   endTime: Date;
   description: string;

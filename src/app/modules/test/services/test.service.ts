@@ -140,6 +140,19 @@ export class TestService {
       );
   }
 
+  updateTest(data: createTestModel) {
+    return this.http
+      .put<ResponseModel<string>>(
+        `${environment.baseURL}Tests/UpdateTest`,
+        data
+      )
+      .pipe(
+        map((res: ResponseModel<string>) => {
+          return res;
+        })
+      );
+  }
+
   getAllTestCandidates(data: GetAllTestCandidateParams) {
     let params = new HttpParams();
     if (data.searchQuery != '') {
@@ -285,6 +298,10 @@ export class TestService {
           return res;
         })
       );
+  }
+
+  GetTestById(testId: number): any {
+    return this.http.get(`${environment.baseURL}Tests/GetTestById/${testId}`);
   }
 
   CheckSumAndSelectedQuestions(form: FormGroup) {
