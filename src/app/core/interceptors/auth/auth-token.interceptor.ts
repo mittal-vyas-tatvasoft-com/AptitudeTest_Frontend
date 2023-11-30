@@ -6,7 +6,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, switchMap, takeUntil, tap, throwError } from 'rxjs';
+import { Observable, catchError, switchMap, tap, throwError, filter, take } from 'rxjs';
 import { LoginService } from '../../auth/services/login.service';
 import { Navigation, StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
@@ -15,6 +15,7 @@ import { LoaderService } from '../../services/loader.service';
 @Injectable()
 export class AuthTokenInterceptor implements HttpInterceptor {
   refreshTokenObservable: Observable<ResponseModel<string>>;
+  private isRefreshing = false;
 
   constructor(
     private loginService: LoginService,
@@ -22,33 +23,45 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   ) { }
 
   private handleTokenRefresh(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    const data = this.loginService.decodeToken();
-    if (data.Role === Navigation.RoleAdmin) {
-      this.refreshTokenObservable = this.loginService.refreshTokenAdmin();
-    } else {
-      this.refreshTokenObservable = this.loginService.refreshToken();
-    }
-    return this.refreshTokenObservable.pipe(
-      switchMap((res: any) => {
-        if (res.result) {
-          const newReq = req.clone({
-            setHeaders: {
-              Authorization: `Bearer ${this.loginService.getToken()}`,
-            },
-          });
-          return next.handle(newReq);
-        } else {
+    if (!this.isRefreshing) {
+      this.isRefreshing = true;
+      
+      const data = this.loginService.decodeToken();
+
+      return this.loginService.refreshToken(data.Role === Navigation.RoleAdmin).pipe(
+        switchMap((res: any) => {
+          this.isRefreshing = false;
+          if (res.result) {
+            return this.retryRequest(req, next);
+          } else {
+            this.loginService.logout();
+            return throwError(Error);
+          }
+        }),
+        catchError((error: any) => {
+          this.isRefreshing = false;
           this.loginService.logout();
-          return throwError(Error);
-        }
-      }),
-      catchError((error: any) => {
-        this.loginService.logout();
-        return throwError(error);
-      })
+          return throwError(error);
+        })
+      );
+    }
+
+    return this.loginService.refreshTokenSubject.pipe(
+      filter(token => token !== null),
+      take(1),
+      switchMap(() => this.retryRequest(req, next))
     );
   }
 
+  retryRequest(req: HttpRequest<any>, next: HttpHandler) {
+    const newReq = req.clone({
+      setHeaders: {
+        Authorization: `Bearer ${this.loginService.getToken()}`,
+      },
+    });
+    return next.handle(newReq);
+  }
+  
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
     // set loader to true 
     if (req.url.toLowerCase().indexOf('/api/') > -1) {
