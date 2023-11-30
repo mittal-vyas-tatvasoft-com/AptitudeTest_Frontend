@@ -5,12 +5,12 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { FormGroup, FormBuilder, FormArray, FormControl } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import {
   candidateControl,
   selectOptionsForRelationship,
 } from '../../configs/candidate.configs';
-import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 
 @Component({
   selector: 'app-family-background',
@@ -51,15 +51,17 @@ export class FamilyBackgroundComponent implements OnInit, OnChanges {
       this.familyDetailsArray.removeAt(0);
     }
 
-    for (let i = 0; i < 5; i++) {
-      const familyDetail = this.familyDetails[i] || {};
-      this.familyDetailsArray.push(
-        this.formBuilder.group({
-          familyPerson: new FormControl(familyDetail.familyPerson || ''),
-          qualification: new FormControl(familyDetail.qualification || ''),
-          occupation: new FormControl(familyDetail.occupation || ''),
-        })
-      );
+    if (this.familyDetails) {
+      for (let i = 0; i < 5; i++) {
+        const familyDetail = this.familyDetails[i] || {};
+        this.familyDetailsArray.push(
+          this.formBuilder.group({
+            familyPerson: new FormControl(familyDetail.familyPerson || ''),
+            qualification: new FormControl(familyDetail.qualification || ''),
+            occupation: new FormControl(familyDetail.occupation || ''),
+          })
+        );
+      }
     }
   }
 

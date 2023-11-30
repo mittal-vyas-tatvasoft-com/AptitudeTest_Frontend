@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
+import { Messages } from 'src/app/shared/messages/messages.static';
+import { validations } from 'src/app/shared/messages/validation.static';
+import { FormControlModel } from 'src/app/shared/modules/form-control/interfaces/form-control-model';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { changePasswordControl } from '../../configs/change-password.config';
-import { MatDialogRef } from '@angular/material/dialog';
-import { AddDegreeComponent } from 'src/app/modules/masters/degree/components/add-degree/add-degree.component';
-import { validations } from 'src/app/shared/messages/validation.static';
-import { Messages } from 'src/app/shared/messages/messages.static';
-import { FormControlModel } from 'src/app/shared/modules/form-control/interfaces/form-control-model';
 
 @Component({
   selector: 'app-change-password',
@@ -21,8 +20,8 @@ export class ChangePasswordComponent implements OnInit {
   constructor(
     public validation: ValidationService,
     private fb: FormBuilder,
-    public dialogRef: MatDialogRef<AddDegreeComponent>
-  ) { }
+    public dialogRef: MatDialogRef<ChangePasswordComponent>
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
@@ -58,13 +57,16 @@ export class ChangePasswordComponent implements OnInit {
 
   private resetPasswordVisibility() {
     this.formControls.currentPasswordField.inputType = 'password';
-    this.formControls.currentPasswordField.iconName = 'password-visibility-show-dark.svg';
+    this.formControls.currentPasswordField.iconName =
+      'password-visibility-show-dark.svg';
 
     this.formControls.newPasswordField.inputType = 'password';
-    this.formControls.newPasswordField.iconName = 'password-visibility-show-dark.svg';
+    this.formControls.newPasswordField.iconName =
+      'password-visibility-show-dark.svg';
 
     this.formControls.confirmPasswordField.inputType = 'password';
-    this.formControls.confirmPasswordField.iconName = 'password-visibility-show-dark.svg';
+    this.formControls.confirmPasswordField.iconName =
+      'password-visibility-show-dark.svg';
   }
 
   onIconClick(formControlModel: FormControlModel) {

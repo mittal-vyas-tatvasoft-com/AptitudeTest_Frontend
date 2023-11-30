@@ -24,7 +24,7 @@ const routes: Routes = [
     component: ResetPasswordComponent,
   },
   {
-    path: Navigation.RegisterPassword,
+    path: Navigation.Register,
     component: RegisterComponent,
   },
 ];

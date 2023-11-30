@@ -3,11 +3,13 @@
     <mat-label>{{ formControlModel.label }}</mat-label>
     <input
       matInput
+      readonly
       [matDatepicker]="picker"
       [formControlName]="formControlModel.key"
       [min]="minDate"
       [max]="maxDate"
       (change)="dateChange()"
+      (click)="picker.open()"
     />
     <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
     <mat-datepicker #picker></mat-datepicker>

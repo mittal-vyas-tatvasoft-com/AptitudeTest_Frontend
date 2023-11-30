@@ -36,7 +36,13 @@
 <app-family-background [familyDetails]="familyDetails"></app-family-background>
 
 <div class="page-action-buttons d-flex justify-content-end">
-  <button mat-flat-button color="primary" (click)="Save()" matTooltip="Save">
+  <button
+    mat-flat-button
+    color="primary"
+    (click)="Save()"
+    [disabled]="disabled"
+    matTooltip="Save"
+  >
     {{ isAdmin ? "Save" : "Register" }}
   </button>
   <button

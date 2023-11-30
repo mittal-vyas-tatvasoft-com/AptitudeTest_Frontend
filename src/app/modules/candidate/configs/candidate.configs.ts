@@ -49,6 +49,8 @@ export const candidateControl = {
     key: 'gender',
     label: 'Gender',
     inputType: 'select',
+    required: true,
+    requiredErrMsg: 'Gender is required',
   },
   group: {
     value: '',
@@ -95,6 +97,8 @@ export const candidateControl = {
     key: 'appliedThrough',
     label: 'Applied Through',
     inputType: 'select',
+    required: true,
+    requiredErrMsg: 'Field is required',
   },
   profiles: {
     value: '',
@@ -122,10 +126,11 @@ export const candidateControl = {
     value: '',
     key: 'pincode',
     label: 'Pincode',
-    required: false,
+    required: true,
     inputType: 'text',
     displayIcon: false,
     patternErrMsg: 'Please enter valid pin code',
+    requiredErrMsg: 'Pincode is required',
     maxLength: 6,
   },
   state: {
@@ -139,7 +144,8 @@ export const candidateControl = {
     key: 'dateOfBirth',
     label: 'Date of Birth',
     inputType: 'text',
-    require: false,
+    require: true,
+    requiredErrMsg: 'DOB is required',
   },
   acpcMeritRank: {
     value: '',

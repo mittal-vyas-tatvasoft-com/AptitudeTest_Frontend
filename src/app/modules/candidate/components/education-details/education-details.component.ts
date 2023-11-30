@@ -1,20 +1,13 @@
-import {
-  AfterViewInit,
-  Component,
-  Input,
-  OnChanges,
-  OnInit,
-  SimpleChanges,
-} from '@angular/core';
+import { Component, Input, OnChanges, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
+import { validations } from 'src/app/shared/messages/validation.static';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import {
   ErrorMessageForEductionDetail,
@@ -25,16 +18,18 @@ import {
   selectOptionsForStream,
 } from '../../configs/candidate.configs';
 import { CandidateService } from '../../services/candidate.service';
-import { validations } from 'src/app/shared/messages/validation.static';
 
+export const defaultSelectOption = {
+  id: '',
+  key: 'Select',
+  value: 'Select',
+};
 @Component({
   selector: 'app-education-details',
   templateUrl: './education-details.component.html',
   styleUrls: ['./education-details.component.scss'],
 })
-export class EducationDetailsComponent
-  implements OnInit, AfterViewInit, OnChanges
-{
+export class EducationDetailsComponent implements OnInit, OnChanges {
   validations = validations;
   CandidateModel = candidateControl;
   form: FormGroup;
@@ -63,12 +58,9 @@ export class EducationDetailsComponent
 
   ngOnInit() {
     this.createForm();
-  }
-
-  ngAfterViewInit() {
     this.getDropdowns();
-    this.setAcademicsDetails();
     this.populateForm();
+    this.setAcademicsDetails();
   }
 
   ngOnChanges() {
@@ -154,6 +146,39 @@ export class EducationDetailsComponent
           }
         });
       });
+    this.masterDegree.unshift(defaultSelectOption);
+    this.masterStream.unshift(defaultSelectOption);
+    this.otherDegree.unshift(defaultSelectOption);
+    this.otherStream.unshift(defaultSelectOption);
+  }
+  chang(event: any, i: number, data: any) {
+    if (i > 2) {
+      console.log(event);
+
+      if (event > 0) {
+        data.get('university').setValidators(Validators.required);
+        data.get('university').updateValueAndValidity();
+        data.get('streamId').setValidators(Validators.required);
+        data.get('streamId').updateValueAndValidity();
+        data.get('grade').setValidators(Validators.required);
+        data.get('grade').updateValueAndValidity();
+        data.get('maths').setValidators(Validators.required);
+        data.get('maths').updateValueAndValidity();
+        data.get('physics').setValidators(Validators.required);
+        data.get('physics').updateValueAndValidity();
+      } else {
+        data.get('university').clearValidators();
+        data.get('university').updateValueAndValidity();
+        data.get('streamId').clearValidators();
+        data.get('streamId').updateValueAndValidity();
+        data.get('grade').clearValidators();
+        data.get('grade').updateValueAndValidity();
+        data.get('maths').clearValidators();
+        data.get('maths').updateValueAndValidity();
+        data.get('physics').clearValidators();
+        data.get('physics').updateValueAndValidity();
+      }
+    }
   }
 
   getFormData(): FormGroup {
@@ -161,14 +186,19 @@ export class EducationDetailsComponent
   }
 
   setAcademicsDetails() {
-    if (this.academicDetails) {
+    if (
+      this.academicDetails &&
+      this.educationDetailsArrayData?.controls?.length
+    ) {
       const academicDetails = this.academicDetails;
       for (
         let index = 0;
-        index < this.educationDetailsArray.controls.length;
+        index < this.educationDetailsArrayData.controls.length;
         index++
       ) {
-        const control = this.educationDetailsArray.controls[index] as FormGroup;
+        const control = this.educationDetailsArrayData.controls[
+          index
+        ] as FormGroup;
         control.patchValue({
           degreeId: '',
           university: '',
@@ -182,8 +212,11 @@ export class EducationDetailsComponent
         const index = this.findFormArrayIndexByDegreeLevel(
           academicDetail.degreeLevel
         );
-        if (index >= 0 && index < this.educationDetailsArray.controls.length) {
-          const control = this.educationDetailsArray.controls[
+        if (
+          index >= 0 &&
+          index < this.educationDetailsArrayData.controls.length
+        ) {
+          const control = this.educationDetailsArrayData.controls[
             index
           ] as FormGroup;
 
@@ -251,23 +284,25 @@ export class EducationDetailsComponent
     });
   }
 
-  get educationDetailsArray() {
-    return this.form.get('educationDetailsArray') as FormArray;
+  get educationDetailsArrayData() {
+    return this.form?.controls['educationDetailsArray'] as FormArray;
   }
 
   populateForm() {
-    for (let i = 0; i < 5; i++) {
-      const academicDetail = this.academicDetails[i];
-      this.educationDetailsArray.push(
-        this.formBuilder.group({
-          degreeId: academicDetail?.degreeId || '',
-          university: academicDetail?.university || '',
-          streamId: academicDetail?.streamId || '',
-          grade: academicDetail?.grade || '',
-          maths: academicDetail?.maths || '',
-          physics: academicDetail?.physics || '',
-        })
-      );
+    if (this.academicDetails && this.educationDetailsArrayData) {
+      for (let i = 0; i < 5; i++) {
+        const academicDetail = this.academicDetails[i];
+        this.educationDetailsArrayData.push(
+          this.formBuilder.group({
+            degreeId: academicDetail?.degreeId || '',
+            university: academicDetail?.university || '',
+            streamId: academicDetail?.streamId || '',
+            grade: academicDetail?.grade || '',
+            maths: academicDetail?.maths || '',
+            physics: academicDetail?.physics || '',
+          })
+        );
+      }
     }
   }
 
@@ -277,7 +312,7 @@ export class EducationDetailsComponent
 
   validateForm() {
     for (let i = 0; i < 3; i++) {
-      const control = this.educationDetailsArray.at(i) as FormGroup | null;
+      const control = this.educationDetailsArrayData.at(i) as FormGroup | null;
       if (control) {
         Object.keys(control.controls).forEach((key) => {
           const formControl = control.get(key) as FormControl;
