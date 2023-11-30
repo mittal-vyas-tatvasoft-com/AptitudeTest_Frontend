@@ -69,10 +69,10 @@ export class ImportCandidateComponent implements OnInit {
   status: SelectOption[] = [
     { value: 'Select', id: '' },
     { value: 'Active', id: true },
-    { value: 'InActive', id: false },
+    { value: 'Inactive', id: false },
   ];
   columns: TableColumn<CandidateModel>[] = [
-    { columnDef: 'select', header: '', width: '5%'  },
+    { columnDef: 'select', header: '', width: '5%' },
     { columnDef: 'name', header: 'Name', width: '15%' },
     { columnDef: 'collegeName', header: 'College', width: '15%' },
     { columnDef: 'groupName', header: 'Group', width: '15%' },

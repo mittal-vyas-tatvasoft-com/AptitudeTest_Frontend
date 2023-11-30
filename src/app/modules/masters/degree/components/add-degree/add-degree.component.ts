@@ -46,7 +46,7 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
   ];
   statusList: Status[] = [
     { key: 'Active', value: true },
-    { key: 'InActive', value: false },
+    { key: 'Inactive', value: false },
   ];
   fromControls = FormControls;
   data: DegreeModel;

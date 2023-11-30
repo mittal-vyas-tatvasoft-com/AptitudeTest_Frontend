@@ -13,11 +13,11 @@ export const Topics = [
   },
 ];
 
-export const OptionList = ['All', 'Active', 'InActive'];
+export const OptionList = ['All', 'Active', 'Inactive'];
 export const OptionsIndex = ['A', 'B', 'C', 'D'];
 export const Status = [
   { id: 0, name: 'Active', value: true },
-  { id: 1, name: 'InActive', value: false },
+  { id: 1, name: 'Inactive', value: false },
 ];
 export const Difficulty = [1, 2, 3, 4, 5];
 export const AnswerType = [

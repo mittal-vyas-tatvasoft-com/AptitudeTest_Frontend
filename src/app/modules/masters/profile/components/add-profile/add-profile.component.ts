@@ -15,7 +15,7 @@ export class AddProfileComponent implements OnInit, AfterViewInit {
   formControl = formControls;
   optionsList = [
     { key: 'Active', value: true },
-    { key: 'InActive', value: false },
+    { key: 'Inactive', value: false },
   ];
 
   constructor(

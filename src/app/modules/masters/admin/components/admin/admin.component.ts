@@ -30,7 +30,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   optionsList: SelectOption[] = [
     { value: 'Select', id: '' },
     { value: 'Active', id: true },
-    { value: 'InActive', id: false },
+    { value: 'Inactive', id: false },
   ];
 
   dataSource: MatTableDataSource<AdminModel>;
@@ -56,7 +56,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
       header: 'Action',
       isAction: true,
       action: 'edit',
-      width: '10%'
+      width: '10%',
     },
   ];
   form: FormGroup;
