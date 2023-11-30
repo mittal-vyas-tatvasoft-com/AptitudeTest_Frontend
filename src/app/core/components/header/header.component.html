@@ -16,6 +16,7 @@
         class="btn-menu"
         (click)="toggleSidebar()"
         *ngIf="isAdmin"
+        matTooltip="Menu"
       >
         <mat-icon>
           <img src="./assets/images/hamburg-white.svg" alt="Menu" />
@@ -56,6 +57,7 @@
               mat-menu-item
               (click)="chanegPasswordDialog()"
               *ngIf="isAdmin"
+              matTooltip="Change Password"
             >
               <mat-icon>
                 <img
@@ -65,7 +67,7 @@
               </mat-icon>
               <span>Change Password</span>
             </button>
-            <button mat-menu-item *ngIf="!isAdmin">
+            <button mat-menu-item *ngIf="!isAdmin" matTooltip="My Profile">
               <mat-icon>
                 <img
                   src="./assets/images/candidates-grey.svg"
@@ -74,7 +76,12 @@
               </mat-icon>
               <span>My Profile</span>
             </button>
-            <button mat-menu-item routerLink="/" (click)="logout()">
+            <button
+              mat-menu-item
+              routerLink="/"
+              (click)="logout()"
+              matTooltip="Logout"
+            >
               <mat-icon>
                 <img src="./assets/images/logout-grey.svg" alt="Logout" />
               </mat-icon>

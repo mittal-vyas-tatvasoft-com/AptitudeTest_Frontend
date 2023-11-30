@@ -6,7 +6,12 @@
     <h4 class="title">Candidates</h4>
   </div>
   <div class="action-list">
-    <button mat-fab color="primary" (click)="handleAddCandidateDialog()">
+    <button
+      mat-fab
+      color="primary"
+      (click)="handleAddCandidateDialog()"
+      matTooltip="Add"
+    >
       <mat-icon
         ><img src="./assets/images/add-white-full.svg" alt="Add"
       /></mat-icon>
@@ -16,6 +21,7 @@
       color="primary"
       class="btn-with-icon"
       routerLink="/admin/candidate/import-candidate"
+      matTooltip="Import Candidates"
     >
       <mat-icon
         ><img src="./assets/images/import-white.svg" alt="Import"
@@ -27,25 +33,38 @@
       [matMenuTriggerFor]="actionMenu"
       class="btn-stroked-default"
       style="padding: 10px"
+      matTooltip="Action"
     >
       <mat-icon style="width: 24px; height: 24px">
         <img src="./assets/images/more-black.svg" alt="Action" />
       </mat-icon>
     </button>
     <mat-menu #actionMenu="matMenu" xPosition="before">
-      <button mat-menu-item (click)="handleActiveInactiveSelected(true)">
+      <button
+        mat-menu-item
+        (click)="handleActiveInactiveSelected(true)"
+        matTooltip="Active"
+      >
         <mat-icon>
           <img src="./assets/images/active.svg" alt="Active" />
         </mat-icon>
         Active
       </button>
-      <button mat-menu-item (click)="handleActiveInactiveSelected(false)">
+      <button
+        mat-menu-item
+        (click)="handleActiveInactiveSelected(false)"
+        matTooltip="Inactive"
+      >
         <mat-icon>
           <img src="./assets/images/inactive.svg" alt="Inactive" />
         </mat-icon>
         Inactive
       </button>
-      <button mat-menu-item (click)="handleDeleteSelected()">
+      <button
+        mat-menu-item
+        (click)="handleDeleteSelected()"
+        matTooltip="Delete"
+      >
         <mat-icon>
           <img src="./assets/images/delete.svg" alt="Delete" />
         </mat-icon>
@@ -115,7 +134,12 @@
         </div>
       </div>
       <div class="col-sm-auto pb-2 pb-sm-0">
-        <button mat-stroked-button color="primary" (click)="clearFilters()">
+        <button
+          mat-stroked-button
+          color="primary"
+          (click)="clearFilters()"
+          matTooltip="Clear"
+        >
           clear
         </button>
       </div>

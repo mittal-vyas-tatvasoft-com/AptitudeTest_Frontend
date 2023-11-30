@@ -103,13 +103,18 @@
                 [matMenuTriggerFor]="tableActionMenu"
                 class="btn-small"
                 *ngIf="!row.isSuperAdmin"
+                matTooltip="Action"
               >
                 <mat-icon>
                   <img src="./assets/images/more-black.svg" alt="Action" />
                 </mat-icon>
               </button>
               <mat-menu #tableActionMenu="matMenu" xPosition="before">
-                <button mat-menu-item (click)="handleEdit(row)">
+                <button
+                  mat-menu-item
+                  (click)="handleEdit(row)"
+                  matTooltip="Edit"
+                >
                   <mat-icon>
                     <img src="./assets/images/edit.svg" alt="Edit" />
                   </mat-icon>
@@ -120,6 +125,7 @@
                     mat-menu-item
                     *ngIf="!row.status; else activeButton"
                     (click)="handleAction(row.id, true)"
+                    matTooltip="Active"
                   >
                     <mat-icon>
                       <img src="./assets/images/active.svg" alt="Active" />
@@ -127,7 +133,11 @@
                     Active
                   </button>
                   <ng-template #activeButton>
-                    <button mat-menu-item (click)="handleAction(row.id, false)">
+                    <button
+                      mat-menu-item
+                      (click)="handleAction(row.id, false)"
+                      matTooltip="Inactive"
+                    >
                       <mat-icon>
                         <img
                           src="./assets/images/inactive.svg"
@@ -138,7 +148,11 @@
                     </button>
                   </ng-template>
                 </ng-container>
-                <button mat-menu-item (click)="handleDelete(row.id)">
+                <button
+                  mat-menu-item
+                  (click)="handleDelete(row.id)"
+                  matTooltip="Delete"
+                >
                   <mat-icon>
                     <img src="./assets/images/delete.svg" alt="Delete" />
                   </mat-icon>

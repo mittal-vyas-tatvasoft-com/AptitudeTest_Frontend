@@ -10,6 +10,7 @@
       mat-stroked-button
       class="btn-stroked-default"
       (click)="handleBackBtn()"
+      matTooltip="Back"
     >
       <mat-icon>
         <img src="./assets/images/back-arrow.svg" alt="Action" />
@@ -20,7 +21,12 @@
 <mat-card class="form-block mb-3">
   <mat-card-content>
     <div class="d-flex justify-content-end">
-      <button mat-raised-button color="primary" (click)="downloadSampleFile()">
+      <button
+        mat-raised-button
+        color="primary"
+        (click)="downloadSampleFile()"
+        matTooltip="Download"
+      >
         download Sample File
       </button>
     </div>
@@ -41,6 +47,7 @@
               color="primary"
               [disabled]="!getValidation()"
               (click)="importQuestions()"
+              matTooltip="Import"
             >
               Import
             </button>

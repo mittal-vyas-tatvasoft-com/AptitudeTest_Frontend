@@ -1,6 +1,11 @@
 <div class="dialog-header">
   <h2 mat-dialog-title>Add Degree</h2>
-  <button mat-icon-button class="dialog-close" (click)="closeModal()">
+  <button
+    mat-icon-button
+    class="dialog-close"
+    (click)="closeModal()"
+    matTooltip="Close"
+  >
     <mat-icon>
       <img src="./assets/images/close-grey.svg" alt="Close" />
     </mat-icon>
@@ -65,7 +70,7 @@
               (removed)="remove(stream)"
             >
               {{ stream }}
-              <button matChipRemove>
+              <button matChipRemove matTooltip="Remove">
                 <mat-icon>
                   <img src="./assets/images/close-dark.svg" alt="Remove" />
                 </mat-icon>
@@ -99,10 +104,16 @@
     color="primary"
     [disabled]="!form.valid"
     (click)="onAddClick()"
+    matTooltip="Save"
   >
     {{ id === 0 ? "Add" : "Save" }}
   </button>
-  <button mat-stroked-button color="primary" [mat-dialog-close]="null">
+  <button
+    mat-stroked-button
+    color="primary"
+    [mat-dialog-close]="null"
+    matTooltip="Cancel"
+  >
     Cancel
   </button>
 </mat-dialog-actions>

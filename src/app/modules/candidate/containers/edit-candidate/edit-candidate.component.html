@@ -15,6 +15,7 @@
       mat-stroked-button
       class="btn-stroked-default"
       (click)="handleBackBtn()"
+      matTooltip="Back"
     >
       <mat-icon>
         <img src="./assets/images/back-arrow.svg" alt="Action" />
@@ -35,7 +36,7 @@
 <app-family-background [familyDetails]="familyDetails"></app-family-background>
 
 <div class="page-action-buttons d-flex justify-content-end">
-  <button mat-flat-button color="primary" (click)="Save()">
+  <button mat-flat-button color="primary" (click)="Save()" matTooltip="Save">
     {{ isAdmin ? "Save" : "Register" }}
   </button>
   <button
@@ -43,6 +44,7 @@
     color="primary"
     (click)="handleBackBtn()"
     class="ms-1"
+    matTooltip="Cancel"
   >
     Cancel
   </button>

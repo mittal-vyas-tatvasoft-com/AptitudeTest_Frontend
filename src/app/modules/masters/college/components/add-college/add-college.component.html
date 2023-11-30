@@ -1,6 +1,11 @@
 <div class="dialog-header">
   <h2 mat-dialog-title>{{ isEditMode ? "Edit College" : "Add College" }}</h2>
-  <button mat-icon-button class="dialog-close" (click)="closeModal()">
+  <button
+    mat-icon-button
+    class="dialog-close"
+    (click)="closeModal()"
+    matTooltip="Close"
+  >
     <mat-icon>
       <img src="./assets/images/close-grey.svg" alt="Close" />
     </mat-icon>
@@ -40,10 +45,16 @@
     label="isEditMode ? 'Save' : 'Add'"
     [disabled]="!form.valid"
     [mat-dialog-close]="form.value"
+    matTooltip="Save"
   >
     {{ isEditMode ? "Save" : "Add" }}
   </button>
-  <button mat-stroked-button color="primary" [mat-dialog-close]="false">
+  <button
+    mat-stroked-button
+    color="primary"
+    [mat-dialog-close]="false"
+    matTooltip="Cancel"
+  >
     Cancel
   </button>
 </mat-dialog-actions>
