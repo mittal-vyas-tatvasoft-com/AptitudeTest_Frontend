@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LoginService } from '../../services/login.service';
-import { loginControl } from '../../configs/login.config';
-import { Subject, takeUntil } from 'rxjs';
-import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { validations } from 'src/app/shared/messages/validation.static';
+import { Subject, takeUntil } from 'rxjs';
 import { Navigation } from 'src/app/shared/common/enums';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { validations } from 'src/app/shared/messages/validation.static';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { loginControl } from '../../configs/login.config';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-login',
