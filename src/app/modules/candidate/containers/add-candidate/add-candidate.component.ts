@@ -50,7 +50,13 @@ export class AddCandidateComponent implements OnInit {
 
   createForm() {
     this.form = this.formBuilder.group({
-      firstName: ['', Validators.required],
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       lastName: [''],
       fatherName: [''],
       email: [

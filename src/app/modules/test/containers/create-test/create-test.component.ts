@@ -16,6 +16,7 @@ import * as moment from 'moment';
 import { Subject, debounceTime } from 'rxjs';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { validations } from 'src/app/shared/messages/validation.static';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
@@ -131,14 +132,26 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   createForms() {
     this.basicTestDetails = this.formBuilder.group({
       testId: [0],
-      testName: ['', Validators.required],
+      testName: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       status: [1, Validators.required],
       basicPoints: ['', Validators.required],
       testDuration: ['', Validators.required],
       date: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
-      description: ['', Validators.required],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       messageAtTheStartOfTest: [''],
       messageAtTheEndOfTest: [''],
       randomQuestions: [false],

@@ -18,6 +18,7 @@ import { Messages } from 'src/app/shared/messages/messages.static';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { DegreeModel } from '../../interfaces/degree.interface';
+import { validations } from 'src/app/shared/messages/validation.static';
 
 export interface Stream {
   name: string;
@@ -69,6 +70,7 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
           Validators.required,
           Validators.maxLength(FormControls.name.maxLength),
           Validators.minLength(FormControls.name.minLength),
+          Validators.pattern(validations.common.whitespaceREGEX),
         ],
       ],
       status: [FormControls.status.value, [Validators.required]],
@@ -78,6 +80,7 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
         [
           Validators.required,
           Validators.maxLength(FormControls.streams.maxLength),
+          Validators.pattern(validations.common.whitespaceREGEX),
         ],
       ],
     });

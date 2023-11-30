@@ -1,6 +1,7 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { validations } from 'src/app/shared/messages/validation.static';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { formControls } from '../../config/profile.config';
 import { ProfileService } from '../../services/profile.service';
@@ -46,7 +47,14 @@ export class AddProfileComponent implements OnInit, AfterViewInit {
   createForm() {
     this.form = this.formBuilder.group({
       id: [0],
-      name: ['', [Validators.required, Validators.maxLength(500)]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.maxLength(500),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       status: [true, [Validators.required]],
     });
   }

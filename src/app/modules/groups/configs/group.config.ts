@@ -4,9 +4,9 @@ export const GroupFormControls = {
     key: 'name',
     label: 'Group Name',
     requiredErrMsg: 'Group name is required',
-    maxLengthErrMsg: 'Max 500 characters allowed',
+    maxLengthErrMsg: 'Max 35 characters allowed',
     inputType: 'text',
-    maxLength: 500,
+    maxLength: 35,
   },
   default: {
     value: false,
