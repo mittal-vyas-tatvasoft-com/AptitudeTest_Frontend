@@ -14,7 +14,7 @@ import { AdminService } from '../../services/admin.service';
 export class AddAdminComponent implements OnInit, AfterViewInit {
   optionsList = [
     { key: 'Active', value: true },
-    { key: 'InActive', value: false },
+    { key: 'Inactive', value: false },
   ];
   isEditMode = false;
   form: FormGroup;

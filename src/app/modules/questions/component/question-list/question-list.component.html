@@ -16,7 +16,7 @@
                 ChipSuccess: question.status,
                 ChipInactive: !question.status
               }"
-              >{{ question.status ? "Active" : "InActive" }}
+              >{{ question.status ? "Active" : "Inactive" }}
             </mat-chip>
           </ng-container>
 
@@ -67,7 +67,7 @@
                   alt="Status"
                 />
               </mat-icon>
-              {{ !question.status ? "Active" : "InActive" }}
+              {{ !question.status ? "Active" : "Inactive" }}
             </button>
             <button
               mat-menu-item
