@@ -26,6 +26,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
   form: FormGroup;
   isAdmin = false;
   validForm = false;
+  disabled: boolean;
   private ngUnsubscribe$ = new Subject<void>();
   @ViewChild(PersonalInfoComponent)
   personalInfoComponent: PersonalInfoComponent;
@@ -56,7 +57,6 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
         .getCandidateData(Id)
         .pipe(takeUntil(this.ngUnsubscribe$))
         .subscribe((data) => {
-          console.log(data.data);
           this.candidateData = { ...data.data };
           if (this.candidateData.hasOwnProperty('status')) {
             this.candidateData.status = this.candidateData.status ? 1 : 2;
@@ -76,6 +76,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
   }
 
   Save() {
+    this.disabled = true;
     const forms = [
       this.personalInfoComponent.getFormData(),
       this.examScoresComponent.getFormData(),
@@ -131,7 +132,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
             }) => ({
               userid: this.candidateId ? this.candidateId : 0,
               degreeid: educationDetail.degreeId ? educationDetail.degreeId : 0,
-              streamid: educationDetail.streamId || null,
+              streamid: educationDetail.streamId ? educationDetail.streamId : 0,
               maths: educationDetail.maths ? educationDetail.maths : 0,
               physics: educationDetail.physics ? educationDetail.physics : 0,
               university: educationDetail.university
@@ -172,11 +173,17 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
           .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(
             (response) => {
-              this.snackbarService.success(response.message);
-              this._location.back();
+              if (response.statusCode === StatusCode.Success) {
+                this.snackbarService.success(response.message);
+                this._location.back();
+              } else {
+                this.snackbarService.error(response.message);
+                this.disabled = false;
+              }
             },
             (error) => {
-              this.snackbarService.error(error.message);
+              this.snackbarService.error(error.statusText);
+              this.disabled = false;
             }
           );
       } else {
@@ -190,10 +197,12 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
                 this.router.navigate(['']);
               } else {
                 this.snackbarService.error(response.message);
+                this.disabled = false;
               }
             },
             (error) => {
-              this.snackbarService.error(error.message);
+              this.disabled = false;
+              this.snackbarService.error(error.statusText);
             }
           );
       }
@@ -202,6 +211,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
       this.educationDetailsComponent.validateForm();
       window.scroll({ top: 0, behavior: 'smooth' });
       this.snackbarService.error(Messages.fillRequiredField);
+      this.disabled = false;
     }
   }
 

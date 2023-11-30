@@ -86,16 +86,22 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       ],
       userGroup: ['', Validators.required],
       userCollege: ['', Validators.required],
-      gender: [''],
+      gender: ['', Validators.required],
       status: [candidateControl.status.value],
       createdYear: [{ value: '', disabled: true }],
-      appliedThrough: [''],
+      appliedThrough: ['', Validators.required],
       technologyInterestedIn: [''],
-      pincode: ['', [Validators.pattern(validations.common.pinCodeREGEX)]],
+      pincode: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.pinCodeREGEX),
+        ],
+      ],
       cityName: [''],
       permanentAddress1: [''],
       state: [''],
-      dateOfBirth: [''],
+      dateOfBirth: ['', Validators.required],
     });
   }
 

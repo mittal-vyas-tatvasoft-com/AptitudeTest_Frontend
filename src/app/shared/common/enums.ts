@@ -7,7 +7,7 @@ export enum Navigation {
   //Auth Navigation
   ForgotPassword = 'forgot-password',
   ResetPassword = 'reset-password',
-  RegisterPassword = 'register-password',
+  Register = 'register',
 
   //Manage Masters Navigation
   Masters = 'masters',
@@ -38,6 +38,7 @@ export enum Navigation {
   //Test navigation
   Tests = 'tests',
   CreateTest = 'create',
+  Groups = 'groups',
 }
 
 export enum Type {

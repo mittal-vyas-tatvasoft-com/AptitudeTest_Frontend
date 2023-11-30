@@ -1,6 +1,8 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { LoginModel } from '../interfaces/login.interface';
+import jwtDecode from 'jwt-decode';
+import { DateTime } from 'luxon';
 import {
   BehaviorSubject,
   Observable,
@@ -9,16 +11,14 @@ import {
   take,
   throwError,
 } from 'rxjs';
-import { environment } from 'src/environments/environment';
-import { ForgotPasswordModel } from '../interfaces/forgot-password.interface';
-import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { ResetPasswordModel } from '../interfaces/reset-password.interface';
-import { HttpClient } from '@angular/common/http';
-import jwtDecode from 'jwt-decode';
-import { ChangePasswordModel } from '../interfaces/change-password.interface';
-import { Messages } from 'src/app/shared/messages/messages.static';
-import { DateTime } from 'luxon';
 import { Navigation } from 'src/app/shared/common/enums';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { Messages } from 'src/app/shared/messages/messages.static';
+import { environment } from 'src/environments/environment';
+import { ChangePasswordModel } from '../interfaces/change-password.interface';
+import { ForgotPasswordModel } from '../interfaces/forgot-password.interface';
+import { LoginModel } from '../interfaces/login.interface';
+import { ResetPasswordModel } from '../interfaces/reset-password.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -145,7 +145,7 @@ export class LoginService {
     payload: ChangePasswordModel
   ): Observable<ResponseModel<string>> {
     return this.http.post<ResponseModel<string>>(
-      `${environment.baseURL}UserAuthentication/ChangePassword`,
+      `${environment.baseURL}AdminAuthentication/ChangePassword`,
       payload
     );
   }

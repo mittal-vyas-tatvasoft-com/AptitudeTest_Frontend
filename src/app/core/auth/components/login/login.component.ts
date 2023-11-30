@@ -15,7 +15,7 @@ import { LoginService } from '../../services/login.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit, OnDestroy {
-  form!: FormGroup;
+  form: FormGroup;
   loginModel = loginControl;
   isAdmin = false;
   private ngUnsubscribe$ = new Subject<void>();
@@ -38,13 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
           Validators.pattern(validations.common.emailREGEX),
         ],
       ],
-      password: [
-        '',
-        [
-          Validators.required,
-          Validators.pattern(validations.common.passwordREGEX),
-        ],
-      ],
+      password: ['', [Validators.required]],
     });
     this.getToken();
   }
@@ -97,26 +91,39 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   isRouteAdmin(route: ActivatedRoute | null): any {
-    if (!route) {
-      return false;
-    }
-    if (route.snapshot.url.some((segment) => segment.path === 'login')) {
-      return true;
+    const decodedToken = this.loginService.decodeToken();
+    if (decodedToken) {
+      return decodedToken.Role === Navigation.RoleAdmin ? true : false;
+    } else {
+      return route &&
+        route.snapshot.url.some((segment) => segment.path === 'login')
+        ? true
+        : false;
     }
   }
 
   onIconClick(event: any) {
-    if (event.formControlModel.inputType == 'text') {
-      event.formControlModel.inputType = 'password';
+    if (event.inputType === 'text') {
+      event.inputType = 'password';
+      this.loginModel.passwordField.iconName =
+        'password-visibility-show-dark.svg';
     } else {
-      event.formControlModel.inputType = 'text';
+      event.inputType = 'text';
+      this.loginModel.passwordField.iconName =
+        'password-visibility-hide-dark.svg';
     }
   }
 
   getToken() {
     const data = this.loginService.getToken();
     if (data) {
-      if (this.isAdmin) {
+      if (
+        (this.activatedRoute.snapshot.url.length === 0 ||
+          this.activatedRoute.snapshot.url.some(
+            (segment) => segment.path === 'login'
+          )) &&
+        this.isAdmin
+      ) {
         this.router.navigate([`${Navigation.Admin}`]);
       } else {
         this.router.navigate([`${Navigation.CandidateUser}`]);

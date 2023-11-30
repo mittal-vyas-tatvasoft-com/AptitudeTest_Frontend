@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { Navigation } from '../shared/common/enums';
 import { CoreComponent } from './core.component';
-import { RoleGuard } from './guards/role/role.guard';
 import { AuthGuard } from './guards/auth/auth.guard';
+import { RoleGuard } from './guards/role/role.guard';
 
 const routes: Routes = [
   {
@@ -39,7 +39,7 @@ const routes: Routes = [
           import('../modules/test/test.module').then((m) => m.TestModule),
       },
       {
-        path: 'groups',
+        path: `${Navigation.Groups}`,
         loadChildren: () =>
           import('../modules/groups/groups.module').then((m) => m.GroupsModule),
       },
@@ -51,4 +51,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class CoreRoutingModule { }
+export class CoreRoutingModule {}

@@ -33,14 +33,14 @@
               class="d-flex justify-content-between align-items-center mt-n1 mb-2"
             >
               <mat-checkbox color="primary" class="font14"
-                >Remeber me</mat-checkbox
+                >Remember me</mat-checkbox
               >
-              <a
+              <!-- <a
                 class="forgot-password"
                 *ngIf="!isAdmin"
                 routerLink="/forgot-password"
                 >Forgot Password?</a
-              >
+              > -->
             </div>
           </div>
           <div class="col-12 animation-target">
@@ -56,9 +56,7 @@
           <div class="col-12 animation-target mt-5" *ngIf="!isAdmin">
             <p class="account">
               Don't have an account?
-              <a class="register" routerLink="/register-password"
-                >Register Now!</a
-              >
+              <a class="register" routerLink="/register">Register Now!</a>
             </p>
           </div>
         </div>
