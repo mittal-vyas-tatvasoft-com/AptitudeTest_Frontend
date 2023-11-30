@@ -104,7 +104,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
         status: personalInfo.status === 1 ? true : false,
         appliedThrough: personalInfo.appliedThrough,
         technologyInterestedIn: personalInfo.technologyInterestedIn || null,
-        pincode: personalInfo.pincode,
+        pincode: personalInfo.pincode || 0,
         city: personalInfo.cityName,
         permanentAddress1: personalInfo.permanentAddress1,
         permanentAddress2: 'string',
