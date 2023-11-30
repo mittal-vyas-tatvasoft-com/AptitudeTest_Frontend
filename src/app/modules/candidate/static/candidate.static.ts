@@ -8,5 +8,5 @@ export const dropzoneConfig = {
 };
 
 export const importCandidateSampleFilePath =
-  '/assets/import-sample/import candidate sample.csv';
-export const importCandidateSampleFileName = 'import candidate sample.csv';
+  '/assets/import-sample/Candidate Import Sample.csv';
+export const importCandidateSampleFileName = 'Candidate Import Sample.csv';
