@@ -63,6 +63,7 @@ export const candidateControl = {
     value: '',
     key: 'groupId',
     label: 'Group',
+    required: true,
     inputType: 'select',
     requiredErrMsg: 'Group is required',
   },
@@ -183,8 +184,7 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
-    maxLength: 3,
-    maxErrMsg: 'InValid Percentile',
+    patternErrMsg: 'Invalid Percentile',
   },
   familyPerson: {
     value: '',

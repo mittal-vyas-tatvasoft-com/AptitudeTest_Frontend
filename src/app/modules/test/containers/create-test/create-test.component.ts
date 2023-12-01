@@ -218,7 +218,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
         this.cdr.detectChanges();
         return true;
       } else {
-        if (this.isEditMode == false) {
+        if (!this.isEditMode) {
           const now = new Date();
           this.getMinTime = `${now.getHours()}:${now.getMinutes()}`;
         }
@@ -286,11 +286,11 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   fetchAllInsertedQuestions() {
     this.testService.GetTopicWiseQuestionsCount().subscribe({
       next: (res) => {
-        if (res.statusCode == StatusCode.Success) {
+        if (res.statusCode === StatusCode.Success) {
           this.testQuestionsCountData = res.data;
-          this.topics.map((topic) => {
-            res.data.map((data) => {
-              if (topic.id == data.topicId) {
+          this.topics.forEach((topic) => {
+            res.data.forEach((data) => {
+              if (topic.id === data.topicId) {
                 topic.questionCount = data.totalQuestions;
               }
             });
@@ -305,8 +305,8 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
         next: (res) => {
           if (res.statusCode == StatusCode.Success) {
             this.existingQuestionsTopicId = [];
-            res.data.questionsCount.map((res) => {
-              this.existingQuestionsTopicId.push(res.topicId);
+            res.data.questionsCount.forEach((element) => {
+              this.existingQuestionsTopicId.push(element.topicId);
             });
             this.allInsertedQuestions = [];
             this.allInsertedQuestions.push(res.data);
