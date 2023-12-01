@@ -80,7 +80,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
           Validators.pattern(validations.common.mobileNumberREGEX),
         ],
       ],
-      userGroup: ['', Validators.required],
+      userGroup: [''],
       userCollege: ['', Validators.required],
       gender: ['', Validators.required],
       status: [candidateControl.status.value],
@@ -99,16 +99,6 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       state: [''],
       dateOfBirth: ['', Validators.required],
     });
-
-    if (!this.isAdmin) {
-      debugger;
-      this.form.get('userGroup')?.clearValidators();
-      this.form.get('userGroup')?.updateValueAndValidity();
-    } else {
-      debugger;
-      this.form.get('userGroup')?.setValidators(Validators.required);
-      this.form.get('userGroup')?.updateValueAndValidity();
-    }
   }
 
   getDropdowns() {
@@ -129,6 +119,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
           key: groups.name,
           value: groups.name,
         }));
+        this.updateValidators();
       });
     }
 
@@ -162,6 +153,16 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
     }
   }
 
+  updateValidators() {
+    if (!this.isAdmin) {
+      this.form.get('userGroup')?.clearValidators();
+      this.form.get('userGroup')?.updateValueAndValidity();
+    } else {
+      this.form.get('userGroup')?.setValidators(Validators.required);
+      this.form.get('userGroup')?.setValue('');
+      this.form.get('userGroup')?.updateValueAndValidity();
+    }
+  }
   validateForm() {
     Object.keys(this.form.controls).forEach((controlName) => {
       const control = this.form.get(controlName);
@@ -174,14 +175,14 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
 
   getFormData(): FormGroup {
     const dateOfBirthControl = this.form.get('dateOfBirth');
-    if (dateOfBirthControl!.value) {
-      const formattedDateOfBirth = moment(dateOfBirthControl!.value).format(
+    if (dateOfBirthControl?.value) {
+      const formattedDateOfBirth = moment(dateOfBirthControl?.value).format(
         'YYYY-MM-DD'
       );
-      dateOfBirthControl!.setValue(formattedDateOfBirth);
+      dateOfBirthControl?.setValue(formattedDateOfBirth);
     }
-    if (dateOfBirthControl!.value == '0001-01-01') {
-      dateOfBirthControl!.setValue(null);
+    if (dateOfBirthControl?.value == '0001-01-01') {
+      dateOfBirthControl?.setValue(null);
     }
     const userCollegeControl = this.form.get('userCollege');
     if (userCollegeControl && userCollegeControl.value === '0') {
