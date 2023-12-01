@@ -189,7 +189,6 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
               d.getHours(),
               d.getMinutes() - d.getTimezoneOffset()
             ).toISOString();
-            console.log(res.data);
             this.basicTestDetails.setValue({
               testId: res.data.id,
               testName: res.data.name,
@@ -295,8 +294,6 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
               }
             });
           });
-        } else {
-          this.snackbarService.error(res.message);
         }
       },
     });
@@ -315,6 +312,12 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
         },
       });
     }
+  }
+
+  fetchInsertedQuestionsAgain() {
+    this.allInsertedQuestions = [];
+    this.existingQuestionsTopicId = [];
+    this.fetchAllInsertedQuestions();
   }
 
   searchTestCandidates() {
@@ -412,7 +415,6 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       } else {
         this.testService.updateTest(payload).subscribe({
           next: (res) => {
-            console.log(res);
             if (res.statusCode == StatusCode.Success) {
               this.snackbarService.success(res.message);
             } else {

@@ -25,8 +25,8 @@ export class TestQuestionsListingComponent implements OnInit, AfterViewInit {
   dataToShow: AllInsertedQuestionModel[] = [];
   marksChipData: TopicWiseQuestionData[] = [];
   constructor(private cdr: ChangeDetectorRef) {}
-  handleEditDialog() {
-    this.handleEditQuestionsDialog.emit();
+  handleEditDialog(data1: any, data2: any) {
+    this.handleEditQuestionsDialog.emit({ data1, data2 });
   }
   handleDeleteDialog(topicId: number) {
     this.handleDeleteQuestionsDialog.emit(topicId);
