@@ -78,6 +78,7 @@ export const candidateControl = {
     key: 'userGroup',
     label: 'Group',
     inputType: 'select',
+    required: true,
     requiredErrMsg: 'Group is required',
   },
   userCollege: {
