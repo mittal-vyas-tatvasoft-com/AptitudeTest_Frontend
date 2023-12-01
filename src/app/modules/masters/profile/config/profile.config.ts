@@ -4,7 +4,8 @@ export const formControls = {
     key: 'name',
     label: 'Name',
     requiredErrMsg: 'Name is required!',
-    maxLengthErrMsg: 'Maximum 500 characters are allowed!',
+    maxLength: 50,
+    maxLengthErrMsg: 'Maximum 50 characters are allowed!',
     inputType: 'text',
   },
   status: {

@@ -57,7 +57,13 @@ export class AddCandidateComponent implements OnInit {
           Validators.pattern(validations.common.whitespaceREGEX),
         ],
       ],
-      lastName: [''],
+      lastName: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       fatherName: [''],
       email: [
         '',

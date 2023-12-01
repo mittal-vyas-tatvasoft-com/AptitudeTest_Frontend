@@ -24,7 +24,8 @@ export const candidateControl = {
     value: '',
     key: 'lastName',
     label: 'Last Name',
-    required: false,
+    required: true,
+    requiredErrMsg: 'Last name is required',
     inputType: 'text',
     displayIcon: false,
     maxLength: 30,
@@ -63,7 +64,6 @@ export const candidateControl = {
     key: 'groupId',
     label: 'Group',
     inputType: 'select',
-    required: true,
     requiredErrMsg: 'Group is required',
   },
   college: {
@@ -78,7 +78,6 @@ export const candidateControl = {
     key: 'userGroup',
     label: 'Group',
     inputType: 'select',
-    required: true,
     requiredErrMsg: 'Group is required',
   },
   userCollege: {
@@ -129,6 +128,8 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
+    maxLength: 30,
+    maxLengthErrMsg: 'Max 30 characters allowed',
   },
   pincode: {
     value: '',
