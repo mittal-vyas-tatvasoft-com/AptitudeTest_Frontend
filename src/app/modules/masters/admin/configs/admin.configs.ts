@@ -7,6 +7,8 @@ export const AdminControl = {
     requiredErrMsg: 'First Name is required',
     inputType: 'text',
     displayIcon: false,
+    maxLength: 30,
+    maxLengthErrMsg: 'Max 30 characters allowed',
   },
   lastName: {
     value: '',
@@ -16,6 +18,8 @@ export const AdminControl = {
     requiredErrMsg: 'Last Name is required',
     inputType: 'text',
     displayIcon: false,
+    maxLength: 30,
+    maxLengthErrMsg: 'Max 30 characters allowed',
   },
   middleName: {
     value: '',
@@ -25,6 +29,8 @@ export const AdminControl = {
     requiredErrMsg: 'Middle Name is required',
     inputType: 'text',
     displayIcon: false,
+    maxLength: 30,
+    maxLengthErrMsg: 'Max 30 characters allowed',
   },
   email: {
     value: '',
