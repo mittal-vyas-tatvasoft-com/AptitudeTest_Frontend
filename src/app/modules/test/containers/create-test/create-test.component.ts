@@ -465,10 +465,10 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     } else {
       this.testService.DeleteAllTestQuestions(this.testId).subscribe({
         next: (res) => {
+          this.allInsertedQuestions = [];
+          this.existingQuestionsTopicId = [];
+          this.fetchAllInsertedQuestions();
           if (res.statusCode == StatusCode.Success) {
-            this.allInsertedQuestions = [];
-            this.existingQuestionsTopicId = [];
-            this.fetchAllInsertedQuestions();
             this.snackbarService.success(res.message);
           } else {
             this.snackbarService.error(res.message);

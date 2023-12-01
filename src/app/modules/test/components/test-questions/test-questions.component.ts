@@ -166,8 +166,8 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
     dialogConfig.width = '980px';
     dialogConfig.data = {
       topics: this.topics,
-      topicWiseQuestionCount: data.data1,
-      insertedQuestions: data.data2,
+      topicWiseQuestionCount: data.questionData,
+      insertedQuestions: data.allInsertedQuestions,
       basicPoints: this.basicTestDetailForm.get('basicPoints')?.value,
       testQuestionsCountData: this.testQuestionsCountData,
       existingQuestionsTopicId: this.existingQuestionsTopicId,
