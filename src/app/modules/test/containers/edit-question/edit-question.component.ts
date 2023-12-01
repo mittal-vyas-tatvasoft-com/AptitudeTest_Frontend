@@ -146,6 +146,22 @@ export class EditQuestionComponent {
     this.dialogRef.close();
   }
 
+  handleValidateSelectedMarks(
+    sum: number,
+    totalMarksQuestionsAdded: number,
+    basicTestMarks: number
+  ) {
+    const remainingMarks = basicTestMarks - totalMarksQuestionsAdded - sum;
+
+    if (remainingMarks < 0) {
+      this.validationMSG = CanNotAddMoreQuestions;
+      this.isDataValid = false;
+    } else {
+      this.validationMSG = '';
+      this.isDataValid = true;
+    }
+  }
+
   handleSumOfMarks() {
     const data = this.testService.CheckSumAndSelectedQuestions(this.form);
 
