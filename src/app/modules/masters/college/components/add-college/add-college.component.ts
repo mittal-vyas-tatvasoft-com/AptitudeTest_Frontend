@@ -1,12 +1,13 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { CollegeService } from '../../services/college.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
+import { validations } from 'src/app/shared/messages/validation.static';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import {
   CollegeControl,
   selectOptionsForStatus,
 } from '../../configs/college.configs';
-import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { CollegeService } from '../../services/college.service';
 
 @Component({
   selector: 'app-add-college',
@@ -53,7 +54,13 @@ export class AddCollegeComponent implements OnInit, AfterViewInit {
   createForm() {
     this.form = this.formBuilder.group({
       id: [0],
-      name: ['', Validators.required],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.characterWithSpaceREGEX),
+        ],
+      ],
       abbreviation: ['', Validators.required],
       status: [1, Validators.required],
     });

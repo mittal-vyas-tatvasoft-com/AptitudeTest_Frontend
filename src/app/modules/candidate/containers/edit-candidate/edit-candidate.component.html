@@ -41,9 +41,9 @@
     color="primary"
     (click)="Save()"
     [disabled]="disabled"
-    matTooltip="Save"
+    [matTooltip]="isAdmin ? 'Update' : 'Register'"
   >
-    {{ isAdmin ? "Save" : "Register" }}
+    {{ isAdmin ? "Update" : "Register" }}
   </button>
   <button
     mat-stroked-button

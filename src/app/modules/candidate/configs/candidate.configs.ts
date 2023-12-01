@@ -7,6 +7,8 @@ export const candidateControl = {
     requiredErrMsg: 'First name is required',
     inputType: 'text',
     displayIcon: false,
+    maxLength: 30,
+    maxLengthErrMsg: 'Max 30 characters allowed',
   },
   fatherName: {
     value: '',
@@ -15,6 +17,8 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
+    maxLength: 30,
+    maxLengthErrMsg: 'Max 30 characters allowed',
   },
   lastName: {
     value: '',
@@ -23,6 +27,8 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
+    maxLength: 30,
+    maxLengthErrMsg: 'Max 30 characters allowed',
   },
   email: {
     value: '',
@@ -57,6 +63,7 @@ export const candidateControl = {
     key: 'groupId',
     label: 'Group',
     inputType: 'select',
+    required: true,
     requiredErrMsg: 'Group is required',
   },
   college: {
@@ -71,6 +78,7 @@ export const candidateControl = {
     key: 'userGroup',
     label: 'Group',
     inputType: 'select',
+    required: true,
     requiredErrMsg: 'Group is required',
   },
   userCollege: {

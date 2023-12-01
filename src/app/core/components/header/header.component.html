@@ -25,7 +25,7 @@
     </div>
     <div class="header-right" *ngIf="!register">
       <ul class="top-actions">
-        <li *ngIf="isAdmin">
+        <li *ngIf="!isAdmin">
           <span class="logged-time">
             {{ currentTime | date : "dd-MM-yyyy"
             }}<em class="time">&nbsp;{{ currentTime | date : "HH:mm:ss" }}</em>

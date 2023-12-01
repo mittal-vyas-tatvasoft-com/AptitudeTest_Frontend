@@ -50,10 +50,6 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
     if (this.candidateData) {
       this.form.patchValue(this.candidateData);
     }
-    if (!this.isAdmin) {
-      this.form.get('userGroup')?.clearValidators();
-      this.form.get('userGroup')?.updateValueAndValidity();
-    }
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -103,6 +99,16 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       state: [''],
       dateOfBirth: ['', Validators.required],
     });
+
+    if (!this.isAdmin) {
+      debugger;
+      this.form.get('userGroup')?.clearValidators();
+      this.form.get('userGroup')?.updateValueAndValidity();
+    } else {
+      debugger;
+      this.form.get('userGroup')?.setValidators(Validators.required);
+      this.form.get('userGroup')?.updateValueAndValidity();
+    }
   }
 
   getDropdowns() {
