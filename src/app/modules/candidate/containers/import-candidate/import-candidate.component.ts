@@ -83,12 +83,11 @@ export class ImportCandidateComponent implements OnInit {
     { columnDef: 'action', header: 'Action', isAction: true, width: '5%' },
   ];
   @ViewChild('myTable') myTable: TableComponent<any>;
-  @ViewChild('dropzone') dropzone: DropzoneDirective;
+  @ViewChild('dropzone', { static: false }) dropzone: DropzoneComponent;
   @ViewChild(DropzoneComponent, { static: false })
   componentRef?: DropzoneComponent;
   @ViewChild(DropzoneDirective)
   directive?: DropzoneDirective;
-
   constructor(
     public dialog: MatDialog,
     private candidateService: CandidateService,
@@ -263,7 +262,10 @@ export class ImportCandidateComponent implements OnInit {
   handleImportCandidate() {
     this.candidateService.importCandidate(this.formData).subscribe({
       next: (res) => {
-        this.componentRef?.directiveRef?.reset();
+        this.dropzone?.directiveRef?.reset();
+        this.formData = new FormData();
+        this.formData.append('groupId', '');
+        this.formData.append('collegeId', '');
         this.fileName = '';
         this.noFileSet = true;
         if (res.statusCode == StatusCode.Success) {
@@ -273,10 +275,16 @@ export class ImportCandidateComponent implements OnInit {
           setTimeout(() => {
             this.importSuccessFully = false;
           }, 3000);
+          this.fileName = '';
+          this.noFileSet = true;
           this.snackbarService.success(res.message);
         } else {
           this.snackbarService.error(res.message);
         }
+      },
+      error: (err) => {
+        this.snackbarService.error(err.statusText);
+        this.formData = new FormData();
       },
     });
     this.form.reset();
