@@ -28,36 +28,43 @@ export class LoginService {
   private storageRefreshToken = 'refreshToken';
   private storageTokenExpiry = 'tokenExpiry';
   private sidebarStateKey = 'sidebarState';
-  private refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
-    null
-  );
-  private isRefreshing = false;
+  private rememberMeKey = 'rM';
+  refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(private http: HttpClient, private router: Router) {}
 
+  storage() {
+    const rm = localStorage.getItem(this.rememberMeKey) == 'true';
+    return rm ? localStorage : sessionStorage;
+  }
+
   setToken(token: string): void {
-    localStorage.setItem(this.storageToken, token);
+    this.storage().setItem(this.storageToken, token);
   }
 
   getToken(): string | null {
-    return localStorage.getItem(this.storageToken);
+    return this.storage().getItem(this.storageToken);
   }
 
   setRefreshToken(refreshToken: string): void {
-    localStorage.setItem(this.storageRefreshToken, refreshToken);
+    this.storage().setItem(this.storageRefreshToken, refreshToken);
   }
 
   getRefreshToken(): string | null {
-    return localStorage.getItem(this.storageRefreshToken);
+    return this.storage().getItem(this.storageRefreshToken);
+  }
+
+  saveRememberMe(value: boolean) {
+    localStorage.setItem(this.rememberMeKey, `${value}`);
   }
 
   setTokenExpiry(expiryTime: Date): void {
     if (expiryTime) {
-      localStorage.setItem(this.storageTokenExpiry, expiryTime.toString());
+      this.storage().setItem(this.storageTokenExpiry, expiryTime.toString());
     }
   }
 
   getTokenExpiry(): string | null {
-    const expiry = localStorage.getItem(this.storageTokenExpiry);
+    const expiry = this.storage().getItem(this.storageTokenExpiry);
     return expiry ? expiry : null;
   }
 
@@ -73,9 +80,10 @@ export class LoginService {
     } else {
       this.router.navigate(['/']);
     }
-    localStorage.removeItem(this.storageToken);
-    localStorage.removeItem(this.storageRefreshToken);
-    localStorage.removeItem(this.storageTokenExpiry);
+    this.storage().removeItem(this.storageToken);
+    this.storage().removeItem(this.storageRefreshToken);
+    this.storage().removeItem(this.storageTokenExpiry);
+    localStorage.removeItem(this.rememberMeKey);
   }
 
   login(payload: LoginModel): Observable<ResponseModel<string>> {
@@ -159,90 +167,40 @@ export class LoginService {
     return storedState ? JSON.parse(storedState) : true;
   }
 
-  refreshTokenAdmin(): Observable<ResponseModel<string>> {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
+  refreshToken(isAdmin = false): Observable<ResponseModel<string>> {
+    this.refreshTokenSubject.next(null);
 
-      const refreshToken = this.getRefreshToken();
-      const token = this.getToken();
-      const tokenExpiry = this.getTokenExpiry();
+    const refreshToken = this.getRefreshToken();
+    const token = this.getToken();
+    const tokenExpiry = this.getTokenExpiry();
+    let url = `${environment.baseURL}UserAuthentication/RefreshToken`;
 
-      if (!refreshToken || !token || !tokenExpiry) {
-        this.isRefreshing = false;
-        return throwError(new Error(Messages.missingToken));
-      }
-
-      const payload = {
-        refreshToken: refreshToken,
-        accessToken: token,
-        refreshTokenExpiryTime:
-          tokenExpiry != null ? tokenExpiry : DateTime.now(),
-      };
-      return this.http
-        .post<ResponseModel<string>>(
-          `${environment.baseURL}AdminAuthentication/RefreshToken`,
-          payload
-        )
-        .pipe(
-          map((res: any) => {
-            if (res.result) {
-              this.setToken(res.data.accessToken);
-              this.setRefreshToken(res.data.refreshToken);
-              this.setTokenExpiry(res.data.refreshTokenExpiryTime);
-            }
-            return res;
-          })
-        );
-    } else {
-      return this.refreshTokenSubject.pipe(
-        filter((result) => result !== null),
-        take(1)
-      );
+    if (!refreshToken || !token || !tokenExpiry) {
+      return throwError(new Error(Messages.missingToken));
     }
-  }
 
-  refreshToken(): Observable<ResponseModel<string>> {
-    if (!this.isRefreshing) {
-      this.isRefreshing = true;
-      this.refreshTokenSubject.next(null);
+    const payload = {
+      refreshToken: refreshToken,
+      accessToken: token,
+      refreshTokenExpiryTime:
+        tokenExpiry != null ? tokenExpiry : DateTime.now(),
+    };
 
-      const refreshToken = this.getRefreshToken();
-      const token = this.getToken();
-      const tokenExpiry = this.getTokenExpiry();
-
-      if (!refreshToken || !token || !tokenExpiry) {
-        this.isRefreshing = false;
-        return throwError(new Error(Messages.missingToken));
-      }
-
-      const payload = {
-        refreshToken: refreshToken,
-        accessToken: token,
-        refreshTokenExpiryTime:
-          tokenExpiry != null ? tokenExpiry : DateTime.now(),
-      };
-      return this.http
-        .post<ResponseModel<string>>(
-          `${environment.baseURL}UserAuthentication/RefreshToken`,
-          payload
-        )
-        .pipe(
-          map((res: any) => {
-            if (res.result) {
-              this.setToken(res.data.accessToken);
-              this.setRefreshToken(res.data.refreshToken);
-              this.setTokenExpiry(res.data.refreshTokenExpiryTime);
-            }
-            return res;
-          })
-        );
-    } else {
-      return this.refreshTokenSubject.pipe(
-        filter((result) => result !== null),
-        take(1)
-      );
+    if (isAdmin) {
+      url = `${environment.baseURL}AdminAuthentication/RefreshToken`;
     }
+
+    return this.http.post<ResponseModel<string>>(url, payload).pipe(
+      map((res: any) => {
+        if (res.result) {
+          this.setToken(res.data.accessToken);
+          this.setRefreshToken(res.data.refreshToken);
+          this.setTokenExpiry(res.data.refreshTokenExpiryTime);
+          this.refreshTokenSubject.next(res.data.accessToken);
+        }
+        return res;
+      })
+    );
   }
 
   decodeToken(): any {

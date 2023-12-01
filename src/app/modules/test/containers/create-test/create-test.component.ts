@@ -1,5 +1,6 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   HostListener,
   OnInit,
@@ -10,11 +11,12 @@ import { MatDialog } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as moment from 'moment';
 import { Subject, debounceTime } from 'rxjs';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { validations } from 'src/app/shared/messages/validation.static';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
@@ -60,7 +62,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   pageNumbers: number[] = [];
   sortKey = '';
   sortDirection = '';
-  minDate: Date = new Date();
+  minDate: Date;
   startEndTimeDifferenceValid = true;
   isPagination = false;
   testId = 0;
@@ -69,6 +71,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   selectedMarkOption = '1';
   markList: string[] = ['1', '2', '3', '4', '5'];
   selectedOption = '10';
+  getMinTime: string;
 
   displayedColumns: TableColumn<testCandidatesModel>[] = [
     { columnDef: 'candidateName', header: 'Candidate Name' },
@@ -89,6 +92,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   testQuestionsCountData: TopicWiseQuestionData[] = [];
   existingQuestionsTopicId: number[] = [];
   @ViewChild('stepper') stepper!: MatStepper;
+  isEditMode = false;
   public smallScreen: boolean = window.innerWidth < 767;
   private searchInputValue = new Subject<string>();
 
@@ -106,7 +110,9 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     private testService: TestService,
     private snackbarService: SnackbarService,
     private candidateService: CandidateService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private cdr: ChangeDetectorRef,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -126,14 +132,26 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   createForms() {
     this.basicTestDetails = this.formBuilder.group({
       testId: [0],
-      testName: ['', Validators.required],
+      testName: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       status: [1, Validators.required],
       basicPoints: ['', Validators.required],
       testDuration: ['', Validators.required],
       date: ['', Validators.required],
       startTime: ['', Validators.required],
       endTime: ['', Validators.required],
-      description: ['', Validators.required],
+      description: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       messageAtTheStartOfTest: [''],
       messageAtTheEndOfTest: [''],
       randomQuestions: [false],
@@ -154,7 +172,61 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     this.getDropDownData();
+    this.activatedRoute.queryParams.subscribe((res) => {
+      if (res['id']) {
+        this.isEditMode = true;
+        this.testId = res['id'];
+        this.testService.GetTestById(+res['id']).subscribe((res: any) => {
+          if (res.statusCode == StatusCode.Success) {
+            const startTime = this.getTime(new Date(res.data.startTime));
+            const endTime = this.getTime(new Date(res.data.endTime));
+            const d = new Date(res.data.date);
+            // This will return an ISO string matching your local time.
+            const utcDate = new Date(
+              d.getFullYear(),
+              d.getMonth(),
+              d.getDate(),
+              d.getHours(),
+              d.getMinutes() - d.getTimezoneOffset()
+            ).toISOString();
+            console.log(res.data);
+            this.basicTestDetails.setValue({
+              testId: res.data.id,
+              testName: res.data.name,
+              status: res.data.status,
+              basicPoints: res.data.basicPoint,
+              testDuration: +res.data.testDuration,
+              date: utcDate,
+              startTime: startTime,
+              endTime: endTime,
+              description: res.data.description,
+              messageAtTheStartOfTest: res.data.messaageAtStartOfTheTest,
+              messageAtTheEndOfTest: res.data.messaageAtEndOfTheTest,
+              randomQuestions: res.data.isRandomQuestion,
+              randomAnswers: res.data.isRandomAnswer,
+              logoutWhenTimeExpires: res.data.isLogoutWhenTimeExpire,
+              questignsMenu: res.data.isQuestionsMenu,
+            });
+            this.testGroupForm.setValue({
+              groupId: res.data.groupId,
+            });
+            this.fetchAllInsertedQuestions();
+          } else {
+            this.snackbarService.error(res.message);
+          }
+        });
+        this.cdr.detectChanges();
+        return true;
+      } else {
+        if (this.isEditMode == false) {
+          const now = new Date();
+          this.getMinTime = `${now.getHours()}:${now.getMinutes()}`;
+        }
 
+        this.minDate = new Date();
+        return false;
+      }
+    });
     this.searchInputValue
       .pipe(
         debounceTime(Numbers.Debounce) // Adjust the debounce time as needed
@@ -164,6 +236,19 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
           this.fetchTestCandidates();
         }
       });
+  }
+
+  getTime(data: Date) {
+    const date = new Date(data);
+    const hours = date.getHours();
+    const minutes = date.getMinutes();
+
+    const formattedHours = (hours % 12 || 12).toString().padStart(2, '0');
+    const formattedMinutes = minutes.toString().padStart(2, '0');
+    const amPm = hours >= 12 ? 'PM' : 'AM';
+
+    const formattedTime = `${formattedHours}:${formattedMinutes} ${amPm}`;
+    return formattedTime;
   }
 
   handleSelectionChange() {
@@ -215,20 +300,21 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
         }
       },
     });
-
-    this.testService.GetAllInsertedQuestions(this.testId).subscribe({
-      next: (res) => {
-        if (res.statusCode == StatusCode.Success) {
-          this.existingQuestionsTopicId = [];
-          res.data.questionsCount.map((res) => {
-            this.existingQuestionsTopicId.push(res.topicId);
-          });
-          this.allInsertedQuestions = [];
-          this.allInsertedQuestions.push(res.data);
-          this.totalMarksQuestionsAdded = res.data.totalMarks;
-        }
-      },
-    });
+    if (this.basicTestDetails.get('testId')?.value != 0) {
+      this.testService.GetAllInsertedQuestions(this.testId).subscribe({
+        next: (res) => {
+          if (res.statusCode == StatusCode.Success) {
+            this.existingQuestionsTopicId = [];
+            res.data.questionsCount.map((res) => {
+              this.existingQuestionsTopicId.push(res.topicId);
+            });
+            this.allInsertedQuestions = [];
+            this.allInsertedQuestions.push(res.data);
+            this.totalMarksQuestionsAdded = res.data.totalMarks;
+          }
+        },
+      });
+    }
   }
 
   searchTestCandidates() {
@@ -277,11 +363,20 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   }
 
   saveBasicDetails() {
-    const date = this.basicTestDetails.get('date')?.value.utc()._d;
+    const d = new Date(this.basicTestDetails.get('date')?.value);
+    // This will return an ISO string matching your local time.
+    const utcDate = new Date(
+      d.getFullYear(),
+      d.getMonth(),
+      d.getDate(),
+      d.getHours(),
+      d.getMinutes() - d.getTimezoneOffset()
+    );
     const payload: createTestModel = {
+      id: this.basicTestDetails.get('testId')?.value,
       name: this.basicTestDetails.get('testName')?.value,
       testDuration: this.basicTestDetails.get('testDuration')?.value,
-      date: date,
+      date: utcDate,
       startTime: this.onTimeSet(this.basicTestDetails.get('startTime')?.value),
       endTime: this.onTimeSet(this.basicTestDetails.get('endTime')?.value),
       description: this.basicTestDetails.get('description')?.value,
@@ -301,18 +396,32 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     };
 
     if (this.startEndTimeDifferenceValid && this.basicTestDetails.valid) {
-      this.testService.createTest(payload).subscribe({
-        next: (res) => {
-          if ((res.statusCode = StatusCode.Success)) {
-            this.basicTestDetails.get('testId')?.setValue(res.data);
-            this.testId = res.data;
-            this.fetchTestCandidates();
-            this.snackbarService.success(res.message);
-          } else {
-            this.snackbarService.error(res.message);
-          }
-        },
-      });
+      if (this.basicTestDetails.get('testId')?.value == 0) {
+        this.testService.createTest(payload).subscribe({
+          next: (res) => {
+            if (res.statusCode == StatusCode.Success) {
+              this.basicTestDetails.get('testId')?.setValue(res.data);
+              this.testId = res.data;
+              this.fetchTestCandidates();
+              this.snackbarService.success(res.message);
+            } else {
+              this.snackbarService.error(res.message);
+            }
+          },
+        });
+      } else {
+        this.testService.updateTest(payload).subscribe({
+          next: (res) => {
+            console.log(res);
+            if (res.statusCode == StatusCode.Success) {
+              this.snackbarService.success(res.message);
+            } else {
+              this.router.navigate(['/admin/tests']);
+              this.snackbarService.error(res.message);
+            }
+          },
+        });
+      }
     }
   }
 

@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
   loginModel = loginControl;
   isAdmin = false;
+  rememberMe = false;
   private ngUnsubscribe$ = new Subject<void>();
 
   constructor(
@@ -45,6 +46,8 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   login() {
     if (this.form.valid) {
+      this.loginService.saveRememberMe(this.rememberMe);
+
       const payload = {
         email: this.form.value.userName,
         password: this.form.value.password,
