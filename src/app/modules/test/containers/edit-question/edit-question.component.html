@@ -12,166 +12,143 @@
   </button>
 </div>
 <mat-dialog-content class="dialog-body pb-0">
-  <div class="row">
-    <div class="col">
-      <mat-form-field appearance="outline">
-        <mat-label>Topics</mat-label>
-        <mat-select>
-          <mat-option *ngFor="let item of optionsList" [value]="item">
-            {{ item }}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </div>
-    <div class="col-md-3">
-      <mat-form-field appearance="outline">
-        <mat-label>Number of question</mat-label>
-        <input matInput />
-      </mat-form-field>
-    </div>
-  </div>
-  <div class="mark-distribution-block mb-24p">
-    <div class="row flex-xl-nowrap">
-      <div class="col-xl pe-xl-0">
-        <div class="mark-distribution-table">
-          <table>
-            <thead>
-              <th>Type of Question</th>
-              <th>1 marks</th>
-              <th>2 marks</th>
-              <th>3 marks</th>
-              <th>4 marks</th>
-              <th>5 marks</th>
-            </thead>
-            <tbody>
-              <tr>
-                <td>Single Answer (21)</td>
-                <td>
-                  <mat-form-field appearance="outline" style="width: 84px">
-                    <mat-select [(ngModel)]="selectedMarkOption">
-                      <mat-option *ngFor="let item of markList" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field appearance="outline" style="width: 84px">
-                    <mat-select [(ngModel)]="selectedMarkOption">
-                      <mat-option *ngFor="let item of markList" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field appearance="outline" style="width: 84px">
-                    <mat-select [(ngModel)]="selectedMarkOption">
-                      <mat-option *ngFor="let item of markList" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field appearance="outline" style="width: 84px">
-                    <mat-select [(ngModel)]="selectedMarkOption">
-                      <mat-option *ngFor="let item of markList" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field appearance="outline" style="width: 84px">
-                    <mat-select [(ngModel)]="selectedMarkOption">
-                      <mat-option *ngFor="let item of markList" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-              </tr>
-              <tr>
-                <td>Muliple Answer (18)</td>
-                <td>
-                  <mat-form-field appearance="outline" style="width: 84px">
-                    <mat-select [(ngModel)]="selectedMarkOption">
-                      <mat-option *ngFor="let item of markList" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field appearance="outline" style="width: 84px">
-                    <mat-select [(ngModel)]="selectedMarkOption">
-                      <mat-option *ngFor="let item of markList" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field appearance="outline" style="width: 84px">
-                    <mat-select [(ngModel)]="selectedMarkOption">
-                      <mat-option *ngFor="let item of markList" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field appearance="outline" style="width: 84px">
-                    <mat-select [(ngModel)]="selectedMarkOption">
-                      <mat-option *ngFor="let item of markList" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-                <td>
-                  <mat-form-field appearance="outline" style="width: 84px">
-                    <mat-select [(ngModel)]="selectedMarkOption">
-                      <mat-option *ngFor="let item of markList" [value]="item">
-                        {{ item }}
-                      </mat-option>
-                    </mat-select>
-                  </mat-form-field>
-                </td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
+  <form [formGroup]="form">
+    <div class="row mb-1">
+      <div class="col-md-8">
+        <mat-form-field appearance="outline">
+          <mat-label>Topics</mat-label>
+          <mat-select formControlName="topicId">
+            <ng-container *ngFor="let item of data.topics">
+              <mat-option
+                *ngIf="item.id === topicId"
+                [value]="item.id"
+                [disabled]="true"
+              >
+                {{ item.name }}
+                <span *ngIf="item.questionCount !== 0">{{
+                  "(" + item.questionCount + ")"
+                }}</span>
+              </mat-option>
+            </ng-container>
+          </mat-select>
+          <mat-error>Topic is required</mat-error>
+        </mat-form-field>
       </div>
-      <div class="col-xl-auto ps-xl-0">
-        <div class="question-distribution">
-          <div>
-            <p class="question-mark">10<span>Questions selected</span></p>
-            <p class="question-mark">30<span>Marks</span></p>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col-sm-12">
+            <mat-form-field appearance="outline">
+              <mat-label>Number of question</mat-label>
+              <input
+                matInput
+                formControlName="numberOfQuestions"
+                (input)="handleSumOfMarks()"
+              />
+              <mat-error>Number of questions are required</mat-error>
+            </mat-form-field>
           </div>
-          <button
-            mat-flat-button
-            color="primary"
-            class="w-xl-100 mt-xl-auto mb-xl-0 my-auto"
-            matTooltip="Add Question"
-          >
-            Add questions
-          </button>
         </div>
       </div>
     </div>
+    <div class="mark-distribution-block mb-24p">
+      <div class="row flex-xl-nowrap">
+        <div class="col-xl pe-xl-0">
+          <div class="mark-distribution-table">
+            <table>
+              <thead>
+                <th [width]="200">Type of Question</th>
+                <th *ngFor="let item of MarksAvailable">{{ item }} marks</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>
+                    Single Answer ({{
+                      singleAnswerQuestionTotalCountTopicWise
+                    }})
+                  </td>
+                  <td *ngFor="let item of singleMarksDropDownData | async">
+                    <mat-form-field appearance="outline" style="width: 84px">
+                      <mat-select
+                        formControlName="{{ item.key }}"
+                        (selectionChange)="handleSumOfMarks()"
+                      >
+                        <mat-option
+                          *ngFor="
+                            let _ of [].constructor(+item.value + 1);
+                            let i = index
+                          "
+                          [value]="i"
+                        >
+                          {{ i }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </tr>
+                <tr>
+                  <td>
+                    Muliple Answer ({{
+                      multiAnswerQuestionTotalCountTopicWise
+                    }})
+                  </td>
+                  <td *ngFor="let item of multiMarksDropDownData | async">
+                    <mat-form-field appearance="outline" style="width: 84px">
+                      <mat-select
+                        formControlName="{{ item.key }}"
+                        (selectionChange)="handleSumOfMarks()"
+                      >
+                        <mat-option
+                          *ngFor="
+                            let _ of [].constructor(+item.value + 1);
+                            let i = index
+                          "
+                          [value]="i"
+                        >
+                          {{ i }}
+                        </mat-option>
+                      </mat-select>
+                    </mat-form-field>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div class="col-xl-auto ps-xl-0">
+          <div class="question-distribution">
+            <div>
+              <p class="question-mark">
+                {{ data.topicWiseQuestionCount.totalQuestions
+                }}<span>Questions selected</span>
+              </p>
+              <p class="question-mark">
+                {{ data.topicWiseQuestionCount.totalMarks }}<span>Marks</span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </form>
+  <div *ngIf="isDataValid === false">
+    <mat-error>{{ validationMSG }}</mat-error>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions align="end" class="dialog-footer">
-  <button mat-flat-button mat-dialog-close color="primary" matTooltip="Save">
+  <button
+    mat-flat-button
+    color="primary"
+    matTooltip="Save"
+    [disabled]="form.invalid || isDataValid === false"
+    (click)="updateMarks()"
+  >
     Save
   </button>
   <button
     mat-stroked-button
     color="primary"
-    [mat-dialog-close]="true"
     matTooltip="Cancel"
+    [mat-dialog-close]="false"
   >
     Cancel
   </button>

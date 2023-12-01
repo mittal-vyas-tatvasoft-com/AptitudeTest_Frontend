@@ -304,6 +304,13 @@ export class TestService {
     return this.http.get(`${environment.baseURL}Tests/GetTestById/${testId}`);
   }
 
+  UpdateTestQuestions(data: AddTestQuestionModel) {
+    return this.http.put(
+      `${environment.baseURL}Tests/UpdateTestQuestions`,
+      data
+    );
+  }
+
   CheckSumAndSelectedQuestions(form: FormGroup) {
     const sum =
       form.get('oneMarkQuestionSingleAnswer')?.value +

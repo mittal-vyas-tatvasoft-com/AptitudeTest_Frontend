@@ -67,6 +67,7 @@
           (questionsAddedSuccess)="questionsAddedSuccess()"
           (deleteTopicWiseQuestions)="deleteQuestions($event)"
           (deleteAllQuestions)="deleteQuestions(0)"
+          (questionEdited)="fetchInsertedQuestionsAgain()"
         ></app-test-questions>
       </mat-step>
     </mat-stepper>
