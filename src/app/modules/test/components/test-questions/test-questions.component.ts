@@ -57,6 +57,7 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
   @Output() questionsAddedSuccess = new EventEmitter();
   @Output() deleteTopicWiseQuestions = new EventEmitter<number>();
   @Output() deleteAllQuestions = new EventEmitter();
+  @Output() questionEdited = new EventEmitter();
   form: FormGroup;
   validationMSG = '';
   isDataValid = true;
@@ -123,12 +124,13 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   setQuestionCounts() {
-    this.testQuestionsCountData.map((res) => {
-      if (res.topicId == this.topicId) {
-        this.singleAnswerQuestionTotalCountTopicWise = res.singleAnswerCount;
-        this.multiAnswerQuestionTotalCountTopicWise = res.multiAnswerCount;
-        this.testService.questionCountSingleAnswer.next(res.singleAnswer);
-        this.testService.questionCountMultiAnswer.next(res.multiAnswer);
+    this.testQuestionsCountData.forEach((element) => {
+      if (element.topicId === this.topicId) {
+        this.singleAnswerQuestionTotalCountTopicWise =
+          element.singleAnswerCount;
+        this.multiAnswerQuestionTotalCountTopicWise = element.multiAnswerCount;
+        this.testService.questionCountSingleAnswer.next(element.singleAnswer);
+        this.testService.questionCountMultiAnswer.next(element.multiAnswer);
       }
     });
   }
@@ -157,12 +159,30 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
     this.cdr.detectChanges();
   }
 
-  handleEditQuestionsDialog() {
+  handleEditQuestionsDialog(data: any) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
     dialogConfig.width = '980px';
-    this.dialog.open(EditQuestionComponent, dialogConfig);
+    dialogConfig.data = {
+      topics: this.topics,
+      topicWiseQuestionCount: data.questionData,
+      insertedQuestions: data.allInsertedQuestions,
+      basicPoints: this.basicTestDetailForm.get('basicPoints')?.value,
+      testQuestionsCountData: this.testQuestionsCountData,
+      existingQuestionsTopicId: this.existingQuestionsTopicId,
+      singleMarksDropDownData: this.singleMarksDropDownData,
+      multiMarksDropDownData: this.multiMarksDropDownData,
+      testId: this.testId,
+    };
+    this.dialog
+      .open(EditQuestionComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((res) => {
+        if (res === true) {
+          this.questionEdited.emit();
+        }
+      });
   }
 
   handleDeleteQuestionsDialog(topicId: number) {
@@ -174,7 +194,7 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
         .open(DeleteConfirmationDialogComponent, dialogConfig)
         .afterClosed()
         .subscribe((res) => {
-          if (res == true) {
+          if (res) {
             this.deleteTopicWiseQuestions.emit(topicId);
           }
         });
@@ -186,7 +206,7 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
         .open(DeleteConfirmationDialogComponent, dialogConfig)
         .afterClosed()
         .subscribe((res) => {
-          if (res == true) {
+          if (res) {
             this.deleteAllQuestions.emit();
           }
         });
@@ -266,8 +286,11 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
       next: (res) => {
         if (res.statusCode == StatusCode.Success) {
           this.snackbarService.success(res.message);
-          this.form.get('topicId')?.setValue('');
           this.questionsAddedSuccess.emit();
+          this.form.get('numberOfQuestions')?.setValue('');
+          this.form.get('numberOfQuestions')?.setErrors(null);
+          this.form.get('weightage')?.setValue('');
+          this.form.get('weightage')?.setErrors(null);
         } else {
           this.snackbarService.error(res.message);
         }

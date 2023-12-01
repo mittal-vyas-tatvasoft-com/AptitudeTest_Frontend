@@ -5,11 +5,11 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { candidateControl } from '../../configs/candidate.configs';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CandidateService } from '../../services/candidate.service';
+import { validations } from 'src/app/shared/messages/validation.static';
+import { candidateControl } from '../../configs/candidate.configs';
 import { UserData } from '../../interfaces/candidate.interface';
-import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
+import { CandidateService } from '../../services/candidate.service';
 
 @Component({
   selector: 'app-exam-scores',
@@ -40,7 +40,7 @@ export class ExamScoresComponent implements OnInit, OnChanges {
     this.form = this.formBuilder.group({
       acpcMeritRank: [''],
       gujcetScore: ['', [Validators.max(120), Validators.min(0)]],
-      jeeScore: ['', [Validators.max(100), Validators.min(0)]],
+      jeeScore: ['', [Validators.pattern(validations.common.fractionREGEX)]],
     });
   }
 

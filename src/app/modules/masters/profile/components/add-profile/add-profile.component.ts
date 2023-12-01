@@ -51,7 +51,7 @@ export class AddProfileComponent implements OnInit, AfterViewInit {
         '',
         [
           Validators.required,
-          Validators.maxLength(500),
+          Validators.maxLength(50),
           Validators.pattern(validations.common.whitespaceREGEX),
         ],
       ],

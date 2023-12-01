@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { LoginService } from '../../services/login.service';
-import { Subject, takeUntil } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { resetPasswordControl } from '../../configs/reset-password.config';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { resetPasswordControl } from '../../configs/reset-password.config';
+import { LoginService } from '../../services/login.service';
 
 @Component({
   selector: 'app-reset-password',

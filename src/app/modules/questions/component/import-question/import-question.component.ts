@@ -6,7 +6,6 @@ import { DropzoneComponent, DropzoneDirective } from 'ngx-dropzone-wrapper';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
   DragDropInput,
@@ -45,7 +44,6 @@ export class ImportQuestionComponent {
   constructor(
     private location: Location,
     public dialog: MatDialog,
-    public validation: ValidationService,
     public snackbarService: SnackbarService,
     private questionService: QuestionsService
   ) {}
