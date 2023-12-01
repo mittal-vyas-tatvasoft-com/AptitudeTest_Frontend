@@ -123,12 +123,13 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
   }
 
   setQuestionCounts() {
-    this.testQuestionsCountData.map((res) => {
-      if (res.topicId == this.topicId) {
-        this.singleAnswerQuestionTotalCountTopicWise = res.singleAnswerCount;
-        this.multiAnswerQuestionTotalCountTopicWise = res.multiAnswerCount;
-        this.testService.questionCountSingleAnswer.next(res.singleAnswer);
-        this.testService.questionCountMultiAnswer.next(res.multiAnswer);
+    this.testQuestionsCountData.forEach((element) => {
+      if (element.topicId === this.topicId) {
+        this.singleAnswerQuestionTotalCountTopicWise =
+          element.singleAnswerCount;
+        this.multiAnswerQuestionTotalCountTopicWise = element.multiAnswerCount;
+        this.testService.questionCountSingleAnswer.next(element.singleAnswer);
+        this.testService.questionCountMultiAnswer.next(element.multiAnswer);
       }
     });
   }
@@ -174,7 +175,7 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
         .open(DeleteConfirmationDialogComponent, dialogConfig)
         .afterClosed()
         .subscribe((res) => {
-          if (res == true) {
+          if (res) {
             this.deleteTopicWiseQuestions.emit(topicId);
           }
         });
@@ -186,7 +187,7 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
         .open(DeleteConfirmationDialogComponent, dialogConfig)
         .afterClosed()
         .subscribe((res) => {
-          if (res == true) {
+          if (res) {
             this.deleteAllQuestions.emit();
           }
         });
