@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { validations } from 'src/app/shared/messages/validation.static';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import { GroupFormControls } from '../../configs/group.config';
 import { GroupsModel } from '../../interfaces/groups.interface';
@@ -30,6 +31,7 @@ export class AddGroupComponent implements OnInit {
         [
           Validators.required,
           Validators.maxLength(GroupFormControls.name.maxLength),
+          Validators.pattern(validations.common.whitespaceREGEX),
         ],
       ],
       isDefault: [GroupFormControls.default.value],

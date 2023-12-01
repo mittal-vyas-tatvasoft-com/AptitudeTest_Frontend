@@ -7,6 +7,7 @@ import {
   selectOptionsForStatus,
 } from '../../configs/college.configs';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { validations } from 'src/app/shared/messages/validation.static';
 
 @Component({
   selector: 'app-add-college',
@@ -53,8 +54,20 @@ export class AddCollegeComponent implements OnInit, AfterViewInit {
   createForm() {
     this.form = this.formBuilder.group({
       id: [0],
-      name: ['', Validators.required],
-      abbreviation: ['', Validators.required],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      abbreviation: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       status: [1, Validators.required],
     });
   }

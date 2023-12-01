@@ -57,9 +57,27 @@ export class AddAdminComponent implements OnInit, AfterViewInit {
   createForm() {
     this.form = this.formBuilder.group({
       id: [Numbers.Zero],
-      firstName: ['', Validators.required],
-      middleName: ['', Validators.required],
-      lastName: ['', Validators.required],
+      firstName: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      middleName: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      lastName: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       email: [
         '',
         [
