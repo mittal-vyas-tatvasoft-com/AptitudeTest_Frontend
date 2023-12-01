@@ -18,8 +18,8 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 export class McqTestComponent implements OnInit {
   firstName: string;
   lastName: string;
-  userId: number = 187;
-  testId: number = 69;
+  userId: number;
+  testId: number;
   timeRemaining = {
     hours: 1,
     minutes: 20,
@@ -50,7 +50,7 @@ export class McqTestComponent implements OnInit {
     const candidateDetails = this.loginService.decodeToken();
     this.firstName = candidateDetails.FirstName;
     this.lastName = candidateDetails.Name;
-    //this.userId = candidateDetails.Id;
+    this.userId = candidateDetails.Id;
 
     this.displayQuestion();
     this.seconds =
