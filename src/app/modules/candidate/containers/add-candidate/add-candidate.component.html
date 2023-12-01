@@ -18,25 +18,25 @@
   <form [formGroup]="form" (ngSubmit)="onSaveClick()">
     <div class="row">
       <div class="col-md-4">
-        <app-text-control
+        <app-text-control-character
           [formControlModel]="CandidateModel.firstName"
           [form]="form"
           class="w-100"
-        ></app-text-control>
+        ></app-text-control-character>
       </div>
       <div class="col-md-4">
-        <app-text-control
+        <app-text-control-character
           [formControlModel]="CandidateModel.fatherName"
           [form]="form"
           class="w-100"
-        ></app-text-control>
+        ></app-text-control-character>
       </div>
       <div class="col-md-4">
-        <app-text-control
+        <app-text-control-character
           [formControlModel]="CandidateModel.lastName"
           [form]="form"
           class="w-100"
-        ></app-text-control>
+        ></app-text-control-character>
       </div>
       <div class="col-md-6">
         <app-select
