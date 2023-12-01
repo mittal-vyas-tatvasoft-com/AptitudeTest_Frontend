@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Question } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { OptionsIndex } from 'src/app/modules/questions/static/question.static';
 import { OptionType, QuestionType } from 'src/app/shared/common/enums';
@@ -13,31 +13,29 @@ export class McqQuestionComponent {
   @Input() question: Question;
   @Output() saveAnswer = new EventEmitter<boolean[]>();
   optionIndex = OptionsIndex;
-  answers: boolean[] = [false, false, false, false];
   optionType = OptionType;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
 
   toggleCheckbox(index: number) {
     if (this.question.questionType == QuestionType.SingleAnswer) {
-      const count = this.answers.filter(Boolean).length;
+      const count = this.question.answers.filter(Boolean).length;
       if (count > 0) {
         for (let i = 0; i < 4; i++) {
           if (index == i) {
             continue;
           }
-          this.answers[i] = false;
+          this.question.answers[i] = false;
         }
       }
     }
-    this.answers[index] = !this.answers[index];
+    this.question.answers[index] = !this.question.answers[index];
   }
 
   clearAnswer() {
-    this.answers = [false, false, false, false];
+    this.question.answers = [false, false, false, false];
   }
 
   save() {
-    this.saveAnswer.emit(this.answers);
-    this.answers = [false, false, false, false];
+    this.saveAnswer.emit(this.question.answers);
   }
 }

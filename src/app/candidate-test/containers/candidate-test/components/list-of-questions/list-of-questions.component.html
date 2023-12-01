@@ -1,159 +1,46 @@
 <mat-card class="form-block mcq-box">
   <mat-card-content>
     <div class="indication-listing">
-      <p class="indication answered">Answered:<b>32</b></p>
-      <p class="indication not-answered">Not Answered:<b>32</b></p>
+      <p class="indication answered">
+        Answered:<b>{{ questionsStatus.answered }}</b>
+      </p>
+      <p class="indication not-answered">
+        Not Answered:<b>{{ questionsStatus.unAnswered }}</b>
+      </p>
     </div>
     <ul class="mcq-listing">
-      <li>
-        <button mat-mini-fab color="primary" class="answered">1</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">2</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">3</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">4</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="not-answered">5</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">6</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">7</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">8</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">9</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">10</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">11</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">12</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">13</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">14</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">15</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">16</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">17</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">18</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">19</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">20</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">21</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="not-answered">22</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">23</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">24</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">25</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="not-answered">26</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">27</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">28</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">29</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">30</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">31</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">32</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">33</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">34</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" class="answered">35</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary">36</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>37</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>38</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>39</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>40</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>41</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>42</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>43</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>44</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>45</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>46</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>47</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>48</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>49</button>
-      </li>
-      <li>
-        <button mat-mini-fab color="primary" disabled>50</button>
+      <li
+        *ngFor="
+          let question of questionsStatus.questionStatusVMs;
+          let i = index
+        "
+      >
+        <button
+          *ngIf="question.status == questionStatus.Answered"
+          mat-mini-fab
+          color="primary"
+          class="answered"
+          (click)="fetchQuestion(question.questionId)"
+        >
+          {{ i + 1 }}
+        </button>
+        <button
+          *ngIf="question.status == questionStatus.Skipped"
+          mat-mini-fab
+          color="primary"
+          class="not-answered"
+          (click)="fetchQuestion(question.questionId)"
+        >
+          {{ i + 1 }}
+        </button>
+        <button
+          *ngIf="question.status == questionStatus.Unvisited"
+          mat-mini-fab
+          color="primary"
+          disabled
+        >
+          {{ i + 1 }}
+        </button>
       </li>
     </ul>
   </mat-card-content>

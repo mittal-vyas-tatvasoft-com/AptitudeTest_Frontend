@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Question } from 'src/app/candidate-test/interfaces/candidate-test.interface';
+import {
+  Question,
+  QuestionStatusModel,
+} from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { QuestionStatus, StatusCode } from 'src/app/shared/common/enums';
@@ -15,8 +18,8 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 export class McqTestComponent implements OnInit {
   firstName: string;
   lastName: string;
-  userId: number = 0;
-  testId: number = 0;
+  userId: number = 187;
+  testId: number = 69;
   timeRemaining = {
     hours: 1,
     minutes: 20,
@@ -33,6 +36,7 @@ export class McqTestComponent implements OnInit {
     nextQuestionId: -1,
     questionNumber: 0,
     totalQuestions: 0,
+    answers: [false, false, false, false],
   };
 
   constructor(
@@ -46,10 +50,9 @@ export class McqTestComponent implements OnInit {
     const candidateDetails = this.loginService.decodeToken();
     this.firstName = candidateDetails.FirstName;
     this.lastName = candidateDetails.Name;
-    this.userId = candidateDetails.Id;
+    //this.userId = candidateDetails.Id;
 
     this.displayQuestion();
-
     this.seconds =
       this.timeRemaining.hours * 3600 +
       this.timeRemaining.minutes * 60 +
@@ -65,6 +68,11 @@ export class McqTestComponent implements OnInit {
         seconds: seconds,
       };
     }, 1000);
+
+    this.testService.loadQuestion.subscribe((data) => {
+      this.question.nextQuestionId = data;
+      this.displayQuestion();
+    });
   }
 
   displayQuestion() {
@@ -92,7 +100,7 @@ export class McqTestComponent implements OnInit {
       event.filter(Boolean).length > 0
         ? QuestionStatus.Answered
         : QuestionStatus.Skipped;
-    let status = [this.question.questionNumber, state];
+    let status = [this.question.questionNumber, this.question.id, state];
     this.testService.questionStatus.next(status);
   }
 }
