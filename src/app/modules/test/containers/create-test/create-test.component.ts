@@ -408,6 +408,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
               this.fetchTestCandidates();
               this.snackbarService.success(res.message);
             } else {
+              this.router.navigate(['/admin/tests']);
               this.snackbarService.error(res.message);
             }
           },
