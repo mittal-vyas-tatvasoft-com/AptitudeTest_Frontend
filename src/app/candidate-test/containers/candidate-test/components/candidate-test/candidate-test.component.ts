@@ -13,8 +13,8 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
   styleUrls: ['./candidate-test.component.scss'],
 })
 export class CandidateTestComponent implements OnInit {
-  userId: number = 187;
-  testId = 69;
+  userId: number;
+  testId: number;
   questionsStatus: QuestionStatusModel = {
     answered: 0,
     questionStatusVMs: [],
