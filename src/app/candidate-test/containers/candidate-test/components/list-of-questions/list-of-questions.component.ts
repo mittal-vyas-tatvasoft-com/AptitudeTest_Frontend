@@ -30,11 +30,11 @@ export class ListOfQuestionsComponent implements OnInit {
       this.questionsStatus.questionStatusVMs[data[0] - 1].status = data[2];
       this.questionsStatus.answered =
         this.questionsStatus.questionStatusVMs.filter(
-          (question) => question.status == this.questionStatus.Answered
+          (question) => question.status === this.questionStatus.Answered
         ).length;
       this.questionsStatus.unAnswered =
         this.questionsStatus.questionStatusVMs.filter(
-          (question) => question.status == this.questionStatus.Skipped
+          (question) => question.status === this.questionStatus.Skipped
         ).length;
     });
   }

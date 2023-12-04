@@ -37,7 +37,7 @@ export class CandidateTestComponent implements OnInit {
     if (this.userId && this.testId) {
       this.testService.getQuestionsStatus(this.userId, this.testId).subscribe({
         next: (response: ResponseModel<QuestionStatusModel>) => {
-          if (response.statusCode == StatusCode.Success) {
+          if (response.statusCode === StatusCode.Success) {
             this.questionsStatus = response.data;
           } else {
             this.snackBarService.error(response.message);

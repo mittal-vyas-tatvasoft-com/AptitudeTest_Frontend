@@ -81,7 +81,7 @@ export class McqTestComponent implements OnInit {
         .getQuestion(this.question.nextQuestionId, this.userId, this.testId)
         .subscribe({
           next: (response: ResponseModel<Question>) => {
-            if (response.statusCode == StatusCode.Success) {
+            if (response.statusCode === StatusCode.Success) {
               this.question = response.data;
             } else {
               this.snackBarService.error(response.message);
@@ -93,7 +93,7 @@ export class McqTestComponent implements OnInit {
 
   onSubmit(event: boolean[]) {
     this.displayQuestion();
-    if (this.question.questionNumber == this.question.totalQuestions) {
+    if (this.question.questionNumber === this.question.totalQuestions) {
       this.router.navigate(['/user/submitted']);
     }
     let state =

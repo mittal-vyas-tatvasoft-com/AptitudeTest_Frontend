@@ -17,11 +17,11 @@ export class McqQuestionComponent {
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
 
   toggleCheckbox(index: number) {
-    if (this.question.questionType == QuestionType.SingleAnswer) {
+    if (this.question.questionType === QuestionType.SingleAnswer) {
       const count = this.question.answers.filter(Boolean).length;
       if (count > 0) {
         for (let i = 0; i < 4; i++) {
-          if (index == i) {
+          if (index === i) {
             continue;
           }
           this.question.answers[i] = false;
