@@ -4,8 +4,8 @@ export const loginControl = {
     key: 'userName',
     label: 'User Name',
     required: true,
-    requiredErrMsg: 'User name is required',
-    patternErrMsg: 'User name is not valid',
+    requiredErrMsg: 'User Name is required',
+    patternErrMsg: 'User Name is not valid',
     inputType: 'text',
     displayIcon: true,
     iconName: 'person-dark.svg',
@@ -22,4 +22,4 @@ export const loginControl = {
     displayIcon: true,
     iconName: 'password-visibility-show-dark.svg',
   },
-}
+};
