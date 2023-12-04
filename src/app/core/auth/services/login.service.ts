@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { DateTime } from 'luxon';
@@ -23,7 +24,7 @@ export class LoginService {
   private sidebarStateKey = 'sidebarState';
   private rememberMeKey = 'rM';
   refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  constructor(private http: HttpClient, private router: Router) {}
+  constructor(private http: HttpClient, private router: Router, private dialogRef: MatDialog) {}
 
   storage() {
     const rm = localStorage.getItem(this.rememberMeKey) == 'true';
@@ -68,6 +69,8 @@ export class LoginService {
 
   logout(): void {
     const data = this.decodeToken();
+    this.dialogRef.closeAll();
+
     if (data.Role == Navigation.RoleAdmin) {
       this.router.navigate([Navigation.AdminLogin]);
     } else {
