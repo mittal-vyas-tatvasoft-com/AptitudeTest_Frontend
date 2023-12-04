@@ -33,7 +33,7 @@ export class CandidateTestService {
   saveAnswer(data: SaveAnswerModel) {
     return this.http.put<ResponseModel<string>>(
       `${environment.baseURL}Candidates/SaveTestQuestionAnswer`,
-      {}
+      { data }
     );
   }
 }
