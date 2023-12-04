@@ -14,7 +14,6 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 })
 export class CandidateTestComponent implements OnInit {
   userId: number;
-  testId: number;
   questionsStatus: QuestionStatusModel = {
     answered: 0,
     questionStatusVMs: [],
@@ -34,8 +33,8 @@ export class CandidateTestComponent implements OnInit {
   }
 
   getQuestionsStatus() {
-    if (this.userId && this.testId) {
-      this.testService.getQuestionsStatus(this.userId, this.testId).subscribe({
+    if (this.userId) {
+      this.testService.getQuestionsStatus(this.userId).subscribe({
         next: (response: ResponseModel<QuestionStatusModel>) => {
           if (response.statusCode === StatusCode.Success) {
             this.questionsStatus = response.data;

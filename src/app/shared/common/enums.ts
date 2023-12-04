@@ -148,3 +148,8 @@ export enum QuestionStatus {
   Answered = 1,
   Skipped = 2,
 }
+
+export enum Status {
+  Active = 1,
+  Inactive = 0,
+}

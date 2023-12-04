@@ -19,7 +19,6 @@ export class McqTestComponent implements OnInit {
   firstName: string;
   lastName: string;
   userId: number;
-  testId: number;
   timeRemaining = {
     hours: 1,
     minutes: 20,
@@ -76,9 +75,9 @@ export class McqTestComponent implements OnInit {
   }
 
   displayQuestion() {
-    if (this.question.nextQuestionId && this.userId && this.testId) {
+    if (this.question.nextQuestionId && this.userId) {
       this.testService
-        .getQuestion(this.question.nextQuestionId, this.userId, this.testId)
+        .getQuestion(this.question.nextQuestionId, this.userId)
         .subscribe({
           next: (response: ResponseModel<Question>) => {
             if (response.statusCode === StatusCode.Success) {
