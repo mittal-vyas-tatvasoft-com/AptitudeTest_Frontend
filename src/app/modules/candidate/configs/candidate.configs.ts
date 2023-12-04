@@ -230,7 +230,7 @@ export const selectOptionsForStatus = [
     value: 'Active',
   },
   {
-    id: 2,
+    id: 0,
     key: 'Inactive',
     value: 'Inactive',
   },

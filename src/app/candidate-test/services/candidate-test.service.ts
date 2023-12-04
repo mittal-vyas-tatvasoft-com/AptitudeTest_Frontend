@@ -17,15 +17,15 @@ export class CandidateTestService {
 
   constructor(private http: HttpClient) {}
 
-  getQuestion(questionId: number, userId: number, testId: number) {
+  getQuestion(questionId: number, userId: number) {
     return this.http.get<ResponseModel<Question>>(
-      `${environment.baseURL}Candidates/GetCandidateTestQuestion/${questionId}/${userId}/${testId}`
+      `${environment.baseURL}Candidates/GetCandidateTestQuestion/${questionId}/${userId}`
     );
   }
 
-  getQuestionsStatus(userId: number, testId: number) {
+  getQuestionsStatus(userId: number) {
     return this.http.get<ResponseModel<QuestionStatusModel>>(
-      `${environment.baseURL}Candidates/GetQuestionsStatus/${userId}/${testId}`
+      `${environment.baseURL}Candidates/GetQuestionsStatus/${userId}`
     );
   }
 }

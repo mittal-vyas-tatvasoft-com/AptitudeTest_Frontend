@@ -2,7 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoginService } from 'src/app/core/auth/services/login.service';
-import { Numbers } from 'src/app/shared/common/enums';
+import { Numbers, Status } from 'src/app/shared/common/enums';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
@@ -116,7 +116,8 @@ export class AddCandidateComponent implements OnInit {
     if (this.form.valid) {
       this.isLoading = true;
       const candidateData: CandidateModel = this.form.value;
-      candidateData.status = this.form.value.status === 'Active' ? true : false;
+      candidateData.status =
+        this.form.value.status === Status.Active ? true : false;
       candidateData.gender =
         this.form.value.gender === 'Male' ? Numbers.One : Numbers.Two;
       candidateData.createdBy = this.userId;

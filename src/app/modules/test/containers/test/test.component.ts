@@ -44,7 +44,7 @@ export class TestComponent implements OnInit {
       header: 'Action',
       isAction: true,
       action: 'edit',
-      width: '5%'
+      width: '5%',
     },
   ];
 
@@ -126,6 +126,13 @@ export class TestComponent implements OnInit {
         if (res.statusCode != StatusCode.Success) {
           this.snackbarService.error(res.message);
         } else {
+          res.data = res.data?.map((record: TestData) => {
+            return {
+              ...record,
+              startTime: this.getTrimmedTime(record.startTime),
+              endTime: this.getTrimmedTime(record.endTime),
+            };
+          });
           this.dataSource = new MatTableDataSource<TestData>(res.data);
           if (res.data.length != 0) {
             this.totalItemsCount = res.data[0].totalRecords;
@@ -242,5 +249,11 @@ export class TestComponent implements OnInit {
       date: '',
     });
     this.getTests();
+  }
+
+  getTrimmedTime(date: string) {
+    let temp = date.replace('T', ' ');
+    let lastDot = date.lastIndexOf('.');
+    return temp.substring(0, lastDot);
   }
 }
