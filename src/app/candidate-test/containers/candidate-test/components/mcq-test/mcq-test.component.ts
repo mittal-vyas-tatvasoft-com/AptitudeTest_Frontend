@@ -100,7 +100,7 @@ export class McqTestComponent implements OnInit {
       event.filter(Boolean).length > 0
         ? QuestionStatus.Answered
         : QuestionStatus.Skipped;
-    let status = [this.question.questionNumber, this.question.id, state];
+    let status = [this.question.questionNumber - 1, this.question.id, state];
     this.testService.questionStatus.next(status);
   }
 }

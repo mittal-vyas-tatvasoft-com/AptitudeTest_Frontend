@@ -27,7 +27,9 @@ export class ListOfQuestionsComponent implements OnInit {
 
   ngOnInit(): void {
     this.testService.questionStatus.subscribe((data) => {
-      this.questionsStatus.questionStatusVMs[data[0] - 1].status = data[2];
+      // Here data is array of numbers with size 3
+      // It contains index of question,Question Id and its Status respectively on array index 0,1and 2
+      this.questionsStatus.questionStatusVMs[data[0]].status = data[2];
       this.questionsStatus.answered =
         this.questionsStatus.questionStatusVMs.filter(
           (question) => question.status === this.questionStatus.Answered
