@@ -80,7 +80,6 @@
 
   .card-header-btn {
     padding: 12px;
-    padding: 12px;
     margin-left: 12px;
 
     .mat-icon {
@@ -102,15 +101,6 @@
   }
 }
 
-.message-success {
-  text-align: center;
-  color: #46a746;
-  font-size: 18px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 24px;
-}
-
 // Sidebar
 .sidebar {
   min-height: 100%;
@@ -118,7 +108,6 @@
   background-color: #ffffff;
   z-index: 3;
   transition: all 400ms cubic-bezier(0.25, 0.8, 0.25, 1);
-  overflow-y: auto;
 
   .sidebar-head {
     padding: 20px 70px;
@@ -346,7 +335,6 @@
     justify-content: space-between;
     flex-wrap: wrap;
 
-    // margin: -6px -6px -6px 0;
     .mat-mdc-button-base {
       margin-top: 6px;
       margin-bottom: 6px;
@@ -406,29 +394,6 @@
 
   .mdc-notched-outline__trailing {
     border-radius: 0 !important;
-  }
-}
-
-// Card header
-.card-header {
-  padding: 12px;
-
-  .card-header-title {
-    font-size: 20px;
-    line-height: 24px;
-    font-weight: 500;
-  }
-
-  .card-header-btn {
-    padding: 12px;
-    padding: 12px;
-    margin-left: 12px;
-
-    .mat-icon {
-      width: 20px;
-      height: 20px;
-      margin: 0;
-    }
   }
 }
 
@@ -1089,7 +1054,6 @@
   border: 1px solid #f1f1f1;
   background: #f7f8fd;
 
-  // margin-bottom: 20px;
   .answer-option {
     display: inline-flex;
     align-items: center;
@@ -1557,8 +1521,6 @@
 
       .mat-drawer {
         top: 0;
-        // width: 260px;
-        // min-width: 260px;
       }
 
       .main-content {
@@ -1853,19 +1815,6 @@
   }
 }
 
-// toaster styles
-
-.mat-mdc-snack-bar-container {
-  &.success {
-    --mdc-snackbar-container-color: var(--color-success);
-    --mdc-snackbar-supporting-text-color: var(--color-white);
-  }
-
-  &.error {
-    --mdc-snackbar-container-color: var(--color-error);
-    --mdc-snackbar-supporting-text-color: var(--color-white);
-  }
-}
 
 // Kinjan Styles
 .msg-block {

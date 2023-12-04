@@ -57,11 +57,16 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
     if (changes['candidateData'] && this.candidateData) {
       this.form.patchValue(this.candidateData);
     }
+    console.log(this.candidateData);
+
     if (this.candidateData?.pincode == 0) {
       this.form.get('pincode')?.patchValue('');
     }
     if (this.candidateData?.appliedThrough == 0) {
       this.form.get('appliedThrough')?.patchValue('');
+    }
+    if (this.candidateData?.dateOfBirth == '0001-01-01T00:00:00') {
+      this.form.get('dateOfBirth')?.patchValue('');
     }
   }
 
