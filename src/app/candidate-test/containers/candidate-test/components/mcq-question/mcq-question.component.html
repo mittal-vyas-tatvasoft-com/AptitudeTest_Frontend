@@ -11,7 +11,7 @@
         {{ option }}
       </p>
       <p class="answer-text" *ngIf="question.optionType == optionType.Image">
-        <img [src]="baseImageUrl + option" />
+        <img [src]="baseImageUrl + option" alt="question image" />
       </p>
       <mat-checkbox
         class="rounded-check"
@@ -33,7 +33,6 @@
     Clear Answer
   </button>
   <button mat-flat-button color="primary" (click)="save()" matTooltip="Save">
-    <!--  routerLink="/user/submitted" -->
     Save &amp; Next
   </button>
 </div>
