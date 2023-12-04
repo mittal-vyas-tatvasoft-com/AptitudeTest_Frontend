@@ -4,7 +4,7 @@ export const validations = {
     passwordREGEX: new RegExp(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!^#%*?&])[A-Za-z\d@$!^#%*?&]{8,}$/
     ),
-    mobileNumberREGEX: new RegExp(/^[6-9]{1}[0-9]{9}$/),
+    mobileNumberREGEX: new RegExp(/^[0-9]{1}[0-9]{9}$/),
     pinCodeREGEX: new RegExp(/^[1-9]{1}[0-9]{2}[0-9]{3}$/),
     whitespaceREGEX: new RegExp(/^(\s+\S+\s*)*(?!\s).*$/),
     characterWithSpaceREGEX: new RegExp(
