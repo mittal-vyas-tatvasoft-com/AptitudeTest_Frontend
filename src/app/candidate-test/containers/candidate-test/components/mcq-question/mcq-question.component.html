@@ -3,7 +3,7 @@
   <div class="col-md-6" *ngFor="let option of question.options; let i = index">
     <div
       class="qa-answer-type-text-option"
-      [ngClass]="{ selected: answers[i] }"
+      [ngClass]="{ selected: question.answers[i] }"
       (click)="toggleCheckbox(i)"
     >
       <span class="answer-option">{{ optionIndex[i] }}</span>
@@ -16,7 +16,7 @@
       <mat-checkbox
         class="rounded-check"
         color="primary"
-        [(ngModel)]="answers[i]"
+        [(ngModel)]="question.answers[i]"
         (change)="toggleCheckbox(i)"
       >
       </mat-checkbox>
