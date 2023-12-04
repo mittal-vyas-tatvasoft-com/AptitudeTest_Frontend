@@ -1,14 +1,17 @@
 <div [formGroup]="form">
   <mat-form-field appearance="outline">
     <mat-label>{{ formControlModel.label }}</mat-label>
-    <mat-select [formControlName]="formControlModel.key" [id]="formControlModel.key"
-      (selectionChange)="selection.emit($event)">
+    <mat-select
+      [formControlName]="formControlModel.key"
+      [id]="formControlModel.key"
+      (selectionChange)="selection.emit($event)"
+    >
       <mat-option *ngFor="let item of getOptions()" [value]="item.id">
         {{ item.value }}
       </mat-option>
     </mat-select>
     <mat-error>
-      {{ _validator.getError(form, formControlModel,formControlModel.key) }}
+      {{ _validator.getError(form, formControlModel, formControlModel.key) }}
     </mat-error>
   </mat-form-field>
 </div>

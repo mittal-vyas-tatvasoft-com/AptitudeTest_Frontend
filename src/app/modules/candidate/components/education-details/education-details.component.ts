@@ -153,8 +153,6 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
   }
   chang(event: any, i: number, data: any) {
     if (i > 2) {
-      console.log(event);
-
       if (event > 0) {
         data.get('university').touched = true;
         data.get('university').setValidators(Validators.required);

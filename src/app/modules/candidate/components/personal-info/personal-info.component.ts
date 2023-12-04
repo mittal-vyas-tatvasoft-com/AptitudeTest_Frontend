@@ -163,7 +163,6 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       this.form.get('userGroup')?.updateValueAndValidity();
     } else {
       this.form.get('userGroup')?.setValidators(Validators.required);
-      this.form.get('userGroup')?.setValue('');
       this.form.get('userGroup')?.updateValueAndValidity();
     }
   }
