@@ -45,7 +45,7 @@ export class CandidatesComponent {
   selectedYear: number | null = null;
   dataSource: MatTableDataSource<CandidateModel>;
   columns: TableColumn<CandidateModel>[] = [
-    { columnDef: 'select', header: '', width: '5%'  },
+    { columnDef: 'select', header: '', width: '5%' },
     { columnDef: 'name', header: 'Name', width: '15%' },
     { columnDef: 'collegeName', header: 'College', width: '15%' },
     { columnDef: 'groupName', header: 'Group', width: '15%' },
@@ -153,8 +153,12 @@ export class CandidatesComponent {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result && result.refreshTable === true) {
-        this.fetchCandidate();
-        this.snackbarService.success(result.message);
+        if (result.status == StatusCode.Success) {
+          this.fetchCandidate();
+          this.snackbarService.success(result.message);
+        } else {
+          this.snackbarService.error(result.message);
+        }
       }
     });
   }
