@@ -57,7 +57,6 @@
               mat-menu-item
               (click)="chanegPasswordDialog()"
               *ngIf="isAdmin && !isSuperAdmin"
-              matTooltip="Change Password"
             >
               <mat-icon>
                 <img
@@ -76,12 +75,7 @@
               </mat-icon>
               <span>My Profile</span>
             </button>
-            <button
-              mat-menu-item
-              routerLink="/"
-              (click)="logout()"
-              matTooltip="Logout"
-            >
+            <button mat-menu-item routerLink="/" (click)="logout()">
               <mat-icon>
                 <img src="./assets/images/logout-grey.svg" alt="Logout" />
               </mat-icon>

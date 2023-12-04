@@ -40,31 +40,19 @@
       </mat-icon>
     </button>
     <mat-menu #actionMenu="matMenu" xPosition="before">
-      <button
-        mat-menu-item
-        (click)="handleActiveInactiveSelected(true)"
-        matTooltip="Active"
-      >
+      <button mat-menu-item (click)="handleActiveInactiveSelected(true)">
         <mat-icon>
           <img src="./assets/images/active.svg" alt="Active" />
         </mat-icon>
         Active
       </button>
-      <button
-        mat-menu-item
-        (click)="handleActiveInactiveSelected(false)"
-        matTooltip="Inactive"
-      >
+      <button mat-menu-item (click)="handleActiveInactiveSelected(false)">
         <mat-icon>
           <img src="./assets/images/inactive.svg" alt="Inactive" />
         </mat-icon>
         Inactive
       </button>
-      <button
-        mat-menu-item
-        (click)="handleDeleteSelected()"
-        matTooltip="Delete"
-      >
+      <button mat-menu-item (click)="handleDeleteSelected()">
         <mat-icon>
           <img src="./assets/images/delete.svg" alt="Delete" />
         </mat-icon>
