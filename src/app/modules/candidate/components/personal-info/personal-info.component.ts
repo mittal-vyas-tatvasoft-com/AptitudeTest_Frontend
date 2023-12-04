@@ -36,6 +36,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
   profiles: SelectOption[] = [];
   states: SelectOption[] = [];
   form: FormGroup;
+  maxDate = new Date();
   @Input() candidateData: UserData;
   @Input() isAdmin: boolean;
 
@@ -58,6 +59,9 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
     }
     if (this.candidateData?.pincode == 0) {
       this.form.get('pincode')?.patchValue('');
+    }
+    if (this.candidateData?.appliedThrough == 0) {
+      this.form.get('appliedThrough')?.patchValue('');
     }
   }
 
