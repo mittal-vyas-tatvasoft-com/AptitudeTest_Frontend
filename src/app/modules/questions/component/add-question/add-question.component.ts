@@ -100,6 +100,12 @@ export class AddQuestionComponent implements OnInit {
       if (this.isEdit || this.isDuplicate) {
         this.questionForm.get('isAnswer')?.markAsTouched();
       }
+      if (
+        this.questionForm.get('questionType')?.value ==
+        QuestionType.SingleAnswer
+      ) {
+        this.initializeAnswers();
+      }
     });
 
     this.questionForm
@@ -142,6 +148,7 @@ export class AddQuestionComponent implements OnInit {
         ?.updateValueAndValidity();
     }
   }
+
   createForm() {
     this.questionForm = this.fb.group({
       topicId: ['', Validators.required],
@@ -267,13 +274,23 @@ export class AddQuestionComponent implements OnInit {
 
   checkboxChanged(event: MatCheckboxChange) {
     this.questionForm.get('isAnswer')?.markAsTouched();
-    if (event.checked) {
-      this.isAnswer[Number(event.source.value)] = true;
-      this.checkboxValues.push(Number(event.source.value));
+    if (
+      this.questionForm.get('questionType')?.value == QuestionType.SingleAnswer
+    ) {
+      this.initializeAnswers();
+      if (event.checked) {
+        this.isAnswer[Number(event.source.value)] = true;
+        this.checkboxValues.push(Number(event.source.value));
+      }
     } else {
-      this.isAnswer[Number(event.source.value)] = false;
-      const index = this.checkboxValues.indexOf(Number(event.source.value));
-      this.checkboxValues.splice(index, 1);
+      if (event.checked) {
+        this.isAnswer[Number(event.source.value)] = true;
+        this.checkboxValues.push(Number(event.source.value));
+      } else {
+        this.isAnswer[Number(event.source.value)] = false;
+        const index = this.checkboxValues.indexOf(Number(event.source.value));
+        this.checkboxValues.splice(index, 1);
+      }
     }
     this.questionForm.get('isAnswer')?.setValue(this.checkboxValues);
     if (this.checkboxValues.length == 0) {
@@ -384,5 +401,10 @@ export class AddQuestionComponent implements OnInit {
       return this.questionControls.optionValue.requiredErrMsg;
     }
     return null;
+  }
+
+  initializeAnswers() {
+    this.isAnswer = [false, false, false, false, false];
+    this.checkboxValues = [];
   }
 }
