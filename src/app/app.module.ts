@@ -17,6 +17,7 @@ import {
 import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { PageNotFoundComponent } from './modules/page-not-found/page-not-found.component';
 import { FormControlModule } from './shared/modules/form-control/form-control.module';
+import { ErrorHandlerInterceptor } from './core/interceptors/error-handler/error-handler.interceptor';
 
 @NgModule({
   declarations: [AppComponent, PageNotFoundComponent],
@@ -32,6 +33,11 @@ import { FormControlModule } from './shared/modules/form-control/form-control.mo
     FormControlModule,
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorHandlerInterceptor,
+      multi: true,
+    },
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthTokenInterceptor,
