@@ -7,4 +7,5 @@ export const Messages = {
   passwordPattern:
     'A minimum 8 characters password contains a combination of uppercase and lowercase letter and number and special character.',
   fillRequiredField: 'Please fill all required fields',
+  commonError: 'Something went wrong',
 };
