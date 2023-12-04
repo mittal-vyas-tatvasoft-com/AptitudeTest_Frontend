@@ -87,7 +87,7 @@ export const QuestionControls = {
     key: 'isAnswer',
     label: 'isAnswer',
     required: true,
-    invalidErrorMsg: 'Invalid Answers Selected',
+    invalidErrorMsg: 'Please select correct answers',
   },
 };
 
