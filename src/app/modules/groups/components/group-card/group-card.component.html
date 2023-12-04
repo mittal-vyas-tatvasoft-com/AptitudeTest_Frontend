@@ -19,11 +19,7 @@
           </mat-icon>
         </button>
         <mat-menu #tableActionMenu="matMenu" xPosition="before">
-          <button
-            mat-menu-item
-            (click)="handleEdit(groupData)"
-            matTooltip="Rename"
-          >
+          <button mat-menu-item (click)="handleEdit(groupData)">
             <mat-icon>
               <img src="./assets/images/edit.svg" alt="Rename" />
             </mat-icon>
@@ -33,7 +29,6 @@
             *ngIf="!groupData.isDefault"
             mat-menu-item
             (click)="handleDelete(groupData.id)"
-            matTooltip="Delete"
           >
             <mat-icon>
               <img src="./assets/images/delete.svg" alt="Delete" />
