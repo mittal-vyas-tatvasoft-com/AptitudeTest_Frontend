@@ -30,9 +30,9 @@ export class CandidateTestService {
     );
   }
 
-  getInstructionsAtStartOfTheTestForUser(userId: number) {
+  getInstructionsOfTheTestForUser(userId: number, testStatus: string) {
     return this.http.get<ResponseModel<string>>(
-      `${environment.baseURL}Candidates/GetInstructionsOfTheTestForUser/${userId}`
+      `${environment.baseURL}Candidates/GetInstructionsOfTheTestForUser/${userId}/${testStatus}`
     );
   }
 
