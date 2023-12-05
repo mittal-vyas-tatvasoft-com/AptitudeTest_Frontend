@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {
   Question,
@@ -9,6 +10,7 @@ import { CandidateTestService } from 'src/app/candidate-test/services/candidate-
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { QuestionStatus, StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 
 @Component({
@@ -43,7 +45,8 @@ export class McqTestComponent implements OnInit, OnDestroy {
     public loginService: LoginService,
     private router: Router,
     private testService: CandidateTestService,
-    private snackBarService: SnackbarService
+    private snackBarService: SnackbarService,
+    public dialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -63,6 +66,9 @@ export class McqTestComponent implements OnInit, OnDestroy {
         minutes: minutes,
         seconds: seconds,
       };
+      if (this.seconds === 0) {
+        this.submitTest();
+      }
     }, 1000);
     this.testService.loadQuestion.subscribe((data) => {
       this.question.nextQuestionId = data;
@@ -112,10 +118,42 @@ export class McqTestComponent implements OnInit, OnDestroy {
       timeRemaining: Math.floor(this.seconds / 60),
       userId: this.userId,
       userAnswers: answer,
+      isAttended: true,
     };
     this.testService.saveAnswer(data).subscribe({
       next: (res: ResponseModel<string>) => {
         if (res.statusCode !== StatusCode.Success) {
+          this.snackBarService.error(res.message);
+        }
+      },
+    });
+  }
+
+  endTest() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = ['primary-dialog'];
+    dialogConfig.panelClass = ['confirmation-dialog'];
+    dialogConfig.autoFocus = false;
+    dialogConfig.data = {
+      message: 'Are you sure want to submit test?',
+      confirmText: 'Finish',
+      cancelText: 'Cancel',
+    };
+    const dialogRef = this.dialog.open(
+      ConfirmationDialogComponent,
+      dialogConfig
+    );
+    dialogRef?.afterClosed().subscribe((result: any) => {
+      if (result) {
+        this.submitTest();
+      }
+    });
+  }
+
+  submitTest() {
+    this.testService.endTest(this.userId).subscribe({
+      next: (res: ResponseModel<string>) => {
+        if (res.statusCode != StatusCode.Success) {
           this.snackBarService.error(res.message);
         }
       },

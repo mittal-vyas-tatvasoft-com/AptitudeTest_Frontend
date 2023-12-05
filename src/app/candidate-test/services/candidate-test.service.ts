@@ -46,7 +46,14 @@ export class CandidateTestService {
   saveAnswer(data: SaveAnswerModel) {
     return this.http.put<ResponseModel<string>>(
       `${environment.baseURL}Candidates/SaveTestQuestionAnswer`,
-      { data }
+      data
+    );
+  }
+
+  endTest(userId: number) {
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}Candidates/EndTest/${userId}`,
+      { userId }
     );
   }
 }
