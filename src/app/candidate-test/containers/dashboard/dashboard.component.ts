@@ -15,6 +15,7 @@ export class DashboardComponent implements OnInit {
   firstName: string;
   lastName: string;
   userId: number;
+  testStatus = 'Start';
   constructor(
     public loginService: LoginService,
     private router: Router,
@@ -31,7 +32,7 @@ export class DashboardComponent implements OnInit {
 
   readyForTest() {
     this.candidateTestService
-      .getInstructionsAtStartOfTheTestForUser(this.userId)
+      .getInstructionsOfTheTestForUser(this.userId, this.testStatus)
       .subscribe({
         next: (res) => {
           if (res.statusCode == StatusCode.Success) {

@@ -15,6 +15,7 @@ export class CandidateInstructionsComponent implements OnInit {
   isChecked = false;
   testExist = false;
   messageToShow: string;
+  testStatus = 'Start';
   userId: number;
   constructor(
     public loginService: LoginService,
@@ -27,12 +28,12 @@ export class CandidateInstructionsComponent implements OnInit {
     const candidateDetails = this.loginService.decodeToken();
     this.userId = +candidateDetails.Id;
     this.candidateTestService
-      .getInstructionsAtStartOfTheTestForUser(this.userId)
+      .getInstructionsOfTheTestForUser(this.userId, this.testStatus)
       .subscribe({
         next: (res: any) => {
           if (res.statusCode == StatusCode.Success) {
             this.testExist = true;
-            this.messageToShow = res.data.messaageAtStartOfTheTest;
+            this.messageToShow = res.data;
           } else {
             this.snackbarService.error(NoTestAssigned);
             this.router.navigate(['/user']);

@@ -15,6 +15,7 @@ export class TestSubmittedComponent implements OnInit {
   userId: number;
   testFinished: boolean;
   messageToShow: string;
+  testStatus: 'End';
   constructor(
     private loginService: LoginService,
     private candidateTestService: CandidateTestService,
@@ -25,11 +26,11 @@ export class TestSubmittedComponent implements OnInit {
     const candidateDetails = this.loginService.decodeToken();
     this.userId = +candidateDetails.Id;
     this.candidateTestService
-      .getInstructionsAtStartOfTheTestForUser(this.userId)
+      .getInstructionsOfTheTestForUser(this.userId, this.testStatus)
       .subscribe({
         next: (res: any) => {
           if (res.statusCode == StatusCode.Success) {
-            this.messageToShow = res.data.messaageAtStartOfTheTest;
+            this.messageToShow = res.data;
           } else {
             this.snackbarService.error(NoTestAssigned);
             this.router.navigate(['/user']);
