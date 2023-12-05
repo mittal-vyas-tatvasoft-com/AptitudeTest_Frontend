@@ -1,0 +1,26 @@
+.no-data-message {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    font-size: 18px;
+    color: #999;
+}
+
+.back-btn-candidate {
+    border-radius: 50%;
+    min-width: 3vh !important;
+    min-height: 5.5vh !important;
+}
+
+.cus-class mat-icon {
+    margin: 0;
+}
+
+.instructions-listing {
+    min-height: 200px;
+}
+
+.text-justify {
+    text-align: justify;
+}

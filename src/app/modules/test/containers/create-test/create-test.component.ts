@@ -12,7 +12,6 @@ import { Sort } from '@angular/material/sort';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as moment from 'moment';
 import { Subject, debounceTime } from 'rxjs';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
@@ -357,24 +356,27 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       today.setHours(Number(hours));
     }
     today.setMinutes(Number(minutes));
-
-    return moment.utc(today).toDate();
+    return this.getDateFormatted(today);
   }
 
   handleNextClick() {
     this.stepper.next();
   }
 
+  getDateFormatted(date: Date) {
+    return new Date(
+      date.getFullYear(),
+      date.getMonth(),
+      date.getDate(),
+      date.getHours(),
+      date.getMinutes() - date.getTimezoneOffset()
+    );
+  }
+
   saveBasicDetails() {
     const d = new Date(this.basicTestDetails.get('date')?.value);
     // This will return an ISO string matching your local time.
-    const utcDate = new Date(
-      d.getFullYear(),
-      d.getMonth(),
-      d.getDate(),
-      d.getHours(),
-      d.getMinutes() - d.getTimezoneOffset()
-    );
+    const utcDate = this.getDateFormatted(d);
     const payload: createTestModel = {
       id: this.basicTestDetails.get('testId')?.value,
       name: this.basicTestDetails.get('testName')?.value,

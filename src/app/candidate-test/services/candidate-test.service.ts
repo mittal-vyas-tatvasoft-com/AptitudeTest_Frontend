@@ -1,13 +1,13 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { environment } from 'src/environments/environment';
 import {
   Question,
   QuestionStatusModel,
   SaveAnswerModel,
 } from '../interfaces/candidate-test.interface';
-import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -27,6 +27,19 @@ export class CandidateTestService {
   getQuestionsStatus(userId: number) {
     return this.http.get<ResponseModel<QuestionStatusModel>>(
       `${environment.baseURL}Candidates/GetQuestionsStatus/${userId}`
+    );
+  }
+
+  getInstructionsAtStartOfTheTestForUser(userId: number) {
+    return this.http.get<ResponseModel<string>>(
+      `${environment.baseURL}Candidates/GetInstructionsOfTheTestForUser/${userId}`
+    );
+  }
+
+  StartUserTest(userId: number) {
+    return this.http.post<ResponseModel<string>>(
+      `${environment.baseURL}Candidates/StartUserTest/${userId}`,
+      userId
     );
   }
 

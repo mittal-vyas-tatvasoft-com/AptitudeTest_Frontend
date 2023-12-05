@@ -29,6 +29,8 @@ export class CandidateTestComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const candidateDetails = this.loginService.decodeToken();
+    this.userId = candidateDetails.Id;
     this.getQuestionsStatus();
   }
 
@@ -45,6 +47,4 @@ export class CandidateTestComponent implements OnInit {
       });
     }
   }
-
-  loadQuestion(event: number) {}
 }
