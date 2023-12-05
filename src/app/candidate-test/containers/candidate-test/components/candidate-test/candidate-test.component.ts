@@ -19,8 +19,9 @@ export class CandidateTestComponent implements OnInit {
     questionStatusVMs: [],
     totalQuestion: 0,
     unAnswered: 0,
+    timeLeft: 0,
   };
-
+  seconds: number;
   constructor(
     public loginService: LoginService,
     private router: Router,
@@ -29,6 +30,8 @@ export class CandidateTestComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    const candidateDetails = this.loginService.decodeToken();
+    this.userId = candidateDetails.Id;
     this.getQuestionsStatus();
   }
 
@@ -38,6 +41,7 @@ export class CandidateTestComponent implements OnInit {
         next: (response: ResponseModel<QuestionStatusModel>) => {
           if (response.statusCode === StatusCode.Success) {
             this.questionsStatus = response.data;
+            this.seconds = this.questionsStatus.timeLeft * 60;
           } else {
             this.snackBarService.error(response.message);
           }
@@ -45,6 +49,4 @@ export class CandidateTestComponent implements OnInit {
       });
     }
   }
-
-  loadQuestion(event: number) {}
 }

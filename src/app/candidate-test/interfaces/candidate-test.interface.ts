@@ -16,6 +16,7 @@ export interface QuestionStatusModel {
   totalQuestion: number;
   answered: number;
   unAnswered: number;
+  timeLeft: number;
 }
 
 export interface QuestionStatusVMs {
