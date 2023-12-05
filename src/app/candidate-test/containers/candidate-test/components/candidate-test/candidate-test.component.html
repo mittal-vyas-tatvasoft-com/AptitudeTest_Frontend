@@ -5,6 +5,7 @@
     </div>
     <div class="col-lg-auto">
       <app-list-of-questions
+        *ngIf="questionsStatus.isQuestionsMenu"
         [questionsStatus]="questionsStatus"
       ></app-list-of-questions>
     </div>
