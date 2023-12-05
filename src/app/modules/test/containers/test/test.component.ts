@@ -252,8 +252,14 @@ export class TestComponent implements OnInit {
   }
 
   getTrimmedTime(date: string) {
-    let temp = date.replace('T', ' ');
-    let lastDot = date.lastIndexOf('.');
-    return temp.substring(0, lastDot);
+    let tempDate = new Date(date);
+    const year = tempDate.getFullYear();
+    const month = tempDate.getMonth();
+    const day = tempDate.getDate();
+    const hours = tempDate.getHours();
+    const minutes = tempDate.getMinutes();
+    const seconds = tempDate.getSeconds();
+    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    return formattedDate;
   }
 }

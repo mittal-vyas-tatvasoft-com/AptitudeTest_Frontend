@@ -12,6 +12,7 @@ import { environment } from 'src/environments/environment';
 export class McqQuestionComponent {
   @Input() question: Question;
   @Output() saveAnswer = new EventEmitter<boolean[]>();
+  @Output() endTestEvent = new EventEmitter<void>();
   optionIndex = OptionsIndex;
   optionType = OptionType;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
@@ -37,5 +38,9 @@ export class McqQuestionComponent {
 
   save() {
     this.saveAnswer.emit(this.question.answers);
+  }
+
+  endTest() {
+    this.endTestEvent.emit();
   }
 }
