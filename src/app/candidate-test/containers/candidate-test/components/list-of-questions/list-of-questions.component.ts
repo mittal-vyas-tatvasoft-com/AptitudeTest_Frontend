@@ -21,6 +21,7 @@ export class ListOfQuestionsComponent implements OnInit {
     questionStatusVMs: [],
     totalQuestion: 0,
     unAnswered: 0,
+    timeLeft: 0,
   };
   questionStatus = QuestionStatus;
   constructor(private testService: CandidateTestService) {}

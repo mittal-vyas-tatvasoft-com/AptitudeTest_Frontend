@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   Question,
   QuestionStatusModel,
+  SaveAnswerModel,
 } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
@@ -15,16 +16,16 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
   templateUrl: './mcq-test.component.html',
   styleUrls: ['./mcq-test.component.scss'],
 })
-export class McqTestComponent implements OnInit {
+export class McqTestComponent implements OnInit, OnDestroy {
   firstName: string;
   lastName: string;
   userId: number;
   timeRemaining = {
-    hours: 1,
-    minutes: 20,
+    hours: 0,
+    minutes: 0,
     seconds: 0,
   };
-  seconds = 0;
+  @Input() seconds = 0;
   question: Question = {
     id: 0,
     questionText: '',
@@ -37,7 +38,7 @@ export class McqTestComponent implements OnInit {
     totalQuestions: 0,
     answers: [false, false, false, false],
   };
-
+  interval: any;
   constructor(
     public loginService: LoginService,
     private router: Router,
@@ -52,11 +53,7 @@ export class McqTestComponent implements OnInit {
     this.userId = candidateDetails.Id;
 
     this.displayQuestion();
-    this.seconds =
-      this.timeRemaining.hours * 3600 +
-      this.timeRemaining.minutes * 60 +
-      this.timeRemaining.seconds;
-    setInterval(() => {
+    this.interval = setInterval(() => {
       this.seconds = this.seconds - 1;
       let hours = Math.floor(this.seconds / 3600);
       let minutes = Math.floor((this.seconds % 3600) / 60);
@@ -67,7 +64,6 @@ export class McqTestComponent implements OnInit {
         seconds: seconds,
       };
     }, 1000);
-
     this.testService.loadQuestion.subscribe((data) => {
       this.question.nextQuestionId = data;
       this.displayQuestion();
@@ -92,6 +88,7 @@ export class McqTestComponent implements OnInit {
 
   onSubmit(event: boolean[]) {
     this.displayQuestion();
+    this.saveAnswers(event);
     if (this.question.questionNumber === this.question.totalQuestions) {
       this.router.navigate(['/user/submitted']);
     }
@@ -101,5 +98,31 @@ export class McqTestComponent implements OnInit {
         : QuestionStatus.Skipped;
     let status = [this.question.questionNumber - 1, this.question.id, state];
     this.testService.questionStatus.next(status);
+  }
+
+  saveAnswers(answers: boolean[]) {
+    let answer: number[] = [];
+    answers.map((isAnswer: boolean, i: number) => {
+      if (isAnswer) {
+        answer.push(i + 1);
+      }
+    });
+    let data: SaveAnswerModel = {
+      questionId: this.question.id,
+      timeRemaining: Math.floor(this.seconds / 60),
+      userId: this.userId,
+      userAnswers: answer,
+    };
+    this.testService.saveAnswer(data).subscribe({
+      next: (res: ResponseModel<string>) => {
+        if (res.statusCode !== StatusCode.Success) {
+          this.snackBarService.error(res.message);
+        }
+      },
+    });
+  }
+
+  ngOnDestroy() {
+    clearInterval(this.interval);
   }
 }
