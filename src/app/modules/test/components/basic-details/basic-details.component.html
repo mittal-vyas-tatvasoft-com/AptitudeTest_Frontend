@@ -34,7 +34,6 @@
           [form]="basicTestDetails"
           [formControlModel]="testBasicDetailFormModel.date"
           [minDate]="minDate"
-          (changeDate)="checkDifference()"
         >
         </app-date-picker>
       </div>
@@ -43,16 +42,12 @@
           [form]="basicTestDetails"
           [timePickerModel]="testBasicDetailFormModel.startTime"
           [minTime]="getCurrentTime"
-          (timeChanged)="
-            setEndDate($event, basicTestDetails.get('testDuration')?.value)
-          "
         ></app-time-picker>
       </div>
       <div class="col-lg-3 col-sm-6">
         <app-time-picker
           [form]="basicTestDetails"
           [timePickerModel]="testBasicDetailFormModel.endTime"
-          (timeChanged)="checkDifference()"
         ></app-time-picker>
       </div>
       <div class="col-12" *ngIf="!startEndTimeDifferenceValid">

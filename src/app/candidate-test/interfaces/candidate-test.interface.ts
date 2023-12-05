@@ -17,6 +17,7 @@ export interface QuestionStatusModel {
   answered: number;
   unAnswered: number;
   timeLeft: number;
+  isQuestionsMenu: boolean;
 }
 
 export interface QuestionStatusVMs {

@@ -20,6 +20,7 @@ export class CandidateTestComponent implements OnInit {
     totalQuestion: 0,
     unAnswered: 0,
     timeLeft: 0,
+    isQuestionsMenu: false,
   };
   seconds: number;
   constructor(
