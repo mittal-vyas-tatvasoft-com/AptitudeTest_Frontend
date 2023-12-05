@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import {
   Question,
   QuestionStatusModel,
+  SaveAnswerModel,
 } from '../interfaces/candidate-test.interface';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { environment } from 'src/environments/environment';
@@ -26,6 +27,13 @@ export class CandidateTestService {
   getQuestionsStatus(userId: number) {
     return this.http.get<ResponseModel<QuestionStatusModel>>(
       `${environment.baseURL}Candidates/GetQuestionsStatus/${userId}`
+    );
+  }
+
+  saveAnswer(data: SaveAnswerModel) {
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}Candidates/SaveTestQuestionAnswer`,
+      { data }
     );
   }
 }

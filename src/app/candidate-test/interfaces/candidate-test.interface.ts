@@ -22,3 +22,10 @@ export interface QuestionStatusVMs {
   questionId: number;
   status: number;
 }
+
+export interface SaveAnswerModel {
+  userId: number;
+  questionId: number;
+  timeRemaining: number;
+  userAnswers: number[];
+}
