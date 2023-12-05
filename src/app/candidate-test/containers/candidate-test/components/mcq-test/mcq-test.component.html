@@ -27,6 +27,7 @@
       <app-mcq-question
         [question]="question"
         (saveAnswer)="onSubmit($event)"
+        (endTestEvent)="endTest()"
       ></app-mcq-question>
     </div>
   </mat-card-content>
