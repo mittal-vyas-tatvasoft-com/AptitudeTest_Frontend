@@ -3,10 +3,18 @@ import { SharedMaterialModule } from './material/shared-material.module';
 import { DeleteConfirmationDialogComponent } from './dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { ConfirmationDialogComponent } from './dialogs/confirmation-dialog/confirmation-dialog.component';
 
 @NgModule({
-  declarations: [DeleteConfirmationDialogComponent],
+  declarations: [
+    DeleteConfirmationDialogComponent,
+    ConfirmationDialogComponent,
+  ],
   imports: [SharedMaterialModule, CommonModule],
-  exports: [SharedMaterialModule, DeleteConfirmationDialogComponent],
+  exports: [
+    SharedMaterialModule,
+    DeleteConfirmationDialogComponent,
+    ConfirmationDialogComponent,
+  ],
 })
 export class SharedModule {}

@@ -29,4 +29,5 @@ export interface SaveAnswerModel {
   questionId: number;
   timeRemaining: number;
   userAnswers: number[];
+  isAttended: boolean;
 }

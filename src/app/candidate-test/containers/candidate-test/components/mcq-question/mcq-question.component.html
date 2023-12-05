@@ -23,16 +23,28 @@
     </div>
   </div>
 </div>
-<div class="action-footer">
-  <button
-    mat-stroked-button
-    color="primary"
-    (click)="clearAnswer()"
-    matTooltip="Clear"
-  >
-    Clear Answer
-  </button>
-  <button mat-flat-button color="primary" (click)="save()" matTooltip="Save">
-    Save &amp; Next
-  </button>
+<div class="action-footer d-flex justify-content-between">
+  <div class="action-btn">
+    <button
+      mat-stroked-button
+      color="primary"
+      (click)="clearAnswer()"
+      matTooltip="Clear"
+    >
+      Clear Answer
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="endTest()"
+      matTooltip="Finish"
+    >
+      Finish Test
+    </button>
+  </div>
+  <div>
+    <button mat-flat-button color="primary" (click)="save()" matTooltip="Save">
+      Save &amp; Next
+    </button>
+  </div>
 </div>
