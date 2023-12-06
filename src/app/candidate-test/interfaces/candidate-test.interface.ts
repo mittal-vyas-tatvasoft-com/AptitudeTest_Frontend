@@ -6,8 +6,8 @@ export interface Question {
   optionType: number;
   nextQuestionId: number;
   questionNumber: number;
-  options: string[];
-  answers: boolean[];
+  options: Options[];
+  answers: Answer[];
   totalQuestions: number;
 }
 
@@ -31,4 +31,14 @@ export interface SaveAnswerModel {
   timeRemaining: number;
   userAnswers: number[];
   isAttended: boolean;
+}
+
+export interface Options {
+  optionId: number;
+  optionData: string;
+}
+
+export interface Answer {
+  optionId: number;
+  isAnswer: boolean;
 }

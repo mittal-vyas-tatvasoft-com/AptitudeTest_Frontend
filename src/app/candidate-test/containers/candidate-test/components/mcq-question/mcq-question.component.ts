@@ -1,5 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Question } from 'src/app/candidate-test/interfaces/candidate-test.interface';
+import {
+  Answer,
+  Question,
+} from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { OptionsIndex } from 'src/app/modules/questions/static/question.static';
 import { OptionType, QuestionType } from 'src/app/shared/common/enums';
 import { environment } from 'src/environments/environment';
@@ -11,35 +14,43 @@ import { environment } from 'src/environments/environment';
 })
 export class McqQuestionComponent {
   @Input() question: Question;
-  @Output() saveAnswer = new EventEmitter<boolean[]>();
+  @Output() saveAnswer = new EventEmitter<Answer[]>();
   @Output() endTestEvent = new EventEmitter<void>();
   optionIndex = OptionsIndex;
   optionType = OptionType;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
 
-  toggleCheckbox(index: number) {
+  toggleCheckbox(optionId: number) {
     if (this.question.questionType === QuestionType.SingleAnswer) {
-      const count = this.question.answers.filter(Boolean).length;
+      const count = this.question.answers.filter((ans: Answer) => {
+        return ans.isAnswer;
+      }).length;
       if (count > 0) {
-        for (let i = 0; i < 4; i++) {
-          if (index === i) {
-            continue;
-          }
-          this.question.answers[i] = false;
-        }
+        this.clearAnswer();
+        this.setAnswer(optionId);
       }
     }
-    this.question.answers[index] = !this.question.answers[index];
+    this.setAnswer(optionId);
   }
 
   clearAnswer() {
-    this.question.answers = [false, false, false, false];
+    this.question.answers = this.question.answers.map((ans: Answer) => {
+      return { isAnswer: false, optionId: ans.optionId };
+    });
   }
 
   save() {
     this.saveAnswer.emit(this.question.answers);
   }
 
+  setAnswer(optionId: number) {
+    this.question.answers = this.question.answers.map((ans) => {
+      if (ans.optionId == optionId) {
+        return { isAnswer: true, optionId: optionId };
+      }
+      return ans;
+    });
+  }
   endTest() {
     this.endTestEvent.emit();
   }

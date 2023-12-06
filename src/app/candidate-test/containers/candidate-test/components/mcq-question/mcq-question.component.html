@@ -3,21 +3,21 @@
   <div class="col-md-6" *ngFor="let option of question.options; let i = index">
     <div
       class="qa-answer-type-text-option"
-      [ngClass]="{ selected: question.answers[i] }"
-      (click)="toggleCheckbox(i)"
+      [ngClass]="{ selected: question.answers[i].isAnswer }"
+      (click)="toggleCheckbox(question.answers[i].optionId)"
     >
       <span class="answer-option">{{ optionIndex[i] }}</span>
       <p class="answer-text" *ngIf="question.optionType == optionType.Text">
-        {{ option }}
+        {{ option.optionData }}
       </p>
       <p class="answer-text" *ngIf="question.optionType == optionType.Image">
-        <img [src]="baseImageUrl + option" alt="question image" />
+        <img [src]="baseImageUrl + option.optionData" alt="question image" />
       </p>
       <mat-checkbox
         class="rounded-check"
         color="primary"
-        [(ngModel)]="question.answers[i]"
-        (change)="toggleCheckbox(i)"
+        [(ngModel)]="question.answers[i].isAnswer"
+        (change)="toggleCheckbox(question.answers[i].optionId)"
       >
       </mat-checkbox>
     </div>
