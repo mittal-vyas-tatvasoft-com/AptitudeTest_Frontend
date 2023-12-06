@@ -21,8 +21,8 @@ export const Status = [
 ];
 export const Difficulty = [1, 2, 3, 4, 5];
 export const AnswerType = [
-  { name: 'SingleAnswer', value: 1 },
-  { name: 'MultiAnswer', value: 2 },
+  { name: 'Single Answer', value: 1 },
+  { name: 'Multi Answer', value: 2 },
 ];
 export const OptionType = [
   { name: 'Text', value: 1 },
