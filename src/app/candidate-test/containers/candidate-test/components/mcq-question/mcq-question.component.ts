@@ -46,7 +46,7 @@ export class McqQuestionComponent {
   setAnswer(optionId: number) {
     this.question.answers = this.question.answers.map((ans) => {
       if (ans.optionId == optionId) {
-        return { isAnswer: true, optionId: optionId };
+        return { isAnswer: !ans.isAnswer, optionId: optionId };
       }
       return ans;
     });

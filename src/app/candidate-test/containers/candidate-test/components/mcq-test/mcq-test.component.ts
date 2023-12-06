@@ -147,6 +147,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     dialogRef?.afterClosed().subscribe((result: any) => {
       if (result) {
         this.submitTest();
+        this.router.navigate(['/user/submitted']);
       }
     });
   }
