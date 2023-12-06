@@ -117,7 +117,7 @@ export class AddCandidateComponent implements OnInit {
       this.isLoading = true;
       const candidateData: CandidateModel = this.form.value;
       candidateData.status =
-        this.form.value.status === Status.Active ? true : false;
+        this.form.value.status === Status.Active;
       candidateData.gender =
         this.form.value.gender === 'Male' ? Numbers.One : Numbers.Two;
       candidateData.createdBy = this.userId;

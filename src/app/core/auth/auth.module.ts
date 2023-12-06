@@ -7,7 +7,6 @@ import { ForgotPasswordComponent } from './components/forgot-password/forgot-pas
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
-// import { FooterComponent } from '../components/footer/footer.component';
 import { CoreModule } from '../core.module';
 import { SharedMaterialModule } from '../../shared/material/shared-material.module';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';

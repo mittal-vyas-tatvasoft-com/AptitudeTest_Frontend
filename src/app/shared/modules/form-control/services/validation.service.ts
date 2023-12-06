@@ -7,8 +7,6 @@ import { Messages } from 'src/app/shared/messages/messages.static';
   providedIn: 'root',
 })
 export class ValidationService {
-  constructor() {}
-
   getError(form: FormGroup, formControlModel: FormControlModel, field: string) {
     const formControl = form.get(field);
     if (formControl) {

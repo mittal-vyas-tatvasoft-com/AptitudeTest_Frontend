@@ -90,7 +90,7 @@ export class CandidateService {
       )
       .pipe(
         catchError((error: Error) => {
-          return throwError(error);
+          throw error;
         })
       );
   }

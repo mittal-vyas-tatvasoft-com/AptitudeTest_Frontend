@@ -82,11 +82,10 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   getUserData() {
-    // const token = this.loginService.getToken();
     const userData = this.loginService.decodeToken();
     if (userData) {
       this.userName = userData ? userData.FirstName : '';
-      this.isSuperAdmin = userData?.IsSuperAdmin === 'true' ? true : false;
+      this.isSuperAdmin = userData?.IsSuperAdmin === 'true';
     }
   }
 

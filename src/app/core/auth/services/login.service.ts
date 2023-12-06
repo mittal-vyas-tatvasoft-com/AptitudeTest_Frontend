@@ -59,7 +59,7 @@ export class LoginService {
 
   getTokenExpiry(): string | null {
     const expiry = this.storage().getItem(this.storageTokenExpiry);
-    return expiry ? expiry : null;
+    return expiry || null;
   }
 
   isLoggedIn(): boolean {
@@ -172,14 +172,13 @@ export class LoginService {
     let url = `${environment.baseURL}UserAuthentication/RefreshToken`;
 
     if (!refreshToken || !token || !tokenExpiry) {
-      return throwError(new Error(Messages.missingToken));
+      throw new Error(Messages.missingToken);
     }
 
     const payload = {
       refreshToken: refreshToken,
       accessToken: token,
-      refreshTokenExpiryTime:
-        tokenExpiry != null ? tokenExpiry : DateTime.now(),
+      refreshTokenExpiryTime: tokenExpiry ?? DateTime.now(),
     };
 
     if (isAdmin) {

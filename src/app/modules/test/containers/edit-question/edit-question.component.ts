@@ -174,11 +174,9 @@ export class EditQuestionComponent {
     ) {
       this.validationMSG = SelectValidQuestionCount;
       this.isDataValid = false;
-      return;
     } else if (remainingMarks < 0) {
       this.validationMSG = CanNotAddMoreQuestions;
       this.isDataValid = false;
-      return;
     } else {
       this.validationMSG = '';
       this.isDataValid = true;

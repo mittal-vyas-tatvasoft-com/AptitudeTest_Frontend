@@ -86,12 +86,6 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
     if (forms.every((form) => form.valid)) {
       const [personalInfo, examScores, familyBackground, educationDetail] =
         forms.map((form) => form.value);
-      const combinedData = {
-        personalInfo,
-        examScores,
-        familyBackground,
-        educationDetail,
-      };
       const updateParams: UpdateParams = {
         id: this.candidateId ? this.candidateId : 0,
         firstName: personalInfo.firstName,
@@ -102,7 +96,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
         groupId: personalInfo.userGroup ? personalInfo.userGroup : 0,
         collegeId: personalInfo.userCollege,
         gender: personalInfo.gender,
-        status: personalInfo.status === 1 ? true : false,
+        status: personalInfo.status === 1,
         appliedThrough: personalInfo.appliedThrough,
         technologyInterestedIn: personalInfo.technologyInterestedIn || null,
         pincode: personalInfo.pincode || 0,

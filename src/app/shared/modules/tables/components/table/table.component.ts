@@ -5,8 +5,6 @@ import {
   EventEmitter,
   SimpleChanges,
   ViewChild,
-  OnChanges,
-  ChangeDetectorRef,
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { TableColumn } from '../../interfaces/table-data.interface';
@@ -41,8 +39,6 @@ export class TableComponent<T> {
   @Output() pageToPage = new EventEmitter<number>();
   @Output() sortingChanged = new EventEmitter<Sort>();
   @ViewChild(MatSort) sort = new MatSort();
-
-  constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['totalItemsCount'] || changes['pageSize']) {

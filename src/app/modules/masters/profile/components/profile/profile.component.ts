@@ -130,17 +130,14 @@ export class ProfileComponent implements OnInit {
   }
 
   handleDataSorting(event: Sort) {
-    switch (event.active) {
-      case 'name':
-        this.sortKey = 'Name';
-        this.sortDirection = event.direction;
-        break;
-
-      default:
-        this.sortKey = '';
-        this.sortDirection = '';
-        break;
+    if (event.active == 'name') {
+      this.sortKey = 'Name';
+      this.sortDirection = event.direction;
+    } else {
+      this.sortKey = '';
+      this.sortDirection = '';
     }
+    
     this.getAllProfileData();
   }
 }

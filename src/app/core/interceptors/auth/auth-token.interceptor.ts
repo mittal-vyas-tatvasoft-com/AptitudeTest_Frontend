@@ -41,7 +41,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
         catchError((error: any) => {
           this.isRefreshing = false;
           this.loginService.logout();
-          return throwError(error);
+          throw new Error(error);
         })
       );
     }
@@ -89,7 +89,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
         ) {
           return this.handleTokenRefresh(req, next);
         } else {
-          return throwError(error);
+          throw new Error(error);
         }
       })
     );

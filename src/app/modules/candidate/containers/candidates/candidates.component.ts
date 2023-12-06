@@ -77,7 +77,7 @@ export class CandidatesComponent {
     const searchQuery = this.searchCandidate;
     const collegeId = this.selectedCollege ? this.selectedCollege.id : null;
     const groupId = this.selectedGroup ? this.selectedGroup.id : null;
-    const year = this.selectedYear === null ? null : this.selectedYear;
+    const year = this.selectedYear ?? null;
     const params: GetAllCandidateParams = {
       currentPageIndex: this.currentPageIndex,
       pageSize: this.pageSize,
