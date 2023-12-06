@@ -247,12 +247,6 @@ export class ImportCandidateComponent implements OnInit {
 
   setPayloadForImportCandidate(event: File) {
     this.formData.append('file', event);
-
-    this.formData.append('groupId', this.form.get('groupId')?.value ?? null);
-    this.formData.append(
-      'collegeId',
-      this.form.get('collegeId')?.value ?? null
-    );
     if (event != null) {
       this.fileName = event.name;
       this.noFileSet = false;
@@ -260,6 +254,11 @@ export class ImportCandidateComponent implements OnInit {
   }
 
   handleImportCandidate() {
+    this.formData.append('groupId', this.form.get('groupId')?.value ?? null);
+    this.formData.append(
+      'collegeId',
+      this.form.get('collegeId')?.value ?? null
+    );
     this.candidateService.importCandidate(this.formData).subscribe({
       next: (res) => {
         this.dropzone?.directiveRef?.reset();
