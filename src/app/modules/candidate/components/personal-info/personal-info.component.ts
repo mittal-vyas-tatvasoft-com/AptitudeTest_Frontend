@@ -70,18 +70,18 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
 
   createForm() {
     this.form = this.formBuilder.group({
-      firstName: ['', Validators.required],
+      firstName: [{ value: '', disabled: this.isAdmin }, Validators.required],
       lastName: [''],
       fatherName: [''],
       email: [
-        '',
+        { value: '', disabled: this.isAdmin },
         [
           Validators.required,
           Validators.pattern(validations.common.emailREGEX),
         ],
       ],
       phoneNumber: [
-        '',
+        { value: '', disabled: this.isAdmin },
         [
           Validators.required,
           Validators.pattern(validations.common.mobileNumberREGEX),
@@ -91,7 +91,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       userCollege: ['', Validators.required],
       gender: ['', Validators.required],
       status: [candidateControl.status.value],
-      createdYear: [{ value: '', disabled: true }],
+      createdYear: [{ value: '', disabled: this.isAdmin }],
       appliedThrough: ['', Validators.required],
       technologyInterestedIn: [''],
       pincode: [
