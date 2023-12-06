@@ -2,6 +2,7 @@ import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {
+  Answer,
   Question,
   QuestionStatusModel,
   SaveAnswerModel,
@@ -38,7 +39,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     nextQuestionId: -1,
     questionNumber: 0,
     totalQuestions: 0,
-    answers: [false, false, false, false],
+    answers: [],
   };
   interval: any;
   constructor(
@@ -92,7 +93,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(event: boolean[]) {
+  onSubmit(event: Answer[]) {
     this.displayQuestion();
     this.saveAnswers(event);
     if (this.question.questionNumber === this.question.totalQuestions) {
@@ -106,11 +107,11 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.testService.questionStatus.next(status);
   }
 
-  saveAnswers(answers: boolean[]) {
+  saveAnswers(answers: Answer[]) {
     let answer: number[] = [];
-    answers.map((isAnswer: boolean, i: number) => {
-      if (isAnswer) {
-        answer.push(i + 1);
+    answers.map((isAnswer: Answer) => {
+      if (isAnswer.isAnswer) {
+        answer.push(isAnswer.optionId);
       }
     });
     let data: SaveAnswerModel = {
