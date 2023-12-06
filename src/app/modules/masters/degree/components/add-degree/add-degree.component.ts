@@ -103,7 +103,6 @@ export class AddDegreeComponent implements OnInit, AfterViewInit {
     this.dialogRef.close();
   }
 
-  // addOnBlur = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   streams: string[] = [];
 

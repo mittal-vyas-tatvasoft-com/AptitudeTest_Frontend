@@ -229,7 +229,6 @@ export class AddQuestionComponent implements OnInit {
   onImageUploadError(event: any) {
     if (event[0].size > MaxImageSize) {
       this.snackbarService.error(ImageSizeErrorMsg);
-      return;
     } else {
       this.snackbarService.error(ImageTypeErrorMsg);
     }
@@ -282,16 +281,15 @@ export class AddQuestionComponent implements OnInit {
         this.isAnswer[Number(event.source.value)] = true;
         this.checkboxValues.push(Number(event.source.value));
       }
+    } else if (event.checked) {
+      this.isAnswer[Number(event.source.value)] = true;
+      this.checkboxValues.push(Number(event.source.value));
     } else {
-      if (event.checked) {
-        this.isAnswer[Number(event.source.value)] = true;
-        this.checkboxValues.push(Number(event.source.value));
-      } else {
-        this.isAnswer[Number(event.source.value)] = false;
-        const index = this.checkboxValues.indexOf(Number(event.source.value));
-        this.checkboxValues.splice(index, 1);
-      }
+      this.isAnswer[Number(event.source.value)] = false;
+      const index = this.checkboxValues.indexOf(Number(event.source.value));
+      this.checkboxValues.splice(index, 1);
     }
+    
     this.questionForm.get('isAnswer')?.setValue(this.checkboxValues);
     if (this.checkboxValues.length == 0) {
       this.questionForm.get('isAnswer')?.setValue('');

@@ -6,7 +6,6 @@ import { RoleGuard } from '../core/guards/role/role.guard';
 import { Navigation } from '../shared/common/enums';
 import { AuthGuard } from '../core/guards/auth/auth.guard';
 import { CandidateInstructionsComponent } from './containers/candidate-instructions/candidate-instructions.component';
-import { TestComponent } from '../modules/test/containers/test/test.component';
 import { CandidateTestComponent } from './containers/candidate-test/components/candidate-test/candidate-test.component';
 import { TestSubmittedComponent } from './containers/test-submitted/test-submitted.component';
 

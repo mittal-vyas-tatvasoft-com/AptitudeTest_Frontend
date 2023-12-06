@@ -96,12 +96,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   isRouteAdmin(route: ActivatedRoute | null): any {
     const decodedToken = this.loginService.decodeToken();
     if (decodedToken) {
-      return decodedToken.Role === Navigation.RoleAdmin ? true : false;
+      return decodedToken.Role === Navigation.RoleAdmin;
     } else {
       return route &&
-        route.snapshot.url.some((segment) => segment.path === 'login')
-        ? true
-        : false;
+        route.snapshot.url.some((segment) => segment.path === 'login');
     }
   }
 

@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { AddGroupComponent } from '../../containers/add-group/add-group.component';
+import { MatDialog } from '@angular/material/dialog';
 import { GroupsModel } from '../../interfaces/groups.interface';
 
 @Component({

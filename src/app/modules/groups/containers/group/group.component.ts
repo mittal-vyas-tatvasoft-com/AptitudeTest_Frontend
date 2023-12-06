@@ -4,15 +4,13 @@ import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
-  CollegesUnderGroup,
   GroupsModel,
 } from '../../interfaces/groups.interface';
 import { GroupsService } from '../../services/groups.service';
 import { AddGroupComponent } from '../add-group/add-group.component';
 import { CollegeModel } from 'src/app/modules/masters/college/interfaces/college.interface';
-import { debounceTime, Observable, Subject } from 'rxjs';
+import { debounceTime, Subject } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { L } from '@angular/cdk/keycodes';
 
 @Component({
   selector: 'app-group',
@@ -88,7 +86,6 @@ export class GroupComponent implements OnInit {
       if (groups === null) {
         this.groupList.length = 0;
         this.groupList = [];
-        return;
       } else if (groups.length > 0) {
         this.groupList = groups;
       }

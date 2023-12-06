@@ -8,5 +8,5 @@ export interface GroupsModel {
 
 export interface CollegesUnderGroup {
   name: string;
-  numberOfStudentsInCollege: Number;
+  numberOfStudentsInCollege: number;
 }

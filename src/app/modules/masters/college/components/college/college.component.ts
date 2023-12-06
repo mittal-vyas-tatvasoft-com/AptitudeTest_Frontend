@@ -90,7 +90,7 @@ export class CollegeComponent implements OnInit {
           id: res.id,
           name: res.name,
           abbreviation: res.abbreviation,
-          status: res.status === 1 ? true : false,
+          status: res.status === 1,
         };
         if (res) {
           if (res.id == 0) {

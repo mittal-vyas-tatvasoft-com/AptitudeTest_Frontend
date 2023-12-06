@@ -9,8 +9,6 @@ export class LoaderService {
   loading$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
   loadingMap: Map<string, boolean> = new Map<string, boolean>();
 
-  constructor() { }
-
   setLoading(loading: boolean, url: string): void {
     if (!url) {
       return;

@@ -194,14 +194,7 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
       this.educationDetailsArrayData?.controls?.length
     ) {
       const academicDetails = this.academicDetails;
-      for (
-        let index = 0;
-        index < this.educationDetailsArrayData.controls.length;
-        index++
-      ) {
-        const control = this.educationDetailsArrayData.controls[
-          index
-        ] as FormGroup;
+      for (const control of this.educationDetailsArrayData.controls) {
         control.patchValue({
           degreeId: '',
           university: '',
