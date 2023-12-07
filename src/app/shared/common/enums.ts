@@ -39,6 +39,9 @@ export enum Navigation {
   Tests = 'tests',
   CreateTest = 'create',
   Groups = 'groups',
+
+  //Setting navigation
+  Setting = 'setting',
 }
 
 export enum Type {

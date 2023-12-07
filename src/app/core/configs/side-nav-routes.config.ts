@@ -38,4 +38,8 @@ export const navBarRoutes = {
     label: 'Questions',
     path: `./${Navigation.Tests}`,
   },
+  Setting: {
+    label: 'Setting',
+    path: `./${Navigation.Setting}`,
+  },
 };
