@@ -1,0 +1,52 @@
+<div class="page-header">
+  <div class="title-wrap">
+    <mat-icon class="page-icon">
+      <img src="./assets/images/setting-primary.svg" alt="Candidates" />
+    </mat-icon>
+    <h4 class="title">Setting</h4>
+  </div>
+  <div class="action-list"></div>
+</div>
+<form [formGroup]="settingForm">
+  <mat-card class="default-card overflow-hidden">
+    <mat-card-content>
+      <div class="container-900">
+        <div class="row ps-sm-5 pe-sm-5 ms-md-5 me-md-5">
+          <div class="col-md-12 ps-sm-5 pe-sm-5">
+            <div class="switch-block-wrapper ms-sm-5 me-sm-5">
+              <mat-slide-toggle
+                color="primary"
+                hideIcon
+                labelPosition="before"
+                formControlName="{{ settingControls.register.key }}"
+                >{{ settingControls.register.label }}</mat-slide-toggle
+              >
+            </div>
+          </div>
+          <div class="col-md-12 ps-sm-5 pe-sm-5">
+            <div class="switch-block-wrapper ms-sm-5 me-sm-5">
+              <mat-slide-toggle
+                color="primary"
+                hideIcon
+                labelPosition="before"
+                formControlName="{{ settingControls.camera.key }}"
+                >{{ settingControls.camera.label }}</mat-slide-toggle
+              >
+            </div>
+          </div>
+          <div class="col-md-12 ps-sm-5 pe-sm-5">
+            <div class="switch-block-wrapper ms-sm-5 me-sm-5">
+              <mat-slide-toggle
+                color="primary"
+                hideIcon
+                labelPosition="before"
+                formControlName="{{ settingControls.screen.key }}"
+                >{{ settingControls.screen.label }}</mat-slide-toggle
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </mat-card-content>
+  </mat-card>
+</form>
