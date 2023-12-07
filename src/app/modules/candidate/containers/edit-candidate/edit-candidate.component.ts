@@ -83,16 +83,24 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
       this.familyBackgroundComponent.getFormData(),
       this.educationDetailsComponent.getFormData(),
     ];
+    const personalData = this.personalInfoComponent.getFormData();
     if (forms.every((form) => form.valid)) {
       const [personalInfo, examScores, familyBackground, educationDetail] =
         forms.map((form) => form.value);
+      const combinedData = {
+        personalInfo,
+        examScores,
+        familyBackground,
+        educationDetail,
+      };
+      // debugger;
       const updateParams: UpdateParams = {
         id: this.candidateId ? this.candidateId : 0,
-        firstName: personalInfo.firstName,
-        lastName: personalInfo.lastName,
+        firstName: personalData.controls['firstName'].value,
+        lastName: personalData.controls['lastName'].value,
         fatherName: personalInfo.fatherName,
-        email: personalInfo.email,
-        phoneNumber: personalInfo.phoneNumber,
+        email: personalData.controls['email'].value,
+        phoneNumber: personalData.controls['phoneNumber'].value,
         groupId: personalInfo.userGroup ? personalInfo.userGroup : 0,
         collegeId: personalInfo.userCollege,
         gender: personalInfo.gender,

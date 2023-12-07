@@ -89,6 +89,15 @@ export const candidateControl = {
     inputType: 'select',
     requiredErrMsg: 'College is required',
   },
+  password: {
+    value: '',
+    key: 'password',
+    label: 'Password',
+    patternErrMsg: 'Invalid password format',
+    inputType: 'password',
+    displayIcon: true,
+    iconName: 'password-visibility-show-dark.svg',
+  },
   year: {
     value: '',
     key: 'createdYear',

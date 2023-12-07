@@ -8,8 +8,10 @@ import {
 
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
+import { StatusCode } from 'src/app/shared/common/enums';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
   candidateControl,
   selectOptionsForAppliedThrough,
@@ -42,7 +44,8 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
 
   constructor(
     private formBuilder: FormBuilder,
-    private candidateService: CandidateService
+    private candidateService: CandidateService,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit() {
@@ -92,6 +95,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       gender: ['', Validators.required],
       status: [candidateControl.status.value],
       createdYear: [{ value: '', disabled: this.isAdmin }],
+      password: ['', [Validators.pattern(validations.common.passwordREGEX)]],
       appliedThrough: ['', Validators.required],
       technologyInterestedIn: [''],
       pincode: [
@@ -160,6 +164,18 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
     }
   }
 
+  onIconClick(event: any) {
+    if (event.inputType === 'text') {
+      event.inputType = 'password';
+      this.CandidateModel.password.iconName =
+        'password-visibility-show-dark.svg';
+    } else {
+      event.inputType = 'text';
+      this.CandidateModel.password.iconName =
+        'password-visibility-hide-dark.svg';
+    }
+  }
+
   updateValidators() {
     if (!this.isAdmin) {
       this.form.get('userGroup')?.clearValidators();
@@ -197,5 +213,19 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       userCollegeControl.markAsTouched();
     }
     return this.form;
+  }
+
+  changePassword() {
+    const Email = this.form.get('email')?.value;
+    const Password = this.form.get('password')?.value;
+    this.candidateService.ChangeUserPasswordByAdmin(Email, Password).subscribe({
+      next: (res) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.snackbarService.success(res.message);
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+    });
   }
 }

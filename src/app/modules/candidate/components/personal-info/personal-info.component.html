@@ -26,7 +26,7 @@
             class="w-100"
           ></app-text-control-character>
         </div>
-        <div class="col-sm-6 col-md-4 col-lg-3 w-xl-40" *ngIf="isAdmin">
+        <div class="col-sm-6 col-md-4 col-lg-3" *ngIf="isAdmin">
           <app-select
             [formControlModel]="CandidateModel.userGroup"
             [form]="form"
@@ -61,6 +61,27 @@
             [form]="form"
             [options]="selectOptionsForGender"
           ></app-select>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-3 col-xl" *ngIf="isAdmin">
+          <app-text-control
+            [formControlModel]="CandidateModel.password"
+            [form]="form"
+            class="w-100"
+            (iconClick)="onIconClick(CandidateModel.password)"
+          ></app-text-control>
+        </div>
+        <div
+          class="col-sm-6 col-md-4 col-lg-3 col-xl changePass-btn"
+          *ngIf="isAdmin"
+        >
+          <button
+            class="w-100"
+            mat-flat-button
+            color="primary"
+            (click)="changePassword()"
+          >
+            Change Password
+          </button>
         </div>
         <div class="col-sm-6 col-md-4 col-lg-3 col-xl">
           <app-date-picker

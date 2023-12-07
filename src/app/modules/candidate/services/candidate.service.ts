@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { environment } from 'src/environments/environment';
 import {
@@ -184,5 +184,13 @@ export class CandidateService {
         }/GetAllActiveStreams`
       )
       .pipe(map((response: any) => response.data));
+  }
+
+  ChangeUserPasswordByAdmin(Email: string, Password: string) {
+    const payload = { Email: Email, Password: Password };
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}User/ChangeUserPasswordByAdmin`,
+      payload
+    );
   }
 }
