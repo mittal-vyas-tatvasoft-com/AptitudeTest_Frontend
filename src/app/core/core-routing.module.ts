@@ -43,6 +43,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('../modules/groups/groups.module').then((m) => m.GroupsModule),
       },
+      {
+        path: `${Navigation.Setting}`,
+        loadChildren: () =>
+          import('../modules/setting/setting.module').then(
+            (m) => m.SettingModule
+          ),
+      },
     ],
   },
 ];
