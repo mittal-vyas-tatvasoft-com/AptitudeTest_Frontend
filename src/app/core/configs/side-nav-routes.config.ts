@@ -42,4 +42,8 @@ export const navBarRoutes = {
     label: 'Setting',
     path: `./${Navigation.Setting}`,
   },
+  Results: {
+    label: 'Results',
+    path: `./${Navigation.Results}`,
+  },
 };
