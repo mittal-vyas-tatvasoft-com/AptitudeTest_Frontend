@@ -50,6 +50,13 @@ const routes: Routes = [
             (m) => m.SettingModule
           ),
       },
+      {
+        path: `${Navigation.Results}`,
+        loadChildren: () =>
+          import('../modules/results/results.module').then(
+            (m) => m.ResultsModule
+          ),
+      },
     ],
   },
 ];

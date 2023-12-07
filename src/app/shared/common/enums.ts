@@ -42,6 +42,10 @@ export enum Navigation {
 
   //Setting navigation
   Setting = 'setting',
+
+  //Results navigation
+  Results = 'results',
+  ResultsDetails = 'result-details',
 }
 
 export enum Type {
