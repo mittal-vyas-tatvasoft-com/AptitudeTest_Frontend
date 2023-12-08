@@ -55,11 +55,19 @@
           Please enter appropriate Start Time and End Time
         </mat-error>
       </div>
-      <div class="col-12">
+      <div class="col-lg-8 col-sm-6">
         <app-text-control
           [formControlModel]="testBasicDetailFormModel.description"
           [form]="basicTestDetails"
         ></app-text-control>
+      </div>
+      <div class="col-lg-4 col-sm-6">
+        <app-text-control-number
+          [formControlModel]="
+            testBasicDetailFormModel.negativeMarkingPercentage
+          "
+          [form]="basicTestDetails"
+        ></app-text-control-number>
       </div>
 
       <div class="col-lg-6 col-sm-12">

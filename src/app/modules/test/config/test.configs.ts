@@ -26,6 +26,17 @@ export const testBasicDetailFormModel = {
     inputType: 'text',
     displayIcon: false,
   },
+  negativeMarkingPercentage: {
+    value: '',
+    key: 'negativeMarkingPercentage',
+    label: 'NegativeMarking Percentage',
+    required: true,
+    requiredErrMsg: 'Field is required',
+    inputType: 'text',
+    displayIcon: false,
+    maxLength: 3,
+    maxErrMsg: 'Invalid Score',
+  },
   testDuration: {
     value: '',
     key: 'testDuration',
