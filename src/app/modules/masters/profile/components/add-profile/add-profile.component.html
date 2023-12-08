@@ -1,5 +1,7 @@
 <div class="dialog-header">
-  <h2 mat-dialog-title>Add Profile</h2>
+  <h2 mat-dialog-title>
+    {{ this.data === 0 ? "Add Profile" : "Edit Profile" }}
+  </h2>
   <button
     mat-icon-button
     class="dialog-close"
@@ -58,7 +60,7 @@
     color="primary"
     [mat-dialog-close]="form.value"
     [disabled]="form.invalid"
-    matTooltip="Save"
+    [matTooltip]="this.data === 0 ? 'Add' : 'Save'"
   >
     {{ this.data === 0 ? "Add" : "Save" }}
   </button>
