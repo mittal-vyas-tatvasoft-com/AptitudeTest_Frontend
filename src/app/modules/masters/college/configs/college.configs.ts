@@ -17,10 +17,11 @@ export const CollegeControl = {
     label: 'Abbreviation',
     required: true,
     requiredErrMsg: 'Abbreviation is required',
+    patternErrMsg: 'White space is not applicable',
     inputType: 'text',
     displayIcon: false,
-    maxLength: 10,
     maxLengthErrMsg: 'Max 10 characters allowed',
+    minLengthErrMsg: 'Min 2 characters required',
   },
   status: {
     value: '',
