@@ -140,6 +140,10 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       ],
       status: [1, Validators.required],
       basicPoints: ['', Validators.required],
+      negativeMarkingPercentage: [
+        0,
+        [Validators.max(100), Validators.min(0), Validators.required],
+      ],
       testDuration: ['', Validators.required],
       date: ['', Validators.required],
       startTime: ['', Validators.required],
@@ -192,6 +196,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
               testId: res.data.id,
               testName: res.data.name,
               status: res.data.status,
+              negativeMarkingPercentage: res.data.negativeMarkingPercentage,
               basicPoints: res.data.basicPoint,
               testDuration: +res.data.testDuration,
               date: utcDate,
@@ -386,6 +391,9 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       endTime: this.onTimeSet(this.basicTestDetails.get('endTime')?.value),
       description: this.basicTestDetails.get('description')?.value,
       basicPoint: this.basicTestDetails.get('basicPoints')?.value,
+      negativeMarkingPercentage: this.basicTestDetails.get(
+        'negativeMarkingPercentage'
+      )?.value,
       status: this.basicTestDetails.get('status')?.value,
       messaageAtStartOfTheTest: this.basicTestDetails.get(
         'messageAtTheStartOfTest'

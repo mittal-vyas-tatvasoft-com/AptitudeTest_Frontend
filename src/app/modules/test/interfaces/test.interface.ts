@@ -6,6 +6,7 @@ export interface createTestModel {
   startTime: Date;
   endTime: Date;
   description: string;
+  negativeMarkingPercentage: number;
   basicPoint: number;
   status: number;
   messaageAtStartOfTheTest?: string;
