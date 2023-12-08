@@ -1,23 +1,20 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CoreRoutingModule } from './core-routing.module';
-import { BreadCrumbComponent } from './components/bread-crumb/bread-crumb.component';
+import { NgModule } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { SharedMaterialModule } from '../shared/material/shared-material.module';
 import { FooterComponent } from './components/footer/footer.component';
 import { HeaderComponent } from './components/header/header.component';
-import { SharedMaterialModule } from '../shared/material/shared-material.module';
-import { RouterModule } from '@angular/router';
+import { LoaderComponent } from './components/loader/loader.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { CoreRoutingModule } from './core-routing.module';
 import { CoreComponent } from './core.component';
 import { LayoutComponent } from './layout/layout.component';
-import { SidebarComponent } from './components/sidebar/sidebar.component';
-import { LoaderComponent } from './components/loader/loader.component';
-
 
 @NgModule({
   declarations: [
     CoreComponent,
     HeaderComponent,
     FooterComponent,
-    BreadCrumbComponent,
     SidebarComponent,
     LayoutComponent,
     SidebarComponent,
@@ -27,11 +24,8 @@ import { LoaderComponent } from './components/loader/loader.component';
     CommonModule,
     CoreRoutingModule,
     RouterModule,
-    SharedMaterialModule
+    SharedMaterialModule,
   ],
-  exports: [
-    FooterComponent,
-    HeaderComponent
-  ]
+  exports: [FooterComponent, HeaderComponent],
 })
-export class CoreModule { }
+export class CoreModule {}
