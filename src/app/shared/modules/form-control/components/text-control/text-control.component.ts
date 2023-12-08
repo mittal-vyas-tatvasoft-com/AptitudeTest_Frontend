@@ -33,14 +33,14 @@ export class TextControlComponent implements OnInit {
 
   getSvgIcon(): string {
     const iconName = this.formControlModel.iconName;
-    if (iconName && iconName.endsWith('.svg')) {
+    if (iconName?.endsWith('.svg')) {
       return this.formControlModel ? this.formControlModel.iconName || '' : '';
     }
     return '';
   }
   private registerCustomSvgIcon() {
     const iconName = this.formControlModel.iconName;
-    if (iconName && iconName.endsWith('.svg')) {
+    if (iconName?.endsWith('.svg')) {
       this.matIconRegistry.addSvgIcon(
         iconName,
         this.domSanitizer.bypassSecurityTrustResourceUrl(

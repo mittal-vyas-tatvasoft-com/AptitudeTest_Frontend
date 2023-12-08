@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ThemePalette } from '@angular/material/core';
-import { MatTooltip } from '@angular/material/tooltip';
 
 @Component({
   selector: 'app-button',

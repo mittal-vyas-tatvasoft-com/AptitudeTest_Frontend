@@ -10,7 +10,7 @@ import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/sel
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { adminFilterFormConfig } from '../../configs/admin.configs';
-import { AdminModel, searchModel } from '../../interfaces/admin.interface';
+import { AdminModel, SearchModel } from '../../interfaces/admin.interface';
 import { AdminService } from '../../services/admin.service';
 import { AddAdminComponent } from '../add-admin/add-admin.component';
 
@@ -60,7 +60,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
     },
   ];
   form: FormGroup;
-  private searchInputValue = new Subject<searchModel>();
+  private searchInputValue = new Subject<SearchModel>();
 
   constructor(
     public dialog: MatDialog,
@@ -95,7 +95,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   searchAdmin() {
     const searchValue = this.form.get('searchField')?.value;
     const statusValue = this.form.get('statusField')?.value;
-    const data: searchModel = {
+    const data: SearchModel = {
       searchValue: searchValue,
       statusValue: statusValue,
     };

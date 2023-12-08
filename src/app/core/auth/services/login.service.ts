@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { DateTime } from 'luxon';
-import { BehaviorSubject, Observable, map, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Navigation } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { Messages } from 'src/app/shared/messages/messages.static';

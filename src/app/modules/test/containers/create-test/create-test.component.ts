@@ -29,8 +29,8 @@ import {
   AllInsertedQuestionModel,
   GetAllTestCandidateParams,
   TopicWiseQuestionData,
-  createTestModel,
-  testCandidatesModel,
+  CreateTestModel,
+  TestCandidatesModel,
 } from '../../interfaces/test.interface';
 import { TestService } from '../../services/test.service';
 import { Topics } from '../../static/test.static';
@@ -72,7 +72,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   selectedOption = '10';
   getMinTime: string;
 
-  displayedColumns: TableColumn<testCandidatesModel>[] = [
+  displayedColumns: TableColumn<TestCandidatesModel>[] = [
     { columnDef: 'candidateName', header: 'Candidate Name' },
     { columnDef: 'collegeName', header: 'College Name' },
     { columnDef: 'email', header: 'Email' },
@@ -100,7 +100,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     this.smallScreen = window.innerWidth < 767;
   }
 
-  dataSource: MatTableDataSource<testCandidatesModel>;
+  dataSource: MatTableDataSource<TestCandidatesModel>;
 
   constructor(
     public dialog: MatDialog,
@@ -382,7 +382,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     const d = new Date(this.basicTestDetails.get('date')?.value);
     // This will return an ISO string matching your local time.
     const utcDate = this.getDateFormatted(d);
-    const payload: createTestModel = {
+    const payload: CreateTestModel = {
       id: this.basicTestDetails.get('testId')?.value,
       name: this.basicTestDetails.get('testName')?.value,
       testDuration: this.basicTestDetails.get('testDuration')?.value,

@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
-import { testCandidatesModel } from '../../interfaces/test.interface';
+import { TestCandidatesModel } from '../../interfaces/test.interface';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 
 @Component({
@@ -17,8 +17,8 @@ export class TestGroupComponent {
   @Input() testGroupFormModel: any;
   @Input() testGroupFilterModel: any;
   @Input() groups: SelectOption[];
-  @Input() columns: TableColumn<testCandidatesModel>[];
-  @Input() dataSource: MatTableDataSource<testCandidatesModel>;
+  @Input() columns: TableColumn<TestCandidatesModel>[];
+  @Input() dataSource: MatTableDataSource<TestCandidatesModel>;
   @Input() totalItemsCount: number;
   @Input() pageSize: number;
   @Input() pagination: boolean;

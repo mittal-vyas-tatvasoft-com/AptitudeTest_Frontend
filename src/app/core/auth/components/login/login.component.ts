@@ -98,8 +98,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if (decodedToken) {
       return decodedToken.Role === Navigation.RoleAdmin;
     } else {
-      return route &&
-        route.snapshot.url.some((segment) => segment.path === 'login');
+      return route?.snapshot.url.some((segment) => segment.path === 'login');
     }
   }
 

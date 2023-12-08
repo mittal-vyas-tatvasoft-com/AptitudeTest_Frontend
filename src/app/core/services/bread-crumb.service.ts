@@ -28,7 +28,7 @@ export class BreadCrumbService {
       const routeData: Data = child.snapshot.data;
       if (routeData['breadCrumb']) {
         breadCrumbs.push({ label: routeData['breadCrumb'], url: url });
-      } else if (routeData['apiData'] && routeData['apiData'].breadCrumb) {
+      } else if (routeData['apiData']?.breadCrumb) {
         breadCrumbs.push({
           label: routeData['apiData'].breadCrumb,
           url: url,

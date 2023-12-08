@@ -1,4 +1,4 @@
-export interface createTestModel {
+export interface CreateTestModel {
   id?: number;
   name: string;
   testDuration: number;
@@ -18,7 +18,7 @@ export interface createTestModel {
   createdBy: number;
 }
 
-export interface testCandidatesModel {
+export interface TestCandidatesModel {
   candidateName: string;
   email: string;
   phoneNumber: string;

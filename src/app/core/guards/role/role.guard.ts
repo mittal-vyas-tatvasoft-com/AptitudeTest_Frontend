@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import {
-  CanActivate,
   ActivatedRouteSnapshot,
-  RouterStateSnapshot,
   Router,
 } from '@angular/router';
 import { LoginService } from '../../auth/services/login.service';
@@ -11,12 +9,11 @@ import { Navigation } from 'src/app/shared/common/enums';
 @Injectable({
   providedIn: 'root',
 })
-export class RoleGuard implements CanActivate {
+export class RoleGuard {
   constructor(private roleGuardService: LoginService, private router: Router) {}
 
   canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
+    route: ActivatedRouteSnapshot
   ): boolean {
     const allowedRoles = route.data['allowedRoles'] as string[];
 

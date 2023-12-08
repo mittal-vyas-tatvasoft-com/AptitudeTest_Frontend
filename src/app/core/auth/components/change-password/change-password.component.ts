@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AbstractControlOptions, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef } from '@angular/material/dialog';
 import { Messages } from 'src/app/shared/messages/messages.static';
 import { validations } from 'src/app/shared/messages/validation.static';
@@ -40,7 +40,7 @@ export class ChangePasswordComponent implements OnInit {
         ],
         confirmPasswordField: ['', [Validators.required]],
       },
-      { validator: this.checkPasswords }
+      { validator: this.checkPasswords } as AbstractControlOptions
     );
   }
 
