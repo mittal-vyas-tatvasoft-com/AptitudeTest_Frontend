@@ -4,7 +4,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import jwtDecode from 'jwt-decode';
 import { DateTime } from 'luxon';
-import { BehaviorSubject, Observable, map, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, map } from 'rxjs';
 import { Navigation } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { Messages } from 'src/app/shared/messages/messages.static';
@@ -23,12 +23,25 @@ export class LoginService {
   private storageTokenExpiry = 'tokenExpiry';
   private sidebarStateKey = 'sidebarState';
   private rememberMeKey = 'rM';
+  private inUse = 'isInUse';
   refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  constructor(private http: HttpClient, private router: Router, private dialogRef: MatDialog) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private dialogRef: MatDialog
+  ) {}
 
   storage() {
     const rm = localStorage.getItem(this.rememberMeKey) == 'true';
     return rm ? localStorage : sessionStorage;
+  }
+
+  setInUse(inUse: string): void {
+    this.storage().setItem(this.inUse, inUse);
+  }
+
+  getInUse(): string | null {
+    return this.storage().getItem(this.inUse);
   }
 
   setToken(token: string): void {
@@ -71,7 +84,7 @@ export class LoginService {
     const data = this.decodeToken();
     this.dialogRef.closeAll();
 
-    if (data.Role == Navigation.RoleAdmin) {
+    if (data?.Role === Navigation.RoleAdmin) {
       this.router.navigate([Navigation.AdminLogin]);
     } else {
       this.router.navigate(['/']);
@@ -79,7 +92,15 @@ export class LoginService {
     this.storage().removeItem(this.storageToken);
     this.storage().removeItem(this.storageRefreshToken);
     this.storage().removeItem(this.storageTokenExpiry);
+    this.storage().removeItem(this.inUse);
     localStorage.removeItem(this.rememberMeKey);
+  }
+
+  removeToken(email: string) {
+    return this.http.post(
+      `${environment.baseURL}UserAuthentication/Logout?email=${email}`,
+      null
+    );
   }
 
   login(payload: LoginModel): Observable<ResponseModel<string>> {
@@ -94,6 +115,7 @@ export class LoginService {
             this.setToken(res.data.accessToken);
             this.setRefreshToken(res.data.refreshToken);
             this.setTokenExpiry(res.data.refreshTokenExpiryTime);
+            this.setInUse('true');
           }
           return res;
         })

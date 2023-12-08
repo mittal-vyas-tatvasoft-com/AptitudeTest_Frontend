@@ -1,15 +1,23 @@
 import {
+  HttpErrorResponse,
+  HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpErrorResponse,
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, switchMap, tap, throwError, filter, take } from 'rxjs';
-import { LoginService } from '../../auth/services/login.service';
+import {
+  Observable,
+  catchError,
+  filter,
+  switchMap,
+  take,
+  tap,
+  throwError,
+} from 'rxjs';
 import { Navigation, StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { LoginService } from '../../auth/services/login.service';
 import { LoaderService } from '../../services/loader.service';
 
 @Injectable()
@@ -20,34 +28,39 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   constructor(
     private loginService: LoginService,
     private loaderService: LoaderService
-  ) { }
+  ) {}
 
-  private handleTokenRefresh(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
+  private handleTokenRefresh(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<any> {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
-      
+
       const data = this.loginService.decodeToken();
 
-      return this.loginService.refreshToken(data.Role === Navigation.RoleAdmin).pipe(
-        switchMap((res: any) => {
-          this.isRefreshing = false;
-          if (res.result) {
-            return this.retryRequest(req, next);
-          } else {
+      return this.loginService
+        .refreshToken(data.Role === Navigation.RoleAdmin)
+        .pipe(
+          switchMap((res: any) => {
+            this.isRefreshing = false;
+            if (res.result) {
+              return this.retryRequest(req, next);
+            } else {
+              this.loginService.logout();
+              return throwError(Error);
+            }
+          }),
+          catchError((error: any) => {
+            this.isRefreshing = false;
             this.loginService.logout();
-            return throwError(Error);
-          }
-        }),
-        catchError((error: any) => {
-          this.isRefreshing = false;
-          this.loginService.logout();
-          throw new Error(error);
-        })
-      );
+            throw new Error(error);
+          })
+        );
     }
 
     return this.loginService.refreshTokenSubject.pipe(
-      filter(token => token !== null),
+      filter((token) => token !== null),
       take(1),
       switchMap(() => this.retryRequest(req, next))
     );
@@ -61,9 +74,9 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     });
     return next.handle(newReq);
   }
-  
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    // set loader to true 
+    // set loader to true
     if (req.url.toLowerCase().indexOf('/api/') > -1) {
       this.loaderService.setLoading(true, req.url);
     }
@@ -76,19 +89,37 @@ export class AuthTokenInterceptor implements HttpInterceptor {
       });
     }
     return next.handle(req).pipe(
-      tap(res => {
+      tap((res) => {
         if (res instanceof HttpResponse) {
           this.loaderService.setLoading(false, req.url);
         }
       }),
       catchError((error) => {
+        const date = this.loginService.getTokenExpiry();
+        let newDate = new Date();
+        if (date !== null) {
+          newDate = new Date(date);
+        }
         this.loaderService.setLoading(false, req.url);
         if (
           error instanceof HttpErrorResponse &&
-          error.status === StatusCode.Unauthorized
+          error.status === StatusCode.Unauthorized &&
+          new Date() < newDate
         ) {
           return this.handleTokenRefresh(req, next);
         } else {
+          const token = this.loginService.decodeToken();
+          if (token && token?.Role !== Navigation.RoleAdmin) {
+            debugger;
+            const email = token.Email;
+            this.loginService.removeToken(email).subscribe({
+              next: (res: any) => {
+                if (res.statusCode === StatusCode.Success) {
+                  this.loginService.logout();
+                }
+              },
+            });
+          }
           throw new Error(error);
         }
       })

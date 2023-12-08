@@ -9,7 +9,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Subject, takeUntil } from 'rxjs';
-import { StatusCode } from 'src/app/shared/common/enums';
+import { Navigation, StatusCode } from 'src/app/shared/common/enums';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { ChangePasswordComponent } from '../../auth/components/change-password/change-password.component';
 import { LoginService } from '../../auth/services/login.service';
@@ -58,8 +58,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.loginService.logout();
-    this.isAuthenticated = false;
+    const token = this.loginService.decodeToken();
+    if (token && token.Role === Navigation.RoleUser) {
+      debugger;
+      const email = token.Email;
+      this.loginService.removeToken(email).subscribe({
+        next: (res: any) => {
+          if (res.statusCode === StatusCode.Success) {
+            this.loginService.logout();
+          }
+        },
+      });
+    } else {
+      this.loginService.logout();
+    }
   }
 
   getRole() {
