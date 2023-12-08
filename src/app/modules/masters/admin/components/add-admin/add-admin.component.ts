@@ -66,10 +66,7 @@ export class AddAdminComponent implements OnInit, AfterViewInit {
       ],
       middleName: [
         '',
-        [
-          Validators.required,
-          Validators.pattern(validations.common.whitespaceREGEX),
-        ],
+        [Validators.pattern(validations.common.whitespaceREGEX)],
       ],
       lastName: [
         '',
