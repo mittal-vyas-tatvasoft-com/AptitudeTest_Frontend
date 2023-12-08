@@ -77,7 +77,7 @@
     label="isEditMode ? 'Save' : 'Add'"
     [disabled]="!form.valid"
     [mat-dialog-close]="form.value"
-    matTooltip="Save"
+    [matTooltip]="isEditMode ? 'Save' : 'Add'"
   >
     {{ isEditMode ? "Save" : "Add" }}
   </button>

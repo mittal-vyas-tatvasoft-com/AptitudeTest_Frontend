@@ -1,5 +1,7 @@
 <div class="dialog-header">
-  <h2 mat-dialog-title>Add Degree</h2>
+  <h2 mat-dialog-title>
+    {{ id === 0 ? "Add Degree" : "Edit Degree" }}
+  </h2>
   <button
     mat-icon-button
     class="dialog-close"
@@ -104,7 +106,7 @@
     color="primary"
     [disabled]="!form.valid"
     (click)="onAddClick()"
-    matTooltip="Save"
+    [matTooltip]="id === 0 ? 'Add' : 'Save'"
   >
     {{ id === 0 ? "Add" : "Save" }}
   </button>
