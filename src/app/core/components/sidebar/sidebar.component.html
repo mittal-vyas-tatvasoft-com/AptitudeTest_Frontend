@@ -118,6 +118,7 @@
     <li class="nav-link">
       <a
         href="javascript:void(0)"
+        [routerLink]="routeConfig.Setting.path"
         class="nav-item"
         routerLinkActive="active"
         title="Setting"
@@ -126,7 +127,7 @@
         <mat-icon class="nav-icon">
           <img src="./assets/images/setting-grey.svg" alt="Setting" />
         </mat-icon>
-        Setting
+        {{ routeConfig.Setting.label }}
       </a>
     </li>
   </ul>
