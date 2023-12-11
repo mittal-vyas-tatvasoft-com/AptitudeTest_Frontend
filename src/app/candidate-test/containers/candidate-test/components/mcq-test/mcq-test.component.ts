@@ -4,7 +4,6 @@ import { Router } from '@angular/router';
 import {
   Answer,
   Question,
-  QuestionStatusModel,
   SaveAnswerModel,
 } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
@@ -109,7 +108,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
 
   saveAnswers(answers: Answer[]) {
     let answer: number[] = [];
-    answers.map((isAnswer: Answer) => {
+    answers.forEach((isAnswer: Answer) => {
       if (isAnswer.isAnswer) {
         answer.push(isAnswer.optionId);
       }

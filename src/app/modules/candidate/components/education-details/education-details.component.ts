@@ -326,11 +326,11 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
     if (formControlName == null || formControlName?.errors == null) {
       return '';
     } else {
-      if (formControlName?.errors!['required'] && formControlName?.touched) {
+      if (formControlName?.errors['required'] && formControlName?.touched) {
         return this.ErrorMessage.Percentage;
-      } else if (formControlName?.errors!['min'] && formControlName?.touched) {
+      } else if (formControlName?.errors['min'] && formControlName?.touched) {
         return this.ErrorMessage.Min;
-      } else if (formControlName?.errors!['max'] && formControlName?.touched) {
+      } else if (formControlName?.errors['max'] && formControlName?.touched) {
         return this.ErrorMessage.Max;
       }
       return '';

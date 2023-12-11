@@ -14,7 +14,7 @@ export interface AdminModel {
   isDeleted?: boolean;
 }
 
-export interface searchModel {
+export interface SearchModel {
   searchValue: string;
   statusValue: boolean | null;
 }

@@ -14,8 +14,8 @@ import {
   TestData,
   TestQueryParams,
   TopicWiseQuestionData,
-  createTestModel,
-  testCandidatesModel,
+  CreateTestModel,
+  TestCandidatesModel,
 } from '../interfaces/test.interface';
 import { QuestionCountInitial } from '../static/test.static';
 
@@ -127,7 +127,7 @@ export class TestService {
     });
   }
 
-  createTest(data: createTestModel): Observable<ResponseModel<number>> {
+  createTest(data: CreateTestModel): Observable<ResponseModel<number>> {
     return this.http
       .post<ResponseModel<number>>(
         `${environment.baseURL}Tests/CreateTest`,
@@ -140,7 +140,7 @@ export class TestService {
       );
   }
 
-  updateTest(data: createTestModel) {
+  updateTest(data: CreateTestModel) {
     return this.http
       .put<ResponseModel<string>>(
         `${environment.baseURL}Tests/UpdateTest`,
@@ -162,12 +162,12 @@ export class TestService {
     params = params.set('SortField', data.sortField);
     params = params.set('SortOrder', data.sortOrder);
     return this.http
-      .get<ResponseModel<testCandidatesModel[]>>(
+      .get<ResponseModel<TestCandidatesModel[]>>(
         `${environment.baseURL}Tests/GetAllTestCandidates/${data.groupId}/${data.currentPageIndex}/${data.pageSize}`,
         { params }
       )
       .pipe(
-        map((res: ResponseModel<testCandidatesModel[]>) => {
+        map((res: ResponseModel<TestCandidatesModel[]>) => {
           return res;
         })
       );
