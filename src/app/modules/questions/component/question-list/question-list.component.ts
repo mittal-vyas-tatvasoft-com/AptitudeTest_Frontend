@@ -46,17 +46,6 @@ export class QuestionListComponent implements OnInit, OnDestroy {
     private router: Router
   ) {}
 
-  ngOnDestroy(): void {
-    this.ngUnsubscribe$.next();
-    this.ngUnsubscribe$.complete();
-    this.scrollSubject.unsubscribe();
-    window.removeEventListener('scroll', () => {
-      const percent =
-        (window.innerHeight + window.scrollY) / document.body.offsetHeight;
-      this.scrollSubject.next(percent);
-    });
-  }
-
   ngOnInit(): void {
     this.initializeEmptyResponse();
     if (this.filterForm) {
@@ -74,11 +63,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
           );
         });
     }
-    window.addEventListener('scroll', () => {
-      const percent =
-        (window.innerHeight + window.scrollY) / document.body.offsetHeight;
-      this.scrollSubject.next(percent);
-    });
+    window.addEventListener('scroll', this.scrollListener);
     this.scrollSubject
       .pipe(debounceTime(Numbers.Debounce), takeUntil(this.ngUnsubscribe$))
       .subscribe((data) => {
@@ -98,6 +83,12 @@ export class QuestionListComponent implements OnInit, OnDestroy {
       this.status
     );
   }
+
+  scrollListener = () => {
+    const percent =
+      (window.innerHeight + window.scrollY) / document.body.offsetHeight;
+    this.scrollSubject.next(percent);
+  };
 
   loadQuestions(
     pageSize: number,
@@ -195,5 +186,12 @@ export class QuestionListComponent implements OnInit, OnDestroy {
       isNextPage: true,
     };
     this.questions = [];
+  }
+
+  ngOnDestroy(): void {
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
+    this.scrollSubject.unsubscribe();
+    window.removeEventListener('scroll', this.scrollListener);
   }
 }
