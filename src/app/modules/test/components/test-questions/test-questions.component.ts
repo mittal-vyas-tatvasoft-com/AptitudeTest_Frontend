@@ -173,7 +173,7 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
       existingQuestionsTopicId: this.existingQuestionsTopicId,
       singleMarksDropDownData: this.singleMarksDropDownData,
       multiMarksDropDownData: this.multiMarksDropDownData,
-      testId: this.testId,
+      testId: this.basicTestDetailForm.get('testId')?.value,
     };
     this.dialog
       .open(EditQuestionComponent, dialogConfig)
