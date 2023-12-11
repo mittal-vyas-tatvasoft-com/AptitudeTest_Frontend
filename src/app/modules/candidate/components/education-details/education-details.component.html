@@ -123,7 +123,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="col-6 col-sm-3 col-lg-1">
+            <div class="col-6 col-sm-3 col-lg-1" *ngIf="i < 2">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Maths</mat-label>
                 <input
@@ -135,7 +135,7 @@
                   [min]="MinMaxValue.Min"
                   [max]="MinMaxValue.Max"
                   formControlName="maths"
-                  [required]="i < 3"
+                  [required]="i < 2"
                 />
                 <mat-error
                   *ngIf="
@@ -147,7 +147,7 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="col-6 col-sm-3 col-lg-1">
+            <div class="col-6 col-sm-3 col-lg-1" *ngIf="i === 1">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Physics</mat-label>
                 <input
@@ -159,7 +159,7 @@
                   [min]="MinMaxValue.Min"
                   [max]="MinMaxValue.Max"
                   formControlName="physics"
-                  [required]="i < 3"
+                  [required]="i === 1"
                 />
                 <mat-error
                   *ngIf="
