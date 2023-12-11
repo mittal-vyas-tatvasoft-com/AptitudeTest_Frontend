@@ -21,9 +21,9 @@
         <mat-menu #tableActionMenu="matMenu" xPosition="before">
           <button mat-menu-item (click)="handleEdit(groupData)">
             <mat-icon>
-              <img src="./assets/images/edit.svg" alt="Rename" />
+              <img src="./assets/images/edit.svg" alt="Edit" />
             </mat-icon>
-            Rename
+            Edit
           </button>
           <button
             *ngIf="!groupData.isDefault"
