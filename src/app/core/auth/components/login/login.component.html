@@ -32,7 +32,11 @@
             <div
               class="d-flex justify-content-between align-items-center mt-n1 mb-2"
             >
-              <mat-checkbox [ngModelOptions]="{standalone: true}" [(ngModel)]="rememberMe" color="primary" class="font14"
+              <mat-checkbox
+                [ngModelOptions]="{ standalone: true }"
+                [(ngModel)]="rememberMe"
+                color="primary"
+                class="font14"
                 >Remember me</mat-checkbox
               >
             </div>
@@ -47,7 +51,10 @@
               Login
             </button>
           </div>
-          <div class="col-12 animation-target mt-5" *ngIf="!isAdmin">
+          <div
+            class="col-12 animation-target mt-5"
+            *ngIf="!isAdmin && OffCampusMode === true"
+          >
             <p class="account">
               Don't have an account?
               <a class="register" routerLink="/register">Register Now!</a>

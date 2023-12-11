@@ -9,6 +9,7 @@ import { Setting } from '../interfaces/setting';
 })
 export class SettingService {
   constructor(private http: HttpClient) {}
+  offCampusRegistration: boolean;
 
   get() {
     return this.http.get<ResponseModel<Setting>>(
@@ -21,5 +22,14 @@ export class SettingService {
       `${environment.baseURL}Settings/Update`,
       setting
     );
+  }
+
+  OffCampusMode(): boolean {
+    this.get().subscribe({
+      next: (res) => {
+        this.offCampusRegistration = res.data.userRegistration;
+      },
+    });
+    return this.offCampusRegistration;
   }
 }

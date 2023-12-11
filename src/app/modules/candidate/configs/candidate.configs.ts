@@ -303,7 +303,7 @@ export const candidateFilterFormConfig = {
   search: {
     value: '',
     key: 'searchQuery',
-    label: 'Search Candidate..',
+    label: 'Search Candidate',
     required: false,
     inputType: 'text',
     displayIcon: false,

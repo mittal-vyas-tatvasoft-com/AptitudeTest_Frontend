@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { SettingService } from 'src/app/modules/setting/services/setting.service';
 import { Navigation } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { validations } from 'src/app/shared/messages/validation.static';
@@ -18,6 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   form: FormGroup;
   loginModel = loginControl;
   isAdmin = false;
+  OffCampusMode: boolean;
   rememberMe = false;
   private ngUnsubscribe$ = new Subject<void>();
 
@@ -26,10 +28,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private settingService: SettingService
   ) {}
 
   ngOnInit() {
+    this.settingService.get().subscribe({
+      next: (res) => {
+        this.OffCampusMode = res.data.userRegistration;
+      },
+    });
     this.isAdmin = this.isRouteAdmin(this.activatedRoute);
     this.form = this.formBuilder.group({
       userName: [

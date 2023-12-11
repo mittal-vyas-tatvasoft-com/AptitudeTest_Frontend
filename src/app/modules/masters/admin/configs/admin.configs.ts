@@ -64,7 +64,7 @@ export const adminFilterFormConfig = {
   search: {
     value: '',
     key: 'searchField',
-    label: 'Search..',
+    label: 'Search',
     required: false,
     inputType: 'text',
     displayIcon: false,

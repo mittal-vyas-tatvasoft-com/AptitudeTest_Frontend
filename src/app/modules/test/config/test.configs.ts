@@ -165,7 +165,7 @@ export const testFilterModel = {
   searchQuery: {
     value: '',
     key: 'searchQuery',
-    label: 'Search candidates..',
+    label: 'Search candidates',
     required: false,
     inputType: 'text',
     displayIcon: false,
