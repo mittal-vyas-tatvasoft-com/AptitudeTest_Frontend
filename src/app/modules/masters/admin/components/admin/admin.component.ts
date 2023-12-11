@@ -71,7 +71,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.dataSource = new MatTableDataSource<AdminModel>([]);
-    this.fetchAdmin('', null);
     this.createForm();
   }
 
@@ -83,12 +82,14 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
+    this.fetchAdmin();
+
     this.searchInputValue
       .pipe(
         debounceTime(Numbers.Debounce) // Adjust the debounce time as needed
       )
-      .subscribe((value) => {
-        this.fetchAdmin(value.searchValue, value.statusValue);
+      .subscribe(() => {
+        this.fetchAdmin();
       });
   }
 
@@ -102,7 +103,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.searchInputValue.next(data);
   }
 
-  fetchAdmin(searchValue: string | null, status: boolean | null) {
+  fetchAdmin() {
+    const searchValue = this.form.get('searchField')?.value;
+    const status = this.form.get('statusField')?.value;
     this.adminService
       .getAdmins(
         this.currentPageIndex,
@@ -130,7 +133,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.adminService.updateStatus(id, newStatus).subscribe({
       next: (res) => {
         if (res.statusCode == StatusCode.Success) {
-          this.resetForm();
+          this.form.get('searchField')?.setValue('');
+          this.form.get('sortField')?.setValue('');
+          this.fetchAdmin();
           this.snackbarService.success(res.message);
         } else {
           this.snackbarService.error(res.message);
@@ -163,7 +168,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
             this.adminService.addNewAdmin(payload).subscribe({
               next: (res) => {
                 if (res.statusCode == StatusCode.Success) {
-                  this.resetForm();
+                  this.form.get('searchField')?.setValue('');
+                  this.form.get('sortField')?.setValue('');
+                  this.fetchAdmin();
                   this.snackbarService.success(res.message);
                 } else {
                   this.snackbarService.error(res.message);
@@ -174,7 +181,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
             this.adminService.updateAdmin(payload).subscribe({
               next: (res) => {
                 if (res.statusCode == StatusCode.Success) {
-                  this.resetForm();
+                  this.form.get('searchField')?.setValue('');
+                  this.form.get('sortField')?.setValue('');
+                  this.fetchAdmin();
                   this.snackbarService.success(res.message);
                 } else {
                   this.snackbarService.error(res.message);
@@ -200,7 +209,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
         this.adminService.deleteAdmin(id).subscribe({
           next: (res) => {
             if (res.statusCode == StatusCode.Success) {
-              this.resetForm();
+              this.form.get('searchField')?.setValue('');
+              this.form.get('sortField')?.setValue('');
+              this.fetchAdmin();
               this.snackbarService.success(res.message);
             } else {
               this.snackbarService.error(res.message);
@@ -214,7 +225,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
   handlePageSizeChange(pageSize: number) {
     this.pageSize = pageSize;
     this.currentPageIndex = Numbers.Zero;
-    this.fetchAdmin('', null);
+    this.fetchAdmin();
   }
 
   handlePageChange(direction: 'prev' | 'next') {
@@ -223,12 +234,12 @@ export class AdminComponent implements OnInit, AfterViewInit {
     } else if (direction === 'next' && !this.isLastPage()) {
       this.currentPageIndex++;
     }
-    this.fetchAdmin('', null);
+    this.fetchAdmin();
   }
 
   handlePageToPage(page: number) {
     this.currentPageIndex = page - Numbers.One;
-    this.fetchAdmin('', null);
+    this.fetchAdmin();
   }
 
   isFirstPage(): boolean {
@@ -242,7 +253,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   resetForm() {
     this.form.reset();
-    this.fetchAdmin('', null);
+    this.fetchAdmin();
   }
 
   handleDataSorting(event: Sort) {
@@ -272,9 +283,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
         this.sortDirection = '';
         break;
     }
-
-    const searchValue = this.form.get('searchField')?.value;
-    const statusValue = this.form.get('statusField')?.value;
-    this.fetchAdmin(searchValue, statusValue);
+    this.fetchAdmin();
   }
 }

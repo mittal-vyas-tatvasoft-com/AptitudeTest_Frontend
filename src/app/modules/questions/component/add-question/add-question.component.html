@@ -3,7 +3,7 @@
     <mat-icon class="page-icon">
       <img src="./assets/images/question-primary.svg" alt="Question" />
     </mat-icon>
-    <h4 class="title">Add Question</h4>
+    <h4 class="title">{{ isEdit ? "Edit Question" : "Add Question" }}</h4>
   </div>
   <div class="action-list">
     <button
@@ -237,7 +237,7 @@
                   color="primary"
                   (click)="addQuestion()"
                   [disabled]="!isValid()"
-                  matTooltip="Save"
+                  [matTooltip]="isEdit ? 'Save' : 'Add '"
                 >
                   {{ isEdit ? "Save" : "Add " }}
                 </button>

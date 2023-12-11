@@ -65,7 +65,9 @@ export class AddCollegeComponent implements OnInit, AfterViewInit {
         '',
         [
           Validators.required,
-          Validators.pattern(validations.common.characterWithSpaceREGEX),
+          Validators.maxLength(10),
+          Validators.minLength(2),
+          Validators.pattern(validations.common.charactersWithoutSpaces),
         ],
       ],
       status: [1, Validators.required],
