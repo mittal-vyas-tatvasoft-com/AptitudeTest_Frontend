@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {
   Numbers,
@@ -15,7 +15,7 @@ import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete
 import { OptionsIndex, Topics } from '../../static/question.static';
 import { environment } from 'src/environments/environment';
 import { Router } from '@angular/router';
-import { Subject, debounceTime } from 'rxjs';
+import { Subject, debounceTime, takeUntil } from 'rxjs';
 import { Pagination } from 'src/app/shared/common/interfaces/pagination.interface';
 import { FormGroup } from '@angular/forms';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
@@ -25,7 +25,7 @@ import { Question } from '../../interfaces/question.interface';
   templateUrl: './question-list.component.html',
   styleUrls: ['./question-list.component.scss'],
 })
-export class QuestionListComponent implements OnInit {
+export class QuestionListComponent implements OnInit, OnDestroy {
   questions: Question[] = [];
   @Input() filterForm?: FormGroup;
   optionType = OptionType;
@@ -38,6 +38,7 @@ export class QuestionListComponent implements OnInit {
   topic?: number;
   status?: boolean;
   private scrollSubject = new Subject<number>();
+  private ngUnsubscribe$ = new Subject<void>();
   constructor(
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
@@ -45,20 +46,33 @@ export class QuestionListComponent implements OnInit {
     private router: Router
   ) {}
 
+  ngOnDestroy(): void {
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
+    this.scrollSubject.unsubscribe();
+    window.removeEventListener('scroll', () => {
+      const percent =
+        (window.innerHeight + window.scrollY) / document.body.offsetHeight;
+      this.scrollSubject.next(percent);
+    });
+  }
+
   ngOnInit(): void {
     this.initializeEmptyResponse();
     if (this.filterForm) {
-      this.filterForm.valueChanges.subscribe((res) => {
-        this.topic = res.topic;
-        this.status = res.status;
-        this.initializeEmptyResponse();
-        this.loadQuestions(
-          PaginationDefaultValues.DefaultPageSize,
-          PaginationDefaultValues.DefaultIndex,
-          res.topic,
-          res.status
-        );
-      });
+      this.filterForm.valueChanges
+        .pipe(takeUntil(this.ngUnsubscribe$))
+        .subscribe((res) => {
+          this.topic = res.topic;
+          this.status = res.status;
+          this.initializeEmptyResponse();
+          this.loadQuestions(
+            PaginationDefaultValues.DefaultPageSize,
+            PaginationDefaultValues.DefaultIndex,
+            res.topic,
+            res.status
+          );
+        });
     }
     window.addEventListener('scroll', () => {
       const percent =
@@ -66,7 +80,7 @@ export class QuestionListComponent implements OnInit {
       this.scrollSubject.next(percent);
     });
     this.scrollSubject
-      .pipe(debounceTime(Numbers.Debounce))
+      .pipe(debounceTime(Numbers.Debounce), takeUntil(this.ngUnsubscribe$))
       .subscribe((data) => {
         if (data > 0.98 && this.response.isNextPage == true) {
           this.loadQuestions(
@@ -93,6 +107,7 @@ export class QuestionListComponent implements OnInit {
   ) {
     this.questionService
       .questions(pageSize, pageIndex, topic, status)
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe({
         next: (res: ResponseModel<Pagination<Question>>) => {
           if (res.statusCode == StatusCode.Success) {
@@ -110,22 +125,25 @@ export class QuestionListComponent implements OnInit {
   }
 
   updateStatus(status: UpdateStatus) {
-    this.questionService.updateStatus(status).subscribe({
-      next: (res: ResponseModel<number>) => {
-        if (res.statusCode == StatusCode.Success) {
-          this.questions = this.questions.map((q) => {
-            if (q.id == status.id) {
-              return { ...q, status: status.status };
-            } else {
-              return q;
-            }
-          });
-          this.snackbarService.success(res.message);
-        } else {
-          this.snackbarService.error(res.message);
-        }
-      },
-    });
+    this.questionService
+      .updateStatus(status)
+      .pipe(takeUntil(this.ngUnsubscribe$))
+      .subscribe({
+        next: (res: ResponseModel<number>) => {
+          if (res.statusCode == StatusCode.Success) {
+            this.questions = this.questions.map((q) => {
+              if (q.id == status.id) {
+                return { ...q, status: status.status };
+              } else {
+                return q;
+              }
+            });
+            this.snackbarService.success(res.message);
+          } else {
+            this.snackbarService.error(res.message);
+          }
+        },
+      });
   }
 
   handleDeleteProfileDialog(id: number) {
@@ -135,20 +153,24 @@ export class QuestionListComponent implements OnInit {
     this.dialog
       .open(DeleteConfirmationDialogComponent, dialogConfig)
       .afterClosed()
+      .pipe(takeUntil(this.ngUnsubscribe$))
       .subscribe((res: boolean) => {
         if (res) {
-          this.questionService.delete(id).subscribe({
-            next: (res: ResponseModel<null>) => {
-              if (res.statusCode == StatusCode.Success) {
-                this.questions = this.questions.filter(
-                  (data: Question) => data.id != id
-                );
-                this.snackbarService.success(res.message);
-              } else {
-                this.snackbarService.error(res.message);
-              }
-            },
-          });
+          this.questionService
+            .delete(id)
+            .pipe(takeUntil(this.ngUnsubscribe$))
+            .subscribe({
+              next: (res: ResponseModel<null>) => {
+                if (res.statusCode == StatusCode.Success) {
+                  this.questions = this.questions.filter(
+                    (data: Question) => data.id != id
+                  );
+                  this.snackbarService.success(res.message);
+                } else {
+                  this.snackbarService.error(res.message);
+                }
+              },
+            });
         }
       });
   }
