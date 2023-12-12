@@ -1,9 +1,10 @@
 import { Location } from '@angular/common';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { StatusCode } from 'src/app/shared/common/enums';
+import { LoginService } from 'src/app/core/auth/services/login.service';
+import { Navigation, StatusCode } from 'src/app/shared/common/enums';
 import { Messages } from 'src/app/shared/messages/messages.static';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { EducationDetailsComponent } from '../../components/education-details/education-details.component';
@@ -27,6 +28,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
   isAdmin = false;
   validForm = false;
   disabled: boolean;
+  collegeSelectedByCandidate: boolean;
   private ngUnsubscribe$ = new Subject<void>();
   @ViewChild(PersonalInfoComponent)
   personalInfoComponent: PersonalInfoComponent;
@@ -35,13 +37,14 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
   familyBackgroundComponent: FamilyBackgroundComponent;
   @ViewChild(EducationDetailsComponent)
   educationDetailsComponent: EducationDetailsComponent;
-
+  @Input() candidateEditMode = false;
   constructor(
     private _location: Location,
     private route: ActivatedRoute,
     private candidateService: CandidateService,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private loginService: LoginService
   ) {}
 
   ngOnInit() {
@@ -63,8 +66,24 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
           }
           this.familyDetails = data.data.familyDetails;
           this.academicDetails = data.data.academicsDetails;
+          if (
+            this.candidateData.userCollege != null &&
+            this.candidateEditMode
+          ) {
+            debugger;
+            this.collegeSelectedByCandidate = true;
+          } else {
+            this.collegeSelectedByCandidate = false;
+          }
         });
-      this.isAdmin = true;
+      const userData = this.loginService.decodeToken();
+      if (userData) {
+        if (userData.Role === Navigation.RoleUser) {
+          this.isAdmin = false;
+        } else {
+          this.isAdmin = true;
+        }
+      }
     } else {
       this.familyDetails = [];
       this.academicDetails = [];
@@ -102,7 +121,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
         email: personalData.controls['email'].value,
         phoneNumber: personalData.controls['phoneNumber'].value,
         groupId: personalInfo.userGroup ? personalInfo.userGroup : 0,
-        collegeId: personalInfo.userCollege,
+        collegeId: personalData.controls['userCollege'].value,
         gender: personalInfo.gender,
         status: personalInfo.status === 1,
         appliedThrough: personalInfo.appliedThrough,

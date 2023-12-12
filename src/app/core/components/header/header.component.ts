@@ -8,6 +8,7 @@ import {
   Output,
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
@@ -26,6 +27,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   isSidebarOpen!: boolean;
   isAuthenticated = false;
   isAdmin = false;
+  userId = 0;
   isSuperAdmin = false;
   role: string | null;
   public mobileScreen: boolean = window.innerWidth < 575;
@@ -37,7 +39,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
   constructor(
     private loginService: LoginService,
     public dialog: MatDialog,
-    public snackbar: SnackbarService
+    public snackbar: SnackbarService,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -132,6 +135,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
             });
         }
       });
+  }
+
+  MyProfile() {
+    const userData = this.loginService.decodeToken();
+    if (userData) {
+      this.userId = +userData.Id;
+    }
+    if (this.userId != 0) {
+      this.router.navigate(['edit', this.userId]);
+    }
   }
 
   ngOnDestroy() {
