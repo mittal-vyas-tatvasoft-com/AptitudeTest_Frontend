@@ -27,10 +27,10 @@ import {
 } from '../../config/test.configs';
 import {
   AllInsertedQuestionModel,
-  GetAllTestCandidateParams,
-  TopicWiseQuestionData,
   CreateTestModel,
+  GetAllTestCandidateParams,
   TestCandidatesModel,
+  TopicWiseQuestionData,
 } from '../../interfaces/test.interface';
 import { TestService } from '../../services/test.service';
 import { Topics } from '../../static/test.static';
@@ -445,6 +445,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
         next: (res) => {
           if (res.statusCode === 200) {
             this.snackbarService.success(res.message);
+            this.stepper.next();
           } else {
             this.snackbarService.error(res.message);
           }
