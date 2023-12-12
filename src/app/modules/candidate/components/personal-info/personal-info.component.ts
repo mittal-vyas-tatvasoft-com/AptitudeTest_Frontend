@@ -41,6 +41,9 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
   maxDate = new Date();
   @Input() candidateData: UserData;
   @Input() isAdmin: boolean;
+  @Input() candidateEditMode: boolean;
+  @Input() collegeSelectedByCandidate: boolean;
+  isCollegeSelectedByCandidate = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,6 +54,11 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.createForm();
     this.getDropdowns();
+    this.form.get('userCollege')?.valueChanges.subscribe(() => {
+      if (this.collegeSelectedByCandidate) {
+        this.form.get('userCollege')?.disable();
+      }
+    });
     if (this.candidateData) {
       this.form.patchValue(this.candidateData);
     }
@@ -73,18 +81,27 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
 
   createForm() {
     this.form = this.formBuilder.group({
-      firstName: [{ value: '', disabled: this.isAdmin }, Validators.required],
-      lastName: [''],
+      firstName: [
+        {
+          value: '',
+          disabled: this.isAdmin || this.candidateEditMode,
+        },
+        Validators.required,
+      ],
+      lastName: [
+        { value: '', disabled: this.candidateEditMode },
+        Validators.required,
+      ],
       fatherName: [''],
       email: [
-        { value: '', disabled: this.isAdmin },
+        { value: '', disabled: this.isAdmin || this.candidateEditMode },
         [
           Validators.required,
           Validators.pattern(validations.common.emailREGEX),
         ],
       ],
       phoneNumber: [
-        { value: '', disabled: this.isAdmin },
+        { value: '', disabled: this.isAdmin || this.candidateEditMode },
         [
           Validators.required,
           Validators.pattern(validations.common.mobileNumberREGEX),
@@ -185,6 +202,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       this.form.get('userGroup')?.updateValueAndValidity();
     }
   }
+
   validateForm() {
     Object.keys(this.form.controls).forEach((controlName) => {
       const control = this.form.get(controlName);
