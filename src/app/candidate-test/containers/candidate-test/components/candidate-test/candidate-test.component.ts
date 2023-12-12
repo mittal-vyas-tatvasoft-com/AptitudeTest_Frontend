@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { QuestionStatusModel } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
@@ -34,6 +34,11 @@ export class CandidateTestComponent implements OnInit {
     const candidateDetails = this.loginService.decodeToken();
     this.userId = candidateDetails.Id;
     this.getQuestionsStatus();
+  }
+
+  @HostListener('contextmenu', ['$event'])
+  onRightClick(event: MouseEvent) {
+    event.preventDefault();
   }
 
   getQuestionsStatus() {
