@@ -1929,3 +1929,10 @@
   position: relative;
   top: -12px;
 }
+
+
+.no-print {
+  @media print {
+    visibility: hidden;
+  }
+}
