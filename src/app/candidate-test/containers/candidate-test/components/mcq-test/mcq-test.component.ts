@@ -99,7 +99,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
       this.router.navigate(['/user/submitted']);
     }
     let state =
-      event.filter(Boolean).length > 0
+      event.filter((res) => res.isAnswer).length > 0
         ? QuestionStatus.Answered
         : QuestionStatus.Skipped;
     let status = [this.question.questionNumber - 1, this.question.id, state];

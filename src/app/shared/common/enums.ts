@@ -159,3 +159,9 @@ export enum Status {
   Active = 1,
   Inactive = 0,
 }
+
+export enum ResultStatus {
+  Active = 1,
+  Pending = 0,
+  Locked = 2,
+}
