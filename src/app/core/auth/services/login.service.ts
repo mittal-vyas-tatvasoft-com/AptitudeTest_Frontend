@@ -25,7 +25,11 @@ export class LoginService {
   private rememberMeKey = 'rM';
   private sId = 'sId';
   refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
-  constructor(private http: HttpClient, private router: Router, private dialogRef: MatDialog) {}
+  constructor(
+    private http: HttpClient,
+    private router: Router,
+    private dialogRef: MatDialog
+  ) {}
 
   storage() {
     const rm = localStorage.getItem(this.rememberMeKey) == 'true';
@@ -79,8 +83,7 @@ export class LoginService {
   logout(): void {
     const data = this.decodeToken();
     this.dialogRef.closeAll();
-
-    if (data.Role == Navigation.RoleAdmin) {
+    if (data !== null && data.Role == Navigation.RoleAdmin) {
       this.router.navigate([Navigation.AdminLogin]);
     } else {
       this.router.navigate(['/']);

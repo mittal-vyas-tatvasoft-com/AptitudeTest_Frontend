@@ -70,7 +70,6 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
             this.candidateData.userCollege != null &&
             this.candidateEditMode
           ) {
-            debugger;
             this.collegeSelectedByCandidate = true;
           } else {
             this.collegeSelectedByCandidate = false;
@@ -112,7 +111,6 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
         familyBackground,
         educationDetail,
       };
-      // debugger;
       const updateParams: UpdateParams = {
         id: this.candidateId ? this.candidateId : 0,
         firstName: personalData.controls['firstName'].value,

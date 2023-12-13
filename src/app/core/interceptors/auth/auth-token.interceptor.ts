@@ -1,15 +1,23 @@
 import {
+  HttpErrorResponse,
+  HttpHandler,
   HttpInterceptor,
   HttpRequest,
-  HttpHandler,
-  HttpErrorResponse,
   HttpResponse,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable, catchError, switchMap, tap, throwError, filter, take } from 'rxjs';
-import { LoginService } from '../../auth/services/login.service';
+import {
+  Observable,
+  catchError,
+  filter,
+  switchMap,
+  take,
+  tap,
+  throwError,
+} from 'rxjs';
 import { Navigation, StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { LoginService } from '../../auth/services/login.service';
 import { LoaderService } from '../../services/loader.service';
 
 @Injectable()
@@ -20,34 +28,42 @@ export class AuthTokenInterceptor implements HttpInterceptor {
   constructor(
     private loginService: LoginService,
     private loaderService: LoaderService
-  ) { }
+  ) {}
 
-  private handleTokenRefresh(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
+  private handleTokenRefresh(
+    req: HttpRequest<any>,
+    next: HttpHandler
+  ): Observable<any> {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
-      
-      const data = this.loginService.decodeToken();
 
-      return this.loginService.refreshToken(data.Role === Navigation.RoleAdmin).pipe(
-        switchMap((res: any) => {
-          this.isRefreshing = false;
-          if (res.result) {
-            return this.retryRequest(req, next);
-          } else {
+      const data = this.loginService.decodeToken();
+      if (data === null) {
+        this.loginService.logout();
+        return throwError(Error);
+      }
+      return this.loginService
+        .refreshToken(data.Role === Navigation.RoleAdmin)
+        .pipe(
+          switchMap((res: any) => {
+            this.isRefreshing = false;
+            if (res.result) {
+              return this.retryRequest(req, next);
+            } else {
+              this.loginService.logout();
+              return throwError(Error);
+            }
+          }),
+          catchError((error: any) => {
+            this.isRefreshing = false;
             this.loginService.logout();
-            return throwError(Error);
-          }
-        }),
-        catchError((error: any) => {
-          this.isRefreshing = false;
-          this.loginService.logout();
-          throw new Error(error);
-        })
-      );
+            throw new Error(error);
+          })
+        );
     }
 
     return this.loginService.refreshTokenSubject.pipe(
-      filter(token => token !== null),
+      filter((token) => token !== null),
       take(1),
       switchMap(() => this.retryRequest(req, next))
     );
@@ -57,14 +73,14 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     const newReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${this.loginService.getToken()}`,
-        Xid: this.loginService.getSid() || ""
+        Xid: this.loginService.getSid() || '',
       },
     });
     return next.handle(newReq);
   }
-  
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    // set loader to true 
+    // set loader to true
     if (req.url.toLowerCase().indexOf('/api/') > -1) {
       this.loaderService.setLoading(true, req.url);
     }
@@ -73,13 +89,13 @@ export class AuthTokenInterceptor implements HttpInterceptor {
       req = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
-          Xid: this.loginService.getSid() || ""
+          Xid: this.loginService.getSid() || '',
         },
       });
     }
 
     return next.handle(req).pipe(
-      tap(res => {
+      tap((res) => {
         if (res instanceof HttpResponse) {
           this.loaderService.setLoading(false, req.url);
         }
@@ -93,7 +109,6 @@ export class AuthTokenInterceptor implements HttpInterceptor {
           this.loginService.logout();
           throw new Error();
         }
-
         if (
           error instanceof HttpErrorResponse &&
           error.status === StatusCode.Unauthorized
