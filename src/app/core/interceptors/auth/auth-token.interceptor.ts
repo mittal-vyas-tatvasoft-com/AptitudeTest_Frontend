@@ -57,6 +57,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
     const newReq = req.clone({
       setHeaders: {
         Authorization: `Bearer ${this.loginService.getToken()}`,
+        Xid: this.loginService.getSid() || ""
       },
     });
     return next.handle(newReq);
@@ -72,9 +73,11 @@ export class AuthTokenInterceptor implements HttpInterceptor {
       req = req.clone({
         setHeaders: {
           Authorization: `Bearer ${token}`,
+          Xid: this.loginService.getSid() || ""
         },
       });
     }
+
     return next.handle(req).pipe(
       tap(res => {
         if (res instanceof HttpResponse) {
@@ -83,6 +86,14 @@ export class AuthTokenInterceptor implements HttpInterceptor {
       }),
       catchError((error) => {
         this.loaderService.setLoading(false, req.url);
+        if (
+          error instanceof HttpErrorResponse &&
+          error.status === StatusCode.AlreadyLoggedIn
+        ) {
+          this.loginService.logout();
+          throw new Error();
+        }
+
         if (
           error instanceof HttpErrorResponse &&
           error.status === StatusCode.Unauthorized

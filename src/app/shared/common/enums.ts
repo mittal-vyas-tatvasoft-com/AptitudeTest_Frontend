@@ -97,6 +97,7 @@ export enum StatusCode {
   MethodNotAllowed = 405,
   NotAcceptable = 406,
   RequestTimeout = 408,
+  AlreadyLoggedIn = 430,
 }
 
 //Questions

@@ -23,6 +23,7 @@ export class LoginService {
   private storageTokenExpiry = 'tokenExpiry';
   private sidebarStateKey = 'sidebarState';
   private rememberMeKey = 'rM';
+  private sId = 'sId';
   refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(private http: HttpClient, private router: Router, private dialogRef: MatDialog) {}
 
@@ -37,6 +38,14 @@ export class LoginService {
 
   getToken(): string | null {
     return this.storage().getItem(this.storageToken);
+  }
+
+  setSid(token: string): void {
+    this.storage().setItem(this.sId, token);
+  }
+
+  getSid(): string | null {
+    return this.storage().getItem(this.sId);
   }
 
   setRefreshToken(refreshToken: string): void {
@@ -79,6 +88,7 @@ export class LoginService {
     this.storage().removeItem(this.storageToken);
     this.storage().removeItem(this.storageRefreshToken);
     this.storage().removeItem(this.storageTokenExpiry);
+    this.storage().removeItem(this.sId);
     localStorage.removeItem(this.rememberMeKey);
   }
 
@@ -94,6 +104,7 @@ export class LoginService {
             this.setToken(res.data.accessToken);
             this.setRefreshToken(res.data.refreshToken);
             this.setTokenExpiry(res.data.refreshTokenExpiryTime);
+            this.setSid(res.data.sid);
           }
           return res;
         })
