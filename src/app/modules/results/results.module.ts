@@ -6,20 +6,27 @@ import { ResultComponent } from './component/result/result.component';
 import { ResultDetailsComponent } from './component/result-details/result-details.component';
 import { SharedMaterialModule } from 'src/app/shared/material/shared-material.module';
 import { ResultsService } from './services/results.service';
-
+import { TablesModule } from 'src/app/shared/modules/tables/tables.module';
+import { ReactiveFormsModule } from '@angular/forms';
+import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
+import { ResultTableComponent } from './component/result-table/result-table.component';
+import { StatisticsTableComponent } from './component/statistics-table/statistics-table.component';
 
 @NgModule({
   declarations: [
     ResultComponent,
-    ResultDetailsComponent
+    ResultDetailsComponent,
+    ResultTableComponent,
+    StatisticsTableComponent,
   ],
   imports: [
     CommonModule,
     ResultsRoutingModule,
-    SharedMaterialModule
+    SharedMaterialModule,
+    TablesModule,
+    ReactiveFormsModule,
+    FormControlModule,
   ],
-  providers: [
-    ResultsService,
-  ]
+  providers: [ResultsService],
 })
-export class ResultsModule { }
+export class ResultsModule {}

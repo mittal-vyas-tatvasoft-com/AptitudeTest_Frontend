@@ -1,8 +1,4 @@
-import {
-  Component,
-  Input,
-  OnInit,
-} from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { QuestionStatusModel } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { QuestionStatus } from 'src/app/shared/common/enums';
@@ -19,7 +15,7 @@ export class ListOfQuestionsComponent implements OnInit {
     totalQuestion: 0,
     unAnswered: 0,
     timeLeft: 0,
-    isQuestionsMenu:false
+    isQuestionsMenu: false,
   };
   questionStatus = QuestionStatus;
   constructor(private testService: CandidateTestService) {}

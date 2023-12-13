@@ -97,8 +97,6 @@ export class AddQuestionComponent implements OnInit {
           .get(param.id)
           .subscribe((data: ResponseModel<Question>) => {
             this.question = data.data;
-            console.log(this.question);
-
             if (this.question.parentId != null && this.question.parentId != 0) {
               this.isTopicEditable = false;
             } else {
