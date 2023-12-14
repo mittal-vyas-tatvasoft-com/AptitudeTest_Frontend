@@ -7,7 +7,7 @@ import {
   ViewChild,
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
-import { ResultData } from '../../interfaces/result.interface';
+import { ResultModel } from '../../interfaces/result.interface';
 import { DisplayedColumns } from '../../static/results.static';
 import { MatSort, Sort } from '@angular/material/sort';
 
@@ -24,15 +24,13 @@ export class ResultTableComponent {
   pageSizeOptions: number[] = [10, 20, 50];
   @Input() totalItemsCount: number = 0;
   @Input() pageSize: number = 10;
-  @Input() dataSource: MatTableDataSource<ResultData>;
-  @Output() detailsClicked = new EventEmitter<number>();
+  @Input() dataSource: MatTableDataSource<ResultModel>;
+  @Output() detailsClicked = new EventEmitter<{ id: number; testId: number }>();
   @Output() pageSizeChanged = new EventEmitter<number>();
   @Output() pageChanged = new EventEmitter<'prev' | 'next'>();
   @Output() pageToPage = new EventEmitter<number>();
   @Output() sortingChanged = new EventEmitter<Sort>();
   @ViewChild(MatSort) sort = new MatSort();
-
-  constructor() {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['totalItemsCount'] || changes['pageSize']) {
@@ -47,7 +45,7 @@ export class ResultTableComponent {
   }
 
   handleDetails(id: number, testId: number) {
-    this.detailsClicked.emit(id);
+    this.detailsClicked.emit({ id, testId });
   }
 
   onPageSizeChange() {

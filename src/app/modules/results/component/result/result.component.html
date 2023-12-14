@@ -26,46 +26,38 @@
         <div class="col-sm">
           <div class="row">
             <div class="col-lg-3 col-sm-6">
-              <mat-form-field appearance="outline">
-                <mat-label>{{ filterControls.searchQuery.label }}</mat-label>
-                <input
-                  matInput
-                  [formControlName]="filterControls.searchQuery.key"
-                />
-              </mat-form-field>
+              <app-text-control
+                [formControlModel]="filterControls.searchQuery"
+                [form]="filterForm"
+                (keyupEvent)="search()"
+              ></app-text-control>
             </div>
             <div class="col-lg-3 col-sm-6">
-              <mat-form-field appearance="outline">
-                <mat-label>Test</mat-label>
-                <mat-select [formControlName]="filterControls.test.key">
-                  <mat-option [value]="null">All</mat-option>
-                  <mat-option *ngFor="let item of groups" [value]="item">
-                    {{ item.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+              <app-select
+                [form]="filterForm"
+                [formControlModel]="filterControls.test"
+                [options]="tests"
+                (selection)="onFilterChange()"
+              >
+              </app-select>
             </div>
             <div class="col-lg-3 col-sm-6">
-              <mat-form-field appearance="outline">
-                <mat-label>{{ filterControls.group.label }}</mat-label>
-                <mat-select [formControlName]="filterControls.group.key">
-                  <mat-option [value]="null">All</mat-option>
-                  <mat-option *ngFor="let item of groups" [value]="item">
-                    {{ item.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+              <app-select
+                [form]="filterForm"
+                [formControlModel]="filterControls.group"
+                [options]="groups"
+                (selection)="onFilterChange()"
+              >
+              </app-select>
             </div>
             <div class="col-lg-3 col-sm-6">
-              <mat-form-field appearance="outline">
-                <mat-label>{{ filterControls.college.label }}</mat-label>
-                <mat-select [formControlName]="filterControls.college.key">
-                  <mat-option [value]="null">All</mat-option>
-                  <mat-option *ngFor="let item of groups" [value]="item">
-                    {{ item.name }}
-                  </mat-option>
-                </mat-select>
-              </mat-form-field>
+              <app-select
+                [form]="filterForm"
+                [formControlModel]="filterControls.college"
+                [options]="colleges"
+                (selection)="onFilterChange()"
+              >
+              </app-select>
             </div>
           </div>
         </div>

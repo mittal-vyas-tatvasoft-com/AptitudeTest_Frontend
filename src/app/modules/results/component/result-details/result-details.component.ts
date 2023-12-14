@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { ActivatedRoute, Params, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { ResultsService } from '../../services/results.service';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
@@ -13,11 +13,11 @@ import {
   Numbers,
   OptionType,
   PaginationDefaultValues,
+  StatusCode,
 } from 'src/app/shared/common/enums';
 import { OptionsIndex } from 'src/app/modules/questions/static/question.static';
 import { environment } from 'src/environments/environment';
 import { Subject, debounceTime, takeUntil } from 'rxjs';
-import { StatusCode } from 'src/app/shared/common/enums';
 @Component({
   selector: 'app-result-details',
   templateUrl: './result-details.component.html',
