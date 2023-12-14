@@ -9,7 +9,11 @@
     </div>
 
     <div class="mat-table-wrapper">
-      <table mat-table [dataSource]="statisticsData">
+      <table
+        mat-table
+        [dataSource]="statisticsData"
+        aria-describedby="Statistics"
+      >
         <!-- Name Column -->
         <ng-container matColumnDef="name">
           <th mat-header-cell *matHeaderCellDef></th>

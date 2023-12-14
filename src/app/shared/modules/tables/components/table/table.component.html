@@ -1,7 +1,12 @@
 <mat-card class="table-card">
   <mat-card-content>
     <div class="mat-table-wrapper">
-      <table mat-table [dataSource]="dataSource" matSort>
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        aria-describedby="Table"
+      >
         <tr mat-header-row *matHeaderRowDef="getDisplayedColumns()"></tr>
         <tr mat-row *matRowDef="let row; columns: getDisplayedColumns()"></tr>
         <ng-container

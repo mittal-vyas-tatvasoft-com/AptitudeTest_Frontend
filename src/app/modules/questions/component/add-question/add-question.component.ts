@@ -242,15 +242,9 @@ export class AddQuestionComponent implements OnInit {
       }
     }
 
-    if (this.question.optionType == this.optionTypes.Text) {
-      this.questionForm.patchValue({
-        isAnswer: this.isAnswer,
-      });
-    } else {
-      this.questionForm.patchValue({
-        isAnswer: this.isAnswer,
-      });
-    }
+    this.questionForm.patchValue({
+      isAnswer: this.isAnswer,
+    });
   }
 
   get options() {
@@ -284,16 +278,7 @@ export class AddQuestionComponent implements OnInit {
     ) {
       this.formData = this.createFormData();
       if (this.isEdit) {
-        this.questionService.update(this.formData).subscribe({
-          next: (res: ResponseModel<null>) => {
-            if (res.statusCode == StatusCode.Success) {
-              this.snackbarService.success(res.message);
-              this.router.navigate(['admin/questions']);
-            } else {
-              this.snackbarService.error(res.message);
-            }
-          },
-        });
+        this.editQuestion();
       } else {
         this.questionService.create(this.formData).subscribe({
           next: (res: ResponseModel<null>) => {
@@ -311,6 +296,19 @@ export class AddQuestionComponent implements OnInit {
       this.questionForm.get('isAnswer')?.markAsTouched();
       this.optionImageTouched = [true, true, true, true];
     }
+  }
+
+  editQuestion() {
+    this.questionService.update(this.formData).subscribe({
+      next: (res: ResponseModel<null>) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.snackbarService.success(res.message);
+          this.router.navigate(['admin/questions']);
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+    });
   }
 
   checkboxChanged(event: MatCheckboxChange) {

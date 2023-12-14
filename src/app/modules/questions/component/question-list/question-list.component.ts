@@ -67,7 +67,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
     this.scrollSubject
       .pipe(debounceTime(Numbers.Debounce), takeUntil(this.ngUnsubscribe$))
       .subscribe((data) => {
-        if (data > 0.98 && this.response.isNextPage == true) {
+        if (data > 0.98 && this.response.isNextPage) {
           this.loadQuestions(
             this.response.pageSize,
             this.response?.currentPageIndex + Numbers.One,

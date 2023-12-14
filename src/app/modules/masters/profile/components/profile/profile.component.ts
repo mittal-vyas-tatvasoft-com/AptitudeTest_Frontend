@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit {
       header: 'Action',
       isAction: true,
       action: 'edit',
-      width: '25%'
+      width: '25%',
     },
   ];
   addProfile: ProfileModel = {
@@ -101,7 +101,7 @@ export class ProfileComponent implements OnInit {
       .open(DeleteConfirmationDialogComponent, dialogConfig)
       .afterClosed()
       .subscribe((res) => {
-        if (res == true) {
+        if (res) {
           this.profileService.DeleteProfile(id).subscribe({
             next: (res) => {
               if (res.statusCode == StatusCode.Success) {
@@ -137,7 +137,7 @@ export class ProfileComponent implements OnInit {
       this.sortKey = '';
       this.sortDirection = '';
     }
-    
+
     this.getAllProfileData();
   }
 }
