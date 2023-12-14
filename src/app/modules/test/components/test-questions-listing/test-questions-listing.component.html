@@ -175,3 +175,13 @@
 <ng-template #noDataFound>
   <div class="no-data-message">No Questions Added</div>
 </ng-template>
+
+<div class="col-lg-3 col-sm-6">
+  <app-button
+    [color]="'primary'"
+    [label]="'Create Test'"
+    (click)="showTestCreatedSnackbar()"
+    [class]="'button'"
+    [matTooltip]="'Create Test'"
+  ></app-button>
+</div>

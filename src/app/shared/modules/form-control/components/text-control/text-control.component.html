@@ -8,6 +8,7 @@
       [type]="formControlModel.inputType || ''"
       [maxlength]="formControlModel.maxLength || null"
       (keyup)="keyupEvent.emit()"
+      (blur)="blurEvent.emit()"
     />
     <mat-error>{{
       validationService.getError(form, formControlModel, formControlModel.key)

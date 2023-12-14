@@ -7,6 +7,8 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
+import { Router } from '@angular/router';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
   AllInsertedQuestionModel,
   TopicWiseQuestionData,
@@ -24,7 +26,12 @@ export class TestQuestionsListingComponent implements OnInit, AfterViewInit {
   @Output() handleDeleteAllQuestionsDialog = new EventEmitter();
   dataToShow: AllInsertedQuestionModel[] = [];
   marksChipData: TopicWiseQuestionData[] = [];
-  constructor(private cdr: ChangeDetectorRef) {}
+  testCreatedMessage = 'Test Created Successfully';
+  constructor(
+    private cdr: ChangeDetectorRef,
+    private snackbarService: SnackbarService,
+    private router: Router
+  ) {}
   handleEditDialog(questionData: any, allInsertedQuestions: any) {
     this.handleEditQuestionsDialog.emit({ questionData, allInsertedQuestions });
   }
@@ -47,5 +54,9 @@ export class TestQuestionsListingComponent implements OnInit, AfterViewInit {
 
   deleteAllQuestions() {
     this.handleDeleteAllQuestionsDialog.emit();
+  }
+  showTestCreatedSnackbar() {
+    this.snackbarService.success(this.testCreatedMessage);
+    this.router.navigate(['/admin/tests']);
   }
 }
