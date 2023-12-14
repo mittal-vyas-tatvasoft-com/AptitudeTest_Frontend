@@ -123,7 +123,13 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
         ],
       ],
       cityName: [''],
-      permanentAddress1: [''],
+      permanentAddress1: [
+        '',
+        [
+          Validators.maxLength(500),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       state: [''],
       dateOfBirth: ['', Validators.required],
     });

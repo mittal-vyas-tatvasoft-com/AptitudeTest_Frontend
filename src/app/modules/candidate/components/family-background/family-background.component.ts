@@ -5,8 +5,16 @@ import {
   OnInit,
   SimpleChanges,
 } from '@angular/core';
-import { FormArray, FormBuilder, FormControl, FormGroup } from '@angular/forms';
+import {
+  FormArray,
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+} from '@angular/forms';
+import { validations } from 'src/app/shared/messages/validation.static';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import {
   candidateControl,
   selectOptionsForRelationship,
@@ -23,7 +31,10 @@ export class FamilyBackgroundComponent implements OnInit, OnChanges {
   form: FormGroup;
   @Input() familyDetails: any[];
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(
+    private formBuilder: FormBuilder,
+    public validationService: ValidationService
+  ) {}
 
   ngOnInit() {
     this.createForm();
@@ -62,6 +73,34 @@ export class FamilyBackgroundComponent implements OnInit, OnChanges {
           })
         );
       }
+    }
+  }
+
+  change(event: any, i: number, data: any) {
+    if (event > 0) {
+      data.get('qualification').touched = true;
+      data
+        .get('qualification')
+        .setValidators([
+          Validators.required,
+          Validators.maxLength(255),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ]);
+      data.get('qualification').updateValueAndValidity();
+      data.get('occupation').touched = true;
+      data
+        .get('occupation')
+        .setValidators([
+          Validators.required,
+          Validators.maxLength(255),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ]);
+      data.get('occupation').updateValueAndValidity();
+    } else {
+      data.get('qualification').clearValidators();
+      data.get('qualification').updateValueAndValidity();
+      data.get('occupation').clearValidators();
+      data.get('occupation').updateValueAndValidity();
     }
   }
 

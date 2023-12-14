@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { FormControlModel } from '../interfaces/form-control-model';
 import { Messages } from 'src/app/shared/messages/messages.static';
+import { FormControlModel } from '../interfaces/form-control-model';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ValidationService {
-  getError(form: FormGroup, formControlModel: FormControlModel, field: string) {
+  getError(form: any, formControlModel: FormControlModel, field: string) {
     const formControl = form.get(field);
     if (formControl) {
       if (formControl.touched && formControl.errors) {

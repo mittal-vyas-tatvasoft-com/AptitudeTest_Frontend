@@ -9,6 +9,7 @@ import {
 } from '@angular/forms';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 import {
   ErrorMessageForEductionDetail,
   MinMaxValue,
@@ -18,12 +19,8 @@ import {
   selectOptionsForStream,
 } from '../../configs/candidate.configs';
 import { CandidateService } from '../../services/candidate.service';
+import { defaultSelectOption } from '../../static/candidate.static';
 
-export const defaultSelectOption = {
-  id: '',
-  key: 'Select',
-  value: 'Select',
-};
 @Component({
   selector: 'app-education-details',
   templateUrl: './education-details.component.html',
@@ -53,7 +50,8 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
 
   constructor(
     private formBuilder: FormBuilder,
-    private candidateService: CandidateService
+    private candidateService: CandidateService,
+    public validationService: ValidationService
   ) {}
 
   ngOnInit() {
@@ -151,23 +149,29 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
     this.otherDegree.unshift(defaultSelectOption);
     this.otherStream.unshift(defaultSelectOption);
   }
-  chang(event: any, i: number, data: any) {
+  change(event: any, i: number, data: any) {
     if (i > 2) {
       if (event > 0) {
         data.get('university').touched = true;
-        data.get('university').setValidators(Validators.required);
+        data
+          .get('university')
+          .setValidators([
+            Validators.required,
+            Validators.maxLength(255),
+            Validators.pattern(validations.common.whitespaceREGEX),
+          ]);
         data.get('university').updateValueAndValidity();
         data.get('streamId').touched = true;
-        data.get('streamId').setValidators(Validators.required);
+        data.get('streamId').setValidators([Validators.required]);
         data.get('streamId').updateValueAndValidity();
         data.get('grade').touched = true;
-        data.get('grade').setValidators(Validators.required);
+        data.get('grade').setValidators([Validators.required]);
         data.get('grade').updateValueAndValidity();
         data.get('maths').touched = true;
-        data.get('maths').setValidators(Validators.required);
+        data.get('maths').setValidators([Validators.required]);
         data.get('maths').updateValueAndValidity();
         data.get('physics').touched = true;
-        data.get('physics').setValidators(Validators.required);
+        data.get('physics').setValidators([Validators.required]);
         data.get('physics').updateValueAndValidity();
       } else {
         data.get('university').clearValidators();
@@ -181,6 +185,15 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
         data.get('physics').clearValidators();
         data.get('physics').updateValueAndValidity();
       }
+    } else {
+      data
+        .get('university')
+        .setValidators([
+          Validators.required,
+          Validators.maxLength(255),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ]);
+      data.get('university').updateValueAndValidity();
     }
   }
 
@@ -308,7 +321,7 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
 
   validateForm() {
     for (let i = 0; i < 3; i++) {
-      const control = this.educationDetailsArrayData.at(i) as FormGroup | null;
+      const control = this.educationDetailsArrayData.at(i) as FormGroup;
       if (control) {
         Object.keys(control.controls).forEach((key) => {
           const formControl = control.get(key) as FormControl;

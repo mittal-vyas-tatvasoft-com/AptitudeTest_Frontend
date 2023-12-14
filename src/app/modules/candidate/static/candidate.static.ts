@@ -10,3 +10,9 @@ export const dropzoneConfig = {
 export const importCandidateSampleFilePath =
   '/assets/import-sample/Candidate Import Sample.csv';
 export const importCandidateSampleFileName = 'Candidate Import Sample.csv';
+
+export const defaultSelectOption = {
+  id: '',
+  key: 'Select',
+  value: 'Select',
+};
