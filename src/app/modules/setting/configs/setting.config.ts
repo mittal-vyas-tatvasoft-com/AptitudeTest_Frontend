@@ -14,4 +14,12 @@ export const SettingControls = {
     key: 'screenCapture',
     label: 'Take Screenshots',
   },
+  Interval: {
+    value: '',
+    key: 'intervalForScreenCapture',
+    label: 'Screenshots Interval',
+    requiredErrMsg: 'Interval is required!',
+    minLengthErrMsg: 'Minimum interval is 5 minute',
+    inputType: 'text',
+  },
 };
