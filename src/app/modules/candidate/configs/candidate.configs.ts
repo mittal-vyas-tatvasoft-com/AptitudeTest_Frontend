@@ -37,7 +37,7 @@ export const candidateControl = {
     label: 'Email Address',
     required: true,
     requiredErrMsg: 'Email is required',
-    patternErrMsg: 'Email is not valid',
+    patternErrMsg: 'Please enter valid Email address',
     inputType: 'text',
     displayIcon: false,
     maxLength: 40,
@@ -133,6 +133,8 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
+    patternErrMsg: 'Please enter valid address',
+    maxLengthErrMsg: 'Max 500 characters allowed',
   },
   cityName: {
     value: '',
@@ -203,19 +205,36 @@ export const candidateControl = {
     label: 'Relationship',
     inputType: 'select',
   },
+  University: {
+    value: '',
+    key: 'university',
+    label: 'University',
+    required: true,
+    requiredErrMsg: 'School/College/University is required',
+    patternErrMsg: 'Please enter valid School/College/University',
+    maxLengthErrMsg: 'Max 255 characters allowed',
+    inputType: 'text',
+    displayIcon: false,
+  },
   Qualification: {
     value: '',
     key: 'qualification',
     label: 'Qualification',
-    required: false,
+    required: true,
+    requiredErrMsg: 'Qualification is required',
+    patternErrMsg: 'Please enter valid qualification',
+    maxLengthErrMsg: 'Max 255 characters allowed',
     inputType: 'text',
     displayIcon: false,
   },
   Occupation: {
     value: '',
     key: 'occupation',
-    label: 'occupation',
+    label: 'Occupation',
     required: false,
+    requiredErrMsg: 'Occupation is required',
+    patternErrMsg: 'Please enter valid occupation',
+    maxLengthErrMsg: 'Max 255 characters allowed',
     inputType: 'text',
     displayIcon: false,
   },
@@ -279,6 +298,11 @@ export const selectOptionsForStream = [
 ];
 
 export const selectOptionsForRelationship = [
+  {
+    id: '',
+    key: 'Select',
+    value: 'Select',
+  },
   {
     id: 1,
     key: 'Father',
