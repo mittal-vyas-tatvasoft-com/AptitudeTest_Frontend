@@ -1,4 +1,3 @@
-import { NumberInput } from '@angular/cdk/coercion';
 import { Pagination } from 'src/app/shared/common/interfaces/pagination.interface';
 
 export interface Results {}
@@ -13,8 +12,9 @@ export interface GetResultsParams {
   sortOrder: string;
 }
 
-export interface ResultData {
-  id?: number;
+export interface ResultModel {
+  id: number;
+  testId: number;
   name: string;
   universityName: string;
   startTime: string;
@@ -26,6 +26,26 @@ export interface ResultData {
   undisplayed: string;
   status: string;
   action: string;
+}
+
+export interface ResultData {
+  userId: number;
+  firstName: string;
+  lastName: string;
+  collegeName: string;
+  startTime: string;
+  points: number;
+  correctMarks: number;
+  correctCount: number;
+  wrongMarks: number;
+  wrongCount: number;
+  unAnsweredCount: number;
+  unDisplayedCount: number;
+  userTestId: number;
+  status: string;
+  totalRecords: number;
+  totalPages: number;
+  nextPage: number;
 }
 
 export interface StatisticsData {
@@ -78,4 +98,23 @@ export interface ResultDetailsParam {
   marks: number;
   pagesize: number;
   pageIndex: number;
+}
+
+export interface StatisticsModel {
+  points: number;
+  statisticsHeader: string;
+  correct: string;
+  wrong: string;
+  unAnswered: number;
+  unDisplayed: number;
+}
+
+export interface ResultQueryParam {
+  searchQuery: string;
+  testId: number;
+  groupId: number;
+  collegeId: number;
+  year?: number;
+  sortField: string;
+  sortOrder: string;
 }

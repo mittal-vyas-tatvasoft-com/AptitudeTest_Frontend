@@ -1,5 +1,5 @@
 import { Location } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { QuestionsService } from '../../services/questions.service';
@@ -92,20 +92,20 @@ export class AddQuestionComponent implements OnInit {
           '|',
           'bulletedList',
           'numberedList',
-        ]
+        ],
       },
       image: {
         toolbar: [
           'imageStyle:full',
           'imageStyle:side',
           '|',
-          'imageTextAlternative'
-        ]
+          'imageTextAlternative',
+        ],
       },
       table: {
-        contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
       },
-      language: 'en'
+      language: 'en',
     };
   }
 
@@ -237,7 +237,7 @@ export class AddQuestionComponent implements OnInit {
           this.baseImageUrl + this.question.options[i].optionValue;
         this.optionImageFlag[i] = true;
       }
-      if (this.question.options[i].isAnswer == true) {
+      if (this.question.options[i].isAnswer) {
         this.checkboxValues.push(i);
       }
     }

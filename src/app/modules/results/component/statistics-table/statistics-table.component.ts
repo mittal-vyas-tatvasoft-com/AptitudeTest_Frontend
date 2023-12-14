@@ -11,6 +11,4 @@ import { DisplayedStatisticsColumns } from '../../static/results.static';
 export class StatisticsTableComponent {
   displayedStatisticsColumns = DisplayedStatisticsColumns;
   @Input() statisticsData: MatTableDataSource<StatisticsData>;
-
-  constructor() {}
 }
