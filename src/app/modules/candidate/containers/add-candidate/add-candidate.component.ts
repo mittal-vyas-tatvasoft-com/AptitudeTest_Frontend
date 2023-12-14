@@ -69,6 +69,7 @@ export class AddCandidateComponent implements OnInit {
         '',
         [
           Validators.required,
+          Validators.maxLength(candidateControl.email.maxLength),
           Validators.pattern(validations.common.emailREGEX),
         ],
       ],
@@ -116,8 +117,7 @@ export class AddCandidateComponent implements OnInit {
     if (this.form.valid) {
       this.isLoading = true;
       const candidateData: CandidateModel = this.form.value;
-      candidateData.status =
-        this.form.value.status === Status.Active;
+      candidateData.status = this.form.value.status === Status.Active;
       candidateData.gender =
         this.form.value.gender === 'Male' ? Numbers.One : Numbers.Two;
       candidateData.createdBy = this.userId;

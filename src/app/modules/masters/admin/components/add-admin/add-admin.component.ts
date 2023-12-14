@@ -82,6 +82,7 @@ export class AddAdminComponent implements OnInit, AfterViewInit {
         '',
         [
           Validators.required,
+          Validators.maxLength(AdminControl.email.maxLength),
           Validators.pattern(validations.common.emailREGEX),
         ],
       ],
