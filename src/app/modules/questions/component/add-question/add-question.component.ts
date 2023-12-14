@@ -73,7 +73,41 @@ export class AddQuestionComponent implements OnInit {
     public validation: ValidationService,
     public snackbarService: SnackbarService,
     private router: Router
-  ) {}
+  ) {
+    ClassicEditor.defaultConfig = {
+      toolbar: {
+        items: [
+          'undo',
+          'redo',
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          '|',
+          'link',
+          '|',
+          'insertTable',
+          '|',
+          'blockQuote',
+          '|',
+          'bulletedList',
+          'numberedList',
+        ]
+      },
+      image: {
+        toolbar: [
+          'imageStyle:full',
+          'imageStyle:side',
+          '|',
+          'imageTextAlternative'
+        ]
+      },
+      table: {
+        contentToolbar: [ 'tableColumn', 'tableRow', 'mergeTableCells' ]
+      },
+      language: 'en'
+    };
+  }
 
   ngOnInit(): void {
     this.createForm();
