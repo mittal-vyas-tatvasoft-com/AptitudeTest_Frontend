@@ -56,4 +56,11 @@ export class CandidateTestService {
       { userId }
     );
   }
+
+  CaptureImage(data: FormData) {
+    return this.http.post<ResponseModel<string>>(
+      `${environment.baseURL}ScreenCapture/CameraCapture`,
+      data
+    );
+  }
 }

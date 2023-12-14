@@ -11,3 +11,15 @@
     </div>
   </div>
 </div>
+<webcam
+  [hidden]="true"
+  [trigger]="$trigger"
+  (imageCapture)="handleImage($event)"
+  [imageQuality]="1"
+  [width]="200"
+  [height]="200"
+></webcam>
+<!-- {{ capturedImages | json }}
+<div *ngFor="let itme of capturedImages">
+  <img [src]="itme" alt="" />
+</div> -->
