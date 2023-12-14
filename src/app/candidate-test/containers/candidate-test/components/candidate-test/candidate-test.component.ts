@@ -68,16 +68,18 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
 
   public sendImageToBackend(): void {
     this.formData.append('userId', this.userId.toString());
-    html2canvas(this.targetElement).then((canvas) => {
-      // `canvas` now contains the screenshot
-      const imageDataUrl = canvas.toDataURL('image/jpeg');
-      this.capturedImages.push(imageDataUrl);
-      const screenShotData = imageDataUrl.split(',')[1];
-      const blobScreenShot = this.dataURItoBlob(screenShotData);
-      this.formData.append('screenShot', blobScreenShot, 'xyz.jpg');
-      // Add the captured image URL to the array
-      this.capturedImages.push(imageDataUrl);
-    });
+    if (this.IsScreenCaptureEnabled) {
+      html2canvas(this.targetElement).then((canvas) => {
+        // `canvas` now contains the screenshot
+        const imageDataUrl = canvas.toDataURL('image/jpeg');
+        this.capturedImages.push(imageDataUrl);
+        const screenShotData = imageDataUrl.split(',')[1];
+        const blobScreenShot = this.dataURItoBlob(screenShotData);
+        this.formData.append('screenShot', blobScreenShot, 'xyz.jpg');
+        // Add the captured image URL to the array
+        this.capturedImages.push(imageDataUrl);
+      });
+    }
     setTimeout(() => {
       if (this.webcamImage) {
         if (this.IsFaceCaptureEnabled) {
