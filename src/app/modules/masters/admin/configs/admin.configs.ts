@@ -41,6 +41,8 @@ export const AdminControl = {
     patternErrMsg: 'Email is invalid!!',
     inputType: 'text',
     displayIcon: false,
+    maxLength: 40,
+    maxLengthErrMsg: 'Max 40 characters allowed',
   },
   phoneNumber: {
     value: '',

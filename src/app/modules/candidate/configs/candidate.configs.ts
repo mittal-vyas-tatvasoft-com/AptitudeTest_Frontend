@@ -40,6 +40,8 @@ export const candidateControl = {
     patternErrMsg: 'Email is not valid',
     inputType: 'text',
     displayIcon: false,
+    maxLength: 40,
+    maxLengthErrorMsg: 'Max 40 characters allowed',
   },
   phoneNumber: {
     value: '',
