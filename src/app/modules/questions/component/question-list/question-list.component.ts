@@ -1,4 +1,11 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+} from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import {
   Numbers,
@@ -28,6 +35,7 @@ import { Question } from '../../interfaces/question.interface';
 export class QuestionListComponent implements OnInit, OnDestroy {
   questions: Question[] = [];
   @Input() filterForm?: FormGroup;
+  @Output() deleteQuestion = new EventEmitter<void>();
   optionType = OptionType;
   questionTopic = QuestionTopic;
   questionType = QuestionType;
@@ -153,6 +161,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
             .subscribe({
               next: (res: ResponseModel<null>) => {
                 if (res.statusCode == StatusCode.Success) {
+                  this.deleteQuestion.emit();
                   this.questions = this.questions.filter(
                     (data: Question) => data.id != id
                   );
