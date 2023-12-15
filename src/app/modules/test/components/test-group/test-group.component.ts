@@ -2,8 +2,8 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import { MatTableDataSource } from '@angular/material/table';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
-import { TestCandidatesModel } from '../../interfaces/test.interface';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { TestCandidatesModel } from '../../interfaces/test.interface';
 
 @Component({
   selector: 'app-test-group',
@@ -29,6 +29,7 @@ export class TestGroupComponent {
   @Output() handleDataSortingEvent = new EventEmitter();
   @Output() search = new EventEmitter();
   @Output() changeSelection = new EventEmitter();
+  @Output() clearSearchFilter = new EventEmitter();
 
   searchTestCandidates() {
     this.search.emit();
@@ -56,5 +57,9 @@ export class TestGroupComponent {
 
   changeFilterSelection() {
     this.changeSelection.emit();
+  }
+
+  clearFilter() {
+    this.clearSearchFilter.emit();
   }
 }

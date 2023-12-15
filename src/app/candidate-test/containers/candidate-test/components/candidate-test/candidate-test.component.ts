@@ -2,7 +2,7 @@ import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import { WebcamImage } from 'ngx-webcam';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
 import { QuestionStatusModel } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
@@ -25,6 +25,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
   trigger: Subject<void> = new Subject();
   formData = new FormData();
   targetElement = document.documentElement;
+  private ngUnsubscribe$ = new Subject<void>();
   IsScreenCaptureEnabled = false;
   IsFaceCaptureEnabled = false;
   captureInterval = 0;
@@ -89,6 +90,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
         }
         this.CaptureImageSub = this.testService
           .CaptureImage(this.formData)
+          .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe(() => {
             setTimeout(() => {
               this.formData = new FormData();
@@ -119,16 +121,24 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
         }, 5000);
       })
       .catch((err) => {
-        if (this.IsScreenCaptureEnabled === true) {
+        if (this.IsFaceCaptureEnabled === true) {
           this.router.navigate(['/user/instructions']);
-        }
-        if (err?.message === 'Permission denied') {
-          this.status =
-            'Camera Permission denied, please try again by approving camera access';
-          this.snackBarService.error(this.status);
+          if (err?.message === 'Permission denied') {
+            this.status =
+              'Camera Permission denied, please try again by approving camera access';
+            this.snackBarService.error(this.status);
+          } else {
+            this.status =
+              'You may not have a camera system. Please try again...';
+            this.snackBarService.error(this.status);
+          }
         } else {
-          this.status = 'You may not have a camera system. Please try again...';
-          this.snackBarService.error(this.status);
+          setTimeout(() => {
+            this.intervalCameraCapture = setInterval(() => {
+              this.trigger.next();
+              this.sendImageToBackend();
+            }, this.captureInterval * 60 * 1000);
+          }, 5000);
         }
       });
   }
@@ -169,7 +179,8 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    this.CaptureImageSub.unsubscribe();
     clearInterval(this.intervalCameraCapture);
+    this.ngUnsubscribe$.next();
+    this.ngUnsubscribe$.complete();
   }
 }

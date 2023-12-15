@@ -258,6 +258,12 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     this.fetchTestCandidates();
   }
 
+  clearFilter() {
+    this.testGroupFilterForm.get('collegeId')?.setValue('');
+    this.testGroupFilterForm.get('searchQuery')?.setValue('');
+    this.fetchTestCandidates();
+  }
+
   fetchTestCandidates() {
     if (this.testId != 0 && this.testGroupForm.get('groupId')?.value != '') {
       const params: GetAllTestCandidateParams = {

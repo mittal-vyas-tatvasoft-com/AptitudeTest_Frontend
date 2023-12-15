@@ -42,7 +42,14 @@
     </div>
   </div>
   <div class="col-md-auto pb-1 pb-md-0 text-left">
-    <button mat-stroked-button color="primary" matTooltip="Clear">clear</button>
+    <button
+      mat-stroked-button
+      color="primary"
+      matTooltip="Clear"
+      (click)="clearFilter()"
+    >
+      clear
+    </button>
   </div>
 </div>
 <div style="margin: 0 -24px -24px">
