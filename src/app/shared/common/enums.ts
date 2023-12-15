@@ -46,6 +46,12 @@ export enum Navigation {
   //Results navigation
   Results = 'results',
   ResultsDetails = 'result-details',
+
+  // User Test navigation
+
+  Instructions = 'instructions',
+  Test = 'test',
+  Submitted = 'submitted',
 }
 
 export enum Type {

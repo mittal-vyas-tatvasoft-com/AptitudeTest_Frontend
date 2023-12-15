@@ -21,15 +21,15 @@ const routes: Routes = [
         component: DashboardComponent,
       },
       {
-        path: `instructions`,
+        path: Navigation.Instructions,
         component: CandidateInstructionsComponent,
       },
       {
-        path: `test`,
+        path: Navigation.Test,
         component: CandidateTestComponent,
       },
       {
-        path: `submitted`,
+        path: Navigation.Submitted,
         component: TestSubmittedComponent,
       },
     ],
