@@ -5,11 +5,11 @@ export const CollegeControl = {
     label: 'Name',
     required: true,
     requiredErrMsg: 'Name is required',
-    patternErrMsg: 'Name is not valid',
     inputType: 'text',
     displayIcon: false,
     maxLength: 50,
     maxLengthErrMsg: 'Max 50 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   abbreviation: {
     value: '',

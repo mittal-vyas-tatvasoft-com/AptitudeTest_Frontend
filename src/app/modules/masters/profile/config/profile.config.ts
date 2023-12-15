@@ -7,6 +7,7 @@ export const formControls = {
     maxLength: 50,
     maxLengthErrMsg: 'Maximum 50 characters are allowed!',
     inputType: 'text',
+    patternErrMsg: 'White space is not applicable',
   },
   status: {
     value: '',

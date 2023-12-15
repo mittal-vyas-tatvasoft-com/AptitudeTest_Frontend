@@ -9,6 +9,7 @@ export const AdminControl = {
     displayIcon: false,
     maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   lastName: {
     value: '',
@@ -20,6 +21,7 @@ export const AdminControl = {
     displayIcon: false,
     maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   middleName: {
     value: '',
@@ -31,6 +33,7 @@ export const AdminControl = {
     displayIcon: false,
     maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   email: {
     value: '',
