@@ -37,7 +37,8 @@ export class CandidateInstructionsComponent implements OnInit {
         next: (res) => {
           if (res.statusCode == StatusCode.Success) {
             this.testExist = true;
-            this.messageToShow = res.data;
+            this.messageToShow = res.data.messageAtStartOfTheTest;
+            this.candidateTestService.endTime.next(res.data.endTime);
           } else {
             this.snackbarService.error(NoTestAssigned);
             this.router.navigate(['/user']);

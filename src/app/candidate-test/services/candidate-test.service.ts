@@ -7,6 +7,7 @@ import {
   Question,
   QuestionStatusModel,
   SaveAnswerModel,
+  TestInstructions,
 } from '../interfaces/candidate-test.interface';
 
 @Injectable({
@@ -15,6 +16,7 @@ import {
 export class CandidateTestService {
   questionStatus = new Subject<number[]>();
   loadQuestion = new Subject<number>();
+  endTime = new Subject<string>();
 
   constructor(private http: HttpClient) {}
 
@@ -31,7 +33,7 @@ export class CandidateTestService {
   }
 
   getInstructionsOfTheTestForUser(userId: number, testStatus: string) {
-    return this.http.get<ResponseModel<string>>(
+    return this.http.get<ResponseModel<TestInstructions>>(
       `${environment.baseURL}Candidates/GetInstructionsOfTheTestForUser/${userId}/${testStatus}`
     );
   }
