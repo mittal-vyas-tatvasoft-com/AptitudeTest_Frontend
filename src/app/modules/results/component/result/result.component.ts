@@ -125,7 +125,23 @@ export class ResultComponent implements OnInit {
   }
 
   exportData() {
-    this.resultService.downloadExcel(null);
+    this.resultService
+      .getExportData(this.params, this.currentPageIndex, this.pageSize)
+      .subscribe({
+        next: (res) => {
+          if (res.statusCode == StatusCode.Success) {
+            if (res.data.length > 0) {
+              this.resultService.downloadExcel(res.data);
+              this.snackbarService.success(res.message);
+            }
+          } else {
+            this.snackbarService.error(res.message);
+          }
+        },
+        error: (error) => {
+          this.snackbarService.error(error.message);
+        },
+      });
   }
 
   getDetails(data: { id: number; testId: number }) {
@@ -154,7 +170,7 @@ export class ResultComponent implements OnInit {
         }
       },
       error: (error) => {
-        this.snackbarService.error(error.Error);
+        this.snackbarService.error(error.message);
       },
     });
   }

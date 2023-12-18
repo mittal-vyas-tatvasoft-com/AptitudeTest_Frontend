@@ -7,6 +7,7 @@ import {
   ResultData,
   ResultDetails,
   ResultDetailsParam,
+  ResultExportData,
   ResultQueryParam,
   StatisticsModel,
 } from '../interfaces/result.interface';
@@ -20,7 +21,7 @@ export class ResultsService {
 
   getTestsForDropDown(): Observable<DropdownItem[]> {
     return this.http
-      .get<DropdownItem[]>(`${environment.baseURL}Groups/GetGroupsForDropDown`)
+      .get<DropdownItem[]>(`${environment.baseURL}Common/GetTestForDropdown`)
       .pipe(map((response: any) => response.data));
   }
 
@@ -30,8 +31,10 @@ export class ResultsService {
     pageSize: number
   ) {
     let httpParam = this.createHttpParam(data, true);
+    httpParam = httpParam.set('currentPageIndex', currentPageIndex.toString());
+    httpParam = httpParam.set('pageSize', pageSize.toString());
     return this.http.get<ResponseModel<ResultData[]>>(
-      `${environment.baseURL}Results/${currentPageIndex}/${pageSize}`,
+      `${environment.baseURL}Results/GetResults`,
       { params: httpParam }
     );
   }
@@ -45,7 +48,7 @@ export class ResultsService {
   getStatistics(data: ResultQueryParam) {
     let httpParam = this.createHttpParam(data, false);
     return this.http.get<ResponseModel<StatisticsModel[]>>(
-      `${environment.baseURL}Results/0`,
+      `${environment.baseURL}Results/GetResultStatistics`,
       { params: httpParam }
     );
   }
@@ -90,7 +93,8 @@ export class ResultsService {
     }
     return httpParam;
   }
-  downloadExcel(data: any) {
+
+  downloadExcel(data: ResultExportData[]) {
     // Convert data to worksheet
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
 
@@ -103,7 +107,7 @@ export class ResultsService {
       bookType: 'xlsx',
       type: 'array',
     });
-    this.saveAsExcelFile(excelBuffer, 'your_excel_filename');
+    this.saveAsExcelFile(excelBuffer, 'ExportedResults');
   }
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
@@ -118,5 +122,19 @@ export class ResultsService {
     a.click();
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
+  }
+
+  getExportData(
+    data: ResultQueryParam,
+    currentPageIndex: number,
+    pageSize: number
+  ) {
+    let httpParam = this.createHttpParam(data, false);
+    httpParam = httpParam.set('currentPageIndex', currentPageIndex.toString());
+    httpParam = httpParam.set('pageSize', pageSize.toString());
+    return this.http.get<ResponseModel<ResultExportData[]>>(
+      `${environment.baseURL}Results/GetResultExportData`,
+      { params: httpParam }
+    );
   }
 }
