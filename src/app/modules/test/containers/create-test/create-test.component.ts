@@ -392,7 +392,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       id: this.basicTestDetails.get('testId')?.value,
       name: this.basicTestDetails.get('testName')?.value,
       testDuration: this.basicTestDetails.get('testDuration')?.value,
-      date: d,
+      date: utcDate,
       startTime: this.onTimeSet(
         utcDate,
         this.basicTestDetails.get('startTime')?.value
