@@ -64,6 +64,7 @@ export class AddQuestionComponent implements OnInit {
   isTopicEditable = true;
   question: Question;
   isEdit = false;
+  isDuplicateOptions = false;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
   constructor(
     private location: Location,
@@ -336,7 +337,48 @@ export class AddQuestionComponent implements OnInit {
     }
   }
 
-  getCheckboxError() {
+  getCheckboxOrOptionError() {
+    const optionA = this.questionForm.get('optionValueA')?.value;
+    const optionB = this.questionForm.get('optionValueB')?.value;
+    const optionC = this.questionForm.get('optionValueC')?.value;
+    const optionD = this.questionForm.get('optionValueD')?.value;
+
+    if (
+      optionA !== '' &&
+      (optionA.trim() === optionB.trim() ||
+        optionA.trim() === optionC.trim() ||
+        optionA.trim() === optionD.trim())
+    ) {
+      return this.questionControls.isAnswer.invalidOptionValue;
+    }
+
+    if (
+      optionB !== '' &&
+      (optionB.trim() === optionA.trim() ||
+        optionB.trim() === optionC.trim() ||
+        optionB.trim() === optionD.trim())
+    ) {
+      return this.questionControls.isAnswer.invalidOptionValue;
+    }
+
+    if (
+      optionC !== '' &&
+      (optionC.trim() === optionA.trim() ||
+        optionC.trim() === optionB.trim() ||
+        optionC.trim() === optionD.trim())
+    ) {
+      return this.questionControls.isAnswer.invalidOptionValue;
+    }
+
+    if (
+      optionD !== '' &&
+      (optionD.trim() === optionA.trim() ||
+        optionD.trim() === optionC.trim() ||
+        optionD.trim() === optionA.trim())
+    ) {
+      return this.questionControls.isAnswer.invalidOptionValue;
+    }
+
     const questionType = this.questionForm.get('questionType')?.value;
     const isAnswer = this.questionForm.get('isAnswer');
     if (
@@ -352,8 +394,9 @@ export class AddQuestionComponent implements OnInit {
       isAnswer?.touched &&
       (this.checkboxValues.length < 2 || this.checkboxValues.length > 4)
     ) {
-      return this.questionControls.isAnswer.invalidErrorMsg;
+      return this.questionControls.isAnswer.invalidMultiAnswerErrorMsg;
     }
+
     return null;
   }
 

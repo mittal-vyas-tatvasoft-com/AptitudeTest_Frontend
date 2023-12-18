@@ -88,6 +88,8 @@ export const QuestionControls = {
     label: 'isAnswer',
     required: true,
     invalidErrorMsg: 'Please select correct answers',
+    invalidMultiAnswerErrorMsg: 'Please select more than one answer',
+    invalidOptionValue: 'Options can not be same',
   },
 };
 
