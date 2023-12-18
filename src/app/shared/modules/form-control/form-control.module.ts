@@ -1,27 +1,27 @@
-import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { NumbersOnlyDirective } from './directives/numbers-only.directive';
-import { DatePickerComponent } from './components/date-picker/date-picker.component';
-import { SharedMaterialModule } from '../../material/shared-material.module';
+import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
-import { TimePickerComponent } from './components/time-picker/time-picker.component';
-import { RadioGroupComponent } from './components/radio-group/radio-group.component';
-import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-group.component';
-import { SelectComponent } from './components/select/select.component';
-import { MultiSelectComponent } from './components/multi-select/multi-select.component';
-import { TextControlComponent } from './components/text-control/text-control.component';
-import { TextControlNumberComponent } from './components/text-control-number/text-control-number.component';
-import { ButtonComponent } from './components/button/button.component';
 import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
+import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
-import { CharactersOnlyDirective } from './directives/characters-only.directive';
+import { SharedMaterialModule } from '../../material/shared-material.module';
+import { ButtonComponent } from './components/button/button.component';
+import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-group.component';
+import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import { MultiSelectComponent } from './components/multi-select/multi-select.component';
+import { RadioGroupComponent } from './components/radio-group/radio-group.component';
+import { SelectComponent } from './components/select/select.component';
 import { TextControlCharacterComponent } from './components/text-control-character/text-control-character.component';
+import { TextControlNumberComponent } from './components/text-control-number/text-control-number.component';
+import { TextControlComponent } from './components/text-control/text-control.component';
+import { TimePickerComponent } from './components/time-picker/time-picker.component';
+import { CharactersOnlyDirective } from './directives/characters-only.directive';
 import { MaxLengthDirective } from './directives/max-length.directive';
+import { NumbersOnlyDirective } from './directives/numbers-only.directive';
 
 @NgModule({
   declarations: [
@@ -45,7 +45,7 @@ import { MaxLengthDirective } from './directives/max-length.directive';
       useClass: MomentDateAdapter,
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
     },
-    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: false } },
   ],
   imports: [
     CommonModule,
