@@ -21,12 +21,7 @@
 <mat-card class="form-block mb-3">
   <mat-card-content>
     <div class="d-flex justify-content-end">
-      <button
-        mat-raised-button
-        color="primary"
-        (click)="downloadSampleFile()"
-        matTooltip="Download"
-      >
+      <button mat-raised-button color="primary" (click)="downloadSampleFile()">
         download Sample File
       </button>
     </div>
@@ -47,7 +42,6 @@
               color="primary"
               [disabled]="!getValidation()"
               (click)="importQuestions()"
-              matTooltip="Import"
             >
               Import
             </button>

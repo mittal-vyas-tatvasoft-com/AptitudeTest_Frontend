@@ -60,16 +60,10 @@
     color="primary"
     [mat-dialog-close]="form.value"
     [disabled]="form.invalid"
-    [matTooltip]="this.data === 0 ? 'Add' : 'Save'"
   >
     {{ this.data === 0 ? "Add" : "Save" }}
   </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    [mat-dialog-close]="false"
-    matTooltip="Cancel"
-  >
+  <button mat-stroked-button color="primary" [mat-dialog-close]="false">
     Cancel
   </button>
 </mat-dialog-actions>

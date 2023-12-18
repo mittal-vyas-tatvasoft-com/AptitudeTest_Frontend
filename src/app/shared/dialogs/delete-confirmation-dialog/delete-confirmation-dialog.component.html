@@ -12,16 +12,10 @@
     mat-dialog-close
     color="primary"
     (click)="deleteConfirmed(true)"
-    matTooltip="Delete"
   >
     Delete
   </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    [mat-dialog-close]="false"
-    matTooltip="Cancel"
-  >
+  <button mat-stroked-button color="primary" [mat-dialog-close]="false">
     Cancel
   </button>
 </mat-dialog-actions>

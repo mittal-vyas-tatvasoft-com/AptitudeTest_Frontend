@@ -77,17 +77,11 @@
     label="isEditMode ? 'Save' : 'Add'"
     [disabled]="!form.valid"
     (click)="submit()"
-    [matTooltip]="isEditMode ? 'Save' : 'Add'"
   >
     {{ isEditMode ? "Save" : "Add" }}
   </button>
   <!-- [mat-dialog-close]="form.value" -->
-  <button
-    mat-stroked-button
-    color="primary"
-    [mat-dialog-close]="false"
-    matTooltip="Cancel"
-  >
+  <button mat-stroked-button color="primary" [mat-dialog-close]="false">
     Cancel
   </button>
 </mat-dialog-actions>
