@@ -342,41 +342,22 @@ export class AddQuestionComponent implements OnInit {
     const optionB = this.questionForm.get('optionValueB')?.value;
     const optionC = this.questionForm.get('optionValueC')?.value;
     const optionD = this.questionForm.get('optionValueD')?.value;
+    const tempOptions = [
+      optionA.trim(),
+      optionB.trim(),
+      optionC.trim(),
+      optionD.trim(),
+    ];
 
-    if (
-      optionA !== '' &&
-      (optionA.trim() === optionB.trim() ||
-        optionA.trim() === optionC.trim() ||
-        optionA.trim() === optionD.trim())
-    ) {
-      return this.questionControls.isAnswer.invalidOptionValue;
-    }
-
-    if (
-      optionB !== '' &&
-      (optionB.trim() === optionA.trim() ||
-        optionB.trim() === optionC.trim() ||
-        optionB.trim() === optionD.trim())
-    ) {
-      return this.questionControls.isAnswer.invalidOptionValue;
-    }
-
-    if (
-      optionC !== '' &&
-      (optionC.trim() === optionA.trim() ||
-        optionC.trim() === optionB.trim() ||
-        optionC.trim() === optionD.trim())
-    ) {
-      return this.questionControls.isAnswer.invalidOptionValue;
-    }
-
-    if (
-      optionD !== '' &&
-      (optionD.trim() === optionA.trim() ||
-        optionD.trim() === optionC.trim() ||
-        optionD.trim() === optionA.trim())
-    ) {
-      return this.questionControls.isAnswer.invalidOptionValue;
+    for (let i = 0; i < 4; i++) {
+      let option = tempOptions[i];
+      if (option !== '') {
+        for (let j = 0; j < 4; j++) {
+          if (i !== j && tempOptions[i] === tempOptions[j]) {
+            return this.questionControls.isAnswer.invalidOptionValue;
+          }
+        }
+      }
     }
 
     const questionType = this.questionForm.get('questionType')?.value;

@@ -53,7 +53,7 @@ export const AdminControl = {
     label: 'Phone Number',
     required: true,
     requiredErrMsg: 'Phone Number is required',
-    patternErrMsg: 'Phone Number is invalid!!',
+    patternErrMsg: 'Please enter valid 10 digit number',
     inputType: 'text',
     displayIcon: false,
   },
