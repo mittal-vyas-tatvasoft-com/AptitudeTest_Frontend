@@ -57,6 +57,7 @@ export class AddCandidateComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern(validations.common.whitespaceREGEX),
+          Validators.maxLength(30),
         ],
       ],
       lastName: [
@@ -64,6 +65,7 @@ export class AddCandidateComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern(validations.common.whitespaceREGEX),
+          Validators.maxLength(30),
         ],
       ],
       fatherName: [''],
@@ -71,7 +73,7 @@ export class AddCandidateComponent implements OnInit {
         '',
         [
           Validators.required,
-          Validators.maxLength(candidateControl.email.maxLength),
+          Validators.maxLength(40),
           Validators.pattern(validations.common.emailREGEX),
         ],
       ],

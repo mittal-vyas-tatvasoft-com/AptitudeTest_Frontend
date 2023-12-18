@@ -86,18 +86,33 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
           value: '',
           disabled: this.isAdmin || this.candidateEditMode,
         },
-        Validators.required,
+        [
+          Validators.required,
+          Validators.maxLength(30),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
       ],
       lastName: [
         { value: '', disabled: this.candidateEditMode },
-        Validators.required,
+        [
+          Validators.required,
+          Validators.maxLength(30),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
       ],
-      fatherName: [''],
+      fatherName: [
+        '',
+        [
+          Validators.pattern(validations.common.whitespaceREGEX),
+          Validators.maxLength(30),
+        ],
+      ],
       email: [
         { value: '', disabled: this.isAdmin || this.candidateEditMode },
         [
           Validators.required,
           Validators.pattern(validations.common.emailREGEX),
+          Validators.maxLength(40),
         ],
       ],
       phoneNumber: [
