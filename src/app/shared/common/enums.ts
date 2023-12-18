@@ -41,7 +41,7 @@ export enum Navigation {
   Groups = 'groups',
 
   //Setting navigation
-  Setting = 'setting',
+  Setting = 'settings',
 
   //Results navigation
   Results = 'results',

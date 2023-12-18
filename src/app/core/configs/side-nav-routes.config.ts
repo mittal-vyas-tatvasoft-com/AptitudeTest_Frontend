@@ -39,7 +39,7 @@ export const navBarRoutes = {
     path: `./${Navigation.Tests}`,
   },
   Setting: {
-    label: 'Setting',
+    label: 'Settings',
     path: `./${Navigation.Setting}`,
   },
   Results: {
