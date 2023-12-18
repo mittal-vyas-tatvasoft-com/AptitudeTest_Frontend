@@ -17,7 +17,7 @@ export const SettingControls = {
   Interval: {
     value: '',
     key: 'intervalForScreenCapture',
-    label: 'Screenshots Interval',
+    label: 'Screenshots Interval (Minutes)',
     requiredErrMsg: 'Interval is required!',
     minLengthErrMsg: 'Minimum interval is 5 minute',
     inputType: 'text',
@@ -25,7 +25,7 @@ export const SettingControls = {
   CutOff: {
     value: '',
     key: 'cutOff',
-    label: 'CutOff',
+    label: 'CutOff Marks',
     requiredErrMsg: 'CutOff is required!',
     inputType: 'text',
   },
