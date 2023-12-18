@@ -430,13 +430,11 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
               this.fetchTestCandidates();
               this.stepper.next();
               this.snackbarService.success(res.message);
+            } else if (res.statusCode != StatusCode.AlreadyExist) {
+              this.router.navigate(['/admin/tests']);
+              this.snackbarService.error(res.message);
             } else {
-              if (res.statusCode != StatusCode.AlreadyExist) {
-                this.router.navigate(['/admin/tests']);
-                this.snackbarService.error(res.message);
-              } else {
-                this.snackbarService.error(res.message);
-              }
+              this.snackbarService.error(res.message);
             }
           },
           error: (res) => {
@@ -469,12 +467,9 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       const groupId = this.testGroupForm.get('groupId')?.value;
       this.testService.updateTestGroup(this.testId, groupId).subscribe({
         next: (res) => {
-          if (res.statusCode == StatusCode.Success) {
-            this.stepper.next();
+          if (res.statusCode === 200) {
             this.snackbarService.success(res.message);
-          } else if (res.statusCode != StatusCode.AlreadyExist) {
-            this.router.navigate(['/admin/tests']);
-            this.snackbarService.error(res.message);
+            this.stepper.next();
           } else {
             this.snackbarService.error(res.message);
           }
