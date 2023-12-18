@@ -3,4 +3,5 @@ export interface Setting {
   camera: boolean;
   screenCapture: boolean;
   intervalForScreenCapture: number;
+  cutOff: number;
 }

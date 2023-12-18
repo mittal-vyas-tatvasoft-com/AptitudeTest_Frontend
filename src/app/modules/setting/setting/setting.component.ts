@@ -28,6 +28,7 @@ export class SettingComponent implements OnInit {
       camera: [''],
       screenCapture: [''],
       intervalForScreenCapture: [0, [Validators.min(0)]],
+      cutOff: [0, [Validators.min(0)]],
     });
 
     this.settingService.get().subscribe({
@@ -37,6 +38,7 @@ export class SettingComponent implements OnInit {
           camera: res.data.camera,
           screenCapture: res.data.screenCapture,
           intervalForScreenCapture: +res.data.intervalForScreenCapture,
+          cutOff: +res.data.cutOff,
         });
       },
       error: (error) => {
