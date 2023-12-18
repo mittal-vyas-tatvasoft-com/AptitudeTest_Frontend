@@ -7,8 +7,8 @@ export const candidateControl = {
     requiredErrMsg: 'First Name is required',
     inputType: 'text',
     displayIcon: false,
-    maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   fatherName: {
     value: '',
@@ -17,8 +17,8 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
-    maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   lastName: {
     value: '',
@@ -28,8 +28,8 @@ export const candidateControl = {
     requiredErrMsg: 'Last Name is required',
     inputType: 'text',
     displayIcon: false,
-    maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   email: {
     value: '',
@@ -40,7 +40,6 @@ export const candidateControl = {
     patternErrMsg: 'Please enter valid Email address',
     inputType: 'text',
     displayIcon: false,
-    maxLength: 40,
     maxLengthErrorMsg: 'Max 40 characters allowed',
   },
   phoneNumber: {
