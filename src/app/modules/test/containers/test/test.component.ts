@@ -258,7 +258,9 @@ export class TestComponent implements OnInit {
     const day = tempDate.getDate();
     const hours = tempDate.getHours();
     const minutes = tempDate.getMinutes();
-    const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}`;
+    const formattedDate = `${day}/${month}/${year} ${
+      hours > 9 ? hours : `0` + hours
+    }:${minutes > 9 ? minutes : `0` + minutes}`;
     return formattedDate;
   }
 }
