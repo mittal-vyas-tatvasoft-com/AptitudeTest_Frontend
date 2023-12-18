@@ -42,3 +42,8 @@ export interface Answer {
   optionId: number;
   isAnswer: boolean;
 }
+
+export interface TestInstructions {
+  messageAtStartOfTheTest: string;
+  endTime: string;
+}

@@ -22,11 +22,14 @@ export class McqTestComponent implements OnInit, OnDestroy {
   firstName: string;
   lastName: string;
   userId: number;
+  testStatus = 'Start';
   timeRemaining = {
     hours: 0,
     minutes: 0,
     seconds: 0,
   };
+  endTime: string;
+  timeRemainingToEndTime: number;
   @Input() seconds = 0;
   question: Question = {
     id: 0,
@@ -44,7 +47,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
   constructor(
     public loginService: LoginService,
     private router: Router,
-    private testService: CandidateTestService,
+    private candidateTestService: CandidateTestService,
     private snackBarService: SnackbarService,
     public dialog: MatDialog
   ) {}
@@ -54,7 +57,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.firstName = candidateDetails.FirstName;
     this.lastName = candidateDetails.Name;
     this.userId = candidateDetails.Id;
-
+    this.getEndTime();
     this.displayQuestion();
     this.interval = setInterval(() => {
       this.seconds = this.seconds - 1;
@@ -70,7 +73,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
         this.submitTest();
       }
     }, 1000);
-    this.testService.loadQuestion.subscribe((data) => {
+    this.candidateTestService.loadQuestion.subscribe((data) => {
       this.question.nextQuestionId = data;
       this.displayQuestion();
     });
@@ -78,7 +81,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
 
   displayQuestion() {
     if (this.question.nextQuestionId && this.userId) {
-      this.testService
+      this.candidateTestService
         .getQuestion(this.question.nextQuestionId, this.userId)
         .subscribe({
           next: (response: ResponseModel<Question>) => {
@@ -96,14 +99,14 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.displayQuestion();
     this.saveAnswers(event);
     if (this.question.questionNumber === this.question.totalQuestions) {
-      this.router.navigate(['/user/submitted']);
+      this.submitTest();
     }
     let state =
       event.filter((res) => res.isAnswer).length > 0
         ? QuestionStatus.Answered
         : QuestionStatus.Skipped;
     let status = [this.question.questionNumber - 1, this.question.id, state];
-    this.testService.questionStatus.next(status);
+    this.candidateTestService.questionStatus.next(status);
   }
 
   saveAnswers(answers: Answer[]) {
@@ -120,7 +123,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
       userAnswers: answer,
       isAttended: true,
     };
-    this.testService.saveAnswer(data).subscribe({
+    this.candidateTestService.saveAnswer(data).subscribe({
       next: (res: ResponseModel<string>) => {
         if (res.statusCode !== StatusCode.Success) {
           this.snackBarService.error(res.message);
@@ -152,13 +155,34 @@ export class McqTestComponent implements OnInit, OnDestroy {
   }
 
   submitTest() {
-    this.testService.endTest(this.userId).subscribe({
+    this.candidateTestService.endTest(this.userId).subscribe({
       next: (res: ResponseModel<string>) => {
         if (res.statusCode != StatusCode.Success) {
           this.snackBarService.error(res.message);
+          this.router.navigate(['/user/submitted']);
         }
       },
     });
+  }
+
+  getEndTime() {
+    this.candidateTestService
+      .getInstructionsOfTheTestForUser(this.userId, this.testStatus)
+      .subscribe({
+        next: (res) => {
+          if (res.statusCode == StatusCode.Success) {
+            this.endTime = res.data.endTime;
+            this.timeRemainingToEndTime = Math.floor(
+              (new Date(this.endTime).getTime() - new Date().getTime()) / 1000
+            );
+            if (this.timeRemainingToEndTime <= this.seconds) {
+              this.seconds = this.timeRemainingToEndTime;
+            }
+          } else {
+            this.snackBarService.error(res.message);
+          }
+        },
+      });
   }
 
   ngOnDestroy() {
