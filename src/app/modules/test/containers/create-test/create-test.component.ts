@@ -439,6 +439,9 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
               }
             }
           },
+          error: (res) => {
+            this.snackbarService.error(res.message);
+          },
         });
       } else {
         this.testService.updateTest(payload).subscribe({
@@ -454,6 +457,9 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
                 this.snackbarService.error(res.message);
               }
             }
+          },
+          error: (res) => {
+            this.snackbarService.error(res.message);
           },
         });
       }
