@@ -353,8 +353,8 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onTimeSet(selectedTime: string) {
-    const today = new Date(Date.now());
+  onTimeSet(date: Date, selectedTime: string) {
+    const today = date;
     const [time, period] = selectedTime.split(' ');
     const [hours, minutes] = time.split(':');
     if (period === 'AM' && hours !== '12') {
@@ -392,9 +392,15 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       id: this.basicTestDetails.get('testId')?.value,
       name: this.basicTestDetails.get('testName')?.value,
       testDuration: this.basicTestDetails.get('testDuration')?.value,
-      date: utcDate,
-      startTime: this.onTimeSet(this.basicTestDetails.get('startTime')?.value),
-      endTime: this.onTimeSet(this.basicTestDetails.get('endTime')?.value),
+      date: d,
+      startTime: this.onTimeSet(
+        utcDate,
+        this.basicTestDetails.get('startTime')?.value
+      ),
+      endTime: this.onTimeSet(
+        utcDate,
+        this.basicTestDetails.get('endTime')?.value
+      ),
       description: this.basicTestDetails.get('description')?.value,
       basicPoint: this.basicTestDetails.get('basicPoints')?.value,
       negativeMarkingPercentage: this.basicTestDetails.get(
@@ -422,22 +428,34 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
               this.basicTestDetails.get('testId')?.setValue(res.data);
               this.testId = res.data;
               this.fetchTestCandidates();
+              this.stepper.next();
               this.snackbarService.success(res.message);
-            } else {
+            } else if (res.statusCode != StatusCode.AlreadyExist) {
               this.router.navigate(['/admin/tests']);
               this.snackbarService.error(res.message);
+            } else {
+              this.snackbarService.error(res.message);
             }
+          },
+          error: (res) => {
+            this.snackbarService.error(res.message);
           },
         });
       } else {
         this.testService.updateTest(payload).subscribe({
           next: (res) => {
             if (res.statusCode == StatusCode.Success) {
+              this.stepper.next();
               this.snackbarService.success(res.message);
-            } else {
+            } else if (res.statusCode != StatusCode.AlreadyExist) {
               this.router.navigate(['/admin/tests']);
               this.snackbarService.error(res.message);
+            } else {
+              this.snackbarService.error(res.message);
             }
+          },
+          error: (res) => {
+            this.snackbarService.error(res.message);
           },
         });
       }

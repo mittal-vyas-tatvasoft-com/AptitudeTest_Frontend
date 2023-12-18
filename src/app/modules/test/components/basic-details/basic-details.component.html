@@ -46,7 +46,6 @@
         <app-time-picker
           [form]="basicTestDetails"
           [timePickerModel]="testBasicDetailFormModel.startTime"
-          [minTime]="getCurrentTime"
         ></app-time-picker>
       </div>
       <div class="col-lg-3 col-sm-6">
@@ -177,7 +176,6 @@
     <div class="action-list mt-md-2 mt-1 mb-lg-2">
       <button
         mat-flat-button
-        matStepperNext
         [disabled]="basicTestDetails.invalid || !startEndTimeDifferenceValid"
         color="primary"
         (click)="saveBasicDetails()"

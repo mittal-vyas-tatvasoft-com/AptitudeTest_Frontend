@@ -47,6 +47,7 @@ export class BasicDetailsComponent {
   saveBasicDetails() {
     this.saveDetails.emit();
   }
+
   checkTestName() {
     const testName = this.basicTestDetails.get('testName')?.value;
     this.testService.checkTestName(testName).subscribe({
