@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
-import { FilterControls } from '../../configs/results.config';
-import { ResultsService } from '../../services/results.service';
 import { Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
+import { Subject, debounceTime } from 'rxjs';
+import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
+import { SettingService } from 'src/app/modules/setting/services/setting.service';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { FilterControls } from '../../configs/results.config';
 import {
   ResultModel,
   ResultQueryParam,
   StatisticsData,
 } from '../../interfaces/result.interface';
-import { Router } from '@angular/router';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { Subject, debounceTime } from 'rxjs';
-import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { ResultsService } from '../../services/results.service';
 
 @Component({
   selector: 'app-result',
@@ -35,6 +36,7 @@ export class ResultComponent implements OnInit {
   statisticsData: MatTableDataSource<StatisticsData>;
   sortKey: string;
   sortDirection: string;
+  cutOff: number;
   filterControls = FilterControls;
   params: ResultQueryParam;
   private searchInputValue = new Subject<string>();
@@ -45,13 +47,19 @@ export class ResultComponent implements OnInit {
     private candidateService: CandidateService,
     private resultService: ResultsService,
     private router: Router,
-    private snackbarService: SnackbarService
+    private snackbarService: SnackbarService,
+    private settingService: SettingService
   ) {
     this.statisticsData = new MatTableDataSource<StatisticsData>();
     this.dataSource = new MatTableDataSource<ResultModel>();
   }
 
   ngOnInit(): void {
+    this.settingService.get().subscribe({
+      next: (res) => {
+        this.cutOff = res.data.cutOff;
+      },
+    });
     this.createForm();
     this.getDropdowns();
     this.initializeParam();
@@ -135,7 +143,7 @@ export class ResultComponent implements OnInit {
             return {
               name: record.statisticsHeader,
               points: record.points.toString(),
-              pointsColor: record.points <= 10 ? 'red' : 'green',
+              pointsColor: record.points <= this.cutOff ? 'red' : 'green',
               correct: record.correct,
               wrong: record.wrong,
               unanswered: record.unAnswered.toString(),
@@ -165,7 +173,7 @@ export class ResultComponent implements OnInit {
                 name: record.firstName + ' ' + record.lastName,
                 points: record.points.toString(),
                 correct: record.correctMarks + ' (' + record.correctCount + ')',
-                pointsColor: record.points <= 10 ? 'red' : 'green',
+                pointsColor: record.points <= this.cutOff ? 'red' : 'green',
                 status: record.status,
                 unanswered: record.unAnsweredCount.toString(),
                 undisplayed: record.unDisplayedCount.toString(),

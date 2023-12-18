@@ -22,4 +22,11 @@ export const SettingControls = {
     minLengthErrMsg: 'Minimum interval is 5 minute',
     inputType: 'text',
   },
+  CutOff: {
+    value: '',
+    key: 'cutOff',
+    label: 'CutOff',
+    requiredErrMsg: 'CutOff is required!',
+    inputType: 'text',
+  },
 };
