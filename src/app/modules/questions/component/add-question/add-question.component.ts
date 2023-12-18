@@ -354,7 +354,10 @@ export class AddQuestionComponent implements OnInit {
       if (option !== '') {
         for (let j = 0; j < 4; j++) {
           if (i !== j && tempOptions[i] === tempOptions[j]) {
+            this.isDuplicateOptions = true;
             return this.questionControls.isAnswer.invalidOptionValue;
+          } else {
+            this.isDuplicateOptions = false;
           }
         }
       }
@@ -420,7 +423,10 @@ export class AddQuestionComponent implements OnInit {
 
   isValid() {
     return (
-      this.questionForm.valid && this.areAnswersValid() && this.areImagesValid()
+      this.questionForm.valid &&
+      this.areAnswersValid() &&
+      this.areImagesValid() &&
+      !this.isDuplicateOptions
     );
   }
 
