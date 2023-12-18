@@ -91,14 +91,8 @@
     [isDisabled]="!form.valid"
     (btnClick)="onSaveClick()"
     [class]="'button'"
-    [toolTipText]="'Add'"
   ></app-button>
-  <button
-    mat-stroked-button
-    color="primary"
-    [mat-dialog-close]="true"
-    matTooltip="Cancel"
-  >
+  <button mat-stroked-button color="primary" [mat-dialog-close]="true">
     Cancel
   </button>
 </mat-dialog-actions>

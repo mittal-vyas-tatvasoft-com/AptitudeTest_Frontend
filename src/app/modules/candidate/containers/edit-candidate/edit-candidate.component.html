@@ -51,7 +51,6 @@
     color="primary"
     (click)="Save()"
     [disabled]="disabled"
-    [matTooltip]="isAdmin ? 'Update' : 'Register'"
   >
     {{ isAdmin ? "Update" : candidateEditMode ? "Save" : "Register" }}
   </button>
@@ -60,7 +59,6 @@
     color="primary"
     (click)="handleBackBtn()"
     class="ms-1"
-    matTooltip="Cancel"
   >
     Cancel
   </button>

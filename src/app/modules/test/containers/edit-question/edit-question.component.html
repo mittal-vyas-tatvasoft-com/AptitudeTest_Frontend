@@ -138,18 +138,12 @@
   <button
     mat-flat-button
     color="primary"
-    matTooltip="Save"
     [disabled]="form.invalid || isDataValid === false"
     (click)="updateMarks()"
   >
     Save
   </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    matTooltip="Cancel"
-    [mat-dialog-close]="false"
-  >
+  <button mat-stroked-button color="primary" [mat-dialog-close]="false">
     Cancel
   </button>
 </mat-dialog-actions>

@@ -16,7 +16,6 @@
       [isDisabled]="!testGroupForm.valid"
       (click)="updateTestGroup()"
       [class]="'button'"
-      [matTooltip]="'Save'"
     ></app-button>
   </div>
 </div>
@@ -42,12 +41,7 @@
     </div>
   </div>
   <div class="col-md-auto pb-1 pb-md-0 text-left">
-    <button
-      mat-stroked-button
-      color="primary"
-      matTooltip="Clear"
-      (click)="clearFilter()"
-    >
+    <button mat-stroked-button color="primary" (click)="clearFilter()">
       clear
     </button>
   </div>

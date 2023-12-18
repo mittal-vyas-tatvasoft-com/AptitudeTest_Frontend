@@ -66,12 +66,7 @@
               </mat-icon>
               <span>Change Password</span>
             </button>
-            <button
-              mat-menu-item
-              *ngIf="!isAdmin"
-              matTooltip="My Profile"
-              (click)="MyProfile()"
-            >
+            <button mat-menu-item *ngIf="!isAdmin" (click)="MyProfile()">
               <mat-icon>
                 <img
                   src="./assets/images/candidates-grey.svg"

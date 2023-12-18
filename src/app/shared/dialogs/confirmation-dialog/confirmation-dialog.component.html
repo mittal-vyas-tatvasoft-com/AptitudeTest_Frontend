@@ -9,16 +9,10 @@
     mat-dialog-close
     color="primary"
     (click)="confirmed(true)"
-    [matTooltip]="data.confirmText"
   >
     {{ data.confirmText }}
   </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    [mat-dialog-close]="false"
-    [matTooltip]="data.cancelText"
-  >
+  <button mat-stroked-button color="primary" [mat-dialog-close]="false">
     {{ data.cancelText }}
   </button>
 </mat-dialog-actions>
