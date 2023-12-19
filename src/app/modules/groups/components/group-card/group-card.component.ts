@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 import { GroupsModel } from '../../interfaces/groups.interface';
 
 @Component({
@@ -13,7 +14,7 @@ export class GroupCardComponent {
   @Output() deleteClicked = new EventEmitter<number>();
   @Output() setDefaultClicked = new EventEmitter<GroupsModel>();
 
-  constructor(public dialog: MatDialog) {}
+  constructor(public dialog: MatDialog, private router: Router) {}
 
   handleEdit(group: GroupsModel) {
     this.editClicked.emit(group);
@@ -25,5 +26,13 @@ export class GroupCardComponent {
 
   setAsDefault(group: GroupsModel) {
     this.setDefaultClicked.emit(group);
+  }
+
+  FilterGroupOrCollege(groupId: number, collegeId: number) {
+    if (collegeId == 0) {
+      this.router.navigate([`/candidate/${groupId}`]);
+    } else {
+      this.router.navigate([`/candidate/${groupId}/${collegeId}`]);
+    }
   }
 }

@@ -125,7 +125,7 @@ export const testBasicDetailFormModel = {
   questignsMenu: {
     value: false,
     key: 'questignsMenu',
-    label: 'Questigns menu',
+    label: 'Questioning Menu',
     required: false,
     inputType: 'text',
     displayIcon: false,

@@ -1,7 +1,7 @@
 <mat-card class="group-card" fxLayout="column" fxLayoutAlign="start start"
   ><mat-card-content>
     <div class="row align-items-center group-card-header">
-      <div class="col">
+      <div class="col" (click)="FilterGroupOrCollege(groupData.id, 0)">
         <h3 class="group-card-heading">
           {{ groupData.name }} :<b> {{ groupData.numberOfStudentsInGroup }}</b>
         </h3>
@@ -43,6 +43,7 @@
         <li
           *ngFor="let college of groupData.collegesUnderGroup"
           class="group-card-listing"
+          (click)="FilterGroupOrCollege(groupData.id, college.id)"
         >
           {{ college.name }} : <b> {{ college.numberOfStudentsInCollege }}</b>
         </li>
@@ -55,7 +56,7 @@
           mat-stroked-button
           color="primary"
           class="btn-sm"
-          routerLink="/admin/candidate/import-candidate"
+          (click)="FilterGroupOrCollege(groupData.id, 0)"
         >
           Manage Candidates
         </button>

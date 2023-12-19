@@ -1,16 +1,23 @@
 .group-card {
   height: 200px;
 }
+
 .college-list {
   height: 70px;
   overflow: auto;
   padding-bottom: 15px;
 }
+
 .nondefault-group {
   color: blue;
   font-size: 13px;
   line-height: 13px;
   line-height: 16px;
   padding: 6px 0;
+  cursor: pointer;
+}
+
+.group-card-heading,
+.group-card-listing {
   cursor: pointer;
 }
