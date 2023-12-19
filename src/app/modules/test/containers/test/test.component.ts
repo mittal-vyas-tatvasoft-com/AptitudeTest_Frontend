@@ -251,6 +251,10 @@ export class TestComponent implements OnInit {
     this.getTests();
   }
 
+  appendPad(unit: any) {
+    return unit > 9 ? unit : `0` + unit
+  }
+
   getTrimmedTime(date: string) {
     let tempDate = new Date(date);
     const year = tempDate.getFullYear();
@@ -258,9 +262,7 @@ export class TestComponent implements OnInit {
     const day = tempDate.getDate();
     const hours = tempDate.getHours();
     const minutes = tempDate.getMinutes();
-    const formattedDate = `${day}/${month}/${year} ${
-      hours > 9 ? hours : `0` + hours
-    }:${minutes > 9 ? minutes : `0` + minutes}`;
+    const formattedDate = `${day}/${month}/${year} ${this.appendPad(hours)}:${this.appendPad(minutes)}`;
     return formattedDate;
   }
 }

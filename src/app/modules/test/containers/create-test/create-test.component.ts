@@ -384,6 +384,47 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     );
   }
 
+  createTest(payload: CreateTestModel) {
+    this.testService.createTest(payload).subscribe({
+      next: (res) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.basicTestDetails.get('testId')?.setValue(res.data);
+          this.testId = res.data;
+          this.fetchTestCandidates();
+          this.stepper.next();
+          this.snackbarService.success(res.message);
+        } else if (res.statusCode != StatusCode.AlreadyExist) {
+          this.router.navigate(['/admin/tests']);
+          this.snackbarService.error(res.message);
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+      error: (res) => {
+        this.snackbarService.error(res.message);
+      },
+    });
+  }
+
+  updateTest(payload: CreateTestModel) {
+    this.testService.updateTest(payload).subscribe({
+      next: (res) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.stepper.next();
+          this.snackbarService.success(res.message);
+        } else if (res.statusCode != StatusCode.AlreadyExist) {
+          this.router.navigate(['/admin/tests']);
+          this.snackbarService.error(res.message);
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+      error: (res) => {
+        this.snackbarService.error(res.message);
+      },
+    });
+  }
+
   saveBasicDetails() {
     const d = new Date(this.basicTestDetails.get('date')?.value);
     // This will return an ISO string matching your local time.
@@ -422,42 +463,9 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
 
     if (this.startEndTimeDifferenceValid && this.basicTestDetails.valid) {
       if (this.basicTestDetails.get('testId')?.value == 0) {
-        this.testService.createTest(payload).subscribe({
-          next: (res) => {
-            if (res.statusCode == StatusCode.Success) {
-              this.basicTestDetails.get('testId')?.setValue(res.data);
-              this.testId = res.data;
-              this.fetchTestCandidates();
-              this.stepper.next();
-              this.snackbarService.success(res.message);
-            } else if (res.statusCode != StatusCode.AlreadyExist) {
-              this.router.navigate(['/admin/tests']);
-              this.snackbarService.error(res.message);
-            } else {
-              this.snackbarService.error(res.message);
-            }
-          },
-          error: (res) => {
-            this.snackbarService.error(res.message);
-          },
-        });
+        this.createTest(payload);
       } else {
-        this.testService.updateTest(payload).subscribe({
-          next: (res) => {
-            if (res.statusCode == StatusCode.Success) {
-              this.stepper.next();
-              this.snackbarService.success(res.message);
-            } else if (res.statusCode != StatusCode.AlreadyExist) {
-              this.router.navigate(['/admin/tests']);
-              this.snackbarService.error(res.message);
-            } else {
-              this.snackbarService.error(res.message);
-            }
-          },
-          error: (res) => {
-            this.snackbarService.error(res.message);
-          },
-        });
+        this.updateTest(payload);
       }
     }
   }

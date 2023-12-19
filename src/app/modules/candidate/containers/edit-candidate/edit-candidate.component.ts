@@ -48,6 +48,10 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    const userData = this.loginService.decodeToken();
+    if (userData) {
+      this.isAdmin = userData.Role === Navigation.RoleAdmin;
+    }
     this.route.params.subscribe((params) => {
       this.candidateId = +params['id'];
       this.fetchCandidateData(this.candidateId);
@@ -55,38 +59,31 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
   }
 
   fetchCandidateData(Id: number) {
-    if (!Number.isNaN(Id)) {
-      this.candidateService
-        .getCandidateData(Id)
-        .pipe(takeUntil(this.ngUnsubscribe$))
-        .subscribe((data) => {
-          this.candidateData = { ...data.data };
-          if (this.candidateData.hasOwnProperty('status')) {
-            this.candidateData.status = this.candidateData.status ? 1 : 2;
-          }
-          this.familyDetails = data.data.familyDetails;
-          this.academicDetails = data.data.academicsDetails;
-          if (
-            this.candidateData.userCollege != null &&
-            this.candidateEditMode
-          ) {
-            this.collegeSelectedByCandidate = true;
-          } else {
-            this.collegeSelectedByCandidate = false;
-          }
-        });
-      const userData = this.loginService.decodeToken();
-      if (userData) {
-        if (userData.Role === Navigation.RoleUser) {
-          this.isAdmin = false;
-        } else {
-          this.isAdmin = true;
-        }
-      }
-    } else {
+    if (Number.isNaN(Id)) {
       this.familyDetails = [];
       this.academicDetails = [];
+      return;
     }
+    
+    this.candidateService
+      .getCandidateData(Id)
+      .pipe(takeUntil(this.ngUnsubscribe$))
+      .subscribe((data) => {
+        this.candidateData = { ...data.data };
+        if (this.candidateData.hasOwnProperty('status')) {
+          this.candidateData.status = this.candidateData.status ? 1 : 2;
+        }
+        this.familyDetails = data.data.familyDetails;
+        this.academicDetails = data.data.academicsDetails;
+        if (
+          this.candidateData.userCollege != null &&
+          this.candidateEditMode
+        ) {
+          this.collegeSelectedByCandidate = true;
+        } else {
+          this.collegeSelectedByCandidate = false;
+        }
+      });
   }
 
   handleBackBtn() {
@@ -105,12 +102,6 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
     if (forms.every((form) => form.valid)) {
       const [personalInfo, examScores, familyBackground, educationDetail] =
         forms.map((form) => form.value);
-      const combinedData = {
-        personalInfo,
-        examScores,
-        familyBackground,
-        educationDetail,
-      };
       const updateParams: UpdateParams = {
         id: this.candidateId ? this.candidateId : 0,
         firstName: personalData.controls['firstName'].value,
