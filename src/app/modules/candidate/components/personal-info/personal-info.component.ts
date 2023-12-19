@@ -124,7 +124,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       ],
       userGroup: [''],
       userCollege: ['', Validators.required],
-      gender: ['', Validators.required],
+      gender: [''],
       status: [candidateControl.status.value],
       createdYear: [{ value: '', disabled: this.isAdmin }],
       password: ['', [Validators.pattern(validations.common.passwordREGEX)]],

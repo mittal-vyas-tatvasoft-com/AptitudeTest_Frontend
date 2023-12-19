@@ -11,6 +11,11 @@ import { ResetPasswordComponent } from './components/reset-password/reset-passwo
 
 const routes: Routes = [
   {
+    path: 'admin',
+    pathMatch: 'full',
+    redirectTo: Navigation.AdminLogin,
+  },
+  {
     path: '',
     component: LoginComponent,
   },

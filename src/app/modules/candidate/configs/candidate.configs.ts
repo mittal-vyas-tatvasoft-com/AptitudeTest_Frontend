@@ -57,8 +57,7 @@ export const candidateControl = {
     key: 'gender',
     label: 'Gender',
     inputType: 'select',
-    required: true,
-    requiredErrMsg: 'Gender is required',
+    required: false,
   },
   group: {
     value: '',
