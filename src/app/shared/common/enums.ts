@@ -172,3 +172,9 @@ export enum ResultStatus {
   Pending = 0,
   Locked = 2,
 }
+
+export enum Gender {
+  Male = 1,
+  Female = 2,
+  Default = 0,
+}
