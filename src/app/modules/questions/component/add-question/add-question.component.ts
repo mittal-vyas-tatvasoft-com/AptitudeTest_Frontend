@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { QuestionsService } from '../../services/questions.service';
+import { validations } from 'src/app/shared/messages/validation.static';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   AnswerType,
@@ -191,11 +192,41 @@ export class AddQuestionComponent implements OnInit {
       questionText: ['', Validators.required],
       questionType: ['', Validators.required],
       optionType: [1, Validators.required],
-      optionValueA: ['', Validators.required],
-      optionValueB: ['', Validators.required],
-      optionValueC: ['', Validators.required],
-      optionValueD: ['', Validators.required],
-      isAnswer: ['', Validators.required],
+      optionValueA: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      optionValueB: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      optionValueC: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      optionValueD: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      isAnswer: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
     });
   }
 
