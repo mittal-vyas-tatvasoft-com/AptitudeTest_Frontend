@@ -1,8 +1,8 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
 import { AddCollegeComponent } from 'src/app/modules/masters/college/components/add-college/add-college.component';
 import {
@@ -27,7 +27,7 @@ import { AddCandidateComponent } from '../add-candidate/add-candidate.component'
   templateUrl: './candidates.component.html',
   styleUrls: ['./candidates.component.scss'],
 })
-export class CandidatesComponent {
+export class CandidatesComponent implements OnInit {
   optionsList: number[] = [];
   pageSize = Numbers.Ten;
   currentPageIndex = Numbers.Zero;
@@ -39,8 +39,8 @@ export class CandidatesComponent {
   searchCandidate: string;
   sortKey: string;
   sortDirection: string;
-  selectedGroup: DropdownItem | null;
-  selectedCollege: DropdownItem | null;
+  selectedGroup: DropdownItem | undefined | null;
+  selectedCollege: DropdownItem | undefined | null;
   statusValue: boolean;
   selectedYear: number | null = null;
   dataSource: MatTableDataSource<CandidateModel>;
@@ -62,6 +62,7 @@ export class CandidatesComponent {
   constructor(
     public dialog: MatDialog,
     private router: Router,
+    private activatedRoute: ActivatedRoute,
     private candidateService: CandidateService,
     private snackbarService: SnackbarService
   ) {}
@@ -69,8 +70,8 @@ export class CandidatesComponent {
   ngOnInit() {
     this.dataSource = new MatTableDataSource<CandidateModel>([]);
     this.setupSearchObservable();
-    this.fetchCandidate();
     this.getDropdowns();
+    this.fetchCandidate();
   }
 
   fetchCandidate() {
@@ -132,6 +133,22 @@ export class CandidatesComponent {
 
     this.candidateService.getGroupsForDropDown().subscribe((colleges) => {
       this.groups = colleges;
+      this.activatedRoute.params.subscribe((res) => {
+        if (res['groupId'] != undefined && res['collegeId'] == undefined) {
+          this.selectedGroup = this.groups.find((x) => x.id == +res['groupId']);
+          this.fetchCandidate();
+        } else if (res['groupId'] != undefined && res['collegeId'] != 0) {
+          this.selectedGroup = this.groups.find((x) => x.id == +res['groupId']);
+          this.selectedCollege = this.colleges.find(
+            (x) => x.id == +res['collegeId']
+          );
+          this.fetchCandidate();
+          console.log(this.selectedCollege);
+        } else {
+          this.selectedGroup = null;
+          this.selectedCollege = null;
+        }
+      });
     });
   }
 

@@ -7,6 +7,7 @@ export interface GroupsModel {
 }
 
 export interface CollegesUnderGroup {
+  id: number;
   name: string;
   numberOfStudentsInCollege: number;
 }
