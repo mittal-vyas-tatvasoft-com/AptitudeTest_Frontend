@@ -15,8 +15,9 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { Navigation, StatusCode } from 'src/app/shared/common/enums';
+import { Navigation, StaticMessages, StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { LoginService } from '../../auth/services/login.service';
 import { LoaderService } from '../../services/loader.service';
 
@@ -27,6 +28,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
   constructor(
     private loginService: LoginService,
+    private snackbarService: SnackbarService,
     private loaderService: LoaderService
   ) {}
 
@@ -106,6 +108,7 @@ export class AuthTokenInterceptor implements HttpInterceptor {
           error instanceof HttpErrorResponse &&
           error.status === StatusCode.AlreadyLoggedIn
         ) {
+          this.snackbarService.error(StaticMessages.AlreadyLoggedInError);
           this.loginService.logout();
           throw new Error();
         }
