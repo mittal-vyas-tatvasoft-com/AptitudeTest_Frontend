@@ -143,7 +143,6 @@ export class CandidatesComponent implements OnInit {
             (x) => x.id == +res['collegeId']
           );
           this.fetchCandidate();
-          console.log(this.selectedCollege);
         } else {
           this.selectedGroup = null;
           this.selectedCollege = null;
