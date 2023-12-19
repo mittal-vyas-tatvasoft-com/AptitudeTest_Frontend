@@ -1801,7 +1801,6 @@
   }
 }
 
-
 // Kinjan Styles
 .msg-block {
   min-height: calc(100vh - 200px);
@@ -1930,9 +1929,12 @@
   top: -12px;
 }
 
-
 .no-print {
   @media print {
     visibility: hidden;
   }
+}
+.mat-calendar-body-disabled span {
+  cursor: default;
+  color: lightgrey !important;
 }
