@@ -21,7 +21,6 @@
       color="primary"
       class="btn-with-icon"
       routerLink="/admin/candidate/import-candidate"
-      matTooltip="Import Candidates"
     >
       <mat-icon
         ><img src="./assets/images/import-white.svg" alt="Import"
@@ -69,7 +68,7 @@
         <div class="row">
           <div class="col-lg-3 col-sm-6">
             <mat-form-field appearance="outline">
-              <mat-label>Search candidate..</mat-label>
+              <mat-label>Search candidate</mat-label>
               <input
                 matInput
                 [(ngModel)]="searchCandidate"
@@ -122,12 +121,7 @@
         </div>
       </div>
       <div class="col-sm-auto pb-2 pb-sm-0">
-        <button
-          mat-stroked-button
-          color="primary"
-          (click)="clearFilters()"
-          matTooltip="Clear"
-        >
+        <button mat-stroked-button color="primary" (click)="clearFilters()">
           clear
         </button>
       </div>

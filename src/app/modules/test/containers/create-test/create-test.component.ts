@@ -27,10 +27,10 @@ import {
 } from '../../config/test.configs';
 import {
   AllInsertedQuestionModel,
-  GetAllTestCandidateParams,
-  TopicWiseQuestionData,
   CreateTestModel,
+  GetAllTestCandidateParams,
   TestCandidatesModel,
+  TopicWiseQuestionData,
 } from '../../interfaces/test.interface';
 import { TestService } from '../../services/test.service';
 import { Topics } from '../../static/test.static';
@@ -258,6 +258,12 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     this.fetchTestCandidates();
   }
 
+  clearFilter() {
+    this.testGroupFilterForm.get('collegeId')?.setValue('');
+    this.testGroupFilterForm.get('searchQuery')?.setValue('');
+    this.fetchTestCandidates();
+  }
+
   fetchTestCandidates() {
     if (this.testId != 0 && this.testGroupForm.get('groupId')?.value != '') {
       const params: GetAllTestCandidateParams = {
@@ -347,8 +353,8 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     });
   }
 
-  onTimeSet(selectedTime: string) {
-    const today = new Date(Date.now());
+  onTimeSet(date: Date, selectedTime: string) {
+    const today = date;
     const [time, period] = selectedTime.split(' ');
     const [hours, minutes] = time.split(':');
     if (period === 'AM' && hours !== '12') {
@@ -387,8 +393,14 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       name: this.basicTestDetails.get('testName')?.value,
       testDuration: this.basicTestDetails.get('testDuration')?.value,
       date: utcDate,
-      startTime: this.onTimeSet(this.basicTestDetails.get('startTime')?.value),
-      endTime: this.onTimeSet(this.basicTestDetails.get('endTime')?.value),
+      startTime: this.onTimeSet(
+        utcDate,
+        this.basicTestDetails.get('startTime')?.value
+      ),
+      endTime: this.onTimeSet(
+        utcDate,
+        this.basicTestDetails.get('endTime')?.value
+      ),
       description: this.basicTestDetails.get('description')?.value,
       basicPoint: this.basicTestDetails.get('basicPoints')?.value,
       negativeMarkingPercentage: this.basicTestDetails.get(
@@ -416,22 +428,34 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
               this.basicTestDetails.get('testId')?.setValue(res.data);
               this.testId = res.data;
               this.fetchTestCandidates();
+              this.stepper.next();
               this.snackbarService.success(res.message);
-            } else {
+            } else if (res.statusCode != StatusCode.AlreadyExist) {
               this.router.navigate(['/admin/tests']);
               this.snackbarService.error(res.message);
+            } else {
+              this.snackbarService.error(res.message);
             }
+          },
+          error: (res) => {
+            this.snackbarService.error(res.message);
           },
         });
       } else {
         this.testService.updateTest(payload).subscribe({
           next: (res) => {
             if (res.statusCode == StatusCode.Success) {
+              this.stepper.next();
               this.snackbarService.success(res.message);
-            } else {
+            } else if (res.statusCode != StatusCode.AlreadyExist) {
               this.router.navigate(['/admin/tests']);
               this.snackbarService.error(res.message);
+            } else {
+              this.snackbarService.error(res.message);
             }
+          },
+          error: (res) => {
+            this.snackbarService.error(res.message);
           },
         });
       }
@@ -445,6 +469,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
         next: (res) => {
           if (res.statusCode === 200) {
             this.snackbarService.success(res.message);
+            this.stepper.next();
           } else {
             this.snackbarService.error(res.message);
           }

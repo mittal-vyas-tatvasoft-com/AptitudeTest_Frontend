@@ -3,7 +3,7 @@
     <mat-icon class="page-icon">
       <img src="./assets/images/setting-primary.svg" alt="Candidates" />
     </mat-icon>
-    <h4 class="title">Setting</h4>
+    <h4 class="title">Settings</h4>
   </div>
   <div class="action-list"></div>
 </div>
@@ -43,6 +43,34 @@
                 formControlName="{{ settingControls.screen.key }}"
                 >{{ settingControls.screen.label }}</mat-slide-toggle
               >
+            </div>
+          </div>
+          <div class="col-md-12 ps-sm-5 pe-sm-5">
+            <div class="switch-block-wrapper ms-sm-5 me-sm-5">
+              <app-text-control
+                [formControlModel]="settingControls.Interval"
+                [form]="settingForm"
+              ></app-text-control>
+            </div>
+          </div>
+          <div class="col-md-12 ps-sm-5 pe-sm-5">
+            <div class="switch-block-wrapper ms-sm-5 me-sm-5">
+              <app-text-control
+                [formControlModel]="settingControls.CutOff"
+                [form]="settingForm"
+              ></app-text-control>
+            </div>
+          </div>
+          <div class="col-md-12 ps-sm-5 pe-sm-5">
+            <div class="ms-sm-5 me-sm-5">
+              <button
+                type="button"
+                mat-raised-button
+                color="primary"
+                (click)="save()"
+              >
+                Save
+              </button>
             </div>
           </div>
         </div>

@@ -9,6 +9,7 @@ export const AdminControl = {
     displayIcon: false,
     maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   lastName: {
     value: '',
@@ -20,6 +21,7 @@ export const AdminControl = {
     displayIcon: false,
     maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   middleName: {
     value: '',
@@ -31,6 +33,7 @@ export const AdminControl = {
     displayIcon: false,
     maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   email: {
     value: '',
@@ -41,6 +44,8 @@ export const AdminControl = {
     patternErrMsg: 'Email is invalid!!',
     inputType: 'text',
     displayIcon: false,
+    maxLength: 40,
+    maxLengthErrMsg: 'Max 40 characters allowed',
   },
   phoneNumber: {
     value: '',
@@ -48,7 +53,7 @@ export const AdminControl = {
     label: 'Phone Number',
     required: true,
     requiredErrMsg: 'Phone Number is required',
-    patternErrMsg: 'Phone Number is invalid!!',
+    patternErrMsg: 'Please enter valid 10 digit number',
     inputType: 'text',
     displayIcon: false,
   },
@@ -64,7 +69,7 @@ export const adminFilterFormConfig = {
   search: {
     value: '',
     key: 'searchField',
-    label: 'Search..',
+    label: 'Search',
     required: false,
     inputType: 'text',
     displayIcon: false,

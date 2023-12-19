@@ -11,7 +11,6 @@
       color="primary"
       class="btn-with-icon"
       routerLink="/admin/questions/import-question"
-      matTooltip="Import"
     >
       <mat-icon
         ><img src="./assets/images/import-white.svg" alt="Import"
@@ -228,7 +227,7 @@
               <mat-error *ngIf="optionType === optionTypes.Image">{{
                 getImageError()
               }}</mat-error>
-              <mat-error>{{ getCheckboxError() }}</mat-error>
+              <mat-error>{{ getCheckboxOrOptionError() }}</mat-error>
             </div>
             <div class="col-12">
               <div class="form-action-list justify-content-end">
@@ -237,7 +236,6 @@
                   color="primary"
                   (click)="addQuestion()"
                   [disabled]="!isValid()"
-                  [matTooltip]="isEdit ? 'Save' : 'Add '"
                 >
                   {{ isEdit ? "Save" : "Add " }}
                 </button>
@@ -245,7 +243,6 @@
                   mat-stroked-button
                   color="primary"
                   (click)="handleCancelBtn()"
-                  matTooltip="Cancel"
                 >
                   Cancel
                 </button>

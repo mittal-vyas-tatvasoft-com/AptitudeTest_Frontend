@@ -3,12 +3,7 @@
     class="col-md-auto d-flex align-items-center justify-content-between mb-sm-0 mb-1"
   >
     <h4 class="title">Questions imported</h4>
-    <button
-      mat-stroked-button
-      color="primary"
-      class="d-md-none d-block"
-      matTooltip="Delete All"
-    >
+    <button mat-stroked-button color="primary" class="d-md-none d-block">
       Delete All
     </button>
   </div>
@@ -25,12 +20,7 @@
       <p class="question-marks">
         Total Marks: <span>{{ item.totalMarks }}</span>
       </p>
-      <button
-        mat-stroked-button
-        color="primary"
-        (click)="deleteAllQuestions()"
-        matTooltip="Delete All"
-      >
+      <button mat-stroked-button color="primary" (click)="deleteAllQuestions()">
         Delete All
       </button>
     </div>
@@ -175,3 +165,12 @@
 <ng-template #noDataFound>
   <div class="no-data-message">No Questions Added</div>
 </ng-template>
+
+<div class="col-lg-3 col-sm-6">
+  <app-button
+    [color]="'primary'"
+    [label]="'Create Test'"
+    (click)="showTestCreatedSnackbar()"
+    [class]="'button'"
+  ></app-button>
+</div>

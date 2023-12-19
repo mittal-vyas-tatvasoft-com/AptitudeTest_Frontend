@@ -5,8 +5,13 @@
         <app-text-control
           [formControlModel]="testBasicDetailFormModel.testName"
           [form]="basicTestDetails"
+          (blurEvent)="checkTestName()"
         ></app-text-control>
+        <mat-error class="w-100 error-style" *ngIf="!isTestNameValid">
+          Test with the same name exists, please use different name
+        </mat-error>
       </div>
+
       <div class="col-lg-3 col-sm-6">
         <app-select
           [form]="basicTestDetails"
@@ -41,7 +46,6 @@
         <app-time-picker
           [form]="basicTestDetails"
           [timePickerModel]="testBasicDetailFormModel.startTime"
-          [minTime]="getCurrentTime"
         ></app-time-picker>
       </div>
       <div class="col-lg-3 col-sm-6">
@@ -172,20 +176,13 @@
     <div class="action-list mt-md-2 mt-1 mb-lg-2">
       <button
         mat-flat-button
-        matStepperNext
         [disabled]="basicTestDetails.invalid || !startEndTimeDifferenceValid"
         color="primary"
         (click)="saveBasicDetails()"
-        matTooltip="Save"
       >
         Save
       </button>
-      <button
-        mat-stroked-button
-        color="primary"
-        routerLink="/admin/tests"
-        matTooltip="Cancel"
-      >
+      <button mat-stroked-button color="primary" routerLink="/admin/tests">
         Cancel
       </button>
     </div>

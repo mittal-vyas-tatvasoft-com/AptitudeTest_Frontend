@@ -1,20 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
-import { Sort, MatSort } from '@angular/material/sort';
-import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
-import { Router } from '@angular/router';
-import { TestService } from '../../services/test.service';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
-import { Numbers, StatusCode, TestStatus } from 'src/app/shared/common/enums';
-import { TestData, TestQueryParams } from '../../interfaces/test.interface';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
-import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { testFilterModel } from '../../config/test.configs';
-import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { Numbers, StatusCode, TestStatus } from 'src/app/shared/common/enums';
 import { DropdownData } from 'src/app/shared/common/interfaces/dropdown-data.interface';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { testFilterModel } from '../../config/test.configs';
+import { TestData, TestQueryParams } from '../../interfaces/test.interface';
+import { TestService } from '../../services/test.service';
 
 @Component({
   selector: 'app-test',
@@ -254,12 +254,13 @@ export class TestComponent implements OnInit {
   getTrimmedTime(date: string) {
     let tempDate = new Date(date);
     const year = tempDate.getFullYear();
-    const month = tempDate.getMonth();
+    const month = tempDate.getMonth() + 1;
     const day = tempDate.getDate();
     const hours = tempDate.getHours();
     const minutes = tempDate.getMinutes();
-    const seconds = tempDate.getSeconds();
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    const formattedDate = `${day}/${month}/${year} ${
+      hours > 9 ? hours : `0` + hours
+    }:${minutes > 9 ? minutes : `0` + minutes}`;
     return formattedDate;
   }
 }

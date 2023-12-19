@@ -2,10 +2,11 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { LoginService } from 'src/app/core/auth/services/login.service';
-import { Numbers, Status } from 'src/app/shared/common/enums';
+import { Numbers, Status, StatusCode } from 'src/app/shared/common/enums';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
   candidateControl,
   selectOptionsForGender,
@@ -35,7 +36,8 @@ export class AddCandidateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private candidateService: CandidateService,
     private loginService: LoginService,
-    public _formValidators: ValidationService
+    public _formValidators: ValidationService,
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
@@ -55,6 +57,7 @@ export class AddCandidateComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern(validations.common.whitespaceREGEX),
+          Validators.maxLength(30),
         ],
       ],
       lastName: [
@@ -62,6 +65,7 @@ export class AddCandidateComponent implements OnInit {
         [
           Validators.required,
           Validators.pattern(validations.common.whitespaceREGEX),
+          Validators.maxLength(30),
         ],
       ],
       fatherName: [''],
@@ -69,6 +73,7 @@ export class AddCandidateComponent implements OnInit {
         '',
         [
           Validators.required,
+          Validators.maxLength(40),
           Validators.pattern(validations.common.emailREGEX),
         ],
       ],
@@ -81,8 +86,8 @@ export class AddCandidateComponent implements OnInit {
       ],
       groupId: ['', Validators.required],
       collegeId: ['', Validators.required],
-      gender: [''],
-      status: [candidateControl.status.value],
+      gender: [+candidateControl.gender.value],
+      status: [+candidateControl.status.value],
     });
   }
 
@@ -116,20 +121,23 @@ export class AddCandidateComponent implements OnInit {
     if (this.form.valid) {
       this.isLoading = true;
       const candidateData: CandidateModel = this.form.value;
-      candidateData.status =
-        this.form.value.status === Status.Active;
-      candidateData.gender =
-        this.form.value.gender === 'Male' ? Numbers.One : Numbers.Two;
+      candidateData.status = this.form.value.status === Status.Active;
+      candidateData.gender = this.form.value.gender;
       candidateData.createdBy = this.userId;
       this.candidateService
         .addCandidate(candidateData)
         .subscribe((response) => {
-          this.isLoading = true;
-          this.dialogRef.close({
-            refreshTable: true,
-            message: response.message,
-            status: response.statusCode,
-          });
+          if (response.statusCode == StatusCode.Success) {
+            this.isLoading = false;
+            this.dialogRef.close({
+              refreshTable: true,
+              message: response.message,
+              status: response.statusCode,
+            });
+          } else {
+            this.snackbarService.error(response.message);
+            this.isLoading = false;
+          }
         });
     } else {
       this.form.markAllAsTouched();

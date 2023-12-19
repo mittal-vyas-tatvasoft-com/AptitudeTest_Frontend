@@ -8,7 +8,15 @@
         alt="Candidates"
       />
     </mat-icon>
-    <h4 class="title">{{ isAdmin ? "Candidate Details" : "Register" }}</h4>
+    <h4 class="title">
+      {{
+        isAdmin
+          ? "Candidate Details"
+          : candidateEditMode
+          ? "My Profile"
+          : "Register"
+      }}
+    </h4>
   </div>
   <div class="action-list" *ngIf="isAdmin">
     <button
@@ -25,8 +33,10 @@
 </div>
 
 <app-personal-info
+  [candidateEditMode]="candidateEditMode"
   [candidateData]="candidateData"
   [isAdmin]="isAdmin"
+  [collegeSelectedByCandidate]="collegeSelectedByCandidate"
 ></app-personal-info>
 <app-education-details
   [academicDetails]="academicDetails"
@@ -41,16 +51,14 @@
     color="primary"
     (click)="Save()"
     [disabled]="disabled"
-    [matTooltip]="isAdmin ? 'Update' : 'Register'"
   >
-    {{ isAdmin ? "Update" : "Register" }}
+    {{ isAdmin ? "Update" : candidateEditMode ? "Save" : "Register" }}
   </button>
   <button
     mat-stroked-button
     color="primary"
     (click)="handleBackBtn()"
     class="ms-1"
-    matTooltip="Cancel"
   >
     Cancel
   </button>

@@ -1,3 +1,5 @@
+import { Gender, Status } from 'src/app/shared/common/enums';
+
 export const candidateControl = {
   firstName: {
     value: '',
@@ -7,8 +9,8 @@ export const candidateControl = {
     requiredErrMsg: 'First Name is required',
     inputType: 'text',
     displayIcon: false,
-    maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   fatherName: {
     value: '',
@@ -17,8 +19,8 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
-    maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   lastName: {
     value: '',
@@ -28,8 +30,8 @@ export const candidateControl = {
     requiredErrMsg: 'Last Name is required',
     inputType: 'text',
     displayIcon: false,
-    maxLength: 30,
     maxLengthErrMsg: 'Max 30 characters allowed',
+    patternErrMsg: 'White space is not applicable',
   },
   email: {
     value: '',
@@ -37,9 +39,10 @@ export const candidateControl = {
     label: 'Email Address',
     required: true,
     requiredErrMsg: 'Email is required',
-    patternErrMsg: 'Email is not valid',
+    patternErrMsg: 'Please enter valid Email address',
     inputType: 'text',
     displayIcon: false,
+    maxLengthErrorMsg: 'Max 40 characters allowed',
   },
   phoneNumber: {
     value: '',
@@ -52,12 +55,11 @@ export const candidateControl = {
     displayIcon: false,
   },
   gender: {
-    value: '',
+    value: Gender.Default.toString(),
     key: 'gender',
     label: 'Gender',
     inputType: 'select',
-    required: true,
-    requiredErrMsg: 'Gender is required',
+    required: false,
   },
   group: {
     value: '',
@@ -105,7 +107,7 @@ export const candidateControl = {
     inputType: 'text',
   },
   status: {
-    value: 'Active',
+    value: Status.Active.toString(),
     key: 'status',
     label: 'Status',
     inputType: 'select',
@@ -131,6 +133,8 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
+    patternErrMsg: 'Please enter valid address',
+    maxLengthErrMsg: 'Max 500 characters allowed',
   },
   cityName: {
     value: '',
@@ -201,25 +205,47 @@ export const candidateControl = {
     label: 'Relationship',
     inputType: 'select',
   },
+  University: {
+    value: '',
+    key: 'university',
+    label: 'University',
+    required: true,
+    requiredErrMsg: 'School/College/University is required',
+    patternErrMsg: 'Please enter valid School/College/University',
+    maxLengthErrMsg: 'Max 255 characters allowed',
+    inputType: 'text',
+    displayIcon: false,
+  },
   Qualification: {
     value: '',
     key: 'qualification',
     label: 'Qualification',
-    required: false,
+    required: true,
+    requiredErrMsg: 'Qualification is required',
+    patternErrMsg: 'Please enter valid qualification',
+    maxLengthErrMsg: 'Max 255 characters allowed',
     inputType: 'text',
     displayIcon: false,
   },
   Occupation: {
     value: '',
     key: 'occupation',
-    label: 'occupation',
+    label: 'Occupation',
     required: false,
+    requiredErrMsg: 'Occupation is required',
+    patternErrMsg: 'Please enter valid occupation',
+    maxLengthErrMsg: 'Max 255 characters allowed',
     inputType: 'text',
     displayIcon: false,
   },
 };
 
 export const selectOptionsForGender = [
+  {
+    id: 0,
+    key: 'Select',
+    value: 'Select',
+  },
   {
     id: 1,
     key: 'Male',
@@ -278,6 +304,11 @@ export const selectOptionsForStream = [
 
 export const selectOptionsForRelationship = [
   {
+    id: '',
+    key: 'Select',
+    value: 'Select',
+  },
+  {
     id: 1,
     key: 'Father',
     value: 'Father',
@@ -303,7 +334,7 @@ export const candidateFilterFormConfig = {
   search: {
     value: '',
     key: 'searchQuery',
-    label: 'Search Candidate..',
+    label: 'Search Candidate',
     required: false,
     inputType: 'text',
     displayIcon: false,

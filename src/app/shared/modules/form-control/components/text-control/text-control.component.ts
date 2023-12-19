@@ -15,6 +15,7 @@ export class TextControlComponent implements OnInit {
   @Input() formControlModel!: FormControlModel;
   @Output() iconClick = new EventEmitter<Event>();
   @Output() keyupEvent = new EventEmitter();
+  @Output() blurEvent = new EventEmitter();
 
   constructor(
     public validationService: ValidationService,

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { SettingService } from '../services/setting.service';
-import { SettingControls } from '../configs/setting.config';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { Setting } from '../interfaces/setting';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import { Subscription, pairwise } from 'rxjs';
+import { SettingControls } from '../configs/setting.config';
+import { Setting } from '../interfaces/setting';
+import { SettingService } from '../services/setting.service';
 
 @Component({
   selector: 'app-setting',
@@ -27,6 +27,8 @@ export class SettingComponent implements OnInit {
       userRegistration: [''],
       camera: [''],
       screenCapture: [''],
+      intervalForScreenCapture: [0, [Validators.min(0)]],
+      cutOff: [0, [Validators.min(0)]],
     });
 
     this.settingService.get().subscribe({
@@ -35,26 +37,27 @@ export class SettingComponent implements OnInit {
           userRegistration: res.data.userRegistration,
           camera: res.data.camera,
           screenCapture: res.data.screenCapture,
+          intervalForScreenCapture: +res.data.intervalForScreenCapture,
+          cutOff: +res.data.cutOff,
         });
       },
       error: (error) => {
         this.snackbarService.error(error.message);
       },
     });
+  }
 
-    this.formChanges = this.settingForm.valueChanges
-      .pipe(pairwise())
-      .subscribe(([prev, next]) => {
-        this.settingService.update(next).subscribe({
-          next: (res) => {
-            this.snackbarService.success(res.message);
-          },
-          error: (error) => {
-            this.formChanges.unsubscribe();
-            this.settingForm.setValue(prev);
-            this.snackbarService.error(error.message);
-          },
-        });
+  save() {
+    this.formChanges = this.settingService
+      .update(this.settingForm.value)
+      .subscribe({
+        next: (res) => {
+          this.snackbarService.success(res.message);
+        },
+        error: (error) => {
+          this.formChanges.unsubscribe();
+          this.snackbarService.error(error.message);
+        },
       });
   }
 }

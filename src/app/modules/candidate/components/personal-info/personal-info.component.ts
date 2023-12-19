@@ -41,6 +41,9 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
   maxDate = new Date();
   @Input() candidateData: UserData;
   @Input() isAdmin: boolean;
+  @Input() candidateEditMode: boolean;
+  @Input() collegeSelectedByCandidate: boolean;
+  isCollegeSelectedByCandidate = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -51,6 +54,11 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
   ngOnInit() {
     this.createForm();
     this.getDropdowns();
+    this.form.get('userCollege')?.valueChanges.subscribe(() => {
+      if (this.collegeSelectedByCandidate) {
+        this.form.get('userCollege')?.disable();
+      }
+    });
     if (this.candidateData) {
       this.form.patchValue(this.candidateData);
     }
@@ -73,18 +81,42 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
 
   createForm() {
     this.form = this.formBuilder.group({
-      firstName: [{ value: '', disabled: this.isAdmin }, Validators.required],
-      lastName: [''],
-      fatherName: [''],
+      firstName: [
+        {
+          value: '',
+          disabled: this.isAdmin || this.candidateEditMode,
+        },
+        [
+          Validators.required,
+          Validators.maxLength(30),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      lastName: [
+        { value: '', disabled: this.candidateEditMode },
+        [
+          Validators.required,
+          Validators.maxLength(30),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      fatherName: [
+        '',
+        [
+          Validators.pattern(validations.common.whitespaceREGEX),
+          Validators.maxLength(30),
+        ],
+      ],
       email: [
-        { value: '', disabled: this.isAdmin },
+        { value: '', disabled: this.isAdmin || this.candidateEditMode },
         [
           Validators.required,
           Validators.pattern(validations.common.emailREGEX),
+          Validators.maxLength(40),
         ],
       ],
       phoneNumber: [
-        { value: '', disabled: this.isAdmin },
+        { value: '', disabled: this.isAdmin || this.candidateEditMode },
         [
           Validators.required,
           Validators.pattern(validations.common.mobileNumberREGEX),
@@ -92,7 +124,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       ],
       userGroup: [''],
       userCollege: ['', Validators.required],
-      gender: ['', Validators.required],
+      gender: [''],
       status: [candidateControl.status.value],
       createdYear: [{ value: '', disabled: this.isAdmin }],
       password: ['', [Validators.pattern(validations.common.passwordREGEX)]],
@@ -106,7 +138,13 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
         ],
       ],
       cityName: [''],
-      permanentAddress1: [''],
+      permanentAddress1: [
+        '',
+        [
+          Validators.maxLength(500),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
       state: [''],
       dateOfBirth: ['', Validators.required],
     });
@@ -185,6 +223,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       this.form.get('userGroup')?.updateValueAndValidity();
     }
   }
+
   validateForm() {
     Object.keys(this.form.controls).forEach((controlName) => {
       const control = this.form.get(controlName);

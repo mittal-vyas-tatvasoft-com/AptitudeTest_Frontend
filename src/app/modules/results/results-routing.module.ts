@@ -10,7 +10,7 @@ const routes: Routes = [
     component: ResultComponent,
   },
   {
-    path: `${Navigation.ResultsDetails}`,
+    path: `${Navigation.ResultsDetails}/:id/:testId`,
     component: ResultDetailsComponent,
   },
 ];

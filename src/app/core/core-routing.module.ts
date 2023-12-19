@@ -27,6 +27,20 @@ const routes: Routes = [
           ),
       },
       {
+        path: `${Navigation.Candidate}/:groupId`,
+        loadChildren: () =>
+          import('../modules/candidate/candidate.module').then(
+            (m) => m.CandidateModule
+          ),
+      },
+      {
+        path: `${Navigation.Candidate}/:groupId/:collegeId`,
+        loadChildren: () =>
+          import('../modules/candidate/candidate.module').then(
+            (m) => m.CandidateModule
+          ),
+      },
+      {
         path: `${Navigation.Questions}`,
         loadChildren: () =>
           import('../modules/questions/questions.module').then(

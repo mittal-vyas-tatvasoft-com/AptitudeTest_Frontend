@@ -76,4 +76,8 @@ export class QuestionsComponent implements OnInit {
       },
     });
   }
+
+  onDelete(event: void) {
+    this.getQuestionCount();
+  }
 }

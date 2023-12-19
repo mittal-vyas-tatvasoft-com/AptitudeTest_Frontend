@@ -21,7 +21,6 @@
       color="primary"
       class="btn-with-icon"
       routerLink="/admin/questions/import-question"
-      matTooltip="Import Question"
     >
       <mat-icon
         ><img src="./assets/images/import-white.svg" alt="Import"
@@ -82,4 +81,5 @@
 <app-question-list
   [filterForm]="filterForm"
   *ngIf="questions"
+  (deleteQuestion)="onDelete($event)"
 ></app-question-list>

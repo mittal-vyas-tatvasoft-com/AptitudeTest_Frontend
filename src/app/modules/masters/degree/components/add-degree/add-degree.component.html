@@ -106,16 +106,10 @@
     color="primary"
     [disabled]="!form.valid"
     (click)="onAddClick()"
-    [matTooltip]="id === 0 ? 'Add' : 'Save'"
   >
     {{ id === 0 ? "Add" : "Save" }}
   </button>
-  <button
-    mat-stroked-button
-    color="primary"
-    [mat-dialog-close]="null"
-    matTooltip="Cancel"
-  >
+  <button mat-stroked-button color="primary" [mat-dialog-close]="null">
     Cancel
   </button>
 </mat-dialog-actions>

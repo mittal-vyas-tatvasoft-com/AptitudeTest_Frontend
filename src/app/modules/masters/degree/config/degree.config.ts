@@ -9,6 +9,7 @@ export const FormControls = {
     inputType: 'text',
     maxLength: 50,
     minLength: 2,
+    patternErrMsg: 'White space is not applicable',
   },
   status: {
     value: true,
@@ -29,5 +30,6 @@ export const FormControls = {
     requiredErrMsg: 'Stream  is required',
     maxLength: 10,
     maxLengthErrMsg: 'Max 10 streams allowed',
+    patternErrMsg: 'White space is not applicable',
   },
 };

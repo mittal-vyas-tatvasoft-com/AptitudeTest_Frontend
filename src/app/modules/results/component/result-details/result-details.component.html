@@ -20,373 +20,108 @@
 
 <div class="row align-items-center mb-1">
   <div class="col-lg pb-1 pb-lg-0">
-    <h2 class="result-candidate-name">Ralph Edwards</h2>
+    <h2 class="result-candidate-name">{{ resultDetails.name }}</h2>
   </div>
   <div class="col-lg-auto">
     <mat-chip-listbox class="selectable-chips-wrapper">
-      <mat-chip-option color="primary" selected
-        >All<span class="result"><em>30</em> / 50</span></mat-chip-option
+      <mat-chip-option color="primary" selected (click)="filterOnMarks(0)"
+        >All<span class="result"
+          ><em>{{ resultDetails.allCorrectQuestionCount }}</em> /
+          {{ resultDetails.allQuestionCount }}</span
+        ></mat-chip-option
       >
-      <mat-chip-option color="primary"
-        >1 mark<span class="result"><em>14</em> / 20</span></mat-chip-option
+      <mat-chip-option color="primary" (click)="filterOnMarks(1)"
+        >1 mark<span class="result"
+          ><em>{{ resultDetails.marks1CorrectQuestionCount }}</em> /
+          {{ resultDetails.marks1QuestionCount }}</span
+        ></mat-chip-option
       >
-      <mat-chip-option color="primary"
-        >2 mark<span class="result"><em>5</em> / 10</span></mat-chip-option
+      <mat-chip-option color="primary" (click)="filterOnMarks(2)"
+        >2 mark<span class="result"
+          ><em>{{ resultDetails.marks2CorrectQuestionCount }}</em> /
+          {{ resultDetails.marks2QuestionCount }}</span
+        ></mat-chip-option
       >
-      <mat-chip-option color="primary"
-        >4 mark<span class="result"><em>3</em> / 5</span></mat-chip-option
+      <mat-chip-option color="primary" (click)="filterOnMarks(3)"
+        >3 mark<span class="result"
+          ><em>{{ resultDetails.marks3CorrectQuestionCount }}</em> /
+          {{ resultDetails.marks3QuestionCount }}</span
+        ></mat-chip-option
       >
-      <mat-chip-option color="primary"
-        >5 mark<span class="result"><em>8</em> / 15</span></mat-chip-option
+      <mat-chip-option color="primary" (click)="filterOnMarks(4)"
+        >4 mark<span class="result"
+          ><em>{{ resultDetails.marks4CorrectQuestionCount }}</em> /
+          {{ resultDetails.marks4QuestionCount }}</span
+        ></mat-chip-option
+      >
+      <mat-chip-option color="primary" (click)="filterOnMarks(5)"
+        >5 mark<span class="result"
+          ><em>{{ resultDetails.marks5CorrectQuestionCount }}</em> /
+          {{ resultDetails.marks5QuestionCount }}</span
+        ></mat-chip-option
       >
     </mat-chip-listbox>
   </div>
 </div>
 
 <ul class="qa-card-listing">
-  <li>
+  <li *ngFor="let item of data.entityList; let i = index">
     <div class="qa-card">
       <div class="qa-head no-wrap-md">
         <div class="qa-left">
-          <span class="qa-sequence">01.</span>
-          <p class="question-text">
-            Occaecat in sint nulla cillum exercitation culpa aliquip enim
-            consequat quis adipisicing do dolor qui reprehenderit excepteur.
-          </p>
+          <span class="qa-sequence">{{ i + 1 }}.</span>
+          <p class="question-text" [innerHTML]="item.questionText"></p>
         </div>
         <div class="qa-right">
-          <mat-chip class="ChipInfo question-mark me-0"> 01 </mat-chip>
+          <mat-chip class="ChipInfo question-mark me-0">
+            {{ item.difficulty }}
+          </mat-chip>
         </div>
       </div>
       <div class="qa-body">
-        <mat-chip-listbox class="mcq-chips-wrapper">
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
-          >
+        <mat-chip-listbox
+          class="mcq-chips-wrapper"
+          *ngIf="item.optionType === optionType.Text"
+        >
           <mat-chip-option
+            *ngFor="let option of item.options; let j = index"
             color="primary"
             [selectable]="false"
             disableRipple
-            selected
-            ><span class="mcq-option bg-success">B</span
-            >Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
+            [selected]="option.isAnswer"
+            ><span
+              [ngClass]="{
+                'bg-success': option.isAnswer && option.isUserAnswer,
+                'bg-error': !option.isAnswer && option.isUserAnswer
+              }"
+              class="mcq-option"
+              >{{ optionIndex[j] }}</span
+            >{{ option.optionValue }}</mat-chip-option
           >
         </mat-chip-listbox>
-      </div>
-    </div>
-  </li>
-  <li>
-    <div class="qa-card">
-      <div class="qa-head no-wrap-md">
-        <div class="qa-left">
-          <span class="qa-sequence">02.</span>
-          <p class="question-text">
-            Occaecat in sint nulla cillum exercitation culpa aliquip enim
-            consequat quis adipisicing do dolor qui reprehenderit excepteur.
-          </p>
-        </div>
-        <div class="qa-right">
-          <mat-chip class="ChipInfo question-mark me-0"> 05 </mat-chip>
-        </div>
-      </div>
-      <div class="qa-body">
-        <mat-chip-listbox class="mcq-chips-wrapper">
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option bg-error">B</span>Checkbox</mat-chip-option
-          >
+        <mat-chip-listbox
+          class="mcq-chips-wrapper image-options"
+          *ngIf="item.optionType === optionType.Image"
+        >
           <mat-chip-option
+            *ngFor="let option of item.options; let j = index"
             color="primary"
             [selectable]="false"
-            selected
             disableRipple
-            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
-          >
-        </mat-chip-listbox>
-      </div>
-    </div>
-  </li>
-  <li>
-    <div class="qa-card">
-      <div class="qa-head no-wrap-md">
-        <div class="qa-left">
-          <span class="qa-sequence">03.</span>
-          <p class="question-text">
-            Occaecat in sint nulla cillum exercitation culpa aliquip enim
-            consequat quis adipisicing do dolor qui reprehenderit excepteur.
-          </p>
-        </div>
-        <div class="qa-right">
-          <mat-chip class="ChipInfo question-mark me-0"> 02 </mat-chip>
-        </div>
-      </div>
-      <div class="qa-body">
-        <mat-chip-listbox class="mcq-chips-wrapper">
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            selected
-            disableRipple
-            ><span class="mcq-option">B</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option bg-error">C</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            selected
-            disableRipple
-            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
-          >
-        </mat-chip-listbox>
-      </div>
-    </div>
-  </li>
-
-  <li>
-    <div class="qa-card">
-      <div class="qa-head no-wrap-md">
-        <div class="qa-left">
-          <span class="qa-sequence">04.</span>
-          <p class="question-text">
-            Occaecat in sint nulla cillum exercitation culpa aliquip enim
-            consequat quis adipisicing do dolor qui reprehenderit excepteur.
-          </p>
-        </div>
-        <div class="qa-right">
-          <mat-chip class="ChipInfo question-mark me-0"> 03 </mat-chip>
-        </div>
-      </div>
-      <div class="qa-body">
-        <mat-chip-listbox class="mcq-chips-wrapper">
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            selected
-            disableRipple
-            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option bg-error">B</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            selected
-            disableRipple
-            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
-          >
-        </mat-chip-listbox>
-      </div>
-    </div>
-  </li>
-
-  <li>
-    <div class="qa-card">
-      <div class="qa-head no-wrap-md">
-        <div class="qa-left">
-          <span class="qa-sequence">05.</span>
-          <p class="question-text">
-            Occaecat in sint nulla cillum exercitation culpa aliquip enim
-            consequat quis adipisicing do dolor qui reprehenderit excepteur.
-          </p>
-        </div>
-        <div class="qa-right">
-          <mat-chip class="ChipInfo question-mark me-0"> 04 </mat-chip>
-        </div>
-      </div>
-      <div class="qa-body">
-        <mat-chip-listbox class="mcq-chips-wrapper">
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            selected
-            disableRipple
-            ><span class="mcq-option bg-success">B</span
-            >Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            selected
-            disableRipple
-            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
-          >
-        </mat-chip-listbox>
-      </div>
-    </div>
-  </li>
-
-  <li>
-    <div class="qa-card">
-      <div class="qa-head no-wrap-md">
-        <div class="qa-left">
-          <span class="qa-sequence">06.</span>
-          <p class="question-text">
-            Occaecat in sint nulla cillum exercitation culpa aliquip enim
-            consequat quis adipisicing do dolor qui reprehenderit excepteur.
-          </p>
-        </div>
-        <div class="qa-right">
-          <mat-chip class="ChipInfo question-mark me-0"> 01 </mat-chip>
-        </div>
-      </div>
-      <div class="qa-body">
-        <mat-chip-listbox class="mcq-chips-wrapper">
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">B</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            selected
-            disableRipple
-            ><span class="mcq-option bg-success">C</span
-            >Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
-          >
-        </mat-chip-listbox>
-      </div>
-    </div>
-  </li>
-
-  <li>
-    <div class="qa-card">
-      <div class="qa-head no-wrap-md">
-        <div class="qa-left">
-          <span class="qa-sequence">07.</span>
-          <p class="question-text">
-            Occaecat in sint nulla cillum exercitation culpa aliquip enim
-            consequat quis adipisicing do dolor qui reprehenderit excepteur.
-          </p>
-        </div>
-        <div class="qa-right">
-          <mat-chip class="ChipInfo question-mark me-0"> 01 </mat-chip>
-        </div>
-      </div>
-      <div class="qa-body">
-        <mat-chip-listbox class="mcq-chips-wrapper">
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option bg-error">A</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">B</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            selected
-            disableRipple
-            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
-          >
-        </mat-chip-listbox>
-      </div>
-    </div>
-  </li>
-
-  <li>
-    <div class="qa-card">
-      <div class="qa-head no-wrap-md">
-        <div class="qa-left">
-          <span class="qa-sequence">08.</span>
-          <p class="question-text">
-            Occaecat in sint nulla cillum exercitation culpa aliquip enim
-            consequat quis adipisicing do dolor qui reprehenderit excepteur.
-          </p>
-        </div>
-        <div class="qa-right">
-          <mat-chip class="ChipInfo question-mark me-0"> 01 </mat-chip>
-        </div>
-      </div>
-      <div class="qa-body">
-        <mat-chip-listbox class="mcq-chips-wrapper">
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            selected
-            disableRipple
-            ><span class="mcq-option bg-success">B</span
-            >Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">D</span>Checkbox</mat-chip-option
-          >
-        </mat-chip-listbox>
-      </div>
-    </div>
-  </li>
-
-  <li>
-    <div class="qa-card">
-      <div class="qa-head no-wrap-md">
-        <div class="qa-left">
-          <span class="qa-sequence">09.</span>
-          <p class="question-text">
-            Occaecat in sint nulla cillum exercitation culpa aliquip enim
-            consequat quis adipisicing do dolor qui reprehenderit excepteur.
-          </p>
-        </div>
-        <div class="qa-right">
-          <mat-chip class="ChipInfo question-mark me-0"> 01 </mat-chip>
-        </div>
-      </div>
-      <div class="qa-body">
-        <mat-chip-listbox class="mcq-chips-wrapper">
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">A</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">B</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option color="primary" [selectable]="false" disableRipple
-            ><span class="mcq-option">C</span>Checkbox</mat-chip-option
-          >
-          <mat-chip-option
-            color="primary"
-            [selectable]="false"
-            selected
-            disableRipple
-            ><span class="mcq-option bg-success">D</span
-            >Checkbox</mat-chip-option
-          >
+            [selected]="option.isAnswer"
+            ><span
+              [ngClass]="{
+                'bg-success': option.isAnswer && option.isUserAnswer,
+                'bg-error': !option.isAnswer && option.isUserAnswer
+              }"
+              class="mcq-option"
+              >{{ optionIndex[j] }}</span
+            ><img
+              class="option-img"
+              [src]="baseImageUrl + option.optionValue"
+              alt="Option 1"
+            />
+          </mat-chip-option>
         </mat-chip-listbox>
       </div>
     </div>

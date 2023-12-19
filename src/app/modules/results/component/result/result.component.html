@@ -6,280 +6,83 @@
     <h4 class="title">Results</h4>
   </div>
   <div class="action-list">
-    <button mat-flat-button color="primary" class="btn-with-icon">
-      <mat-icon><img src="./assets/images/export-white.svg" alt="Export" /></mat-icon>
+    <button
+      mat-flat-button
+      color="primary"
+      class="btn-with-icon"
+      (click)="exportData()"
+    >
+      <mat-icon
+        ><img src="./assets/images/export-white.svg" alt="Export"
+      /></mat-icon>
       Export
     </button>
   </div>
 </div>
-
-<mat-card class="form-block mb-3">
-  <mat-card-content class="pb-0">
-    <div class="row">
-      <div class="col-sm">
-        <div class="row">
-          <div class="col-lg-3 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Search candidate..</mat-label>
-              <input matInput />
-            </mat-form-field>
-          </div>
-          <div class="col-lg-3 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Test</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let item of optionsList" [value]="item">
-                  {{ item }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-lg-3 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>Group</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let item of optionsList" [value]="item">
-                  {{ item }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-          <div class="col-lg-3 col-sm-6">
-            <mat-form-field appearance="outline">
-              <mat-label>College</mat-label>
-              <mat-select>
-                <mat-option *ngFor="let item of optionsList" [value]="item">
-                  {{ item }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-          </div>
-        </div>
-      </div>
-      <div class="col-sm-auto pb-12p d-flex">
-        <button mat-stroked-button color="primary" class="mt-auto">clear</button>
-      </div>
-    </div>
-  </mat-card-content>
-</mat-card>
-
-<mat-card class="table-card mb-3">
-  <mat-card-content>
-    <div class="mat-table-wrapper">
-      <table mat-table [dataSource]="dataSource">
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef>Name</th>
-          <td mat-cell *matCellDef="let row">
-            <a class="default-bold-link" href="javascript:void(0)" routerLink="/admin/candidate/edit"
-              [title]="row.name"><b>{{ row.name }}</b></a> <small> {{
-              row.universityName }}</small>
-          </td>
-        </ng-container>
-
-        <!-- Start Time Column -->
-        <ng-container matColumnDef="startTime">
-          <th mat-header-cell *matHeaderCellDef>Start Time</th>
-          <td mat-cell *matCellDef="let row">{{ row.startTime }}</td>
-        </ng-container>
-
-        <!-- Points Column -->
-        <ng-container matColumnDef="points">
-          <th mat-header-cell *matHeaderCellDef>Points</th>
-          <td mat-cell *matCellDef="let row" [class]="row.pointsColor">
-            {{ row.points }}
-          </td>
-        </ng-container>
-
-        <!-- Correct Column -->
-        <ng-container matColumnDef="correct">
-          <th mat-header-cell *matHeaderCellDef>Correct</th>
-          <td mat-cell *matCellDef="let row">{{ row.correct }}</td>
-        </ng-container>
-
-        <!-- Wrong Column -->
-        <ng-container matColumnDef="wrong">
-          <th mat-header-cell *matHeaderCellDef>Wrong</th>
-          <td mat-cell *matCellDef="let row">{{ row.wrong }}</td>
-        </ng-container>
-
-        <!-- Unanswered Column -->
-        <ng-container matColumnDef="unanswered">
-          <th mat-header-cell *matHeaderCellDef>Unanswered</th>
-          <td mat-cell *matCellDef="let row">{{ row.unanswered }}</td>
-        </ng-container>
-
-        <!-- Undisplayed Column -->
-        <ng-container matColumnDef="undisplayed">
-          <th mat-header-cell *matHeaderCellDef>Undisplayed</th>
-          <td mat-cell *matCellDef="let row">{{ row.undisplayed }}</td>
-        </ng-container>
-
-        <!-- Status Column -->
-        <ng-container matColumnDef="status">
-          <th mat-header-cell *matHeaderCellDef class="text-center">Status</th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            <ng-container [ngSwitch]="row.status">
-              <mat-chip *ngSwitchCase="'Active'" [class.ChipSuccess]="row.status">
-                {{ row.status }}
-              </mat-chip>
-              <mat-chip *ngSwitchCase="'Pending'" [class.ChipWarn]="row.status">
-                {{ row.status }}
-              </mat-chip>
-              <mat-chip *ngSwitchCase="'Locked'" [class.ChipInfo]="row.status">
-                {{ row.status }}
-              </mat-chip>
-            </ng-container>
-          </td>
-        </ng-container>
-
-        <!-- Action Column -->
-        <ng-container matColumnDef="action">
-          <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            <button mat-icon-button [matMenuTriggerFor]="tableActionMenu" class="btn-small"
-              (click)="$event.stopPropagation()">
-              <mat-icon>
-                <img src="./assets/images/more-black.svg" alt="Action" />
-              </mat-icon>
-            </button>
-            <mat-menu #tableActionMenu="matMenu" xPosition="before">
-              <button mat-menu-item routerLink="/admin/results/result-details">
-                <mat-icon>
-                  <img src="./assets/images/details.svg" alt="Edit" />
-                </mat-icon>
-                Details
-              </button>
-            </mat-menu>
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-      </table>
-    </div>
-
-    <div class="mat-custom-pagination">
-      <div class="pagination-left">
-        <mat-form-field appearance="outline" class="pagination-select remove-hint">
-          <mat-label>Page</mat-label>
-          <mat-select [(ngModel)]="selectedOption">
-            <mat-option *ngFor="let item of paginationOptionsList" [value]="item">
-              {{ item }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-        <span class="page-info">Showing 10 - 20 of 50 entries</span>
-      </div>
-      <ul class="pagination-right">
-        <li>
-          <a mat-stroked-button href="javascript:void(0)" disabled>
-            <img src="./assets/images/chevron-backward.svg" alt="Prev" />
-          </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)" class="active"> 1 </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)"> 2 </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)"> 3 </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)"> 4 </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)"> 5 </a>
-        </li>
-        <li>
-          <a mat-stroked-button href="javascript:void(0)">
-            <img src="./assets/images/chevron-forward.svg" alt="Prev" />
-          </a>
-        </li>
-      </ul>
-    </div>
-  </mat-card-content>
-</mat-card>
-
-<mat-card class="table-card">
-  <mat-card-content>
-    <div class="card-header">
-      <div class="row align-items-center">
+<form [formGroup]="filterForm">
+  <mat-card class="form-block mb-3">
+    <mat-card-content class="pb-0">
+      <div class="row">
         <div class="col-sm">
-          <h5 class="card-header-title">Statistics</h5>
+          <div class="row">
+            <div class="col-lg-3 col-sm-6">
+              <app-text-control
+                [formControlModel]="filterControls.searchQuery"
+                [form]="filterForm"
+                (keyupEvent)="search()"
+              ></app-text-control>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+              <app-select
+                [form]="filterForm"
+                [formControlModel]="filterControls.test"
+                [options]="tests"
+                (selection)="onFilterChange()"
+              >
+              </app-select>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+              <app-select
+                [form]="filterForm"
+                [formControlModel]="filterControls.group"
+                [options]="groups"
+                (selection)="onFilterChange()"
+              >
+              </app-select>
+            </div>
+            <div class="col-lg-3 col-sm-6">
+              <app-select
+                [form]="filterForm"
+                [formControlModel]="filterControls.college"
+                [options]="colleges"
+                (selection)="onFilterChange()"
+              >
+              </app-select>
+            </div>
+          </div>
         </div>
-        <div class="col-sm-auto d-flex justify-content-end mt-1 mt-sm-0">
-          <button mat-stroked-button color="primary" class="card-header-btn">
-            CSV
-          </button>
-          <button mat-stroked-button color="primary" class="card-header-btn">
-            PDF
-          </button>
-          <button mat-stroked-button color="primary" class="card-header-btn">
-            Excel
+        <div class="col-sm-auto pb-2 pb-sm-0">
+          <button
+            mat-stroked-button
+            color="primary"
+            class="mt-auto"
+            (click)="clearFilters()"
+          >
+            clear
           </button>
         </div>
       </div>
-    </div>
-
-    <div class="mat-table-wrapper">
-      <table mat-table [dataSource]="statisticsData">
-        <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th mat-header-cell *matHeaderCellDef></th>
-          <td mat-cell *matCellDef="let row">
-            <strong>{{ row.name }}</strong>
-          </td>
-        </ng-container>
-
-        <!-- Points Column -->
-        <ng-container matColumnDef="points">
-          <th mat-header-cell *matHeaderCellDef class="text-center">Points</th>
-          <td mat-cell *matCellDef="let row" class="text-center" [class]="row.pointsColor">
-            {{ row.points }}
-          </td>
-        </ng-container>
-
-        <!-- Correct Column -->
-        <ng-container matColumnDef="correct">
-          <th mat-header-cell *matHeaderCellDef class="text-center">Correct</th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            {{ row.correct }}
-          </td>
-        </ng-container>
-
-        <!-- Wrong Column -->
-        <ng-container matColumnDef="wrong">
-          <th mat-header-cell *matHeaderCellDef class="text-center">Wrong</th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            {{ row.wrong }}
-          </td>
-        </ng-container>
-
-        <!-- Unanswered Column -->
-        <ng-container matColumnDef="unanswered">
-          <th mat-header-cell *matHeaderCellDef class="text-center">
-            Unanswered
-          </th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            {{ row.unanswered }}
-          </td>
-        </ng-container>
-
-        <!-- Undisplayed Column -->
-        <ng-container matColumnDef="undisplayed">
-          <th mat-header-cell *matHeaderCellDef class="text-center">
-            Undisplayed
-          </th>
-          <td mat-cell *matCellDef="let row" class="text-center">
-            {{ row.undisplayed }}
-          </td>
-        </ng-container>
-
-        <tr mat-header-row *matHeaderRowDef="displayedStatisticsColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedStatisticsColumns"></tr>
-      </table>
-    </div>
-  </mat-card-content>
-</mat-card>
+    </mat-card-content>
+  </mat-card>
+</form>
+<app-result-table
+  [dataSource]="dataSource"
+  (detailsClicked)="getDetails($event)"
+  [totalItemsCount]="totalItemsCount"
+  [pageSize]="pageSize"
+  (pageSizeChanged)="handlePageSizeChange($event)"
+  (pageToPage)="handlePageToPage($event)"
+  (pageChanged)="handlePageChange($event)"
+  (sortingChanged)="handleDataSorting($event)"
+></app-result-table>
+<app-statistics-table [statisticsData]="statisticsData"></app-statistics-table>

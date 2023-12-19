@@ -191,6 +191,18 @@ export class TestService {
       );
   }
 
+  checkTestName(testName: string) {
+    return this.http
+      .get<ResponseModel<string>>(
+        `${environment.baseURL}Tests/CheckTestName/${testName}`
+      )
+      .pipe(
+        map((res: ResponseModel<string>) => {
+          return res;
+        })
+      );
+  }
+
   delete(id: number) {
     return this.http.delete<ResponseModel<string>>(
       `${environment.baseURL}Tests/DeleteTest/${id}`

@@ -1,8 +1,9 @@
 import { Location } from '@angular/common';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { QuestionsService } from '../../services/questions.service';
+import { validations } from 'src/app/shared/messages/validation.static';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import {
   AnswerType,
@@ -64,6 +65,7 @@ export class AddQuestionComponent implements OnInit {
   isTopicEditable = true;
   question: Question;
   isEdit = false;
+  isDuplicateOptions = false;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
   constructor(
     private location: Location,
@@ -73,7 +75,41 @@ export class AddQuestionComponent implements OnInit {
     public validation: ValidationService,
     public snackbarService: SnackbarService,
     private router: Router
-  ) {}
+  ) {
+    ClassicEditor.defaultConfig = {
+      toolbar: {
+        items: [
+          'undo',
+          'redo',
+          'heading',
+          '|',
+          'bold',
+          'italic',
+          '|',
+          'link',
+          '|',
+          'insertTable',
+          '|',
+          'blockQuote',
+          '|',
+          'bulletedList',
+          'numberedList',
+        ],
+      },
+      image: {
+        toolbar: [
+          'imageStyle:full',
+          'imageStyle:side',
+          '|',
+          'imageTextAlternative',
+        ],
+      },
+      table: {
+        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
+      },
+      language: 'en',
+    };
+  }
 
   ngOnInit(): void {
     this.createForm();
@@ -97,8 +133,6 @@ export class AddQuestionComponent implements OnInit {
           .get(param.id)
           .subscribe((data: ResponseModel<Question>) => {
             this.question = data.data;
-            console.log(this.question);
-
             if (this.question.parentId != null && this.question.parentId != 0) {
               this.isTopicEditable = false;
             } else {
@@ -158,11 +192,41 @@ export class AddQuestionComponent implements OnInit {
       questionText: ['', Validators.required],
       questionType: ['', Validators.required],
       optionType: [1, Validators.required],
-      optionValueA: ['', Validators.required],
-      optionValueB: ['', Validators.required],
-      optionValueC: ['', Validators.required],
-      optionValueD: ['', Validators.required],
-      isAnswer: ['', Validators.required],
+      optionValueA: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      optionValueB: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      optionValueC: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      optionValueD: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
+      isAnswer: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ],
+      ],
     });
   }
 
@@ -205,20 +269,14 @@ export class AddQuestionComponent implements OnInit {
           this.baseImageUrl + this.question.options[i].optionValue;
         this.optionImageFlag[i] = true;
       }
-      if (this.question.options[i].isAnswer == true) {
+      if (this.question.options[i].isAnswer) {
         this.checkboxValues.push(i);
       }
     }
 
-    if (this.question.optionType == this.optionTypes.Text) {
-      this.questionForm.patchValue({
-        isAnswer: this.isAnswer,
-      });
-    } else {
-      this.questionForm.patchValue({
-        isAnswer: this.isAnswer,
-      });
-    }
+    this.questionForm.patchValue({
+      isAnswer: this.isAnswer,
+    });
   }
 
   get options() {
@@ -252,16 +310,7 @@ export class AddQuestionComponent implements OnInit {
     ) {
       this.formData = this.createFormData();
       if (this.isEdit) {
-        this.questionService.update(this.formData).subscribe({
-          next: (res: ResponseModel<null>) => {
-            if (res.statusCode == StatusCode.Success) {
-              this.snackbarService.success(res.message);
-              this.router.navigate(['admin/questions']);
-            } else {
-              this.snackbarService.error(res.message);
-            }
-          },
-        });
+        this.editQuestion();
       } else {
         this.questionService.create(this.formData).subscribe({
           next: (res: ResponseModel<null>) => {
@@ -279,6 +328,19 @@ export class AddQuestionComponent implements OnInit {
       this.questionForm.get('isAnswer')?.markAsTouched();
       this.optionImageTouched = [true, true, true, true];
     }
+  }
+
+  editQuestion() {
+    this.questionService.update(this.formData).subscribe({
+      next: (res: ResponseModel<null>) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.snackbarService.success(res.message);
+          this.router.navigate(['admin/questions']);
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+    });
   }
 
   checkboxChanged(event: MatCheckboxChange) {
@@ -306,7 +368,32 @@ export class AddQuestionComponent implements OnInit {
     }
   }
 
-  getCheckboxError() {
+  getCheckboxOrOptionError() {
+    const optionA = this.questionForm.get('optionValueA')?.value;
+    const optionB = this.questionForm.get('optionValueB')?.value;
+    const optionC = this.questionForm.get('optionValueC')?.value;
+    const optionD = this.questionForm.get('optionValueD')?.value;
+    const tempOptions = [
+      optionA.trim(),
+      optionB.trim(),
+      optionC.trim(),
+      optionD.trim(),
+    ];
+
+    for (let i = 0; i < 4; i++) {
+      let option = tempOptions[i];
+      if (option !== '') {
+        for (let j = 0; j < 4; j++) {
+          if (i !== j && tempOptions[i] === tempOptions[j]) {
+            this.isDuplicateOptions = true;
+            return this.questionControls.isAnswer.invalidOptionValue;
+          } else {
+            this.isDuplicateOptions = false;
+          }
+        }
+      }
+    }
+
     const questionType = this.questionForm.get('questionType')?.value;
     const isAnswer = this.questionForm.get('isAnswer');
     if (
@@ -322,8 +409,9 @@ export class AddQuestionComponent implements OnInit {
       isAnswer?.touched &&
       (this.checkboxValues.length < 2 || this.checkboxValues.length > 4)
     ) {
-      return this.questionControls.isAnswer.invalidErrorMsg;
+      return this.questionControls.isAnswer.invalidMultiAnswerErrorMsg;
     }
+
     return null;
   }
 
@@ -366,7 +454,10 @@ export class AddQuestionComponent implements OnInit {
 
   isValid() {
     return (
-      this.questionForm.valid && this.areAnswersValid() && this.areImagesValid()
+      this.questionForm.valid &&
+      this.areAnswersValid() &&
+      this.areImagesValid() &&
+      !this.isDuplicateOptions
     );
   }
 

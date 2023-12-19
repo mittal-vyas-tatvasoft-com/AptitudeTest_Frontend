@@ -27,7 +27,10 @@
             <div class="col-12 col-md-4 col-lg-3">
               <mat-form-field appearance="outline">
                 <mat-label>Relationship</mat-label>
-                <mat-select formControlName="familyPerson">
+                <mat-select
+                  formControlName="familyPerson"
+                  (selectionChange)="change($event.value, i, familyDetail)"
+                >
                   <mat-option
                     *ngFor="let item of selectOptionsForRelationship"
                     [value]="item.id"
@@ -41,12 +44,26 @@
               <mat-form-field appearance="outline">
                 <mat-label>Qualification</mat-label>
                 <input matInput formControlName="qualification" />
+                <mat-error>{{
+                  validationService.getError(
+                    familyDetailsArray.controls[i],
+                    CandidateModel.Qualification,
+                    CandidateModel.Qualification.key
+                  )
+                }}</mat-error>
               </mat-form-field>
             </div>
             <div class="col-sm-6 col-md-4 col-lg">
               <mat-form-field appearance="outline">
                 <mat-label>Occupation</mat-label>
                 <input matInput formControlName="occupation" />
+                <mat-error>{{
+                  validationService.getError(
+                    familyDetailsArray.controls[i],
+                    CandidateModel.Occupation,
+                    CandidateModel.Occupation.key
+                  )
+                }}</mat-error>
               </mat-form-field>
             </div>
           </div>

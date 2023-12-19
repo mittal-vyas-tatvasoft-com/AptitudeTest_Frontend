@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Numbers } from 'src/app/shared/common/enums';
+import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 import { validations } from 'src/app/shared/messages/validation.static';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { AdminControl } from '../../configs/admin.configs';
+import { AdminModel } from '../../interfaces/admin.interface';
 import { AdminService } from '../../services/admin.service';
 
 @Component({
@@ -24,6 +26,7 @@ export class AddAdminComponent implements OnInit, AfterViewInit {
     public dialogRef: MatDialogRef<AddAdminComponent>,
     private adminService: AdminService,
     private formBuilder: FormBuilder,
+    private snackbarService: SnackbarService,
     @Inject(MAT_DIALOG_DATA) public data: number
   ) {}
 
@@ -79,6 +82,7 @@ export class AddAdminComponent implements OnInit, AfterViewInit {
         '',
         [
           Validators.required,
+          Validators.maxLength(AdminControl.email.maxLength),
           Validators.pattern(validations.common.emailREGEX),
         ],
       ],
@@ -91,6 +95,42 @@ export class AddAdminComponent implements OnInit, AfterViewInit {
       ],
       status: [true, Validators.required],
     });
+  }
+
+  submit() {
+    const payload: AdminModel = {
+      id: this.form.get('id')?.value,
+      email: this.form.get('email')?.value,
+      firstName: this.form.get('firstName')?.value,
+      middleName: this.form.get('middleName')?.value,
+      lastName: this.form.get('lastName')?.value,
+      phoneNumber: this.form.get('phoneNumber')?.value,
+      status: this.form.get('status')?.value,
+    };
+
+    if (this.form.get('id')?.value === 0) {
+      this.adminService.addNewAdmin(payload).subscribe({
+        next: (res) => {
+          if (res.statusCode == StatusCode.Success) {
+            this.dialogRef.close(true);
+            this.snackbarService.success(res.message);
+          } else {
+            this.snackbarService.error(res.message);
+          }
+        },
+      });
+    } else {
+      this.adminService.updateAdmin(payload).subscribe({
+        next: (res) => {
+          if (res.statusCode == StatusCode.Success) {
+            this.dialogRef.close(true);
+            this.snackbarService.success(res.message);
+          } else {
+            this.snackbarService.error(res.message);
+          }
+        },
+      });
+    }
   }
 
   closeModal() {

@@ -125,7 +125,7 @@ export const testBasicDetailFormModel = {
   questignsMenu: {
     value: false,
     key: 'questignsMenu',
-    label: 'Questigns menu',
+    label: 'Questioning Menu',
     required: false,
     inputType: 'text',
     displayIcon: false,
@@ -165,7 +165,7 @@ export const testFilterModel = {
   searchQuery: {
     value: '',
     key: 'searchQuery',
-    label: 'Search candidates..',
+    label: 'Search Test',
     required: false,
     inputType: 'text',
     displayIcon: false,

@@ -41,11 +41,17 @@ export enum Navigation {
   Groups = 'groups',
 
   //Setting navigation
-  Setting = 'setting',
+  Setting = 'settings',
 
   //Results navigation
   Results = 'results',
   ResultsDetails = 'result-details',
+
+  // User Test navigation
+
+  Instructions = 'instructions',
+  Test = 'test',
+  Submitted = 'submitted',
 }
 
 export enum Type {
@@ -97,6 +103,7 @@ export enum StatusCode {
   MethodNotAllowed = 405,
   NotAcceptable = 406,
   RequestTimeout = 408,
+  AlreadyLoggedIn = 430,
 }
 
 //Questions
@@ -158,4 +165,16 @@ export enum QuestionStatus {
 export enum Status {
   Active = 1,
   Inactive = 0,
+}
+
+export enum ResultStatus {
+  Active = 1,
+  Pending = 0,
+  Locked = 2,
+}
+
+export enum Gender {
+  Male = 1,
+  Female = 2,
+  Default = 0,
 }

@@ -1,6 +1,6 @@
 export const validations = {
   common: {
-    emailREGEX: new RegExp(/^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/),
+    emailREGEX: new RegExp('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
     passwordREGEX: new RegExp(
       /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!^#%*?&])[A-Za-z\d@$!^#%*?&]{8,}$/
     ),
@@ -11,6 +11,5 @@ export const validations = {
       /^[^ ][A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/
     ),
     fractionREGEX: new RegExp(/^[0-9]?[0-9]?(\.[0-9][0-9]?)?$/),
-    charactersWithoutSpaces: new RegExp(/^\S*$/),
   },
 };

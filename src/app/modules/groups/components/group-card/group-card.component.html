@@ -1,7 +1,7 @@
 <mat-card class="group-card" fxLayout="column" fxLayoutAlign="start start"
   ><mat-card-content>
     <div class="row align-items-center group-card-header">
-      <div class="col">
+      <div class="col" (click)="FilterGroupOrCollege(groupData.id, 0)">
         <h3 class="group-card-heading">
           {{ groupData.name }} :<b> {{ groupData.numberOfStudentsInGroup }}</b>
         </h3>
@@ -21,9 +21,9 @@
         <mat-menu #tableActionMenu="matMenu" xPosition="before">
           <button mat-menu-item (click)="handleEdit(groupData)">
             <mat-icon>
-              <img src="./assets/images/edit.svg" alt="Rename" />
+              <img src="./assets/images/edit.svg" alt="Edit" />
             </mat-icon>
-            Rename
+            Edit
           </button>
           <button
             *ngIf="!groupData.isDefault"
@@ -43,6 +43,7 @@
         <li
           *ngFor="let college of groupData.collegesUnderGroup"
           class="group-card-listing"
+          (click)="FilterGroupOrCollege(groupData.id, college.id)"
         >
           {{ college.name }} : <b> {{ college.numberOfStudentsInCollege }}</b>
         </li>
@@ -55,8 +56,7 @@
           mat-stroked-button
           color="primary"
           class="btn-sm"
-          routerLink="/admin/candidate/import-candidate"
-          matTooltip="Manage Candidates"
+          (click)="FilterGroupOrCollege(groupData.id, 0)"
         >
           Manage Candidates
         </button>

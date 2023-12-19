@@ -154,43 +154,10 @@ export class AdminComponent implements OnInit, AfterViewInit {
       .open(AddAdminComponent, dialogConfig)
       .afterClosed()
       .subscribe((res) => {
-        const payload: AdminModel = {
-          id: res.id,
-          email: res.email,
-          firstName: res.firstName,
-          middleName: res.middleName,
-          lastName: res.lastName,
-          phoneNumber: res.phoneNumber,
-          status: res.status,
-        };
         if (res) {
-          if (res.id == Numbers.Zero) {
-            this.adminService.addNewAdmin(payload).subscribe({
-              next: (res) => {
-                if (res.statusCode == StatusCode.Success) {
-                  this.form.get('searchField')?.setValue('');
-                  this.form.get('sortField')?.setValue('');
-                  this.fetchAdmin();
-                  this.snackbarService.success(res.message);
-                } else {
-                  this.snackbarService.error(res.message);
-                }
-              },
-            });
-          } else {
-            this.adminService.updateAdmin(payload).subscribe({
-              next: (res) => {
-                if (res.statusCode == StatusCode.Success) {
-                  this.form.get('searchField')?.setValue('');
-                  this.form.get('sortField')?.setValue('');
-                  this.fetchAdmin();
-                  this.snackbarService.success(res.message);
-                } else {
-                  this.snackbarService.error(res.message);
-                }
-              },
-            });
-          }
+          this.form.get('searchField')?.setValue('');
+          this.form.get('sortField')?.setValue('');
+          this.fetchAdmin();
         }
       });
   }
@@ -252,7 +219,8 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   resetForm() {
-    this.form.reset();
+    this.form.get('searchField')?.setValue('');
+    this.form.get('statusField')?.setValue('');
     this.fetchAdmin();
   }
 

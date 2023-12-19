@@ -1,0 +1,175 @@
+<mat-card class="table-card mb-3">
+  <mat-card-content>
+    <div class="mat-table-wrapper">
+      <table
+        mat-table
+        [dataSource]="dataSource"
+        matSort
+        aria-describedby="Results"
+      >
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Name</th>
+          <td mat-cell *matCellDef="let row">
+            <a
+              class="default-bold-link"
+              href="javascript:void(0)"
+              [routerLink]="'/admin/candidate/edit/' + row.id"
+              [title]="row.name"
+              ><b>{{ row.name }}</b></a
+            >
+            <small> {{ row.universityName }}</small>
+          </td>
+        </ng-container>
+
+        <!-- Start Time Column -->
+        <ng-container matColumnDef="startTime">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Start Time</th>
+          <td mat-cell *matCellDef="let row">{{ row.startTime }}</td>
+        </ng-container>
+
+        <!-- Points Column -->
+        <ng-container matColumnDef="points">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Points</th>
+          <td mat-cell *matCellDef="let row" [class]="row.pointsColor">
+            {{ row.points }}
+          </td>
+        </ng-container>
+
+        <!-- Correct Column -->
+        <ng-container matColumnDef="correct">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Correct</th>
+          <td mat-cell *matCellDef="let row">{{ row.correct }}</td>
+        </ng-container>
+
+        <!-- Wrong Column -->
+        <ng-container matColumnDef="wrong">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Wrong</th>
+          <td mat-cell *matCellDef="let row">{{ row.wrong }}</td>
+        </ng-container>
+
+        <!-- Unanswered Column -->
+        <ng-container matColumnDef="unanswered">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Unanswered</th>
+          <td mat-cell *matCellDef="let row">{{ row.unanswered }}</td>
+        </ng-container>
+
+        <!-- Undisplayed Column -->
+        <ng-container matColumnDef="undisplayed">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>Undisplayed</th>
+          <td mat-cell *matCellDef="let row">{{ row.undisplayed }}</td>
+        </ng-container>
+
+        <!-- Status Column -->
+        <ng-container matColumnDef="status">
+          <th mat-header-cell *matHeaderCellDef class="text-center">Status</th>
+          <td mat-cell *matCellDef="let row" class="text-center">
+            <ng-container [ngSwitch]="row.status">
+              <mat-chip
+                *ngSwitchCase="'Active'"
+                [class.ChipSuccess]="row.status"
+              >
+                {{ row.status }}
+              </mat-chip>
+              <mat-chip *ngSwitchCase="'Pending'" [class.ChipWarn]="row.status">
+                {{ row.status }}
+              </mat-chip>
+              <mat-chip *ngSwitchCase="'Locked'" [class.ChipInfo]="row.status">
+                {{ row.status }}
+              </mat-chip>
+            </ng-container>
+          </td>
+        </ng-container>
+
+        <!-- Action Column -->
+        <ng-container matColumnDef="action">
+          <th mat-header-cell *matHeaderCellDef class="text-center">Actions</th>
+          <td mat-cell *matCellDef="let row" class="text-center">
+            <button
+              mat-icon-button
+              [matMenuTriggerFor]="tableActionMenu"
+              class="btn-small"
+              (click)="$event.stopPropagation()"
+            >
+              <mat-icon>
+                <img src="./assets/images/more-black.svg" alt="Action" />
+              </mat-icon>
+            </button>
+            <mat-menu #tableActionMenu="matMenu" xPosition="before">
+              <button mat-menu-item (click)="handleDetails(row.id, row.testId)">
+                <mat-icon>
+                  <img src="./assets/images/details.svg" alt="Edit" />
+                </mat-icon>
+                Details
+              </button>
+            </mat-menu>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+      </table>
+    </div>
+
+    <div
+      class="mat-custom-pagination"
+      *ngIf="!dataSource?.data || dataSource.data.length !== 0"
+    >
+      <div class="pagination-left">
+        <mat-form-field
+          appearance="outline"
+          class="pagination-select remove-hint"
+        >
+          <mat-label>Page</mat-label>
+          <mat-select
+            [(ngModel)]="pageSize"
+            (ngModelChange)="onPageSizeChange()"
+          >
+            <mat-option *ngFor="let item of pageSizeOptions" [value]="item">
+              {{ item }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <span class="page-info">{{ getDisplayedRange() }}</span>
+      </div>
+      <ul class="pagination-right">
+        <li>
+          <a
+            mat-stroked-button
+            href="javascript:void(0)"
+            (click)="onPageChange('prev')"
+            [disabled]="isFirstPage()"
+          >
+            <img src="./assets/images/chevron-backward.svg" alt="Prev" />
+          </a>
+        </li>
+        <li *ngFor="let page of pageNumbers; let i = index">
+          <a
+            mat-stroked-button
+            href="javascript:void(0)"
+            (click)="onPageChangeToPage(page)"
+            [class.active]="currentPageIndex === i"
+          >
+            {{ page }}
+          </a>
+        </li>
+        <li>
+          <a
+            mat-stroked-button
+            href="javascript:void(0)"
+            (click)="onPageChange('next')"
+            [disabled]="isLastPage()"
+          >
+            <img src="./assets/images/chevron-forward.svg" alt="Next" />
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div
+      *ngIf="!dataSource?.data || dataSource.data.length === 0"
+      class="no-data-message"
+    >
+      No data found
+    </div>
+  </mat-card-content>
+</mat-card>
