@@ -17,6 +17,7 @@ export class CandidateInstructionsComponent implements OnInit {
   testExist = false;
   NoCameraAccess = false;
   messageToShow: string;
+  IsFaceCaptureEnabled = false;
   status: string;
   testStatus = 'Start';
   userId: number;
@@ -46,7 +47,15 @@ export class CandidateInstructionsComponent implements OnInit {
           }
         },
       });
-    this.checkPermissions();
+
+    this.settingService.get().subscribe({
+      next: (data) => {
+        this.IsFaceCaptureEnabled = data.data.camera;
+        if (data.data.camera) {
+          this.checkPermissions();
+        }
+      },
+    });
   }
 
   checkPermissions() {
