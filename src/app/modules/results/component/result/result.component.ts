@@ -12,6 +12,7 @@ import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/sel
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { FilterControls } from '../../configs/results.config';
 import {
+  ResultExportData,
   ResultModel,
   ResultQueryParam,
   StatisticsData,
@@ -131,7 +132,8 @@ export class ResultComponent implements OnInit {
         next: (res) => {
           if (res.statusCode == StatusCode.Success) {
             if (res.data.length > 0) {
-              this.resultService.downloadExcel(res.data);
+              let data = this.resultService.mapExportData(res.data);
+              this.resultService.downloadExcel(data);
               this.snackbarService.success(res.message);
             }
           } else {
