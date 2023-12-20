@@ -20,15 +20,13 @@ export class McqQuestionComponent {
   optionType = OptionType;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
 
+  getSelectedAns(optionId: number) {
+    return this.question.answers.find((d) => d.optionId === optionId)?.isAnswer;
+  }
+
   toggleCheckbox(optionId: number) {
     if (this.question.questionType === QuestionType.SingleAnswer) {
-      const count = this.question.answers.filter((ans: Answer) => {
-        return ans.isAnswer;
-      }).length;
-      if (count > 0) {
-        this.clearAnswer();
-        this.setAnswer(optionId);
-      }
+      this.clearAnswer();
     }
     this.setAnswer(optionId);
   }
@@ -51,6 +49,7 @@ export class McqQuestionComponent {
       return ans;
     });
   }
+
   endTest() {
     this.endTestEvent.emit();
   }
