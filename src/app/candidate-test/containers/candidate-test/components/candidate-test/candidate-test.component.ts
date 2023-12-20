@@ -7,7 +7,7 @@ import { QuestionStatusModel } from 'src/app/candidate-test/interfaces/candidate
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { SettingService } from 'src/app/modules/setting/services/setting.service';
-import { StatusCode } from 'src/app/shared/common/enums';
+import { QuestionStatus, StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 
@@ -39,6 +39,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
     isQuestionsMenu: false,
   };
   seconds: number;
+  questionStatus = QuestionStatus;
   constructor(
     public loginService: LoginService,
     private router: Router,
@@ -172,6 +173,10 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
         next: (response: ResponseModel<QuestionStatusModel>) => {
           if (response.statusCode === StatusCode.Success) {
             this.questionsStatus = response.data;
+            if (this.questionsStatus.questionStatusVMs.length > 0) {
+              this.questionsStatus.questionStatusVMs[0].status =
+                this.questionStatus.Current;
+            }
             this.seconds = this.questionsStatus.timeLeft * 60;
           } else {
             this.snackBarService.error(response.message);

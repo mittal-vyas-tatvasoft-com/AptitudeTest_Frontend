@@ -25,7 +25,6 @@ export class McqQuestionComponent {
   }
 
   toggleCheckbox(optionId: number) {
-    console.log(optionId);
     if (this.question.questionType === QuestionType.SingleAnswer) {
       this.clearAnswer(optionId);
     }
