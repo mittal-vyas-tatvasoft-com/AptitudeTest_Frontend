@@ -60,7 +60,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
         this.IsScreenCaptureEnabled = data.data.screenCapture;
         this.IsFaceCaptureEnabled = data.data.camera;
         this.captureInterval = data.data.intervalForScreenCapture;
-        if (data.data.screenCapture || data.data.camera) {
+        if (data.data.camera) {
           this.checkPermissions();
         }
       },
@@ -69,7 +69,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
 
   public sendImageToBackend(): void {
     this.formData.append('userId', this.userId.toString());
-    if (this.IsScreenCaptureEnabled) {
+    if (this.IsFaceCaptureEnabled) {
       html2canvas(this.targetElement).then((canvas) => {
         // `canvas` now contains the screenshot
         const imageDataUrl = canvas.toDataURL('image/jpeg');
@@ -81,66 +81,70 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
         this.capturedImages.push(imageDataUrl);
       });
     }
-    setTimeout(() => {
-      if (this.webcamImage) {
-        if (this.IsFaceCaptureEnabled) {
-          const imageData = this.webcamImage.split(',')[1];
-          const blobCamera = this.dataURItoBlob(imageData);
-          this.formData.append('file', blobCamera, 'xyz.jpg');
+    if (this.IsScreenCaptureEnabled) {
+      setTimeout(() => {
+        if (this.webcamImage) {
+          if (this.IsFaceCaptureEnabled) {
+            const imageData = this.webcamImage.split(',')[1];
+            const blobCamera = this.dataURItoBlob(imageData);
+            this.formData.append('file', blobCamera, 'xyz.jpg');
+          }
+          this.CaptureImageSub = this.testService
+            .CaptureImage(this.formData)
+            .pipe(takeUntil(this.ngUnsubscribe$))
+            .subscribe(() => {
+              setTimeout(() => {
+                this.formData = new FormData();
+              }, 1000);
+            });
         }
-        this.CaptureImageSub = this.testService
-          .CaptureImage(this.formData)
-          .pipe(takeUntil(this.ngUnsubscribe$))
-          .subscribe(() => {
-            setTimeout(() => {
-              this.formData = new FormData();
-            }, 1000);
-          });
-      }
-    }, 1000);
+      }, 1000);
+    }
   }
 
   checkPermissions() {
-    navigator.mediaDevices
-      .getUserMedia({
-        video: {
-          width: 500,
-          height: 500,
-          frameRate: 0,
+    debugger;
+    if (this.IsFaceCaptureEnabled) {
+      navigator.mediaDevices
+        .getUserMedia({
+          video: {
+            width: 500,
+            height: 500,
+            frameRate: 0,
 
-          facingMode: 'user',
-        },
-      })
-      .then(() => {
-        this.status = 'My camera is accessing';
-        setTimeout(() => {
-          this.intervalCameraCapture = setInterval(() => {
-            this.trigger.next();
-            this.sendImageToBackend();
-          }, this.captureInterval * 60 * 1000);
-        }, 5000);
-      })
-      .catch((err) => {
-        if (this.IsFaceCaptureEnabled === true) {
-          this.router.navigate(['/user/instructions']);
-          if (err?.message === 'Permission denied') {
-            this.status =
-              'Camera Permission denied, please try again by approving camera access';
-            this.snackBarService.error(this.status);
-          } else {
-            this.status =
-              'You may not have a camera system. Please try again...';
-            this.snackBarService.error(this.status);
-          }
-        } else {
+            facingMode: 'user',
+          },
+        })
+        .then(() => {
+          this.status = 'My camera is accessing';
           setTimeout(() => {
             this.intervalCameraCapture = setInterval(() => {
               this.trigger.next();
               this.sendImageToBackend();
             }, this.captureInterval * 60 * 1000);
           }, 5000);
-        }
-      });
+        })
+        .catch((err) => {
+          if (this.IsFaceCaptureEnabled === true) {
+            this.router.navigate(['/user/instructions']);
+            if (err?.message === 'Permission denied') {
+              this.status =
+                'Camera Permission denied, please try again by approving camera access';
+              this.snackBarService.error(this.status);
+            } else {
+              this.status =
+                'You may not have a camera system. Please try again...';
+              this.snackBarService.error(this.status);
+            }
+          }
+        });
+    }
+    setTimeout(() => {
+      this.intervalCameraCapture = setInterval(() => {
+        this.trigger.next();
+        this.sendImageToBackend();
+      }, this.captureInterval * 60 * 1000);
+    }, 5000);
   }
 
   private dataURItoBlob(dataURI: string): Blob {

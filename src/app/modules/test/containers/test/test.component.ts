@@ -35,8 +35,9 @@ export class TestComponent implements OnInit {
     { columnDef: 'testName', header: 'Test', width: '20%' },
     { columnDef: 'groupName', header: 'Group', width: '15%' },
     { columnDef: 'testTime', header: 'Test Time', width: '10%' },
-    { columnDef: 'startTime', header: 'Start Time', width: '15%' },
-    { columnDef: 'endTime', header: 'End Time', width: '15%' },
+    { columnDef: 'date', header: 'Date', width: '10%' },
+    { columnDef: 'startTime', header: 'Start Time', width: '10%' },
+    { columnDef: 'endTime', header: 'End Time', width: '10%' },
     { columnDef: 'noOfCandidates', header: 'No. Of Candidates', width: '10%' },
     { columnDef: 'status', header: 'Status', width: '10%' },
     {
@@ -129,6 +130,7 @@ export class TestComponent implements OnInit {
           res.data = res.data?.map((record: TestData) => {
             return {
               ...record,
+              date: this.getTrimmedDate(record.startTime),
               startTime: this.getTrimmedTime(record.startTime),
               endTime: this.getTrimmedTime(record.endTime),
             };
@@ -253,14 +255,20 @@ export class TestComponent implements OnInit {
 
   getTrimmedTime(date: string) {
     let tempDate = new Date(date);
+    const hours = tempDate.getHours();
+    const minutes = tempDate.getMinutes();
+    const formattedTime = `${hours > 9 ? hours : `0` + hours}:${
+      minutes > 9 ? minutes : `0` + minutes
+    }`;
+    return formattedTime;
+  }
+
+  getTrimmedDate(date: string) {
+    let tempDate = new Date(date);
     const year = tempDate.getFullYear();
     const month = tempDate.getMonth() + 1;
     const day = tempDate.getDate();
-    const hours = tempDate.getHours();
-    const minutes = tempDate.getMinutes();
-    const formattedDate = `${day}/${month}/${year} ${
-      hours > 9 ? hours : `0` + hours
-    }:${minutes > 9 ? minutes : `0` + minutes}`;
+    const formattedDate = `${day}/${month}/${year}`;
     return formattedDate;
   }
 }

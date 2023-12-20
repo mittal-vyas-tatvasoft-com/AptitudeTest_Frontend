@@ -10,13 +10,38 @@
       <div class="right">
         <p class="data-value">
           Time Remaining
-          <b>{{
-            this.timeRemaining.hours +
-              ":" +
-              this.timeRemaining.minutes +
-              ":" +
-              this.timeRemaining.seconds
-          }}</b>
+          <b
+            *ngIf="
+              this.timeRemaining.hours > 0 &&
+              this.timeRemaining.minutes > 0 &&
+              this.timeRemaining.seconds > 0
+            "
+            >{{
+              this.timeRemaining.hours +
+                ":" +
+                this.timeRemaining.minutes +
+                ":" +
+                this.timeRemaining.seconds
+            }}</b
+          >
+          <b
+            *ngIf="
+              this.timeRemaining.hours === 0 &&
+              this.timeRemaining.minutes > 0 &&
+              this.timeRemaining.seconds >= 0
+            "
+          >
+            {{ this.timeRemaining.minutes + ":" + this.timeRemaining.seconds }}
+          </b>
+          <b
+            *ngIf="
+              this.timeRemaining.hours === 0 &&
+              this.timeRemaining.minutes === 0 &&
+              this.timeRemaining.seconds >= 0
+            "
+          >
+            {{ this.timeRemaining.seconds }}
+          </b>
         </p>
       </div>
     </div>

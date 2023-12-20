@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import {
@@ -98,6 +98,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
   onSubmit(event: Answer[]) {
     this.displayQuestion();
     this.saveAnswers(event);
+    debugger;
     if (this.question.questionNumber === this.question.totalQuestions) {
       this.submitTest();
     }
@@ -157,8 +158,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
   submitTest() {
     this.candidateTestService.endTest(this.userId).subscribe({
       next: (res: ResponseModel<string>) => {
-        if (res.statusCode != StatusCode.Success) {
-          this.snackBarService.error(res.message);
+        if (res.statusCode == StatusCode.Success) {
           this.router.navigate(['/user/submitted']);
         }
       },
