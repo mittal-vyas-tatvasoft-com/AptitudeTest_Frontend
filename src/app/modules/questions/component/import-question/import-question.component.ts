@@ -98,6 +98,9 @@ export class ImportQuestionComponent {
           this.snackbarService.error(res.message);
         }
       },
+      error: (error) => {
+        this.snackbarService.error(error.message);
+      },
     });
   }
 
