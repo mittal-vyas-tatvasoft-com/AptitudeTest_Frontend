@@ -25,7 +25,6 @@ export class McqQuestionComponent {
   }
 
   toggleCheckbox(optionId: number) {
-    console.log('Option Id', optionId);
     if (this.question.questionType === QuestionType.SingleAnswer) {
       this.clearAnswer();
     }
@@ -45,7 +44,6 @@ export class McqQuestionComponent {
   setAnswer(optionId: number) {
     this.question.answers = this.question.answers.map((ans) => {
       if (ans.optionId == optionId) {
-        console.log(ans.isAnswer);
         return { isAnswer: !ans.isAnswer, optionId: optionId };
       }
       return ans;
