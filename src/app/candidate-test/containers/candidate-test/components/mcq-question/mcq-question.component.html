@@ -16,7 +16,9 @@
       <mat-checkbox
         class="rounded-check"
         color="primary"
-        [ngModel]="getSelectedAns(option.optionId)"
+        (click)="$event.stopPropagation()"
+        [checked]="getSelectedAns(option.optionId)"
+        (change)="toggleCheckbox(option.optionId)"
       >
       </mat-checkbox>
     </div>
