@@ -86,8 +86,8 @@ export class AddCandidateComponent implements OnInit {
       ],
       groupId: ['', Validators.required],
       collegeId: ['', Validators.required],
-      gender: [''],
-      status: [candidateControl.status.value],
+      gender: [+candidateControl.gender.value],
+      status: [+candidateControl.status.value],
     });
   }
 
@@ -122,8 +122,7 @@ export class AddCandidateComponent implements OnInit {
       this.isLoading = true;
       const candidateData: CandidateModel = this.form.value;
       candidateData.status = this.form.value.status === Status.Active;
-      candidateData.gender =
-        this.form.value.gender === 'Male' ? Numbers.One : Numbers.Two;
+      candidateData.gender = this.form.value.gender;
       candidateData.createdBy = this.userId;
       this.candidateService
         .addCandidate(candidateData)

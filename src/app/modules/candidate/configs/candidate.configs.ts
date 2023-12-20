@@ -1,3 +1,5 @@
+import { Gender, Status } from 'src/app/shared/common/enums';
+
 export const candidateControl = {
   firstName: {
     value: '',
@@ -53,7 +55,7 @@ export const candidateControl = {
     displayIcon: false,
   },
   gender: {
-    value: '',
+    value: Gender.Default.toString(),
     key: 'gender',
     label: 'Gender',
     inputType: 'select',
@@ -105,7 +107,7 @@ export const candidateControl = {
     inputType: 'text',
   },
   status: {
-    value: 'Active',
+    value: Status.Active.toString(),
     key: 'status',
     label: 'Status',
     inputType: 'select',
@@ -239,6 +241,11 @@ export const candidateControl = {
 };
 
 export const selectOptionsForGender = [
+  {
+    id: 0,
+    key: 'Select',
+    value: 'Select',
+  },
   {
     id: 1,
     key: 'Male',

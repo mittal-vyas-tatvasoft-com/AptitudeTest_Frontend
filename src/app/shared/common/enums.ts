@@ -147,6 +147,7 @@ export enum PaginationDefaultValues {
 export enum StaticMessages {
   //warning static message
   SelectRow = 'Please select atleast one row',
+  AlreadyLoggedInError = 'Your account has already been logged in on another device.'
 }
 
 export enum TestStatus {
@@ -171,4 +172,10 @@ export enum ResultStatus {
   Active = 1,
   Pending = 0,
   Locked = 2,
+}
+
+export enum Gender {
+  Male = 1,
+  Female = 2,
+  Default = 0,
 }

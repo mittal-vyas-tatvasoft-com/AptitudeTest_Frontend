@@ -167,12 +167,12 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
         data.get('grade').touched = true;
         data.get('grade').setValidators([Validators.required]);
         data.get('grade').updateValueAndValidity();
-        data.get('maths').touched = true;
-        data.get('maths').setValidators([Validators.required]);
-        data.get('maths').updateValueAndValidity();
-        data.get('physics').touched = true;
-        data.get('physics').setValidators([Validators.required]);
-        data.get('physics').updateValueAndValidity();
+        // data.get('maths').touched = true;
+        // data.get('maths').setValidators([Validators.required]);
+        // data.get('maths').updateValueAndValidity();
+        // data.get('physics').touched = true;
+        // data.get('physics').setValidators([Validators.required]);
+        // data.get('physics').updateValueAndValidity();
       } else {
         data.get('university').clearValidators();
         data.get('university').updateValueAndValidity();
@@ -180,10 +180,10 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
         data.get('streamId').updateValueAndValidity();
         data.get('grade').clearValidators();
         data.get('grade').updateValueAndValidity();
-        data.get('maths').clearValidators();
-        data.get('maths').updateValueAndValidity();
-        data.get('physics').clearValidators();
-        data.get('physics').updateValueAndValidity();
+        // data.get('maths').clearValidators();
+        // data.get('maths').updateValueAndValidity();
+        // data.get('physics').clearValidators();
+        // data.get('physics').updateValueAndValidity();
       }
     } else {
       data
