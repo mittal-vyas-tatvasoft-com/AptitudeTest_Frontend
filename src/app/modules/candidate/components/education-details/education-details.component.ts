@@ -332,6 +332,21 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
           }
         });
       }
+      // TODO: issue when trying to update
+      if (i === 0 || i === 2) {
+        const fc = control.get('physics');
+        if (fc) {
+          fc.clearValidators();
+          fc.updateValueAndValidity();
+        }
+      }
+      if (i === 2) {
+        const fcm = control.get('maths');
+        if (fcm) {
+          fcm.clearValidators();
+          fcm.updateValueAndValidity();
+        }
+      }
     }
   }
 
