@@ -107,7 +107,7 @@ export class ResultsService {
       bookType: 'xlsx',
       type: 'array',
     });
-    this.saveAsExcelFile(excelBuffer, 'ExportedResults');
+    this.saveAsExcelFile(excelBuffer, 'AptitudeTest-Results');
   }
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
