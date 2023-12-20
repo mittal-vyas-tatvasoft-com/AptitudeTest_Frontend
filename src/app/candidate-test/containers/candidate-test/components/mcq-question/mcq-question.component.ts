@@ -25,15 +25,19 @@ export class McqQuestionComponent {
   }
 
   toggleCheckbox(optionId: number) {
+    console.log(optionId);
     if (this.question.questionType === QuestionType.SingleAnswer) {
-      this.clearAnswer();
+      this.clearAnswer(optionId);
     }
     this.setAnswer(optionId);
   }
 
-  clearAnswer() {
+  clearAnswer(optionId: number = 0) {
     this.question.answers = this.question.answers.map((ans: Answer) => {
-      return { isAnswer: false, optionId: ans.optionId };
+      if (ans.optionId !== optionId) {
+        return { isAnswer: false, optionId: ans.optionId };
+      }
+      return ans;
     });
   }
 
@@ -43,7 +47,7 @@ export class McqQuestionComponent {
 
   setAnswer(optionId: number) {
     this.question.answers = this.question.answers.map((ans) => {
-      if (ans.optionId == optionId) {
+      if (ans.optionId === optionId) {
         return { isAnswer: !ans.isAnswer, optionId: optionId };
       }
       return ans;
