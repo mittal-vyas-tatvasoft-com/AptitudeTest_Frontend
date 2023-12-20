@@ -8,7 +8,7 @@
     >
       <span class="answer-option">{{ optionIndex[i] }}</span>
       <p class="answer-text" *ngIf="question.optionType == optionType.Text">
-        {{ option.optionData }} --{{ option.optionId }}
+        {{ option.optionData }}
       </p>
       <p class="answer-text" *ngIf="question.optionType == optionType.Image">
         <img [src]="baseImageUrl + option.optionData" alt="question image" />
