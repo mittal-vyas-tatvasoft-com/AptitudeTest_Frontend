@@ -98,7 +98,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
   onSubmit(event: Answer[]) {
     this.displayQuestion();
     this.saveAnswers(event);
-    debugger;
     if (this.question.questionNumber === this.question.totalQuestions) {
       this.submitTest();
     }

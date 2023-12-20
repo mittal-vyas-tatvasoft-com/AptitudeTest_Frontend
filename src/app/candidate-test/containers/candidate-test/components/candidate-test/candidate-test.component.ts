@@ -103,7 +103,6 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
   }
 
   checkPermissions() {
-    debugger;
     if (this.IsFaceCaptureEnabled) {
       navigator.mediaDevices
         .getUserMedia({
