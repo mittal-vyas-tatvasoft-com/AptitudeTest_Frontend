@@ -28,7 +28,15 @@ export class McqTestComponent implements OnInit, OnDestroy {
     minutes: 0,
     seconds: 0,
   };
+  timeRemainingForExam = {
+    hours: '0',
+    minutes: '0',
+    seconds: '0',
+  };
   endTime: string;
+  remainingHours = '';
+  remainingMinutes = '';
+  remainingSeconds = '';
   timeRemainingToEndTime: number;
   @Input() seconds = 0;
   question: Question = {
@@ -64,11 +72,33 @@ export class McqTestComponent implements OnInit, OnDestroy {
       let hours = Math.floor(this.seconds / 3600);
       let minutes = Math.floor((this.seconds % 3600) / 60);
       let seconds = this.seconds - minutes * 60 - hours * 3600;
+      if (hours <= 9) {
+        this.remainingHours = '0' + hours;
+      } else {
+        this.remainingHours = hours.toString();
+      }
+
+      if (minutes <= 9) {
+        this.remainingMinutes = '0' + minutes;
+      } else {
+        this.remainingMinutes = minutes.toString();
+      }
+      if (seconds <= 9) {
+        this.remainingSeconds = '0' + seconds;
+      } else {
+        this.remainingSeconds = seconds.toString();
+      }
       this.timeRemaining = {
         hours: hours,
         minutes: minutes,
         seconds: seconds,
       };
+      this.timeRemainingForExam = {
+        hours: this.remainingHours,
+        minutes: this.remainingMinutes,
+        seconds: this.remainingSeconds,
+      };
+
       if (this.seconds === 0) {
         this.submitTest();
       }
