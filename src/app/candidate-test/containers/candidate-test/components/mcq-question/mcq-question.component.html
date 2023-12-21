@@ -26,7 +26,12 @@
 </div>
 <div class="action-footer d-flex justify-content-between">
   <div class="action-btn">
-    <button mat-stroked-button color="primary" (click)="clearAnswer()">
+    <button
+      *ngIf="isClearResponseEnable"
+      mat-stroked-button
+      color="primary"
+      (click)="clearAnswer()"
+    >
       Clear Answer
     </button>
     <button mat-flat-button color="warn" (click)="endTest()">
