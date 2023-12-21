@@ -8,6 +8,7 @@ import { ResponseModel } from 'src/app/shared/common/interfaces/response.interfa
 import { validations } from 'src/app/shared/messages/validation.static';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { loginControl } from '../../configs/login.config';
+import { TokenWithSidVm } from '../../interfaces/login.interface';
 import { LoginService } from '../../services/login.service';
 
 @Component({
@@ -84,9 +85,16 @@ export class LoginComponent implements OnInit, OnDestroy {
           .login(payload)
           .pipe(takeUntil(this.ngUnsubscribe$))
           .subscribe({
-            next: (res: ResponseModel<string>) => {
+            next: (res: ResponseModel<TokenWithSidVm>) => {
               if (res.result) {
-                this.router.navigate([`${Navigation.CandidateUser}`]);
+                if (res.data.isSubmitted) {
+                  this.loginService.setSubmitted('true');
+                  this.router.navigate([`user/${Navigation.Submitted}`]);
+                } else {
+                  this.loginService.setSubmitted('false');
+                  const token = this.loginService.decodeToken();
+                  this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
+                }
               } else {
                 this.snackbarService.error(res.message);
               }

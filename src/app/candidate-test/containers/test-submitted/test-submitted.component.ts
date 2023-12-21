@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { StatusCode } from 'src/app/shared/common/enums';
-import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { CandidateTestService } from '../../services/candidate-test.service';
-import { NoTestAssigned } from '../../static/candidate-test.static';
 
 @Component({
   selector: 'app-test-submitted',
@@ -15,14 +12,21 @@ export class TestSubmittedComponent implements OnInit {
   userId: number;
   testFinished: boolean;
   messageToShow: string;
+  seconds = 10;
+  message = `You will be automatically logged out within ${this.seconds} seconds.`;
   testStatus: 'End';
   constructor(
     private loginService: LoginService,
-    private candidateTestService: CandidateTestService,
-    private snackbarService: SnackbarService,
-    private router: Router
+    private candidateTestService: CandidateTestService
   ) {}
   ngOnInit(): void {
+    setTimeout(() => {
+      this.logout();
+    }, 10000);
+    setInterval(() => {
+      this.seconds = this.seconds - 1;
+      this.message = `You will be automatically logged out within ${this.seconds} seconds.`;
+    }, 1000);
     const candidateDetails = this.loginService.decodeToken();
     this.userId = +candidateDetails.Id;
     this.candidateTestService
@@ -31,11 +35,11 @@ export class TestSubmittedComponent implements OnInit {
         next: (res: any) => {
           if (res.statusCode == StatusCode.Success) {
             this.messageToShow = res.data;
-          } else {
-            this.snackbarService.error(NoTestAssigned);
-            this.router.navigate(['/user']);
           }
         },
       });
+  }
+  logout() {
+    this.loginService.logout();
   }
 }
