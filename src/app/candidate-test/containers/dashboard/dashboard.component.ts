@@ -23,6 +23,7 @@ export class DashboardComponent implements OnInit {
   testDurationInMinutes: number;
   basicPoints: number;
   negativeMarkingPoints: number;
+  testExists = false;
   constructor(
     public loginService: LoginService,
     private router: Router,
@@ -57,12 +58,15 @@ export class DashboardComponent implements OnInit {
       .getInstructionsOfTheTestForUser(this.userId, this.testStatus)
       .subscribe({
         next: (test) => {
-          this.testName = test.data.testName;
-          this.basicPoints = test.data.basicPoints;
-          this.testDate = this.getTestStartDate(test.data.testDate);
-          this.startTime = this.getTestStartTime(test.data.startTime);
-          this.testDurationInMinutes = test.data.testDurationInMinutes;
-          this.negativeMarkingPoints = test.data.negativeMarkingPoints;
+          if (test.data != null) {
+            this.testExists = true;
+            this.testName = test.data.testName;
+            this.basicPoints = test.data.basicPoints;
+            this.testDate = this.getTestStartDate(test.data.testDate);
+            this.startTime = this.getTestStartTime(test.data.startTime);
+            this.testDurationInMinutes = test.data.testDurationInMinutes;
+            this.negativeMarkingPoints = test.data.negativeMarkingPoints;
+          }
         },
       });
   }
