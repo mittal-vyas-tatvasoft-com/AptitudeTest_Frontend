@@ -342,6 +342,12 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
     this.groups.push({ value: 'Select', id: '' });
     this.colleges.push({ value: 'Select', id: '' });
     this.candidateService.getGroupsForDropDown().subscribe((groups) => {
+      groups.forEach((group) => {
+        if (group.isDefault) {
+          const defaultGroupName = group.name + ' (Default Group) ';
+          this.groups.push({ value: defaultGroupName, id: group.id });
+        }
+      });
       groups.forEach((element) => {
         this.groups.push({ value: element.name, id: element.id });
       });

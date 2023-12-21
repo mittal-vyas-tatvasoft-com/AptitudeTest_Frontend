@@ -17,21 +17,25 @@
               this.timeRemaining.seconds > 0
             "
             >{{
-              this.timeRemaining.hours +
+              this.timeRemainingForExam.hours +
                 ":" +
-                this.timeRemaining.minutes +
+                this.timeRemainingForExam.minutes +
                 ":" +
-                this.timeRemaining.seconds
+                this.timeRemainingForExam.seconds
             }}</b
           >
           <b
             *ngIf="
               this.timeRemaining.hours === 0 &&
-              this.timeRemaining.minutes > 0 &&
+              this.timeRemaining.minutes >= 0 &&
               this.timeRemaining.seconds >= 0
             "
           >
-            {{ this.timeRemaining.minutes + ":" + this.timeRemaining.seconds }}
+            {{
+              this.timeRemainingForExam.minutes +
+                ":" +
+                this.timeRemainingForExam.seconds
+            }}
           </b>
           <b
             *ngIf="
@@ -40,7 +44,37 @@
               this.timeRemaining.seconds >= 0
             "
           >
-            {{ this.timeRemaining.seconds }}
+            {{ this.timeRemainingForExam.seconds }}
+          </b>
+          <b
+            *ngIf="
+              this.timeRemaining.hours > 0 &&
+              this.timeRemaining.minutes > 0 &&
+              this.timeRemaining.seconds === 0
+            "
+          >
+            {{
+              this.timeRemainingForExam.hours +
+                ":" +
+                this.timeRemainingForExam.minutes +
+                ":" +
+                this.timeRemainingForExam.seconds
+            }}
+          </b>
+          <b
+            *ngIf="
+              this.timeRemaining.hours > 0 &&
+              this.timeRemaining.minutes === 0 &&
+              this.timeRemaining.seconds >= 0
+            "
+          >
+            {{
+              this.timeRemainingForExam.hours +
+                ":" +
+                this.timeRemainingForExam.minutes +
+                ":" +
+                this.timeRemainingForExam.seconds
+            }}
           </b>
         </p>
       </div>

@@ -110,11 +110,21 @@ export class ResultComponent implements OnInit {
       this.colleges = [...this.colleges, ...temp];
     });
 
-    this.candidateService.getGroupsForDropDown().subscribe((groups) => {
-      const temp = groups.map((res) => {
-        return { id: res.id, value: res.name };
+    this.candidateService.getGroupsForDropDown().subscribe((groupElements) => {
+      groupElements.forEach((groupElement) => {
+        if (groupElement.isDefault) {
+          const defaultGroupName = groupElement.name + ' (Default Group) ';
+          this.groups.push({ value: defaultGroupName, id: groupElement.id });
+        }
       });
-      this.groups = [...this.groups, ...temp];
+      groupElements.forEach((groupElement) => {
+        if (!groupElement.isDefault) {
+          this.groups.push({
+            value: groupElement.name,
+            id: groupElement.id,
+          });
+        }
+      });
     });
 
     this.resultService.getTestsForDropDown().subscribe((tests) => {

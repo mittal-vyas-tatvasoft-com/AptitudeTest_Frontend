@@ -6,6 +6,7 @@ import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
 import { DropdownData } from 'src/app/shared/common/interfaces/dropdown-data.interface';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { environment } from 'src/environments/environment';
+import { DropdownItem } from '../../candidate/interfaces/candidate.interface';
 import {
   AddTestQuestionModel,
   AllInsertedQuestionModel,
@@ -209,8 +210,8 @@ export class TestService {
     );
   }
 
-  getGroups(): Observable<ResponseModel<DropdownData[]>> {
-    return this.http.get<ResponseModel<DropdownData[]>>(
+  getGroups(): Observable<ResponseModel<DropdownItem[]>> {
+    return this.http.get<ResponseModel<DropdownItem[]>>(
       `${environment.baseURL}Groups/GetGroupsForDropDown`
     );
   }
