@@ -10,6 +10,7 @@ import { FormControlModule } from 'src/app/shared/modules/form-control/form-cont
 import { CoreModule } from '../core.module';
 import { SharedMaterialModule } from '../../shared/material/shared-material.module';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
+import { ChangePasswordActionComponent } from './components/change-password-action/change-password-action.component';
 
 @NgModule({
   declarations: [
@@ -17,6 +18,7 @@ import { ChangePasswordComponent } from './components/change-password/change-pas
     ForgotPasswordComponent,
     ResetPasswordComponent,
     ChangePasswordComponent,
+    ChangePasswordActionComponent,
   ],
   imports: [
     CommonModule,
