@@ -121,6 +121,19 @@
                   </mat-icon>
                   Edit
                 </button>
+                <button
+                  mat-menu-item
+                  (click)="handleChangePassword(row)"
+                  *ngIf="isCandidateTable"
+                >
+                  <mat-icon>
+                    <img
+                      src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADIAAAAyCAYAAAAeP4ixAAAACXBIWXMAAAsTAAALEwEAmpwYAAAB2UlEQVR4nO2YyUoDQRCGP43mYshzuD2ByxMIghvexeWgBtEn8KBRFF/C9SkE9Si4gKAS9WS8S0TxYktDBRozYzJRMzXYHxQMPVU99aeX6g54PH/OIWASZidBQkxCrYLQF0oxXogyjB+RJI9IGlgHnoAikJc2FPiZKELWAra71YDYOPxMFCFFaesBeuXZtqHAz9QjpNfp8PGbDzfSz0QRkg8Y4pWA2Dj8TNTFnpdf6FE6C1ucjfYzvo4ow/gRUYb5NyNiEmYVnChIykS040oZHo+nUdgz0TiwD9wAL2LXwA4wArQ4/kfAKcoYAx5q2G2swAGN9SsFbDlJnQFzQAfQBmSBbmARuBKfD2BZm5AtSeYNmACaqoheAt6rFbY4ppNN5FVuc7Uy+EVMrKSdNWFHohrfnR5iZdxZE81JFnIgScyScG5FSDsJpyRCMiSc0i8IyUofzyiYWrbw1UunU+1jY0+SmP9BHwvSxzYKtt/zGrffr9iYS+nDFtZYC+K9JDJZR/y0xBZC/nFsKCPOOasvQly/xNjYIZSw6YiZqjLN7LsZR8QGikg5YqxdADmgS47xGXnOOWuiLMLGqmMYuKvhYlXQNJ3CSMsOtCvX25JY+ao7CrSGRns8qOIT0jrRqSnDANIAAAAASUVORK5CYII="
+                      alt="change password"
+                    />
+                  </mat-icon>
+                  Change password
+                </button>
                 <ng-container *ngIf="!isTestTable">
                   <button
                     mat-menu-item

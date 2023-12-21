@@ -27,6 +27,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
   targetElement = document.documentElement;
   private ngUnsubscribe$ = new Subject<void>();
   IsScreenCaptureEnabled = false;
+  ShowCam = false;
   IsFaceCaptureEnabled = false;
   captureInterval = 0;
   CaptureImageSub: Subscription;
@@ -61,7 +62,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
         this.IsScreenCaptureEnabled = data.data.screenCapture;
         this.IsFaceCaptureEnabled = data.data.camera;
         this.captureInterval = data.data.intervalForScreenCapture;
-        if (data.data.camera) {
+        if (data.data.camera || data.data.screenCapture) {
           this.checkPermissions();
         }
       },
@@ -70,7 +71,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
 
   public sendImageToBackend(): void {
     this.formData.append('userId', this.userId.toString());
-    if (this.IsFaceCaptureEnabled) {
+    if (this.IsScreenCaptureEnabled) {
       html2canvas(this.targetElement).then((canvas) => {
         // `canvas` now contains the screenshot
         const imageDataUrl = canvas.toDataURL('image/jpeg');
@@ -82,25 +83,26 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
         this.capturedImages.push(imageDataUrl);
       });
     }
-    if (this.IsScreenCaptureEnabled) {
-      setTimeout(() => {
-        if (this.webcamImage) {
-          if (this.IsFaceCaptureEnabled) {
-            const imageData = this.webcamImage.split(',')[1];
-            const blobCamera = this.dataURItoBlob(imageData);
-            this.formData.append('file', blobCamera, 'xyz.jpg');
-          }
-          this.CaptureImageSub = this.testService
-            .CaptureImage(this.formData)
-            .pipe(takeUntil(this.ngUnsubscribe$))
-            .subscribe(() => {
-              setTimeout(() => {
-                this.formData = new FormData();
-              }, 1000);
-            });
+
+    if (this.IsFaceCaptureEnabled) {
+      if (this.webcamImage) {
+        if (this.IsFaceCaptureEnabled) {
+          const imageData = this.webcamImage.split(',')[1];
+          const blobCamera = this.dataURItoBlob(imageData);
+          this.formData.append('file', blobCamera, 'xyz.jpg');
         }
-      }, 1000);
+      }
     }
+    setTimeout(() => {
+      this.CaptureImageSub = this.testService
+        .CaptureImage(this.formData)
+        .pipe(takeUntil(this.ngUnsubscribe$))
+        .subscribe(() => {
+          setTimeout(() => {
+            this.formData = new FormData();
+          }, 1000);
+        });
+    }, 1000);
   }
 
   checkPermissions() {
@@ -138,13 +140,14 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
             }
           }
         });
+    } else {
+      setTimeout(() => {
+        this.intervalCameraCapture = setInterval(() => {
+          this.trigger.next();
+          this.sendImageToBackend();
+        }, this.captureInterval * 60 * 1000);
+      }, 5000);
     }
-    setTimeout(() => {
-      this.intervalCameraCapture = setInterval(() => {
-        this.trigger.next();
-        this.sendImageToBackend();
-      }, this.captureInterval * 60 * 1000);
-    }, 5000);
   }
 
   private dataURItoBlob(dataURI: string): Blob {
@@ -190,5 +193,13 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
     clearInterval(this.intervalCameraCapture);
     this.ngUnsubscribe$.next();
     this.ngUnsubscribe$.complete();
+  }
+
+  showHideCam() {
+    if (this.ShowCam === true) {
+      this.ShowCam = false;
+    } else {
+      this.ShowCam = true;
+    }
   }
 }

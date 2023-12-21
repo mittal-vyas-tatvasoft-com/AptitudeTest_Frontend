@@ -1,0 +1,27 @@
+/* styles.css or styles.scss */
+
+.container {
+    position: fixed;
+    overflow: hidden;
+    right: 42px;
+    width: 183px;
+    height: 125px;
+    /* Adjust the height as needed */
+}
+
+.bottom-right {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100% !important;
+    height: 100% !important;
+    /* Add margin for spacing */
+    /* Add any additional styles you want for the webcam component */
+}
+
+.showHideButton {
+    position: absolute;
+    z-index: 99;
+    right: 0;
+    border-radius: 20px !important;
+}

@@ -4,6 +4,7 @@ import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime, distinctUntilChanged, switchMap } from 'rxjs';
+import { ChangePasswordActionComponent } from 'src/app/core/auth/components/change-password-action/change-password-action.component';
 import { AddCollegeComponent } from 'src/app/modules/masters/college/components/add-college/add-college.component';
 import {
   Numbers,
@@ -245,6 +246,31 @@ export class CandidatesComponent implements OnInit {
         });
       }
     });
+  }
+
+  changePassword(data: any) {
+    const email = data.email;
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = ['primary-dialog'];
+    dialogConfig.autoFocus = false;
+    this.dialog
+      .open(ChangePasswordActionComponent, dialogConfig)
+      .afterClosed()
+      .subscribe((data) => {
+        if (data != null) {
+          this.candidateService
+            .ChangeUserPasswordByAdmin(email, data.passwordField)
+            .subscribe({
+              next: (res) => {
+                if (res.statusCode == StatusCode.Success) {
+                  this.snackbarService.success(res.message);
+                } else {
+                  this.snackbarService.error(res.message);
+                }
+              },
+            });
+        }
+      });
   }
 
   importCandidates() {
