@@ -5,5 +5,64 @@
     <button mat-flat-button color="primary" (click)="readyForTest()">
       I am Ready to Begin
     </button>
+    <div class="float-container">
+      <div class="float-child">
+        <table>
+          <tr>
+            Test Name:
+          </tr>
+          <tr>
+            Basic Points:
+          </tr>
+          <tr>
+            Test Date:
+          </tr>
+          <tr>
+            Start Time:
+          </tr>
+          <tr>
+            Test Duration:
+          </tr>
+          <tr>
+            Negative Marks:
+          </tr>
+        </table>
+      </div>
+
+      <div class="float-child">
+        <table>
+          <tr>
+            {{
+              this.testName
+            }}
+          </tr>
+          <tr>
+            {{
+              this.basicPoints
+            }}
+          </tr>
+          <tr>
+            {{
+              this.testDate
+            }}
+          </tr>
+          <tr>
+            {{
+              this.startTime
+            }}
+          </tr>
+          <tr>
+            {{
+              this.testDurationInMinutes
+            }}
+          </tr>
+          <tr>
+            {{
+              this.negativeMarkingPoints
+            }}
+          </tr>
+        </table>
+      </div>
+    </div>
   </div>
 </div>

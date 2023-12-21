@@ -3,8 +3,8 @@
     <div class="test-header">
       <div class="left">
         <p class="data-value">
-          Welcome
-          <b>{{ firstName + " " + lastName }}</b>
+          Aptitude Test
+          <b>{{ groupName + "-" + collegeName }}</b>
         </p>
       </div>
       <div class="right">
@@ -27,8 +27,8 @@
           <b
             *ngIf="
               this.timeRemaining.hours === 0 &&
-              this.timeRemaining.minutes >= 0 &&
-              this.timeRemaining.seconds >= 0
+              this.timeRemaining.minutes > 0 &&
+              this.timeRemaining.seconds > 0
             "
           >
             {{
@@ -41,7 +41,7 @@
             *ngIf="
               this.timeRemaining.hours === 0 &&
               this.timeRemaining.minutes === 0 &&
-              this.timeRemaining.seconds >= 0
+              this.timeRemaining.seconds > 0
             "
           >
             {{ this.timeRemainingForExam.seconds }}
@@ -65,7 +65,35 @@
             *ngIf="
               this.timeRemaining.hours > 0 &&
               this.timeRemaining.minutes === 0 &&
-              this.timeRemaining.seconds >= 0
+              this.timeRemaining.seconds > 0
+            "
+          >
+            {{
+              this.timeRemainingForExam.hours +
+                ":" +
+                this.timeRemainingForExam.minutes +
+                ":" +
+                this.timeRemainingForExam.seconds
+            }}
+          </b>
+          <b
+            *ngIf="
+              this.timeRemaining.hours === 0 &&
+              this.timeRemaining.minutes > 0 &&
+              this.timeRemaining.seconds === 0
+            "
+          >
+            {{
+              this.timeRemainingForExam.minutes +
+                ":" +
+                this.timeRemainingForExam.seconds
+            }}
+          </b>
+          <b
+            *ngIf="
+              this.timeRemaining.hours > 0 &&
+              this.timeRemaining.minutes === 0 &&
+              this.timeRemaining.seconds === 0
             "
           >
             {{

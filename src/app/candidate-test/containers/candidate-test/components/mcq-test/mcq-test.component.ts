@@ -8,6 +8,8 @@ import {
 } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
+import { UserData } from 'src/app/modules/candidate/interfaces/candidate.interface';
+import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { QuestionStatus, StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
@@ -23,6 +25,8 @@ export class McqTestComponent implements OnInit, OnDestroy {
   lastName: string;
   userId: number;
   testStatus = 'Start';
+  groupName: string;
+  collegeName: string;
   timeRemaining = {
     hours: 0,
     minutes: 0,
@@ -56,6 +60,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     public loginService: LoginService,
     private router: Router,
     private candidateTestService: CandidateTestService,
+    private candidateService: CandidateService,
     private snackBarService: SnackbarService,
     public dialog: MatDialog
   ) {}
@@ -65,6 +70,12 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.firstName = candidateDetails.FirstName;
     this.lastName = candidateDetails.Name;
     this.userId = candidateDetails.Id;
+    this.candidateService
+      .getCandidateData(this.userId)
+      .subscribe((candidate: any) => {
+        this.groupName = candidate.data.groupName;
+        this.collegeName = candidate.data.collegeName;
+      });
     this.getEndTime();
     this.displayQuestion();
     this.interval = setInterval(() => {

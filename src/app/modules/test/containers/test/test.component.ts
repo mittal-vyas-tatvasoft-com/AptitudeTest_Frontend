@@ -196,6 +196,11 @@ export class TestComponent implements OnInit {
         this.sortOrder = event.direction;
         break;
 
+      case 'date':
+        this.sortField = 'Date';
+        this.sortOrder = event.direction;
+        break;
+
       case 'testTime':
         this.sortField = 'TestTime';
         this.sortOrder = event.direction;

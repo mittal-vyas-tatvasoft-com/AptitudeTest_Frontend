@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { TestInstructions } from '../../interfaces/candidate-test.interface';
 import { CandidateTestService } from '../../services/candidate-test.service';
 import { NoTestAssigned } from '../../static/candidate-test.static';
 
@@ -16,6 +17,12 @@ export class DashboardComponent implements OnInit {
   lastName: string;
   userId: number;
   testStatus = 'Start';
+  testName: string;
+  startTime: string;
+  testDate: string;
+  testDurationInMinutes: number;
+  basicPoints: number;
+  negativeMarkingPoints: number;
   constructor(
     public loginService: LoginService,
     private router: Router,
@@ -28,6 +35,7 @@ export class DashboardComponent implements OnInit {
     this.firstName = candidateDetails.FirstName;
     this.lastName = candidateDetails.Name;
     this.userId = +candidateDetails.Id;
+    this.getBasicTestDetails();
   }
 
   readyForTest() {
@@ -42,5 +50,38 @@ export class DashboardComponent implements OnInit {
           }
         },
       });
+  }
+
+  getBasicTestDetails() {
+    this.candidateTestService
+      .getInstructionsOfTheTestForUser(this.userId, this.testStatus)
+      .subscribe({
+        next: (test) => {
+          this.testName = test.data.testName;
+          this.basicPoints = test.data.basicPoints;
+          this.testDate = this.getTestStartDate(test.data.testDate);
+          this.startTime = this.getTestStartTime(test.data.startTime);
+          this.testDurationInMinutes = test.data.testDurationInMinutes;
+          this.negativeMarkingPoints = test.data.negativeMarkingPoints;
+        },
+      });
+  }
+
+  getTestStartDate(date: string) {
+    const testDate = new Date(date);
+    const year = testDate.getFullYear();
+    const month = testDate.getMonth() + 1;
+    const day = testDate.getDate();
+    const formattedTestDate = `${day}/${month}/${year}`;
+    return formattedTestDate;
+  }
+  getTestStartTime(date: string) {
+    const testDate = new Date(date);
+    const hours = testDate.getHours();
+    const minutes = testDate.getMinutes();
+    const formattedTestTime = `${hours > 9 ? hours : `0` + hours}:${
+      minutes > 9 ? minutes : `0` + minutes
+    }`;
+    return formattedTestTime;
   }
 }
