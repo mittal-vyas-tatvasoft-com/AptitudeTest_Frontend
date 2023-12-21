@@ -1,16 +1,16 @@
+import { SelectionModel } from '@angular/cdk/collections';
 import {
   Component,
+  EventEmitter,
   Input,
   Output,
-  EventEmitter,
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { MatTableDataSource } from '@angular/material/table';
-import { TableColumn } from '../../interfaces/table-data.interface';
-import { SelectionModel } from '@angular/cdk/collections';
 import { MatSort, Sort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { Numbers } from 'src/app/shared/common/enums';
+import { TableColumn } from '../../interfaces/table-data.interface';
 
 @Component({
   selector: 'app-table',
@@ -28,8 +28,10 @@ export class TableComponent<T> {
   @Input() totalItemsCount: number = Numbers.Zero;
   @Input() pageSize: number = Numbers.Ten;
   @Input() isTestTable: boolean = false;
+  @Input() isCandidateTable: boolean = false;
   @Output() editClicked = new EventEmitter<T>();
   @Output() deleteClicked = new EventEmitter<number>();
+  @Output() changePasswordClicked = new EventEmitter<number>();
   @Output() actionClicked = new EventEmitter<{
     row: number;
     action: boolean;
@@ -58,6 +60,10 @@ export class TableComponent<T> {
 
   handleDelete(id: number) {
     this.deleteClicked.emit(id);
+  }
+
+  handleChangePassword(row: any) {
+    this.changePasswordClicked.emit(row);
   }
 
   handleAction(row: number, action: boolean) {
