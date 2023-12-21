@@ -278,7 +278,7 @@ export class TestComponent implements OnInit {
     const year = tempDate.getFullYear();
     const month = tempDate.getMonth() + 1;
     const day = tempDate.getDate();
-    const formattedDate = `${day}/${month}/${year}`;
+    const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
   }
 }
