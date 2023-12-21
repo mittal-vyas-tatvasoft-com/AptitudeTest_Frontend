@@ -231,7 +231,7 @@ export class ResultComponent implements OnInit {
     const hours = tempDate.getHours();
     const minutes = tempDate.getMinutes();
     const seconds = tempDate.getSeconds();
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
     return formattedDate;
   }
 
