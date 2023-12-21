@@ -47,6 +47,19 @@
           </div>
           <div class="col-md-12 ps-sm-5 pe-sm-5">
             <div class="switch-block-wrapper ms-sm-5 me-sm-5">
+              <mat-slide-toggle
+                color="primary"
+                hideIcon
+                labelPosition="before"
+                formControlName="{{ settingControls.clearResponseButton.key }}"
+                >{{
+                  settingControls.clearResponseButton.label
+                }}</mat-slide-toggle
+              >
+            </div>
+          </div>
+          <div class="col-md-12 ps-sm-5 pe-sm-5">
+            <div class="switch-block-wrapper ms-sm-5 me-sm-5">
               <app-text-control
                 [formControlModel]="settingControls.Interval"
                 [form]="settingForm"

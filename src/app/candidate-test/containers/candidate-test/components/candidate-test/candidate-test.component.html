@@ -12,6 +12,7 @@
   </div>
 </div>
 <webcam
+  [hidden]="true"
   [trigger]="$trigger"
   (imageCapture)="handleImage($event)"
   [imageQuality]="1"

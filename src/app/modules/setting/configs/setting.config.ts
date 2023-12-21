@@ -14,6 +14,11 @@ export const SettingControls = {
     key: 'screenCapture',
     label: 'Take Screenshots',
   },
+  clearResponseButton: {
+    value: '',
+    key: 'clearResponseButton',
+    label: 'Clear Response Button',
+  },
   Interval: {
     value: '',
     key: 'intervalForScreenCapture',

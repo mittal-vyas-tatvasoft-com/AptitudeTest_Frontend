@@ -26,6 +26,7 @@ export class SettingComponent implements OnInit {
     this.settingForm = this.fb.group({
       userRegistration: [''],
       camera: [''],
+      clearResponseButton: [''],
       screenCapture: [''],
       intervalForScreenCapture: [0, [Validators.min(0)]],
       cutOff: [0, [Validators.min(0)]],
@@ -36,6 +37,7 @@ export class SettingComponent implements OnInit {
         this.settingForm.setValue({
           userRegistration: res.data.userRegistration,
           camera: res.data.camera,
+          clearResponseButton: res.data.clearResponseButton,
           screenCapture: res.data.screenCapture,
           intervalForScreenCapture: +res.data.intervalForScreenCapture,
           cutOff: +res.data.cutOff,
