@@ -12,7 +12,6 @@ import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/sel
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { FilterControls } from '../../configs/results.config';
 import {
-  ResultExportData,
   ResultModel,
   ResultQueryParam,
   StatisticsData,

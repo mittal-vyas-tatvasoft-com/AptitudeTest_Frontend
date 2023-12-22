@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
-import { DropdownData } from 'src/app/shared/common/interfaces/dropdown-data.interface';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { environment } from 'src/environments/environment';
 import { DropdownItem } from '../../candidate/interfaces/candidate.interface';
