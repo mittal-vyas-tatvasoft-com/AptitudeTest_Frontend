@@ -132,8 +132,18 @@ export class CandidatesComponent implements OnInit {
       this.colleges = colleges;
     });
 
-    this.candidateService.getGroupsForDropDown().subscribe((colleges) => {
-      this.groups = colleges;
+    this.candidateService.getGroupsForDropDown().subscribe((groupList) => {
+      groupList.forEach((group) => {
+        if (group.isDefault) {
+          const defaultGroupName = group.name + ' (Default Group) ';
+          this.groups.push({ name: defaultGroupName, id: group.id });
+        }
+      });
+      groupList.forEach((group) => {
+        if (!group.isDefault) {
+          this.groups.push({ name: group.name, id: group.id });
+        }
+      });
       this.activatedRoute.params.subscribe((res) => {
         if (res['groupId'] != undefined && res['collegeId'] == undefined) {
           this.selectedGroup = this.groups.find((x) => x.id == +res['groupId']);

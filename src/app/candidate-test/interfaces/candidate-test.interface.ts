@@ -46,4 +46,10 @@ export interface Answer {
 export interface TestInstructions {
   messageAtStartOfTheTest: string;
   endTime: string;
+  testName: string;
+  startTime: string;
+  testDate: string;
+  testDurationInMinutes: number;
+  basicPoints: number;
+  negativeMarkingPoints: number;
 }
