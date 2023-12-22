@@ -11,7 +11,7 @@ import { Messages } from 'src/app/shared/messages/messages.static';
 import { environment } from 'src/environments/environment';
 import { ChangePasswordModel } from '../interfaces/change-password.interface';
 import { ForgotPasswordModel } from '../interfaces/forgot-password.interface';
-import { LoginModel } from '../interfaces/login.interface';
+import { LoginModel, TokenWithSidVm } from '../interfaces/login.interface';
 import { ResetPasswordModel } from '../interfaces/reset-password.interface';
 
 @Injectable({
@@ -23,6 +23,7 @@ export class LoginService {
   private storageTokenExpiry = 'tokenExpiry';
   private sidebarStateKey = 'sidebarState';
   private rememberMeKey = 'rM';
+  private submitted = 'submitted';
   private sId = 'sId';
   refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(
@@ -42,6 +43,14 @@ export class LoginService {
 
   getToken(): string | null {
     return this.storage().getItem(this.storageToken);
+  }
+
+  setSubmitted(submitted: string): void {
+    this.storage().setItem(this.submitted, submitted);
+  }
+
+  getGetSubmitted(): string | null {
+    return this.storage().getItem(this.submitted);
   }
 
   setSid(token: string): void {
@@ -95,9 +104,9 @@ export class LoginService {
     localStorage.removeItem(this.rememberMeKey);
   }
 
-  login(payload: LoginModel): Observable<ResponseModel<string>> {
+  login(payload: LoginModel): Observable<ResponseModel<TokenWithSidVm>> {
     return this.http
-      .post<ResponseModel<string>>(
+      .post<ResponseModel<TokenWithSidVm>>(
         `${environment.baseURL}UserAuthentication/Login`,
         payload
       )

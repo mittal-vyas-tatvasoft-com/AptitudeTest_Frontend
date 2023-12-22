@@ -38,7 +38,6 @@
                 <mat-label>{{ labelNameForDegree[i] }}</mat-label>
                 <mat-select
                   formControlName="degreeId"
-                  [required]="i < 3"
                   (selectionChange)="change($event.value, i, educationDetail)"
                 >
                   <mat-option
@@ -48,25 +47,19 @@
                     {{ option.value }}
                   </mat-option>
                 </mat-select>
-                <mat-error
-                  *ngIf="
-                    educationDetail.get('degreeId')?.invalid &&
-                    educationDetail.get('degreeId')?.touched
-                  "
-                >
-                  {{ ErrorMessage.DegreeSpecialization }}
-                </mat-error>
+                <mat-error>{{
+                  validationService.getError(
+                    educationDetail,
+                    CandidateModel.Degree,
+                    CandidateModel.Degree.key
+                  )
+                }}</mat-error>
               </mat-form-field>
             </div>
             <div class="col-sm-6 col-lg-4">
               <mat-form-field appearance="outline">
                 <mat-label>{{ labelNameForCollege[i] }}</mat-label>
-                <input
-                  matInput
-                  formControlName="university"
-                  [required]="i < 3"
-                  [pattern]="i < 3 ? validations.common.whitespaceREGEX : ''"
-                />
+                <input matInput formControlName="university" />
                 <mat-error>{{
                   validationService.getError(
                     educationDetail,
@@ -79,7 +72,7 @@
             <div class="col-6 col-sm-3 col-lg-2">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Stream</mat-label>
-                <mat-select formControlName="streamId" [required]="i < 3">
+                <mat-select formControlName="streamId">
                   <mat-option
                     *ngFor="let option of StreamDetailOptions(i)"
                     [value]="option.id"
@@ -87,14 +80,13 @@
                     {{ option.value }}
                   </mat-option>
                 </mat-select>
-                <mat-error
-                  *ngIf="
-                    educationDetail.get('streamId')?.invalid &&
-                    educationDetail.get('streamId')?.touched
-                  "
-                >
-                  {{ ErrorMessage.Stream }}
-                </mat-error>
+                <mat-error>{{
+                  validationService.getError(
+                    educationDetail,
+                    CandidateModel.Stream,
+                    CandidateModel.Stream.key
+                  )
+                }}</mat-error>
               </mat-form-field>
             </div>
             <div class="col-6 col-sm-3 col-lg-1">
@@ -107,19 +99,14 @@
                   appNumbersOnly
                   appMaxLength
                   [maxLength]="3"
-                  [min]="MinMaxValue.Min"
-                  [max]="MinMaxValue.Max"
-                  [required]="i < 3"
                 />
-
-                <mat-error
-                  *ngIf="
-                    educationDetail.get('grade')?.getError &&
-                    educationDetail.get('grade')?.touched
-                  "
-                >
-                  {{ getError(educationDetail.get("grade")) }}
-                </mat-error>
+                <mat-error>{{
+                  validationService.getError(
+                    educationDetail,
+                    CandidateModel.Grade,
+                    "grade"
+                  )
+                }}</mat-error>
               </mat-form-field>
             </div>
             <div class="col-6 col-sm-3 col-lg-1" *ngIf="i < 2">
@@ -129,21 +116,17 @@
                   matInput
                   type="number"
                   appMaxLength
-                  [maxLength]="3"
                   appNumbersOnly
-                  [min]="MinMaxValue.Min"
-                  [max]="MinMaxValue.Max"
+                  [maxLength]="3"
                   formControlName="maths"
-                  [required]="i < 2"
                 />
-                <mat-error
-                  *ngIf="
-                    educationDetail.get('maths')?.invalid &&
-                    educationDetail.get('maths')?.touched
-                  "
-                >
-                  {{ getError(educationDetail.get("maths")) }}
-                </mat-error>
+                <mat-error>{{
+                  validationService.getError(
+                    educationDetail,
+                    CandidateModel.Grade,
+                    "maths"
+                  )
+                }}</mat-error>
               </mat-form-field>
             </div>
             <div class="col-6 col-sm-3 col-lg-1" *ngIf="i === 1">
@@ -155,19 +138,15 @@
                   appNumbersOnly
                   appMaxLength
                   [maxLength]="3"
-                  [min]="MinMaxValue.Min"
-                  [max]="MinMaxValue.Max"
                   formControlName="physics"
-                  [required]="i === 1"
                 />
-                <mat-error
-                  *ngIf="
-                    educationDetail.get('physics')?.invalid &&
-                    educationDetail.get('physics')?.touched
-                  "
-                >
-                  {{ getError(educationDetail.get("physics")) }}
-                </mat-error>
+                <mat-error>{{
+                  validationService.getError(
+                    educationDetail,
+                    CandidateModel.Grade,
+                    "physics"
+                  )
+                }}</mat-error>
               </mat-form-field>
             </div>
           </div>

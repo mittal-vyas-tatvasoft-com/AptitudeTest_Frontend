@@ -94,7 +94,7 @@ export class ResultsService {
     return httpParam;
   }
 
-  downloadExcel(data: ResultExportData[]) {
+  downloadExcel(data: any[]) {
     // Convert data to worksheet
     const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(data);
 
@@ -107,7 +107,7 @@ export class ResultsService {
       bookType: 'xlsx',
       type: 'array',
     });
-    this.saveAsExcelFile(excelBuffer, 'ExportedResults');
+    this.saveAsExcelFile(excelBuffer, 'AptitudeTest-Results');
   }
 
   private saveAsExcelFile(buffer: any, fileName: string): void {
@@ -136,5 +136,81 @@ export class ResultsService {
       `${environment.baseURL}Results/GetResultExportData`,
       { params: httpParam }
     );
+  }
+
+  mapExportData(data: ResultExportData[]) {
+    return data.map((record) => {
+      return {
+        'Full Name': record.fullName,
+        'User Name': record.userName,
+        Gender: record.gender,
+        'Preferred Profile': record.preferedProfile,
+        'Applied Through': record.appliedThrough,
+        'Permanent Address': record.permanentAddress,
+        Mobile: record.mobile,
+        Email: record.email,
+        DOB: record.dateOfBirth_Age,
+        'SSC School': record.sscUniversity,
+        'SSC Stream': record.sscStream,
+        'SSC Grade': record.sscGrade,
+        'SSC Maths': record.sscMaths,
+        'HSC School': record.hscUniversity,
+        'HSC Stream': record.hscStream,
+        'HSC Grade': record.hscGrade,
+        'HSC Maths/Account Marks': record.hscMaths_Account,
+        'HSC Physics/State Marks': record.hscPhysics_State,
+        'Degree 1': record.degree1,
+        'Degree 1 University': record.degree1University,
+        'Degree 1 Stream': record.degree1Stream,
+        'Degree 1 Grade': record.degree1Grade,
+        'Degree 2': record.degree2,
+        'Degree 2 University': record.degree2University,
+        'Degree 2 Stream': record.degree2Stream,
+        'Degree 2 Grade': record.degree2Grade,
+        'Degree 3': record.degree3,
+        'Degree 3 University': record.degree3University,
+        'Degree 3 Stream': record.degree3Stream,
+        'Degree 3 Grade': record.degree3Grade,
+        'Father Qualification': record.fatherQualification,
+        'Father Occupation': record.fatherOccupation,
+        'Mother Qualification': record.motherQualification,
+        'Brother/Sister 1 Qualification': record.brother_Sister1Qualification,
+        'Mother Occupation': record.motherOccupation,
+        'Brother/Sister 2 Qualification':
+          record.brother_Sister2Qualificatiostring,
+        'Brother/Sister 1 Occupation': record.brother_Sister1Occupation,
+        'Overall Score': record.overallScore,
+        'Brother/Sister 2 Occupation': record.brother_Sister2Occupation,
+        'Negative Marks': record.negativeMarks,
+        'Positive Marks': record.positiveMarks,
+        'Total Correct': record.totalCorrect,
+        'Total Wrong': record.totalWrong,
+        'Total Unanswered': record.totalUnanswered,
+        'Maths Total Wrong': record.mathsTotalWrong,
+        'Maths Total Correct': record.mathsTotalCorrect,
+        'Maths Total Unanswered': record.mathsTotalUnanswered,
+        'Maths 1 Mark Correct': record.mathsCorrectMarks1,
+        'Maths 2 Marks Correct': record.mathsCorrectMarks2,
+        'Maths 3 Marks Correct': record.mathsCorrectMarks3,
+        'Maths 4 Marks Correct': record.mathsCorrectMarks4,
+        'Maths 5 Marks Correct': record.mathsCorrectMarks5,
+        'Reasoning Total Correct': record.reasoningTotalCorrect,
+        'Reasoning Total Wrong': record.reasoningTotalWrong,
+        'Reasoning Total Unanswered': record.reasoningTotalUnanswered,
+        'Reasoning 1 Mark Correct': record.reasoningCorrectMarks1,
+        'Reasoning 2 Marks Correct': record.reasoningCorrectMarks2,
+        'Reasoning 3 Marks Correct': record.reasoningCorrectMarks3,
+        'Reasoning 4 Marks Correct': record.reasoningCorrectMarks4,
+        'Reasoning 5 Marks Correct': record.reasoningCorrectMarks5,
+        'Technical Total Correct': record.technicalTotalCorrect,
+        'Technical Total Wrong': record.technicalTotalWrong,
+        'Technical Total Unanswered': record.technicalTotalUnanswered,
+        'Technical 1 Mark Correct': record.technicalCorrectMarks1,
+        'Technical 2 Marks Correct': record.technicalCorrectMarks2,
+        'Technical 3 Marks Correct': record.technicalCorrectMarks3,
+        'Technical 4 Marks Correct': record.technicalCorrectMarks4,
+        'Technical 5 Marks Correct': record.technicalCorrectMarks5,
+      };
+    });
   }
 }

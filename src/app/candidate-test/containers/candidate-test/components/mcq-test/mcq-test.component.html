@@ -3,8 +3,8 @@
     <div class="test-header">
       <div class="left">
         <p class="data-value">
-          Welcome
-          <b>{{ firstName + " " + lastName }}</b>
+          Aptitude Test
+          <b>{{ groupName + "-" + collegeName }}</b>
         </p>
       </div>
       <div class="right">
@@ -12,35 +12,93 @@
           Time Remaining
           <b
             *ngIf="
-              this.timeRemaining.hours > 0 &&
-              this.timeRemaining.minutes > 0 &&
-              this.timeRemaining.seconds > 0
+              timeRemaining.hours > 0 &&
+              timeRemaining.minutes > 0 &&
+              timeRemaining.seconds > 0
             "
             >{{
-              this.timeRemaining.hours +
+              timeRemainingForExam.hours +
                 ":" +
-                this.timeRemaining.minutes +
+                timeRemainingForExam.minutes +
                 ":" +
-                this.timeRemaining.seconds
+                timeRemainingForExam.seconds
             }}</b
           >
           <b
             *ngIf="
-              this.timeRemaining.hours === 0 &&
-              this.timeRemaining.minutes > 0 &&
-              this.timeRemaining.seconds >= 0
+              timeRemaining.hours === 0 &&
+              timeRemaining.minutes > 0 &&
+              timeRemaining.seconds > 0
             "
           >
-            {{ this.timeRemaining.minutes + ":" + this.timeRemaining.seconds }}
+            {{
+              timeRemainingForExam.minutes + ":" + timeRemainingForExam.seconds
+            }}
           </b>
           <b
             *ngIf="
-              this.timeRemaining.hours === 0 &&
-              this.timeRemaining.minutes === 0 &&
-              this.timeRemaining.seconds >= 0
+              timeRemaining.hours === 0 &&
+              timeRemaining.minutes === 0 &&
+              timeRemaining.seconds > 0
             "
           >
-            {{ this.timeRemaining.seconds }}
+            {{ timeRemainingForExam.seconds }}
+          </b>
+          <b
+            *ngIf="
+              timeRemaining.hours > 0 &&
+              timeRemaining.minutes > 0 &&
+              timeRemaining.seconds === 0
+            "
+          >
+            {{
+              timeRemainingForExam.hours +
+                ":" +
+                timeRemainingForExam.minutes +
+                ":" +
+                timeRemainingForExam.seconds
+            }}
+          </b>
+          <b
+            *ngIf="
+              timeRemaining.hours > 0 &&
+              timeRemaining.minutes === 0 &&
+              timeRemaining.seconds > 0
+            "
+          >
+            {{
+              timeRemainingForExam.hours +
+                ":" +
+                timeRemainingForExam.minutes +
+                ":" +
+                timeRemainingForExam.seconds
+            }}
+          </b>
+          <b
+            *ngIf="
+              timeRemaining.hours === 0 &&
+              timeRemaining.minutes > 0 &&
+              timeRemaining.seconds === 0
+            "
+          >
+            {{
+              timeRemainingForExam.minutes + ":" + timeRemainingForExam.seconds
+            }}
+          </b>
+          <b
+            *ngIf="
+              timeRemaining.hours > 0 &&
+              timeRemaining.minutes === 0 &&
+              timeRemaining.seconds === 0
+            "
+          >
+            {{
+              timeRemainingForExam.hours +
+                ":" +
+                timeRemainingForExam.minutes +
+                ":" +
+                timeRemainingForExam.seconds
+            }}
           </b>
         </p>
       </div>

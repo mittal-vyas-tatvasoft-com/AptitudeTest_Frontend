@@ -8,6 +8,8 @@ import {
 } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
+import { UserData } from 'src/app/modules/candidate/interfaces/candidate.interface';
+import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { QuestionStatus, StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
@@ -23,12 +25,22 @@ export class McqTestComponent implements OnInit, OnDestroy {
   lastName: string;
   userId: number;
   testStatus = 'Start';
+  groupName: string;
+  collegeName: string;
   timeRemaining = {
     hours: 0,
     minutes: 0,
     seconds: 0,
   };
+  timeRemainingForExam = {
+    hours: '0',
+    minutes: '0',
+    seconds: '0',
+  };
   endTime: string;
+  remainingHours = '';
+  remainingMinutes = '';
+  remainingSeconds = '';
   timeRemainingToEndTime: number;
   @Input() seconds = 0;
   question: Question = {
@@ -48,6 +60,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     public loginService: LoginService,
     private router: Router,
     private candidateTestService: CandidateTestService,
+    private candidateService: CandidateService,
     private snackBarService: SnackbarService,
     public dialog: MatDialog
   ) {}
@@ -57,6 +70,12 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.firstName = candidateDetails.FirstName;
     this.lastName = candidateDetails.Name;
     this.userId = candidateDetails.Id;
+    this.candidateService
+      .getCandidateData(this.userId)
+      .subscribe((candidate: any) => {
+        this.groupName = candidate.data.groupName;
+        this.collegeName = candidate.data.collegeName;
+      });
     this.getEndTime();
     this.displayQuestion();
     this.interval = setInterval(() => {
@@ -64,11 +83,33 @@ export class McqTestComponent implements OnInit, OnDestroy {
       let hours = Math.floor(this.seconds / 3600);
       let minutes = Math.floor((this.seconds % 3600) / 60);
       let seconds = this.seconds - minutes * 60 - hours * 3600;
+      if (hours <= 9) {
+        this.remainingHours = '0' + hours;
+      } else {
+        this.remainingHours = hours.toString();
+      }
+
+      if (minutes <= 9) {
+        this.remainingMinutes = '0' + minutes;
+      } else {
+        this.remainingMinutes = minutes.toString();
+      }
+      if (seconds <= 9) {
+        this.remainingSeconds = '0' + seconds;
+      } else {
+        this.remainingSeconds = seconds.toString();
+      }
       this.timeRemaining = {
         hours: hours,
         minutes: minutes,
         seconds: seconds,
       };
+      this.timeRemainingForExam = {
+        hours: this.remainingHours,
+        minutes: this.remainingMinutes,
+        seconds: this.remainingSeconds,
+      };
+
       if (this.seconds === 0) {
         this.submitTest();
       }

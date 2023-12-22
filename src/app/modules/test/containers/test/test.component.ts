@@ -1,3 +1,4 @@
+import { group } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -5,6 +6,8 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
+import { DropdownItem } from 'src/app/modules/candidate/interfaces/candidate.interface';
+import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { Numbers, StatusCode, TestStatus } from 'src/app/shared/common/enums';
 import { DropdownData } from 'src/app/shared/common/interfaces/dropdown-data.interface';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
@@ -56,7 +59,10 @@ export class TestComponent implements OnInit {
     { value: 'Completed', id: TestStatus.Completed },
   ];
   groupList: SelectOption[] = [{ value: 'All', id: '' }];
+  groups: SelectOption[] = [];
+  nonDefaultGroups: SelectOption[] = [];
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
+  candidateService: CandidateService;
 
   constructor(
     private router: Router,
@@ -68,18 +74,22 @@ export class TestComponent implements OnInit {
 
   ngOnInit(): void {
     this.createForm();
-    this.testService.getGroups().subscribe({
-      next: (res: ResponseModel<DropdownData[]>) => {
-        const tempData: SelectOption[] = res.data.map((data) => {
-          return {
-            id: data.id,
-            value: data.name,
-          };
-        });
-        this.groupList = [...this.groupList, ...tempData];
-      },
+    this.testService.getGroups().subscribe((groupElements) => {
+      groupElements.data.forEach((groupElement) => {
+        if (groupElement.isDefault) {
+          const defaultGroupName = groupElement.name + ' (Default Group) ';
+          this.groupList.push({ value: defaultGroupName, id: groupElement.id });
+        }
+      });
+      groupElements.data.forEach((groupElement) => {
+        if (!groupElement.isDefault) {
+          this.groupList.push({
+            value: groupElement.name,
+            id: groupElement.id,
+          });
+        }
+      });
     });
-
     this.dataSource = new MatTableDataSource<TestData>([]);
     this.getTests();
     this.form.valueChanges.pipe(debounceTime(Numbers.Debounce)).subscribe({
@@ -186,6 +196,11 @@ export class TestComponent implements OnInit {
         this.sortOrder = event.direction;
         break;
 
+      case 'date':
+        this.sortField = 'Date';
+        this.sortOrder = event.direction;
+        break;
+
       case 'testTime':
         this.sortField = 'TestTime';
         this.sortOrder = event.direction;
@@ -272,7 +287,7 @@ export class TestComponent implements OnInit {
     const year = tempDate.getFullYear();
     const month = tempDate.getMonth() + 1;
     const day = tempDate.getDate();
-    const formattedDate = `${day}/${month}/${year}`;
+    const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
   }
 }

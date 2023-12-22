@@ -27,6 +27,14 @@ import { defaultSelectOption } from '../../static/candidate.static';
   styleUrls: ['./education-details.component.scss'],
 })
 export class EducationDetailsComponent implements OnInit, OnChanges {
+  commonValidationForGrade = [
+    Validators.min(MinMaxValue.Min),
+    Validators.max(MinMaxValue.Max),
+  ];
+  commonValidationForUniversity = [
+    Validators.maxLength(255),
+    Validators.pattern(validations.common.whitespaceREGEX),
+  ];
   validations = validations;
   CandidateModel = candidateControl;
   form: FormGroup;
@@ -149,52 +157,49 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
     this.otherDegree.unshift(defaultSelectOption);
     this.otherStream.unshift(defaultSelectOption);
   }
+
   change(event: any, i: number, data: any) {
-    if (i > 2) {
-      if (event > 0) {
-        data.get('university').touched = true;
-        data
-          .get('university')
-          .setValidators([
-            Validators.required,
-            Validators.maxLength(255),
-            Validators.pattern(validations.common.whitespaceREGEX),
-          ]);
-        data.get('university').updateValueAndValidity();
-        data.get('streamId').touched = true;
-        data.get('streamId').setValidators([Validators.required]);
-        data.get('streamId').updateValueAndValidity();
-        data.get('grade').touched = true;
-        data.get('grade').setValidators([Validators.required]);
-        data.get('grade').updateValueAndValidity();
-        // data.get('maths').touched = true;
-        // data.get('maths').setValidators([Validators.required]);
-        // data.get('maths').updateValueAndValidity();
-        // data.get('physics').touched = true;
-        // data.get('physics').setValidators([Validators.required]);
-        // data.get('physics').updateValueAndValidity();
-      } else {
-        data.get('university').clearValidators();
-        data.get('university').updateValueAndValidity();
-        data.get('streamId').clearValidators();
-        data.get('streamId').updateValueAndValidity();
-        data.get('grade').clearValidators();
-        data.get('grade').updateValueAndValidity();
-        // data.get('maths').clearValidators();
-        // data.get('maths').updateValueAndValidity();
-        // data.get('physics').clearValidators();
-        // data.get('physics').updateValueAndValidity();
-      }
+    if (event > 0) {
+      this.setValidation('university', data, [
+        ...this.commonValidationForUniversity,
+        Validators.required,
+      ]);
+      this.setValidation('streamId', data, [Validators.required]);
+      this.setValidation('grade', data, [
+        ...this.commonValidationForGrade,
+        Validators.required,
+      ]);
+      this.setValidation('maths', data, [
+        ...this.commonValidationForGrade,
+        Validators.required,
+      ]);
+      this.setValidation('physics', data, [
+        ...this.commonValidationForGrade,
+        Validators.required,
+      ]);
     } else {
-      data
-        .get('university')
-        .setValidators([
-          Validators.required,
-          Validators.maxLength(255),
-          Validators.pattern(validations.common.whitespaceREGEX),
-        ]);
-      data.get('university').updateValueAndValidity();
+      this.clearValidation('university', data);
+      this.clearValidation('streamId', data);
+      this.clearValidation('grade', data);
+      this.clearValidation('maths', data);
+      this.clearValidation('physics', data);
     }
+    if (i > 1) {
+      this.clearValidation('maths', data);
+    }
+    if (i === 0 || i > 1) {
+      this.clearValidation('physics', data);
+    }
+  }
+
+  setValidation(key: string, data: any, validation: Validators[]) {
+    data.get(key).setValidators(validation);
+    data.get(key).updateValueAndValidity();
+  }
+
+  clearValidation(key: string, data: any) {
+    data.get(key).clearValidators();
+    data.get(key).updateValueAndValidity();
   }
 
   getFormData(): FormGroup {
@@ -303,14 +308,19 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
         const academicDetail = this.academicDetails[i];
         this.educationDetailsArrayData.push(
           this.formBuilder.group({
-            degreeId: academicDetail?.degreeId || '',
-            university: academicDetail?.university || '',
-            streamId: academicDetail?.streamId || '',
-            grade: academicDetail?.grade || '',
-            maths: academicDetail?.maths || '',
-            physics: academicDetail?.physics || '',
+            degreeId: [academicDetail?.degreeId || ''],
+            university: [academicDetail?.university || ''],
+            streamId: [academicDetail?.streamId || ''],
+            grade: [academicDetail?.grade || ''],
+            maths: [academicDetail?.maths || ''],
+            physics: [academicDetail?.physics || ''],
           })
         );
+        if (i < 3) {
+          const fm = this.educationDetailsArrayData.at(i);
+          fm.get('degreeId')?.setValidators(Validators.required);
+          fm.get('degreeId')?.updateValueAndValidity();
+        }
       }
     }
   }
@@ -320,48 +330,6 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
   }
 
   validateForm() {
-    for (let i = 0; i < 3; i++) {
-      const control = this.educationDetailsArrayData.at(i) as FormGroup;
-      if (control) {
-        Object.keys(control.controls).forEach((key) => {
-          const formControl = control.get(key) as FormControl;
-          if (formControl) {
-            formControl.markAsTouched();
-            formControl.setValidators(Validators.required);
-            formControl.updateValueAndValidity();
-          }
-        });
-      }
-      // TODO: issue when trying to update
-      if (i === 0 || i === 2) {
-        const fc = control.get('physics');
-        if (fc) {
-          fc.clearValidators();
-          fc.updateValueAndValidity();
-        }
-      }
-      if (i === 2) {
-        const fcm = control.get('maths');
-        if (fcm) {
-          fcm.clearValidators();
-          fcm.updateValueAndValidity();
-        }
-      }
-    }
-  }
-
-  getError(formControlName: AbstractControl<any, any> | null) {
-    if (formControlName == null || formControlName?.errors == null) {
-      return '';
-    } else {
-      if (formControlName?.errors['required'] && formControlName?.touched) {
-        return this.ErrorMessage.Percentage;
-      } else if (formControlName?.errors['min'] && formControlName?.touched) {
-        return this.ErrorMessage.Min;
-      } else if (formControlName?.errors['max'] && formControlName?.touched) {
-        return this.ErrorMessage.Max;
-      }
-      return '';
-    }
+    this.educationDetailsArrayData.markAllAsTouched();
   }
 }

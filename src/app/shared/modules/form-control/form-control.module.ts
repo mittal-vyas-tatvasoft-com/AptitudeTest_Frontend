@@ -5,13 +5,20 @@ import {
   MAT_MOMENT_DATE_ADAPTER_OPTIONS,
   MomentDateAdapter,
 } from '@angular/material-moment-adapter';
-import { DateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import {
+  DateAdapter,
+  MAT_DATE_FORMATS,
+  MAT_DATE_LOCALE,
+} from '@angular/material/core';
 import { NgxMatTimepickerModule } from 'ngx-mat-timepicker';
 import { NgxMaterialTimepickerModule } from 'ngx-material-timepicker';
 import { SharedMaterialModule } from '../../material/shared-material.module';
 import { ButtonComponent } from './components/button/button.component';
 import { CheckboxGroupComponent } from './components/checkbox-group/checkbox-group.component';
-import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import {
+  DatePickerComponent,
+  MY_DATE_FORMAT,
+} from './components/date-picker/date-picker.component';
 import { MultiSelectComponent } from './components/multi-select/multi-select.component';
 import { RadioGroupComponent } from './components/radio-group/radio-group.component';
 import { SelectComponent } from './components/select/select.component';
@@ -46,6 +53,7 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
       deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
     },
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: false } },
+    { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMAT },
   ],
   imports: [
     CommonModule,

@@ -16,6 +16,16 @@
         "
       >
         <button
+          *ngIf="question.status == questionStatus.Current"
+          else
+          otherStatus
+          mat-mini-fab
+          color="primary"
+        >
+          {{ i + 1 }}
+        </button>
+
+        <button
           *ngIf="question.status == questionStatus.Answered"
           mat-mini-fab
           color="primary"

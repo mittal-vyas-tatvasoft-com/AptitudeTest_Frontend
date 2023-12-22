@@ -135,6 +135,7 @@
   [pagination]="true"
   (editClicked)="handleEditCandidate($event)"
   (deleteClicked)="getDeleteCandidateDialog($event)"
+  (changePasswordClicked)="changePassword($event)"
   (actionClicked)="getupdateStatus($event.row, $event.action)"
   [totalItemsCount]="totalItemsCount"
   [pageSize]="pageSize"
@@ -142,5 +143,6 @@
   (pageToPage)="handlePageToPage($event)"
   (pageChanged)="handlePageChange($event)"
   (sortingChanged)="handleDataSorting($event)"
+  [isCandidateTable]="true"
   #myTable
 ></app-table>

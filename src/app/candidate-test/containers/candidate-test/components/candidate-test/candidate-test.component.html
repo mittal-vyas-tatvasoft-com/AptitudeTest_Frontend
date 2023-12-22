@@ -10,6 +10,24 @@
       ></app-list-of-questions>
     </div>
   </div>
+  <div class="container" *ngIf="IsFaceCaptureEnabled">
+    <button
+      class="showHideButton"
+      mat-mini-fab
+      color="primary"
+      aria-label="Example icon button with a home icon"
+      (click)="showHideCam()"
+    >
+      <mat-icon>{{ ShowCam ? "cancel" : "camera_alt" }}</mat-icon>
+    </button>
+    <webcam
+      [hidden]="!ShowCam"
+      [trigger]="$trigger"
+      (imageCapture)="handleImage($event)"
+      [imageQuality]="1"
+      class="bottom-right"
+    ></webcam>
+  </div>
 </div>
 <webcam
   [trigger]="$trigger"

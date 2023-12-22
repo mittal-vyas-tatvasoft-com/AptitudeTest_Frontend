@@ -12,6 +12,7 @@ import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/sel
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { FilterControls } from '../../configs/results.config';
 import {
+  ResultExportData,
   ResultModel,
   ResultQueryParam,
   StatisticsData,
@@ -109,11 +110,21 @@ export class ResultComponent implements OnInit {
       this.colleges = [...this.colleges, ...temp];
     });
 
-    this.candidateService.getGroupsForDropDown().subscribe((groups) => {
-      const temp = groups.map((res) => {
-        return { id: res.id, value: res.name };
+    this.candidateService.getGroupsForDropDown().subscribe((groupElements) => {
+      groupElements.forEach((groupElement) => {
+        if (groupElement.isDefault) {
+          const defaultGroupName = groupElement.name + ' (Default Group) ';
+          this.groups.push({ value: defaultGroupName, id: groupElement.id });
+        }
       });
-      this.groups = [...this.groups, ...temp];
+      groupElements.forEach((groupElement) => {
+        if (!groupElement.isDefault) {
+          this.groups.push({
+            value: groupElement.name,
+            id: groupElement.id,
+          });
+        }
+      });
     });
 
     this.resultService.getTestsForDropDown().subscribe((tests) => {
@@ -131,7 +142,8 @@ export class ResultComponent implements OnInit {
         next: (res) => {
           if (res.statusCode == StatusCode.Success) {
             if (res.data.length > 0) {
-              this.resultService.downloadExcel(res.data);
+              let data = this.resultService.mapExportData(res.data);
+              this.resultService.downloadExcel(data);
               this.snackbarService.success(res.message);
             }
           } else {
@@ -219,7 +231,7 @@ export class ResultComponent implements OnInit {
     const hours = tempDate.getHours();
     const minutes = tempDate.getMinutes();
     const seconds = tempDate.getSeconds();
-    const formattedDate = `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+    const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
     return formattedDate;
   }
 

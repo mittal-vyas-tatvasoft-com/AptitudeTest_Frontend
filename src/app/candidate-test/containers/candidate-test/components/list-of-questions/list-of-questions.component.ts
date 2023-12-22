@@ -17,6 +17,7 @@ export class ListOfQuestionsComponent implements OnInit {
     timeLeft: 0,
     isQuestionsMenu: false,
   };
+  currentQuestionNumber: number = 1;
   questionStatus = QuestionStatus;
   constructor(private testService: CandidateTestService) {}
 
@@ -33,6 +34,14 @@ export class ListOfQuestionsComponent implements OnInit {
         this.questionsStatus.questionStatusVMs.filter(
           (question) => question.status === this.questionStatus.Skipped
         ).length;
+      //Here we get Index of previous Question in data[0]
+      // so data[0]+1 will give us index of current question
+      // and data[0]+2 will give current question number
+      if (this.questionsStatus.questionStatusVMs.length >= data[0] + 2) {
+        this.currentQuestionNumber = data[0] + 2;
+        this.questionsStatus.questionStatusVMs[data[0] + 1].status =
+          this.questionStatus.Current;
+      }
     });
   }
 

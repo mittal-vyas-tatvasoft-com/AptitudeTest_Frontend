@@ -23,7 +23,7 @@
         </mat-icon>
       </button>
     </div>
-    <div class="header-right" *ngIf="!register">
+    <div class="header-right" *ngIf="isAuthenticated">
       <ul class="top-actions">
         <li *ngIf="!isAdmin">
           <span class="logged-time">
@@ -66,7 +66,11 @@
               </mat-icon>
               <span>Change Password</span>
             </button>
-            <button mat-menu-item *ngIf="!isAdmin" (click)="MyProfile()">
+            <!-- <button
+              mat-menu-item
+              *ngIf="!isAdmin && !register"
+              (click)="MyProfile()"
+            >
               <mat-icon>
                 <img
                   src="./assets/images/candidates-grey.svg"
@@ -74,7 +78,7 @@
                 />
               </mat-icon>
               <span>My Profile</span>
-            </button>
+            </button> -->
             <button mat-menu-item routerLink="/" (click)="logout()">
               <mat-icon>
                 <img src="./assets/images/logout-grey.svg" alt="Logout" />
