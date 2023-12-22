@@ -291,6 +291,8 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
           this.form.get('numberOfQuestions')?.setErrors(null);
           this.form.get('weightage')?.setValue('');
           this.form.get('weightage')?.setErrors(null);
+        } else if (res.statusCode == StatusCode.BadRequest) {
+          this.snackbarService.warn(res.message);
         } else {
           this.snackbarService.error(res.message);
         }

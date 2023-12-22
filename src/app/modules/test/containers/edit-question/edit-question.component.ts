@@ -219,6 +219,8 @@ export class EditQuestionComponent {
         if (res.statusCode == StatusCode.Success) {
           this.dialogRef.close(true);
           this.snackbarService.success(res.message);
+        } else if (res.statusCode == StatusCode.BadRequest) {
+          this.snackbarService.warn(res.message);
         } else {
           this.dialogRef.close(true);
           this.snackbarService.error(res.message);

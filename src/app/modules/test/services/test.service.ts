@@ -3,20 +3,20 @@ import { Injectable } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { BehaviorSubject, Observable, Subject, map } from 'rxjs';
-import { DropdownData } from 'src/app/shared/common/interfaces/dropdown-data.interface';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { environment } from 'src/environments/environment';
 import { DropdownItem } from '../../candidate/interfaces/candidate.interface';
 import {
   AddTestQuestionModel,
   AllInsertedQuestionModel,
+  CreateTestModel,
   GetAllTestCandidateParams,
   QuestionTypeCount,
+  TestCandidatesModel,
   TestData,
   TestQueryParams,
   TopicWiseQuestionData,
-  CreateTestModel,
-  TestCandidatesModel,
+  UpdateTestStatus,
 } from '../interfaces/test.interface';
 import { QuestionCountInitial } from '../static/test.static';
 
@@ -145,6 +145,19 @@ export class TestService {
     return this.http
       .put<ResponseModel<string>>(
         `${environment.baseURL}Tests/UpdateTest`,
+        data
+      )
+      .pipe(
+        map((res: ResponseModel<string>) => {
+          return res;
+        })
+      );
+  }
+
+  updateTestStatus(data: UpdateTestStatus) {
+    return this.http
+      .put<ResponseModel<string>>(
+        `${environment.baseURL}Tests/UpdateTestStatus`,
         data
       )
       .pipe(

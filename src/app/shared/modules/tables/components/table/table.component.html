@@ -157,6 +157,26 @@
                     </button>
                   </ng-template>
                 </ng-container>
+
+                <ng-container *ngIf="isTestTable">
+                  <button
+                    *ngIf="row.status === 1"
+                    mat-menu-item
+                    (click)="handleTestAction(row.id, 2)"
+                  >
+                    <mat-icon> slideshow </mat-icon>
+                    Active
+                  </button>
+
+                  <button
+                    *ngIf="row.status === 2"
+                    mat-menu-item
+                    (click)="handleTestAction(row.id, 3)"
+                  >
+                    <mat-icon>check</mat-icon>
+                    Complete
+                  </button>
+                </ng-container>
                 <button mat-menu-item (click)="handleDelete(row.id)">
                   <mat-icon>
                     <img src="./assets/images/delete.svg" alt="Delete" />

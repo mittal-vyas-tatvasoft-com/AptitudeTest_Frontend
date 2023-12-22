@@ -36,6 +36,10 @@ export class TableComponent<T> {
     row: number;
     action: boolean;
   }>();
+  @Output() testActionClicked = new EventEmitter<{
+    row: number;
+    action: number;
+  }>();
   @Output() pageSizeChanged = new EventEmitter<number>();
   @Output() pageChanged = new EventEmitter<'prev' | 'next'>();
   @Output() pageToPage = new EventEmitter<number>();
@@ -68,6 +72,10 @@ export class TableComponent<T> {
 
   handleAction(row: number, action: boolean) {
     this.actionClicked.emit({ row, action });
+  }
+
+  handleTestAction(row: number, action: number) {
+    this.testActionClicked.emit({ row, action });
   }
 
   getDisplayedColumns() {
