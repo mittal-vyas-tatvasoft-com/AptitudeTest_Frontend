@@ -15,8 +15,9 @@ import {
   tap,
   throwError,
 } from 'rxjs';
-import { Navigation, StatusCode } from 'src/app/shared/common/enums';
+import { Navigation, StaticMessages, StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { LoginService } from '../../auth/services/login.service';
 import { LoaderService } from '../../services/loader.service';
 
@@ -27,39 +28,36 @@ export class AuthTokenInterceptor implements HttpInterceptor {
 
   constructor(
     private loginService: LoginService,
+    private snackbarService: SnackbarService,
     private loaderService: LoaderService
-  ) {}
+  ) { }
 
   private handleTokenRefresh(
     req: HttpRequest<any>,
     next: HttpHandler
-  ): Observable<any> {
+  ) {
     if (!this.isRefreshing) {
       this.isRefreshing = true;
 
       const data = this.loginService.decodeToken();
       if (data === null) {
         this.loginService.logout();
-        return throwError(Error);
       }
       return this.loginService
         .refreshToken(data.Role === Navigation.RoleAdmin)
-        .pipe(
-          switchMap((res: any) => {
-            this.isRefreshing = false;
-            if (res.result) {
-              return this.retryRequest(req, next);
-            } else {
-              this.loginService.logout();
-              return throwError(Error);
-            }
-          }),
-          catchError((error: any) => {
-            this.isRefreshing = false;
+        .subscribe((res) => {
+          this.isRefreshing = false;
+          if (res.result) {
+            return this.retryRequest(req, next);
+          } else {
             this.loginService.logout();
-            throw new Error(error);
-          })
-        );
+            return throwError(Error);
+          }
+        }, (err: any) => {
+          this.isRefreshing = false;
+          this.loginService.logout();
+          console.log(err);
+        })
     }
 
     return this.loginService.refreshTokenSubject.pipe(
@@ -93,31 +91,30 @@ export class AuthTokenInterceptor implements HttpInterceptor {
         },
       });
     }
-
     return next.handle(req).pipe(
       tap((res) => {
         if (res instanceof HttpResponse) {
           this.loaderService.setLoading(false, req.url);
         }
-      }),
-      catchError((error) => {
+      }, err => {
         this.loaderService.setLoading(false, req.url);
         if (
-          error instanceof HttpErrorResponse &&
-          error.status === StatusCode.AlreadyLoggedIn
+          err instanceof HttpErrorResponse &&
+          err.status === StatusCode.AlreadyLoggedIn
         ) {
+          this.snackbarService.error(StaticMessages.AlreadyLoggedInError);
           this.loginService.logout();
           throw new Error();
         }
         if (
-          error instanceof HttpErrorResponse &&
-          error.status === StatusCode.Unauthorized
+          err instanceof HttpErrorResponse &&
+          err.status === StatusCode.Unauthorized
         ) {
           return this.handleTokenRefresh(req, next);
         } else {
-          throw new Error(error);
+          throw new Error(err);
         }
-      })
+      }),
     );
   }
 }

@@ -3,8 +3,8 @@
   <div class="col-md-6" *ngFor="let option of question.options; let i = index">
     <div
       class="qa-answer-type-text-option"
-      [ngClass]="{ selected: question.answers[i].isAnswer }"
-      (click)="toggleCheckbox(question.answers[i].optionId)"
+      [ngClass]="{ selected: getSelectedAns(option.optionId) }"
+      (click)="toggleCheckbox(option.optionId)"
     >
       <span class="answer-option">{{ optionIndex[i] }}</span>
       <p class="answer-text" *ngIf="question.optionType == optionType.Text">
@@ -16,8 +16,9 @@
       <mat-checkbox
         class="rounded-check"
         color="primary"
-        [(ngModel)]="question.answers[i].isAnswer"
-        (change)="toggleCheckbox(question.answers[i].optionId)"
+        (click)="$event.stopPropagation()"
+        [checked]="getSelectedAns(option.optionId)"
+        (change)="toggleCheckbox(option.optionId)"
       >
       </mat-checkbox>
     </div>
