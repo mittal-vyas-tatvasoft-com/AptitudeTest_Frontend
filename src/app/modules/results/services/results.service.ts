@@ -45,6 +45,13 @@ export class ResultsService {
     );
   }
 
+  approveResumeTest(userId: number, testId: number, isApprove: boolean) {
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}Results/ApproveResumeTest/${userId}/${testId}/${isApprove}`,
+      {}
+    );
+  }
+
   getStatistics(data: ResultQueryParam) {
     let httpParam = this.createHttpParam(data, false);
     return this.http.get<ResponseModel<StatisticsModel[]>>(

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { environment } from 'src/environments/environment';
 import {
@@ -15,7 +15,7 @@ import {
 })
 export class CandidateTestService {
   questionStatus = new Subject<number[]>();
-  loadQuestion = new Subject<number>();
+  loadQuestion = new BehaviorSubject<number>(-1);
   endTime = new Subject<string>();
 
   constructor(private http: HttpClient) {}
