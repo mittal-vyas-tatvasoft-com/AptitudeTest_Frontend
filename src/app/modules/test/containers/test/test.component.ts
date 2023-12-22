@@ -1,4 +1,3 @@
-import { group } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
@@ -6,17 +5,19 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
-import { DropdownItem } from 'src/app/modules/candidate/interfaces/candidate.interface';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { Numbers, StatusCode, TestStatus } from 'src/app/shared/common/enums';
-import { DropdownData } from 'src/app/shared/common/interfaces/dropdown-data.interface';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { testFilterModel } from '../../config/test.configs';
-import { TestData, TestQueryParams } from '../../interfaces/test.interface';
+import {
+  TestData,
+  TestQueryParams,
+  UpdateTestStatus,
+} from '../../interfaces/test.interface';
 import { TestService } from '../../services/test.service';
 
 @Component({
@@ -285,5 +286,22 @@ export class TestComponent implements OnInit {
     const day = tempDate.getDate();
     const formattedDate = `${day}-${month}-${year}`;
     return formattedDate;
+  }
+
+  handleTestStatus(data: { row: number; action: number }) {
+    const payload: UpdateTestStatus = {
+      id: data.row,
+      status: data.action,
+    };
+    this.testService.updateTestStatus(payload).subscribe({
+      next: (res) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.getTests();
+          this.snackbarService.success(res.message);
+        } else {
+          this.snackbarService.warn(res.message);
+        }
+      },
+    });
   }
 }
