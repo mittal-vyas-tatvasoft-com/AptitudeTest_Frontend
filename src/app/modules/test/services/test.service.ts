@@ -9,13 +9,14 @@ import { DropdownItem } from '../../candidate/interfaces/candidate.interface';
 import {
   AddTestQuestionModel,
   AllInsertedQuestionModel,
+  CreateTestModel,
   GetAllTestCandidateParams,
   QuestionTypeCount,
+  TestCandidatesModel,
   TestData,
   TestQueryParams,
   TopicWiseQuestionData,
-  CreateTestModel,
-  TestCandidatesModel,
+  UpdateTestStatus,
 } from '../interfaces/test.interface';
 import { QuestionCountInitial } from '../static/test.static';
 
@@ -144,6 +145,19 @@ export class TestService {
     return this.http
       .put<ResponseModel<string>>(
         `${environment.baseURL}Tests/UpdateTest`,
+        data
+      )
+      .pipe(
+        map((res: ResponseModel<string>) => {
+          return res;
+        })
+      );
+  }
+
+  updateTestStatus(data: UpdateTestStatus) {
+    return this.http
+      .put<ResponseModel<string>>(
+        `${environment.baseURL}Tests/UpdateTestStatus`,
         data
       )
       .pipe(

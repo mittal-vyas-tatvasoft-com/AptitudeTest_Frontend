@@ -418,6 +418,8 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
         if (res.statusCode == StatusCode.Success) {
           this.stepper.next();
           this.snackbarService.success(res.message);
+        } else if (res.statusCode == StatusCode.BadRequest) {
+          this.snackbarService.warn(res.message);
         } else if (res.statusCode != StatusCode.AlreadyExist) {
           this.router.navigate(['/admin/tests']);
           this.snackbarService.error(res.message);
@@ -481,9 +483,11 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       const groupId = this.testGroupForm.get('groupId')?.value;
       this.testService.updateTestGroup(this.testId, groupId).subscribe({
         next: (res) => {
-          if (res.statusCode === 200) {
+          if (res.statusCode === StatusCode.Success) {
             this.snackbarService.success(res.message);
             this.stepper.next();
+          } else if (res.statusCode == StatusCode.BadRequest) {
+            this.snackbarService.warn(res.message);
           } else {
             this.snackbarService.error(res.message);
           }
@@ -507,6 +511,8 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
             this.fetchAllInsertedQuestions();
             if (res.statusCode == StatusCode.Success) {
               this.snackbarService.success(res.message);
+            } else if (res.statusCode == StatusCode.BadRequest) {
+              this.snackbarService.warn(res.message);
             } else {
               this.snackbarService.error(res.message);
             }
@@ -520,6 +526,8 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
           this.fetchAllInsertedQuestions();
           if (res.statusCode == StatusCode.Success) {
             this.snackbarService.success(res.message);
+          } else if (res.statusCode == StatusCode.BadRequest) {
+            this.snackbarService.warn(res.message);
           } else {
             this.snackbarService.error(res.message);
           }

@@ -177,8 +177,25 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
           if (response.statusCode === StatusCode.Success) {
             this.questionsStatus = response.data;
             if (this.questionsStatus.questionStatusVMs.length > 0) {
-              this.questionsStatus.questionStatusVMs[0].status =
-                this.questionStatus.Current;
+              if (this.isResume()) {
+                const currentQuestion =
+                  this.questionsStatus.questionStatusVMs.find(
+                    (x) => x.status === this.questionStatus.Unvisited
+                  );
+                this.testService.loadQuestion.next(
+                  currentQuestion?.questionId!
+                );
+                this.questionsStatus.questionStatusVMs =
+                  this.questionsStatus.questionStatusVMs.map((q) => {
+                    if (q.questionId == currentQuestion?.questionId) {
+                      q.status = this.questionStatus.Current;
+                    }
+                    return q;
+                  });
+              } else {
+                this.questionsStatus.questionStatusVMs[0].status =
+                  this.questionStatus.Current;
+              }
             }
             this.seconds = this.questionsStatus.timeLeft * 60;
           } else {
@@ -201,5 +218,13 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
     } else {
       this.ShowCam = true;
     }
+  }
+
+  isResume(): boolean {
+    return (
+      this.questionsStatus.questionStatusVMs.filter(
+        (x) => x.status == this.questionStatus.Unvisited
+      ).length != this.questionsStatus.questionStatusVMs.length
+    );
   }
 }

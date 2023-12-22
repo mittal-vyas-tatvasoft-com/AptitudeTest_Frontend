@@ -104,3 +104,8 @@ export interface AddTestQuestionModel {
   createdBy: number;
   updatedBy: number;
 }
+
+export interface UpdateTestStatus {
+  id: number;
+  status: number;
+}
