@@ -269,13 +269,15 @@ export class TestComponent implements OnInit {
     this.getTests();
   }
 
+  appendPad(unit: any) {
+    return unit > 9 ? unit : `0` + unit
+  }
+
   getTrimmedTime(date: string) {
     let tempDate = new Date(date);
     const hours = tempDate.getHours();
     const minutes = tempDate.getMinutes();
-    const formattedTime = `${hours > 9 ? hours : `0` + hours}:${
-      minutes > 9 ? minutes : `0` + minutes
-    }`;
+    const formattedTime = `${this.appendPad(hours)}:${this.appendPad(minutes)}`;
     return formattedTime;
   }
 

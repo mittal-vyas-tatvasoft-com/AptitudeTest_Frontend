@@ -53,6 +53,49 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.getToken();
   }
 
+  doAdminLogin(payload: any) {
+    this.loginService
+      .Adminlogin(payload)
+      .pipe(takeUntil(this.ngUnsubscribe$))
+      .subscribe({
+        next: (res: ResponseModel<string>) => {
+          if (res.result) {
+            this.router.navigate([`${Navigation.Admin}`]);
+          } else {
+            this.snackbarService.error(res.message);
+          }
+        },
+        error: (error: { message: string }) => {
+          this.snackbarService.error(error.message);
+        },
+      });
+  }
+
+  doUserLogin(payload: any) {
+    this.loginService
+    .login(payload)
+    .pipe(takeUntil(this.ngUnsubscribe$))
+    .subscribe({
+      next: (res: ResponseModel<TokenWithSidVm>) => {
+        if (res.result) {
+          if (res.data.isSubmitted) {
+            this.loginService.setSubmitted('true');
+            this.router.navigate([`user/${Navigation.Submitted}`]);
+          } else {
+            this.loginService.setSubmitted('false');
+            const token = this.loginService.decodeToken();
+            this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
+          }
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+      error: (error: { message: string }) => {
+        this.snackbarService.error(error.message);
+      },
+    });
+  }
+
   login() {
     if (this.form.valid) {
       this.loginService.saveRememberMe(this.rememberMe);
@@ -65,44 +108,9 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.loginModel.passwordField.iconName =
         'password-visibility-show-dark.svg';
       if (this.isAdmin) {
-        this.loginService
-          .Adminlogin(payload)
-          .pipe(takeUntil(this.ngUnsubscribe$))
-          .subscribe({
-            next: (res: ResponseModel<string>) => {
-              if (res.result) {
-                this.router.navigate([`${Navigation.Admin}`]);
-              } else {
-                this.snackbarService.error(res.message);
-              }
-            },
-            error: (error: { message: string }) => {
-              this.snackbarService.error(error.message);
-            },
-          });
+        this.doAdminLogin(payload);
       } else {
-        this.loginService
-          .login(payload)
-          .pipe(takeUntil(this.ngUnsubscribe$))
-          .subscribe({
-            next: (res: ResponseModel<TokenWithSidVm>) => {
-              if (res.result) {
-                if (res.data.isSubmitted) {
-                  this.loginService.setSubmitted('true');
-                  this.router.navigate([`user/${Navigation.Submitted}`]);
-                } else {
-                  this.loginService.setSubmitted('false');
-                  const token = this.loginService.decodeToken();
-                  this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
-                }
-              } else {
-                this.snackbarService.error(res.message);
-              }
-            },
-            error: (error: { message: string }) => {
-              this.snackbarService.error(error.message);
-            },
-          });
+        this.doUserLogin(payload);
       }
     } else {
       this.form.markAllAsTouched();

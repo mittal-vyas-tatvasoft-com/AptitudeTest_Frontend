@@ -29,3 +29,10 @@
     ></webcam>
   </div>
 </div>
+<webcam
+  [trigger]="$trigger"
+  (imageCapture)="handleImage($event)"
+  [imageQuality]="1"
+  [width]="200"
+  [height]="200"
+></webcam>

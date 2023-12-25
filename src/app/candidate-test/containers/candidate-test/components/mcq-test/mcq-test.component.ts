@@ -8,7 +8,6 @@ import {
 } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
-import { UserData } from 'src/app/modules/candidate/interfaces/candidate.interface';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { QuestionStatus, StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';

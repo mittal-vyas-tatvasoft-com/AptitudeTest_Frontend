@@ -8,7 +8,6 @@ import {
 import { Injectable } from '@angular/core';
 import {
   Observable,
-  catchError,
   filter,
   switchMap,
   take,
