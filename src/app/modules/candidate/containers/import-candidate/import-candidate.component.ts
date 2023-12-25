@@ -60,6 +60,7 @@ export class ImportCandidateComponent implements OnInit {
   fileName = '';
   formData = new FormData();
   noFileSet = true;
+  groupAndCollegeSelected = false;
   importSuccessFully = false;
   importCount: number;
   private searchInputValue = new Subject<string>();
@@ -109,13 +110,28 @@ export class ImportCandidateComponent implements OnInit {
       .subscribe(() => {
         this.fetchCandidate();
       });
+
+    this.form.get('groupId')?.valueChanges.subscribe((res) => {
+      if (res != null && this.form.get('collegeId')?.value != '') {
+        this.groupAndCollegeSelected = true;
+      } else {
+        this.groupAndCollegeSelected = false;
+      }
+    });
+    this.form.get('collegeId')?.valueChanges.subscribe((res) => {
+      if (res != null && this.form.get('groupId')?.value != '') {
+        this.groupAndCollegeSelected = true;
+      } else {
+        this.groupAndCollegeSelected = false;
+      }
+    });
   }
 
   createForm() {
     this.form = this.formBuilder.group({
       file: ['', Validators.required],
-      groupId: [0],
-      collegeId: [0],
+      groupId: ['', Validators.required],
+      collegeId: ['', Validators.required],
     });
     this.filterForm = this.formBuilder.group({
       collegeId: [''],
