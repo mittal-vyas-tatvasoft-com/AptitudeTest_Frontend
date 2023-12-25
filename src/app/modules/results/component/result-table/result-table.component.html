@@ -102,6 +102,16 @@
                 </mat-icon>
                 Details
               </button>
+              <button
+                mat-menu-item
+                *ngIf="row.status === 'Active'"
+                (click)="handleAdminApproveDialog(row.id, row.testId)"
+              >
+                <mat-icon>
+                  <img src="./assets/images/edit.svg" alt="Edit" />
+                </mat-icon>
+                Approve
+              </button>
             </mat-menu>
           </td>
         </ng-container>

@@ -20,3 +20,14 @@ export const FilterControls = {
     label: 'College',
   },
 };
+
+export const AdminApproveControls = {
+  remainingTimeInMinutes: {
+    value: '',
+    key: 'remainingTimeInMinutes',
+    label: 'Remaining Time In Minutes',
+    requiredErrMsg: 'Duration is required',
+    maxLimitErrMsg: 'Max allowed duration is: ',
+    maxLength: 3,
+  },
+};

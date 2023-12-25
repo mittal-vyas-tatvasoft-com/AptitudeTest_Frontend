@@ -191,3 +191,15 @@ export interface ResultExportData {
   technicalCorrectMarks4: number;
   technicalCorrectMarks5: number;
 }
+
+export interface ApproveTestParams {
+  userId: number;
+  testId: number;
+}
+
+export interface ApproveTestData {
+  userId: number;
+  testId: number;
+  remainingTimeInMinutes: number;
+  duration?: number;
+}

@@ -11,6 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { FormControlModule } from 'src/app/shared/modules/form-control/form-control.module';
 import { ResultTableComponent } from './component/result-table/result-table.component';
 import { StatisticsTableComponent } from './component/statistics-table/statistics-table.component';
+import { AdminApprovalComponent } from './component/admin-approval/admin-approval.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { StatisticsTableComponent } from './component/statistics-table/statistic
     ResultDetailsComponent,
     ResultTableComponent,
     StatisticsTableComponent,
+    AdminApprovalComponent,
   ],
   imports: [
     CommonModule,
