@@ -10,6 +10,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { ResultModel } from '../../interfaces/result.interface';
 import { DisplayedColumns } from '../../static/results.static';
 import { MatSort, Sort } from '@angular/material/sort';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { AdminApprovalComponent } from '../admin-approval/admin-approval.component';
 
 @Component({
   selector: 'app-result-table',
@@ -31,6 +33,8 @@ export class ResultTableComponent {
   @Output() pageToPage = new EventEmitter<number>();
   @Output() sortingChanged = new EventEmitter<Sort>();
   @ViewChild(MatSort) sort = new MatSort();
+
+  constructor(public dialog: MatDialog) {}
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['totalItemsCount'] || changes['pageSize']) {
@@ -94,5 +98,16 @@ export class ResultTableComponent {
     const firstEntry = this.getFirstEntryIndex();
     const lastEntry = this.getLastEntryIndex();
     return `Showing ${firstEntry} - ${lastEntry} of ${this.totalItemsCount} entries`;
+  }
+
+  handleAdminApproveDialog(userId: number, testId: number) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = ['primary-dialog'];
+    dialogConfig.autoFocus = false;
+    dialogConfig.data = { userId: userId, testId: testId };
+    this.dialog
+      .open(AdminApprovalComponent, dialogConfig)
+      .afterClosed()
+      .subscribe();
   }
 }

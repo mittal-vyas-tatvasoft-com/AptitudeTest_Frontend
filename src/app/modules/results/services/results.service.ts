@@ -4,6 +4,7 @@ import { Observable, map } from 'rxjs';
 import { DropdownItem } from '../../candidate/interfaces/candidate.interface';
 import { environment } from 'src/environments/environment';
 import {
+  ApproveTestData,
   ResultData,
   ResultDetails,
   ResultDetailsParam,
@@ -45,10 +46,16 @@ export class ResultsService {
     );
   }
 
-  approveResumeTest(userId: number, testId: number, isApprove: boolean) {
+  approveResumeTest(data: ApproveTestData) {
     return this.http.put<ResponseModel<string>>(
-      `${environment.baseURL}Results/ApproveResumeTest/${userId}/${testId}/${isApprove}`,
-      {}
+      `${environment.baseURL}Results/ApproveResumeTest`,
+      data
+    );
+  }
+
+  getApproveTestDetails(userId: number, testId: number) {
+    return this.http.get<ResponseModel<ApproveTestData>>(
+      `${environment.baseURL}Results/GetApproveTestData/${userId}/${testId}`
     );
   }
 
