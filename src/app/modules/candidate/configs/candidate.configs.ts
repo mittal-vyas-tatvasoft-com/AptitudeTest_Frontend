@@ -390,17 +390,19 @@ export const importCandidateFormConfig = {
     value: '',
     key: 'collegeId',
     label: 'College',
-    required: false,
+    required: true,
     inputType: 'text',
     displayIcon: false,
+    requiredErrMsg: 'College is required',
   },
   groupId: {
     value: '',
     key: 'groupId',
     label: 'Group Name',
-    required: false,
+    required: true,
     inputType: 'text',
     displayIcon: false,
+    requiredErrMsg: 'Group is required',
   },
 };
 

@@ -84,7 +84,7 @@
                 mat-flat-button
                 color="primary"
                 (click)="handleImportCandidate()"
-                [disabled]="noFileSet"
+                [disabled]="noFileSet || !groupAndCollegeSelected"
                 matTooltip="Import Candidates"
               >
                 Import
