@@ -28,9 +28,9 @@ export class CharactersOnlyDirective {
     const allowedKeysWithCtrl = ['a', 'c', 'v', 'x'];
 
     if (
-      this.navigationKeys.indexOf(e.key) > -1                        // Allow: navigation keys: backspace, delete, arrows etc.
-      || (e.ctrlKey === true && allowedKeysWithCtrl.includes(e.key)) // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
-      || (e.metaKey === true && allowedKeysWithCtrl.includes(e.key)) // Allow: Cmd+A, Cmd+C, Cmd+V, Cmd+X
+      this.navigationKeys.indexOf(e.key) > -1 || // Allow: navigation keys: backspace, delete, arrows etc.
+      (e.ctrlKey === true && allowedKeysWithCtrl.includes(e.key)) || // Allow: Ctrl+A, Ctrl+C, Ctrl+V, Ctrl+X
+      (e.metaKey === true && allowedKeysWithCtrl.includes(e.key)) // Allow: Cmd+A, Cmd+C, Cmd+V, Cmd+X
     ) {
       // let it happen, don't do anything
       return;
@@ -43,7 +43,6 @@ export class CharactersOnlyDirective {
 
   @HostListener('paste', ['$event'])
   onPaste(event: ClipboardEvent) {
-    event.preventDefault();
     if (event.clipboardData) {
       const pastedInput: string = event.clipboardData
         .getData('text/plain')
@@ -54,7 +53,6 @@ export class CharactersOnlyDirective {
 
   @HostListener('drop', ['$event'])
   onDrop(event: DragEvent) {
-    event.preventDefault();
     if (event.dataTransfer) {
       const textData = event.dataTransfer
         .getData('text')

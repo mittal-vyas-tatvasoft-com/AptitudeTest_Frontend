@@ -6,33 +6,32 @@
       I am Ready to Begin
     </button>
     <div class="float-container" *ngIf="this.testExists">
-      <b class="basic-detail">Basic Details of Test</b>
-      <table class="test-details">
-        <tr>
-          <td class="detail">Test Name:</td>
-          <td class="detail-value">{{ testName }}</td>
-        </tr>
-        <tr>
-          <td class="detail">Basic Points:</td>
-          <td class="detail-value">{{ basicPoints }}</td>
-        </tr>
-        <tr>
-          <td class="detail">Test Duration:</td>
-          <td class="detail-value">{{ testDurationInMinutes }}</td>
-        </tr>
-        <tr>
-          <td class="detail">Test Date:</td>
-          <td class="detail-value">{{ testDate }}</td>
-        </tr>
-        <tr>
-          <td class="detail">Start Time:</td>
-          <td class="detail-value">{{ startTime }}</td>
-        </tr>
-        <tr>
-          <td class="detail">Negative Marks:</td>
-          <td class="detail-value">{{ negativeMarkingPoints }}</td>
-        </tr>
-      </table>
+      <div class="card">
+        <ul class="list-group list-group-flush"></ul>
+        <div class="list">
+          <ul class="stylel">
+            <li class="list-group-item">
+              Test Name: <b class="bold">{{ testName }}</b>
+            </li>
+            <li class="list-group-item">
+              Basic Points: <b class="bold">{{ basicPoints }} Marks</b>
+            </li>
+            <li class="list-group-item">
+              Test Duration:
+              <b class="bold">{{ testDurationInMinutes }} Minutes</b>
+            </li>
+            <li class="list-group-item">
+              Test Date: <b class="bold">{{ testDate }}</b>
+            </li>
+            <li class="list-group-item">
+              Start Time: <b class="bold">{{ startTime }}</b>
+            </li>
+            <li class="list-group-item">
+              Negative Marks: <b class="bold">{{ negativeMarkingPoints }}%</b>
+            </li>
+          </ul>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -34,6 +34,9 @@ export class ValidationService {
         if (formControl.errors['min']) {
           return formControlModel.minErrMsg;
         }
+        if (formControl.errors['characterOnly']) {
+          return formControlModel.characterOnlyMsg;
+        }
       }
     }
     return null;

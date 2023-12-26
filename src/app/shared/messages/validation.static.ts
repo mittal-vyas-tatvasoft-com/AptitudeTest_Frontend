@@ -7,9 +7,7 @@ export const validations = {
     mobileNumberREGEX: new RegExp(/^[0-9]{10}$/),
     pinCodeREGEX: new RegExp(/^[1-9]{1}[0-9]{2}[0-9]{3}$/),
     whitespaceREGEX: new RegExp(/^(\s+\S+\s*)*(?!\s).*$/),
-    characterWithSpaceREGEX: new RegExp(
-      /^[^ ][A-Za-z0-9 _]*[A-Za-z0-9][A-Za-z0-9 _]*$/
-    ),
+    characterWithSpaceREGEX: new RegExp(/^[a-zA-Z]+$/),
     fractionREGEX: new RegExp(/^[0-9]?[0-9]?(\.[0-9][0-9]?)?$/),
   },
 };

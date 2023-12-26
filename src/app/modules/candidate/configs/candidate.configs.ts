@@ -11,6 +11,7 @@ export const candidateControl = {
     displayIcon: false,
     maxLengthErrMsg: 'Max 30 characters allowed',
     patternErrMsg: 'White space is not applicable',
+    characterOnlyMsg: 'Only characters are allowed',
   },
   fatherName: {
     value: '',
@@ -32,6 +33,7 @@ export const candidateControl = {
     displayIcon: false,
     maxLengthErrMsg: 'Max 30 characters allowed',
     patternErrMsg: 'White space is not applicable',
+    characterOnlyMsg: 'Only characters are allowed',
   },
   email: {
     value: '',
