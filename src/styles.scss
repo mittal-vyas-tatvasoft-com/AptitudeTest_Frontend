@@ -341,6 +341,13 @@
   }
 }
 
+.form-action-list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
 // Form group
 .form-group {
   .form-group-btn {
