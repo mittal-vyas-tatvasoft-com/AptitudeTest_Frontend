@@ -6,7 +6,14 @@ import {
   SimpleChanges,
 } from '@angular/core';
 
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {
+  AbstractControl,
+  FormBuilder,
+  FormGroup,
+  ValidationErrors,
+  ValidatorFn,
+  Validators,
+} from '@angular/forms';
 import * as moment from 'moment';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { validations } from 'src/app/shared/messages/validation.static';
@@ -89,7 +96,13 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
         [
           Validators.required,
           Validators.maxLength(30),
-          Validators.pattern(validations.common.whitespaceREGEX),
+          regexValidator(
+            new RegExp(validations.common.characterWithSpaceREGEX),
+            { characterOnly: true }
+          ),
+          regexValidator(new RegExp(validations.common.whitespaceREGEX), {
+            pattern: true,
+          }),
         ],
       ],
       lastName: [
@@ -97,13 +110,21 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
         [
           Validators.required,
           Validators.maxLength(30),
-          Validators.pattern(validations.common.whitespaceREGEX),
+          regexValidator(
+            new RegExp(validations.common.characterWithSpaceREGEX),
+            { characterOnly: true }
+          ),
+          regexValidator(new RegExp(validations.common.whitespaceREGEX), {
+            pattern: true,
+          }),
         ],
       ],
       fatherName: [
         '',
         [
-          Validators.pattern(validations.common.whitespaceREGEX),
+          regexValidator(new RegExp(validations.common.whitespaceREGEX), {
+            pattern: true,
+          }),
           Validators.maxLength(30),
         ],
       ],
@@ -267,4 +288,22 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       },
     });
   }
+}
+
+export function regexValidator(
+  regex: RegExp,
+  error: ValidationErrors
+): ValidatorFn {
+  return (control: AbstractControl): { [key: string]: any } | null => {
+    // Check if the control value is falsy (undefined, null, empty string, etc.)
+    if (!control.value) {
+      return null; // Return null if the value is falsy
+    }
+
+    // Test the control value against the regular expression
+    const valid = regex.test(control.value);
+
+    // Return the error object if the validation fails, otherwise, return null
+    return valid ? null : error;
+  };
 }

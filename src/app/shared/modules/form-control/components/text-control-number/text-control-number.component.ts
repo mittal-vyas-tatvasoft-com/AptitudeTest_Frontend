@@ -9,7 +9,7 @@ import { ValidationService } from '../../services/validation.service';
   styleUrls: ['./text-control-number.component.scss'],
 })
 export class TextControlNumberComponent {
-  @Input() form!: FormGroup;
+  @Input() form: FormGroup;
   @Input() formControlModel!: FormControlModel;
   @Input() hint: string;
   constructor(public validationService: ValidationService) {}

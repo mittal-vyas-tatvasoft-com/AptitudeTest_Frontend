@@ -71,7 +71,7 @@ export class DashboardComponent implements OnInit {
   }
 
   addPad(digit: number) {
-    return digit > 9 ? digit : `0${digit}`
+    return digit > 9 ? digit : `0${digit}`;
   }
 
   getTestStartDate(date: string) {
@@ -85,8 +85,11 @@ export class DashboardComponent implements OnInit {
   getTestStartTime(date: string) {
     const testDate = new Date(date);
     const hours = testDate.getHours();
+    const amPm = hours >= 12 ? 'PM' : 'AM';
     const minutes = testDate.getMinutes();
-    const formattedTestTime = `${this.addPad(hours)}:${this.addPad(minutes)}`;
+    const formattedTestTime = `${this.addPad(hours)}:${this.addPad(
+      minutes
+    )}  ${amPm}`;
     return formattedTestTime;
   }
 }

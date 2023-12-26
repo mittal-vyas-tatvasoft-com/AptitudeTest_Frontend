@@ -13,4 +13,5 @@ export interface FormControlModel {
   maxLength?: number;
   maxErrMsg?: string;
   minErrMsg?: string;
+  characterOnlyMsg?: string;
 }
