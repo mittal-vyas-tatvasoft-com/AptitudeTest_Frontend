@@ -13,6 +13,7 @@ import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime } from 'rxjs';
+import { DropdownItem } from 'src/app/modules/candidate/interfaces/candidate.interface';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 import { validations } from 'src/app/shared/messages/validation.static';
@@ -71,7 +72,7 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   markList: string[] = ['1', '2', '3', '4', '5'];
   selectedOption = '10';
   getMinTime: string;
-
+  defaultGroupId: number;
   displayedColumns: TableColumn<TestCandidatesModel>[] = [
     { columnDef: 'candidateName', header: 'Candidate Name' },
     { columnDef: 'collegeName', header: 'College Name' },
@@ -116,7 +117,6 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.createForms();
-
     this.testGroupForm.get('groupId')?.valueChanges.subscribe((res) => {
       if (res != null) {
         this.fetchTestCandidates();
@@ -162,7 +162,6 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       logoutWhenTimeExpires: [false],
       questignsMenu: [false],
     });
-
     this.testGroupForm = this.formBuilder.group({
       groupId: ['', Validators.required],
     });
@@ -174,6 +173,14 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
+    this.candidateService.getGroupsForDropDown().subscribe((groups) => {
+      groups.forEach((group) => {
+        if (group.isDefault) {
+          this.defaultGroupId = group.id;
+          this.testGroupForm.get('groupId')?.setValue(group.id);
+        }
+      });
+    });
     this.getDropDownData();
     this.activatedRoute.queryParams.subscribe((res) => {
       if (res['id']) {
@@ -339,7 +346,6 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
   }
 
   getDropDownData() {
-    this.groups.push({ value: 'Select', id: '' });
     this.colleges.push({ value: 'Select', id: '' });
     this.candidateService.getGroupsForDropDown().subscribe((groups) => {
       groups.forEach((group) => {
@@ -349,9 +355,12 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
         }
       });
       groups.forEach((element) => {
-        this.groups.push({ value: element.name, id: element.id });
+        if (!element.isDefault) {
+          this.groups.push({ value: element.name, id: element.id });
+        }
       });
     });
+
     this.candidateService.getCollegesForDropDown().subscribe((colleges) => {
       colleges.forEach((element) => {
         this.colleges.push({ value: element.name.toString(), id: element.id });
