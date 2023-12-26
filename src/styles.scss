@@ -39,11 +39,13 @@
   color: $primary500;
   text-decoration: none;
   transition: all 0.2s ease-in-out;
+
   &:hover,
   &:active,
   &:focus {
     color: $primary600;
   }
+
   &::before {
     content: "";
     position: absolute;
@@ -54,6 +56,7 @@
     transition: all 0.2s ease-in-out;
     transition-delay: 0.1s;
   }
+
   &:hover::before {
     left: 0;
     right: 0;
@@ -169,8 +172,7 @@
               vertical-align: middle;
               width: 16px;
               height: 16px;
-              background: url("./assets/images/chevron-down-grey.svg") no-repeat
-                center center;
+              background: url("./assets/images/chevron-down-grey.svg") no-repeat center center;
               background-size: 16px 16px;
               z-index: 0;
               pointer-events: none;
@@ -186,7 +188,7 @@
           .mat-expansion-panel-body {
             padding: 0 0 5px;
 
-            ul li > .nav-item {
+            ul li>.nav-item {
               padding: 6.5px 20px 6.5px 28px;
               font-size: 14px;
               line-height: 20px;
@@ -230,10 +232,12 @@
 .wrapper {
   min-height: 100dvh;
   background: #f7f8fd;
+
   .layout-sidenav-container.mat-drawer-container {
     padding: 80px 0 0;
     background: transparent;
     min-height: inherit;
+
     .mat-drawer {
       position: fixed;
       top: 80px;
@@ -303,15 +307,19 @@
       margin-top: 6px;
       margin-bottom: 6px;
     }
-    .mat-mdc-button-base + .mat-mdc-button-base {
+
+    .mat-mdc-button-base+.mat-mdc-button-base {
       margin: 6px 0 6px 12px;
     }
+
     .btn-with-icon .mat-icon {
       width: 20px;
       height: 20px;
     }
+
     .btn-stroked-default {
       padding: 12px;
+
       .mat-icon {
         width: 20px;
         height: 20px;
@@ -320,11 +328,13 @@
     }
   }
 }
+
 // Form Block Card
 .form-block {
   &.mat-mdc-card.mdc-card .mat-mdc-card-content {
     padding: 12px;
   }
+
   .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
     line-height: 12px;
     height: 12px;
@@ -340,12 +350,14 @@
     border-left: 0;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
+
     .mat-icon {
       width: 20px;
       height: 20px;
       margin: 0;
     }
   }
+
   .mdc-notched-outline__trailing {
     border-radius: 0 !important;
   }
@@ -354,15 +366,18 @@
 // Card header
 .card-header {
   padding: 12px;
+
   .card-header-title {
     font-size: 20px;
     line-height: 24px;
     font-weight: 500;
   }
+
   .card-header-btn {
     padding: 12px;
     padding: 12px;
     margin-left: 12px;
+
     .mat-icon {
       width: 20px;
       height: 20px;
@@ -377,6 +392,7 @@
   border-radius: 6px;
   margin: 0 12px;
   padding: 12px 12px 0;
+
   .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
     line-height: 12px;
   }
@@ -396,8 +412,10 @@
   background: #eef0f6;
   padding: 15px 12px;
   margin-bottom: 12px;
+
   .mat-mdc-slide-toggle {
     display: block;
+
     .mdc-form-field {
       display: flex;
       align-items: center;
@@ -411,12 +429,15 @@
   border-radius: 6px;
   background: #f7f8fd;
   overflow: hidden;
+
   .mark-distribution-table {
     min-height: 100%;
     overflow: auto;
+
     table {
       width: 100%;
       margin-bottom: 8px;
+
       thead {
         th {
           font-size: 14px;
@@ -430,6 +451,7 @@
           white-space: nowrap;
         }
       }
+
       tbody {
         td {
           font-size: 14px;
@@ -440,6 +462,7 @@
           padding: 6px 10px;
           vertical-align: middle;
           text-align: left;
+
           .mat-mdc-form-field {
             .mat-mdc-form-field-subscript-wrapper {
               display: none;
@@ -449,6 +472,7 @@
       }
     }
   }
+
   .question-distribution {
     padding: 8px 14px;
     border-left: 1px solid #d9ddf0;
@@ -456,6 +480,7 @@
     min-height: 100%;
     display: flex;
     flex-direction: column;
+
     .question-mark {
       display: flex;
       align-items: center;
@@ -466,6 +491,7 @@
       line-height: 24px;
       text-transform: capitalize;
       padding: 4px 0 2px;
+
       span {
         color: $color51545F;
         font-size: 14px;
@@ -487,8 +513,10 @@
     line-height: 30px;
     color: $color51545F;
   }
+
   .title-action {
     text-align: right;
+
     .question-marks {
       display: inline-flex;
       align-items: center;
@@ -499,6 +527,7 @@
       color: #667387;
       padding-top: 14px;
       margin-right: 12px;
+
       span {
         margin-left: 4px;
         font-weight: 600;
@@ -506,23 +535,28 @@
       }
     }
   }
+
   .imported-question-listing {
     margin-top: 12px;
+
     .imported-question {
       display: block;
       border-radius: 8px;
       border: 1px solid #d8dfe9;
       background: #fff;
       margin-bottom: 10px;
+
       .card-header {
         display: flex;
         align-items: center;
         justify-content: space-between;
         padding: 16px 16px 12px;
+
         .left {
           display: inline-flex;
           align-items: center;
           flex-wrap: wrap;
+
           .title {
             font-size: 22px;
             font-style: normal;
@@ -531,6 +565,7 @@
             color: $primary500;
             margin-right: 12px;
           }
+
           .question-marks {
             display: inline-flex;
             align-items: center;
@@ -540,6 +575,7 @@
             line-height: 24px;
             margin-right: 12px;
             color: #3f444c;
+
             span {
               font-weight: 400;
               margin-left: 4px;
@@ -547,18 +583,22 @@
             }
           }
         }
+
         .right {
           display: flex;
           align-items: center;
+
           .mat-mdc-fab.mdc-fab.btn-sm {
             width: 28px;
             height: 28px;
             padding: 6px;
             margin-left: 4px;
+
             .mat-icon {
               width: 20px;
               height: 20px;
             }
+
             .mat-mdc-button-touch-target {
               width: 28px;
               height: 28px;
@@ -566,10 +606,13 @@
           }
         }
       }
+
       .card-body {
         padding: 0 16px 8px;
+
         .questions-meta {
           margin-bottom: 8px;
+
           .title {
             color: #838898;
             font-size: 12px;
@@ -588,15 +631,19 @@
 // Weight distribution
 .question-weightage-chips {
   margin: -4px;
+
   .weightage-chip.mat-mdc-chip {
     min-height: 28px;
     margin: 4px;
+
     &.mat-mdc-standard-chip:not(.mdc-evolution-chip--disabled) {
       border-radius: 4px;
       background: #f7f8fd;
     }
+
     .mat-mdc-chip-action {
       padding: 0 8px;
+
       .mdc-evolution-chip__text-label {
         font-family: "Poppins", sans-serif;
         color: #838898;
@@ -605,6 +652,7 @@
         line-height: 16px;
         letter-spacing: 0.12px;
         text-transform: capitalize;
+
         .mark {
           color: #313544;
           font-weight: 600;
@@ -638,9 +686,11 @@
     text-overflow: ellipsis;
     font-weight: 500;
   }
+
   .mat-mdc-form-field .mat-mdc-form-field-subscript-wrapper {
     line-height: 10px;
   }
+
   .hr-line {
     margin: 0 -12px 16px;
   }
@@ -651,46 +701,56 @@
   color: $color51545F;
   min-height: 100%;
   display: flex;
+
   .group-card-header {
     margin-bottom: 12px;
+
     .group-card-heading {
       font-size: 18px;
       line-height: 24px;
       font-weight: 400;
+
       b {
         font-weight: 600;
       }
     }
   }
+
   .mat-mdc-card-content {
     padding: 12px !important;
     min-height: 100%;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
+
     .btn-small {
       padding: 0;
       height: 24px;
       width: 24px;
       display: block;
       background-color: #f6f7fc;
+
       .mat-mdc-button-touch-target {
         width: 24px;
         height: 24px;
       }
     }
+
     .btn-sm {
       padding: 5px 11px;
       border-radius: 20px;
       font-size: 13px;
       line-height: 16px;
+
       .mat-mdc-button-touch-target {
         height: 28px;
       }
     }
   }
+
   .group-card-listing {
     margin-bottom: 12px;
+
     li {
       font-size: 13px;
       line-height: 18px;
@@ -698,6 +758,7 @@
       font-weight: 400;
       position: relative;
       padding-left: 20px;
+
       &::before {
         content: "";
         position: absolute;
@@ -708,9 +769,11 @@
         border-radius: 4px;
         background-color: #838898;
       }
-      + li {
+
+      +li {
         margin-top: 6px;
       }
+
       b {
         font-weight: 600;
         margin-left: 4px;
@@ -718,8 +781,10 @@
       }
     }
   }
+
   .group-card-footer {
     margin-top: auto;
+
     .default-group {
       color: #46a746;
       font-size: 13px;
@@ -735,6 +800,7 @@
   dropzone {
     .dropzone.dz-wrapper {
       min-height: 80px;
+
       .dz-message {
         margin: 0;
         display: block !important;
@@ -747,24 +813,27 @@
         position: absolute;
         height: 100%;
         max-width: 100%;
+
         .dz-text {
           display: flex;
           align-items: center;
           justify-content: center;
+
           &:before {
             content: "";
             width: 30px;
             height: 30px;
-            background: url(assets/images/excel-icon.svg) center center
-              no-repeat;
+            background: url(assets/images/excel-icon.svg) center center no-repeat;
             display: block;
             margin-right: 10px;
           }
         }
+
         &:hover {
           border-style: solid;
         }
       }
+
       .dz-preview {
         display: none;
       }
@@ -774,7 +843,7 @@
 
 // Question Answer cards
 .qa-card-listing {
-  li + li {
+  li+li {
     margin-top: 12px;
   }
 }
@@ -784,15 +853,18 @@
   background: #fff;
   box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.05);
   padding: 12px 12px 14px 12px;
+
   .qa-head {
     display: flex;
     align-items: flex-start;
     padding-bottom: 12px;
+
     .qa-left {
       display: flex;
       align-items: flex-start;
       flex-grow: 1;
       margin-right: 20px;
+
       .qa-sequence {
         font-size: 16px;
         font-style: normal;
@@ -803,6 +875,7 @@
         vertical-align: middle;
         margin-right: 6px;
       }
+
       .question-text {
         font-size: 15px;
         font-style: normal;
@@ -811,6 +884,7 @@
         color: $color51545F;
       }
     }
+
     .qa-right {
       display: flex;
       align-items: center;
@@ -818,14 +892,17 @@
       flex-shrink: 0;
       margin-top: 2px;
       padding-left: 10px;
+
       .mat-mdc-chip {
         margin-right: 8px;
+
         &.question-mark {
           .mat-mdc-chip-action {
             padding: 0 6px;
           }
         }
       }
+
       .mat-mdc-mini-fab.btn-sm {
         background: #f6f7fc;
         border-radius: 50%;
@@ -833,6 +910,7 @@
         width: 24px;
         height: 24px;
         padding: 0;
+
         .mat-icon {
           width: 24px;
           height: 24px;
@@ -840,34 +918,41 @@
       }
     }
   }
+
   .qa-body {
     padding: 0 24px;
+
     .mat-mdc-chip-listbox.mcq-chips-wrapper {
       pointer-events: none;
+
       .mdc-evolution-chip-set__chips {
         margin-left: 0;
       }
+
       .mat-mdc-chip.mat-mdc-chip-option:not(.mdc-evolution-chip--disabled) {
         border-radius: 15px;
         border: 1px solid #e5e7e9;
         background: $white;
         min-height: 30px;
         margin: 4px 24px 4px 0;
+
         .mat-mdc-chip-action {
           padding: 0 4px;
           flex-direction: row-reverse;
+
           .mat-mdc-chip-graphic {
             .mdc-evolution-chip__checkmark-svg {
               path {
                 display: none;
               }
-              background: url("./assets/images/success-check.svg") center center
-                no-repeat;
+
+              background: url("./assets/images/success-check.svg") center center no-repeat;
               background-size: 22px 22px;
               width: 22px;
               height: 22px;
             }
           }
+
           .mat-mdc-chip-action-label {
             color: $color51545F;
             font-size: 14px;
@@ -875,6 +960,7 @@
             font-weight: 600;
             line-height: 16px;
             letter-spacing: 0.2px;
+
             .mcq-option {
               display: inline-flex;
               align-items: center;
@@ -890,10 +976,12 @@
               line-height: 16px;
               letter-spacing: 0.2px;
               margin-right: 8px;
+
               &.bg-success {
                 background: #46a746;
                 color: #fff;
               }
+
               &.bg-error {
                 background: #dd4949;
                 color: #fff;
@@ -901,22 +989,27 @@
             }
           }
         }
+
         &:hover {
           .mat-mdc-chip-focus-overlay {
             opacity: 0;
           }
+
           background: $white;
         }
       }
+
       &.image-options {
         .mat-mdc-chip-option {
           .mat-mdc-chip-action {
             display: inline-flex;
             align-items: flex-start;
+
             .mat-mdc-chip-action-label {
               display: inline-flex;
               align-items: flex-start;
               padding: 4px 0;
+
               .option-img {
                 max-width: 100%;
                 padding: 14px;
@@ -948,6 +1041,7 @@
   border: 1px solid #f1f1f1;
   background: #f7f8fd;
   margin-bottom: 20px;
+
   .answer-option {
     display: inline-flex;
     align-items: center;
@@ -970,56 +1064,26 @@
     margin: 0 12px;
   }
 
-  .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:checked
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:indeterminate
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox
-    .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:focus:checked
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:focus:indeterminate
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox:not(:disabled):active
-    .mdc-checkbox__native-control:enabled:checked
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox:hover
-    .mdc-checkbox__native-control:enabled:checked
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox:hover
-    .mdc-checkbox__native-control:enabled:indeterminate
-    ~ .mdc-checkbox__background,
-  .mdc-checkbox:hover
-    .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
-    ~ .mdc-checkbox__background {
+  .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+  .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,
+  .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate="true"]:enabled~.mdc-checkbox__background,
+  .mdc-checkbox .mdc-checkbox__native-control:enabled:focus:checked~.mdc-checkbox__background,
+  .mdc-checkbox .mdc-checkbox__native-control:enabled:focus:indeterminate~.mdc-checkbox__background,
+  .mdc-checkbox:not(:disabled):active .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+  .mdc-checkbox:hover .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
+  .mdc-checkbox:hover .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,
+  .mdc-checkbox:hover .mdc-checkbox__native-control[data-indeterminate="true"]:enabled~.mdc-checkbox__background {
     border-color: #46a746;
     background-color: #46a746;
   }
 
-  .mdc-checkbox
-    .mdc-checkbox__native-control:focus:checked
-    ~ .mdc-checkbox__ripple,
-  .mdc-checkbox .mdc-checkbox__native-control:focus ~ .mdc-checkbox__ripple {
+  .mdc-checkbox .mdc-checkbox__native-control:focus:checked~.mdc-checkbox__ripple,
+  .mdc-checkbox .mdc-checkbox__native-control:focus~.mdc-checkbox__ripple {
     background-color: #46a746;
   }
 
-  .mat-mdc-checkbox
-    .mdc-checkbox:hover
-    .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
-      [data-indeterminate="true"]
-    )
-    ~ .mdc-checkbox__background,
-  .mat-mdc-checkbox
-    .mdc-checkbox
-    .mdc-checkbox__native-control:enabled:focus:focus:not(:checked):not(
-      :indeterminate
-    )
-    ~ .mdc-checkbox__background {
+  .mat-mdc-checkbox .mdc-checkbox:hover .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background,
+  .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:focus:focus:not(:checked):not( :indeterminate)~.mdc-checkbox__background {
     border-color: #46a746;
   }
 
@@ -1039,10 +1103,12 @@
     min-height: 100px;
     position: relative;
     transition: all 0.2s ease-in-out;
+
     img {
       display: block;
       max-width: 100%;
     }
+
     .btn-remove {
       position: absolute;
       top: -1px;
@@ -1057,14 +1123,17 @@
       border: 1px solid #b8bfcb;
       background: $primary500;
       transition: all 0.2s ease-in-out;
+
       .mdc-fab__ripple {
         border-radius: 4px;
       }
+
       .mat-icon {
         width: 26px;
         height: 26px;
       }
     }
+
     &:hover {
       .btn-remove {
         opacity: 1;
@@ -1076,14 +1145,17 @@
   .inline-dropzone {
     flex-grow: 1;
     margin: 0 12px;
+
     .dz-wrapper.dropzone {
       min-height: 100px;
       overflow: hidden;
+
       .dz-message {
         border-radius: 6px;
         border: 1px dashed #bfc6c6;
         background: #fff;
         overflow: hidden;
+
         .dz-text {
           display: block;
           text-align: center;
@@ -1093,15 +1165,16 @@
           font-family: "Poppins", sans-serif;
           color: #b4b8c5;
           padding: 8px 6px;
+
           .link-primary {
             font-size: 12px;
             line-height: 20px;
             padding: 0;
           }
+
           &::before {
             margin: 0 auto 4px;
-            background: url("./assets/images/add-photo-light.svg") no-repeat
-              center center;
+            background: url("./assets/images/add-photo-light.svg") no-repeat center center;
             background-size: 30px 30px;
           }
         }
@@ -1122,6 +1195,7 @@
 .ask-question-box {
   margin-bottom: 30px;
   min-height: calc(100% - 30px);
+
   .test-header {
     display: flex;
     padding: 12px;
@@ -1130,12 +1204,14 @@
     border-radius: 8px;
     background: #eef0f6;
     margin-bottom: 30px;
+
     .data-value {
       font-size: 14px;
       line-height: 24px;
       font-weight: 400;
       color: $color51545F;
       text-transform: capitalize;
+
       b {
         display: block;
         font-size: 18px;
@@ -1143,22 +1219,27 @@
         font-weight: 600;
       }
     }
+
     .right {
       flex-shrink: 0;
+
       .data-value {
         font-size: 13px;
         text-align: right;
+
         b {
           letter-spacing: 0.54px;
         }
       }
     }
   }
+
   .test-body {
     text-align: center;
     max-width: 862px;
     margin: 0 auto;
     padding: 0 12px;
+
     .question-label {
       font-size: 12px;
       line-height: 18px;
@@ -1168,6 +1249,7 @@
       text-transform: uppercase;
       margin-bottom: 16px;
     }
+
     .question {
       font-size: 20px;
       font-weight: 400;
@@ -1175,6 +1257,7 @@
       color: $color51545F;
       margin-bottom: 30px;
     }
+
     .qa-answer-type-text-option {
       display: flex;
       align-items: center;
@@ -1185,6 +1268,7 @@
       margin-bottom: 12px;
       transition: all 0.2s ease-in-out;
       cursor: pointer;
+
       .answer-option {
         display: inline-flex;
         align-items: center;
@@ -1203,6 +1287,7 @@
         border: 1px solid #cdd7e8;
         flex-shrink: 0;
       }
+
       .answer-text {
         font-size: 16px;
         font-weight: 600;
@@ -1212,6 +1297,7 @@
         flex-grow: 1;
         margin: 0 12px;
         text-align: left;
+
         img {
           display: block;
           height: 60px;
@@ -1219,19 +1305,23 @@
           max-width: 100%;
         }
       }
+
       .mat-mdc-checkbox {
         .mdc-checkbox {
           width: 26px;
           height: 26px;
+
           .mdc-checkbox__native-control {
             width: 48px;
             height: 48px;
           }
+
           .mdc-checkbox__background {
             width: 26px;
             height: 26px;
             border-radius: 50%;
           }
+
           .mdc-checkbox__ripple,
           .mat-mdc-checkbox-ripple,
           .mdc-checkbox__native-control {
@@ -1242,19 +1332,23 @@
           }
         }
       }
+
       &:hover {
         background: rgba(45, 97, 172, 0.06);
       }
+
       &.selected {
         border-color: $primary500;
         background: #f7f8fd;
       }
     }
+
     .action-footer {
       display: flex;
       align-items: center;
       justify-content: space-between;
       padding: 10px 0 26px;
+
       .mat-mdc-button-base {
         margin: 8px 0;
       }
@@ -1267,12 +1361,15 @@
   max-width: 274px;
   margin-bottom: 30px;
   min-height: calc(100% - 30px);
+
   .mat-mdc-card-content {
     padding: 14px 24px;
+
     .indication-listing {
       display: flex;
       flex-direction: column;
       margin-bottom: 16px;
+
       .indication {
         display: block;
         font-size: 13px;
@@ -1280,6 +1377,7 @@
         font-weight: 400;
         color: #667387;
         position: relative;
+
         b {
           display: inline-block;
           vertical-align: middle;
@@ -1287,6 +1385,7 @@
           font-weight: 600;
           color: #3f444c;
         }
+
         &.answered::before {
           content: "";
           display: inline-block;
@@ -1299,6 +1398,7 @@
           border: 1px solid #c3c9e5;
           background: #f7f8fd;
         }
+
         &.not-answered::before {
           content: "";
           display: inline-block;
@@ -1313,14 +1413,17 @@
         }
       }
     }
+
     .mcq-listing {
       margin-bottom: 32px;
       margin: 0 -12px;
+
       li {
         display: inline-block;
         vertical-align: top;
         text-align: center;
       }
+
       .mat-mdc-button-base.mdc-fab--mini {
         padding: 2px;
         width: 26px;
@@ -1333,24 +1436,29 @@
         line-height: 18px;
         font-weight: 500;
         margin: 8px 12px;
+
         &.answered {
           color: $primary500;
           border: 1px solid #c3c9e5;
           background: #f7f8fd;
+
           &:hover {
             border-color: $primary500;
             background: #e7eafb;
           }
         }
+
         &.not-answered {
           color: $white;
           border: 1px solid #e19f51;
           background: #e19f51;
+
           &:hover {
             border-color: #ab6f28;
             background: #d8923f;
           }
         }
+
         &[disabled="true"] {
           color: #919ec9;
           background: $white;
@@ -1393,6 +1501,7 @@
       bottom: 0;
     }
   }
+
   .mark-distribution-block {
     .mark-distribution-table {
       table {
@@ -1403,6 +1512,7 @@
         }
       }
     }
+
     .question-distribution {
       min-width: 210px;
     }
@@ -1419,6 +1529,7 @@
     }
   }
 }
+
 @media (max-width: 991px) {
   .mark-distribution-block {
     .question-distribution {
@@ -1441,14 +1552,17 @@
         font-size: 18px;
         line-height: 24px;
       }
+
       .qa-answer-type-text-option {
         padding: 6px 12px;
       }
+
       .action-footer {
         padding: 10px 0;
       }
     }
   }
+
   .mcq-box.mat-mdc-card.mdc-card {
     max-width: 100%;
   }
@@ -1473,11 +1587,13 @@
 
   .page-header {
     margin-bottom: 18px;
+
     .title-wrap {
       .title {
         font-size: 20px;
         line-height: 26px;
       }
+
       .page-icon.mat-icon {
         width: 38px;
         height: 38px;
@@ -1497,6 +1613,7 @@
   .back-bg-card {
     margin-left: -12px;
     margin-right: -12px;
+
     .remove-hint.mat-mdc-form-field {
       .mat-mdc-form-field-subscript-wrapper {
         display: block;
@@ -1536,20 +1653,25 @@
       flex-direction: column-reverse;
       align-items: stretch;
       padding-bottom: 8px;
+
       .qa-left {
         margin-right: 0;
       }
+
       .qa-right {
         margin-bottom: 10px;
+
         .mat-mdc-mini-fab.btn-sm {
           margin-left: auto;
         }
       }
+
       &.no-wrap-md {
         flex-direction: row;
         align-items: flex-start;
       }
     }
+
     .qa-body {
       .mat-mdc-chip-listbox.mcq-chips-wrapper {
         .mat-mdc-chip.mat-mdc-chip-option:not(.mdc-evolution-chip--disabled) {
@@ -1572,11 +1694,14 @@
       padding: 64px 0 0;
     }
   }
+
   .action-list .btn-with-icon {
     padding: 12px;
+
     .mat-icon {
       margin: 0;
     }
+
     .mdc-button__label {
       display: none;
     }
@@ -1587,18 +1712,22 @@
       font-size: 18px;
     }
   }
+
   .mark-distribution-block {
     .question-distribution {
       flex-direction: column;
+
       div {
         margin-bottom: 10px;
       }
     }
   }
+
   .mat-mdc-dialog-content.dialog-body {
     .mark-distribution-block {
       .question-distribution {
         flex-direction: column;
+
         div {
           margin-bottom: 10px;
         }
@@ -1610,11 +1739,14 @@
     .test-header {
       padding: 16px 12px;
       flex-direction: column;
+
       .data-value {
         text-align: center;
       }
+
       .right {
         margin-top: 10px;
+
         .data-value {
           text-align: center;
         }
@@ -1630,10 +1762,12 @@
     flex: 0 0 auto;
     width: 20%;
   }
+
   .w-xl-40 {
     flex: 0 0 auto;
     width: 40%;
   }
+
   .container-900 {
     max-width: 900px;
     margin: 0 auto;
@@ -1660,13 +1794,38 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
   .msg-block-inner {
     max-width: 722px;
     text-align: center;
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 550px;
+      justify-content: center;
+      margin-bottom: 40px;
+      li {
+        margin: 5px;
+        border-radius: 4px;
+        padding: 6px 8px;
+        background: #FFF;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+        font-size: 13px;
+        line-height: 16px;
+        font-weight: 500;
+        span{
+          font-weight: 400;
+          color: #838898;
+        }
+      }
+    }
   }
+
   .msg-block-img {
     margin-bottom: 32px;
   }
+
   h2 {
     font-size: 24px;
     font-style: normal;
@@ -1676,6 +1835,7 @@
     margin-bottom: 9px;
     color: #2d61ac;
   }
+
   p {
     font-size: 16px;
     font-style: normal;
@@ -1685,6 +1845,7 @@
     color: #8d92a2;
     margin-bottom: 32px;
   }
+
   .mdc-button {
     padding-left: 40px;
     padding-right: 40px;
@@ -1698,6 +1859,7 @@
   .mat-mdc-card-content {
     padding: 24px 24px 0 !important;
   }
+
   h2 {
     font-size: 24px;
     font-style: normal;
@@ -1706,6 +1868,7 @@
     color: #2d61ac;
     margin-bottom: 20px;
   }
+
   .instructions-listing {
     li {
       padding: 0 0 20px 20px;
@@ -1717,6 +1880,7 @@
       text-transform: capitalize;
       color: #51545f;
       position: relative;
+
       &:before {
         content: "";
         position: absolute;
@@ -1734,9 +1898,11 @@
 @media (max-width: 767px) {
   .instructions-block {
     max-height: inherit;
+
     .mat-mdc-card-content {
       padding: 12px 12px 0 !important;
     }
+
     .instructions-listing li {
       padding-bottom: 12px;
     }
