@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -44,15 +44,13 @@ export class AddCandidateComponent implements OnInit {
     private candidateService: CandidateService,
     private loginService: LoginService,
     public _formValidators: ValidationService,
-    private snackbarService: SnackbarService,
-    private cdr: ChangeDetectorRef
+    private snackbarService: SnackbarService
   ) {}
 
   ngOnInit(): void {
     this.getDropdowns();
     this.createForm();
     this.getUserData();
-    this.cdr.detectChanges();
   }
 
   closeModal() {
