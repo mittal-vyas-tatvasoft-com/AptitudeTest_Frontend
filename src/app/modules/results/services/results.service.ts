@@ -1,8 +1,10 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
-import { DropdownItem } from '../../candidate/interfaces/candidate.interface';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { environment } from 'src/environments/environment';
+import * as XLSX from 'xlsx';
+import { DropdownItem } from '../../candidate/interfaces/candidate.interface';
 import {
   ApproveTestData,
   ResultData,
@@ -12,8 +14,6 @@ import {
   ResultQueryParam,
   StatisticsModel,
 } from '../interfaces/result.interface';
-import * as XLSX from 'xlsx';
-import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 @Injectable({
   providedIn: 'root',
 })
@@ -149,6 +149,12 @@ export class ResultsService {
     return this.http.get<ResponseModel<ResultExportData[]>>(
       `${environment.baseURL}Results/GetResultExportData`,
       { params: httpParam }
+    );
+  }
+
+  GetGroupOfTest(testId: number) {
+    return this.http.get<ResponseModel<number>>(
+      `${environment.baseURL}Results/GetGroupOfTest/${testId}`
     );
   }
 

@@ -385,6 +385,14 @@ export const candidateFilterFormConfig = {
     inputType: 'text',
     displayIcon: false,
   },
+  groupId: {
+    value: '',
+    key: 'groupId',
+    label: 'Group',
+    required: false,
+    inputType: 'text',
+    displayIcon: false,
+  },
 };
 
 export const importCandidateFormConfig = {
