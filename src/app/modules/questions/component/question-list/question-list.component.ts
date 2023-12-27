@@ -47,6 +47,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   status?: boolean;
   private scrollSubject = new Subject<number>();
   private ngUnsubscribe$ = new Subject<void>();
+  statusUpdateList: number[] = [];
   constructor(
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
@@ -195,6 +196,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
       isNextPage: true,
     };
     this.questions = [];
+    this.statusUpdateList = [];
   }
 
   ngOnDestroy(): void {
@@ -202,5 +204,39 @@ export class QuestionListComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe$.complete();
     this.scrollSubject.unsubscribe();
     window.removeEventListener('scroll', this.scrollListener);
+  }
+
+  checkboxChange(event: any, id: number) {
+    if (event.checked) {
+      this.statusUpdateList.push(id);
+    } else {
+      const index = this.statusUpdateList.indexOf(id);
+      this.statusUpdateList.splice(index, 1);
+    }
+  }
+
+  updateBulkStatus(status: boolean) {
+    this.questionService
+      .updateBulkStatus({ status: status, idList: this.statusUpdateList })
+      .subscribe({
+        next: (res) => {
+          if (res.statusCode == StatusCode.Success) {
+            this.snackbarService.success(res.message);
+            this.initializeEmptyResponse();
+            this.loadQuestions(
+              this.response.pageSize,
+              this.response?.currentPageIndex,
+              this.topic,
+              this.status
+            );
+            this.deleteQuestion.emit();
+          } else {
+            this.snackbarService.error(res.message);
+          }
+        },
+        error: (error) => {
+          this.snackbarService.error(error.message);
+        },
+      });
   }
 }

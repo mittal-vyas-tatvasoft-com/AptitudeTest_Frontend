@@ -6,7 +6,10 @@ import {
   QuestionsCount,
 } from 'src/app/modules/questions/interfaces/question.interface';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { UpdateStatus } from 'src/app/shared/common/interfaces/update-status';
+import {
+  BulkStatusUpdate,
+  UpdateStatus,
+} from 'src/app/shared/common/interfaces/update-status';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -95,5 +98,12 @@ export class QuestionsService {
       url = url + `?status=${status}`;
     }
     return url;
+  }
+
+  updateBulkStatus(bulkStatusUpdate: BulkStatusUpdate) {
+    return this.httpClient.put<ResponseModel<string>>(
+      `${environment.baseURL}Questions/UpdateBulkStatus`,
+      bulkStatusUpdate
+    );
   }
 }

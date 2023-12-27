@@ -1,8 +1,42 @@
 <ul class="qa-card-listing">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col-sm"></div>
+      <div class="col-sm-auto d-flex justify-content-end">
+        <button
+          mat-stroked-button
+          class="card-header-btn"
+          matTooltip="Active"
+          (click)="updateBulkStatus(true)"
+          [disabled]="statusUpdateList.length === 0"
+        >
+          <mat-icon>
+            <img src="./assets/images/active.svg" alt="Active" />
+          </mat-icon>
+        </button>
+        <button
+          mat-stroked-button
+          class="card-header-btn"
+          matTooltip="Inactive"
+          [disabled]="statusUpdateList.length === 0"
+          (click)="updateBulkStatus(false)"
+        >
+          <mat-icon>
+            <img src="./assets/images/inactive.svg" alt="Inactive" />
+          </mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
   <li *ngFor="let question of questions; let i = index">
     <div class="qa-card">
       <div class="qa-head">
-        <div class="qa-left">
+        <div class="qa-left-listing">
+          <mat-checkbox
+            color="primary"
+            (change)="checkboxChange($event, question.id)"
+          >
+          </mat-checkbox>
           <span class="qa-sequence">{{ question.sequence }}.</span>
           <p class="question-text" [innerHTML]="question.questionText"></p>
         </div>
