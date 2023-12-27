@@ -83,7 +83,7 @@
                 [(ngModel)]="selectedGroup"
                 (ngModelChange)="onFilterChange()"
               >
-                <mat-option [value]="null">All</mat-option>
+                <mat-option [value]="'All'">All</mat-option>
                 <mat-option *ngFor="let item of groups" [value]="item">
                   {{ item.name }}
                 </mat-option>
