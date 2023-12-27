@@ -21,6 +21,7 @@ export class McqQuestionComponent implements OnInit {
   optionIndex = OptionsIndex;
   optionType = OptionType;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
+  questionType = QuestionType;
 
   constructor(private settingService: SettingService) {}
 

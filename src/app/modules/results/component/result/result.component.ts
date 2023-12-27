@@ -73,6 +73,16 @@ export class ResultComponent implements OnInit {
         this.fetchResults();
         this.getStatistics();
       });
+
+    this.filterForm.get('test')?.valueChanges.subscribe((res) => {
+      if (res != 0) {
+        this.resultService.GetGroupOfTest(res).subscribe((data) => {
+          this.filterForm.get('group')?.setValue(data.data);
+          this.fetchResults();
+          this.getStatistics();
+        });
+      }
+    });
   }
 
   clearFilters() {

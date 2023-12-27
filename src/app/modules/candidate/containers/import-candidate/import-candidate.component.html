@@ -152,14 +152,14 @@
     <div class="col-sm">
       <form [formGroup]="filterForm">
         <div class="row">
-          <div class="col-lg-4 col-sm-6">
+          <div class="col-lg-3 col-sm-4">
             <app-text-control
               [formControlModel]="candidateFilterForm.search"
               [form]="filterForm"
               (keyupEvent)="search()"
             ></app-text-control>
           </div>
-          <div class="col-lg-4 col-sm-6">
+          <div class="col-lg-3 col-sm-4">
             <app-select
               [form]="filterForm"
               [formControlModel]="candidateFilterForm.collegeId"
@@ -168,7 +168,16 @@
             >
             </app-select>
           </div>
-          <div class="col-lg-4 col-sm-6">
+          <div class="col-lg-3 col-sm-4">
+            <app-select
+              [form]="filterForm"
+              [formControlModel]="candidateFilterForm.groupId"
+              [options]="groups"
+              (selection)="onFilterChange()"
+            >
+            </app-select>
+          </div>
+          <div class="col-lg-3 col-sm-4">
             <app-select
               [form]="filterForm"
               [formControlModel]="candidateFilterForm.status"

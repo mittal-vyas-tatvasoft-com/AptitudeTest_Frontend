@@ -43,8 +43,8 @@ import {
 })
 export class ImportCandidateComponent implements OnInit {
   colleges: SelectOption[] = [];
-  collegesForFilter: DropdownItem[] = [{ id: 0, name: 'All' }];
   groups: SelectOption[] = [];
+  collegesForFilter: DropdownItem[] = [{ id: 0, name: 'All' }];
   dropzoneConfig = dropzoneConfig;
   optionsList: SelectOption[] = [];
   form: FormGroup;
@@ -134,6 +134,7 @@ export class ImportCandidateComponent implements OnInit {
       collegeId: ['', Validators.required],
     });
     this.filterForm = this.formBuilder.group({
+      groupId: [''],
       collegeId: [''],
       status: [''],
       searchQuery: [''],
@@ -147,6 +148,7 @@ export class ImportCandidateComponent implements OnInit {
   fetchCandidate() {
     const searchQuery = this.filterForm.get('searchQuery')?.value;
     const collegeId = this.filterForm.get('collegeId')?.value;
+    const groupId = this.filterForm.get('groupId')?.value;
     const status = this.filterForm.get('status')?.value;
 
     const params: GetAllCandidateParams = {
@@ -154,7 +156,7 @@ export class ImportCandidateComponent implements OnInit {
       pageSize: this.pageSize,
       searchQuery: searchQuery,
       collegeId: collegeId,
-      groupId: null,
+      groupId: groupId,
       status: status,
       year: null,
       sortField: this.sortKey,
@@ -183,14 +185,24 @@ export class ImportCandidateComponent implements OnInit {
     }
 
     this.candidateService.getCollegesForDropDown().subscribe((colleges) => {
+      this.colleges.push({ value: 'All', id: '' });
       colleges.forEach((element) => {
         this.colleges.push({ value: element.name.toString(), id: element.id });
       });
     });
 
     this.candidateService.getGroupsForDropDown().subscribe((groups) => {
-      groups.forEach((element) => {
-        this.groups.push({ value: element.name, id: element.id });
+      this.groups.push({ value: 'All', id: '' });
+      groups.forEach((group) => {
+        if (group.isDefault) {
+          const defaultGroupName = group.name + ' (Default Group) ';
+          this.groups.push({ value: defaultGroupName, id: group.id });
+        }
+      });
+      groups.forEach((group) => {
+        if (!group.isDefault) {
+          this.groups.push({ value: group.name, id: group.id });
+        }
       });
     });
   }
@@ -202,6 +214,7 @@ export class ImportCandidateComponent implements OnInit {
   clearFilters() {
     this.filterForm.get('searchQuery')?.setValue('');
     this.filterForm.get('collegeId')?.setValue('');
+    this.filterForm.get('groupId')?.setValue('');
     this.filterForm.get('status')?.setValue('');
     this.fetchCandidate();
   }
