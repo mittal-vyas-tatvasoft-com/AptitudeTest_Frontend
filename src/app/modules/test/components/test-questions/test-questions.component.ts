@@ -109,7 +109,7 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
   resetFields() {
     this.form.patchValue({
       numberOfQuestions: '',
-      weightage: '',
+      weightage: 0,
       oneMarkQuestionSingleAnswer: 0,
       twoMarkQuestionSingleAnswer: 0,
       threeMarkQuestionSingleAnswer: 0,
@@ -139,7 +139,7 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
     this.form = this.formBuilder.group({
       topicId: ['', Validators.required],
       numberOfQuestions: ['', Validators.required],
-      weightage: ['', Validators.required],
+      weightage: [0],
       oneMarkQuestionSingleAnswer: [0, Validators.required],
       twoMarkQuestionSingleAnswer: [0, Validators.required],
       threeMarkQuestionSingleAnswer: [0, Validators.required],
@@ -256,7 +256,10 @@ export class TestQuestionsComponent implements OnInit, AfterViewInit {
       topicId: this.form.get('topicId')?.value,
       NoOfQuestions: this.form.get('numberOfQuestions')?.value,
       createdBy: 1,
-      weightage: this.form.get('weightage')?.value,
+      weightage:
+        this.form.get('weightage')?.value != ''
+          ? this.form.get('weightage')?.value
+          : 0,
       testQuestionsCount: [
         {
           questionType: QuestionType.SingleAnswer,

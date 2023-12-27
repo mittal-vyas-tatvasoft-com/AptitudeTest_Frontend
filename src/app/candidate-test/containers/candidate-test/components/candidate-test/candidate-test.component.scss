@@ -6,6 +6,8 @@
     right: 42px;
     width: 183px;
     height: 125px;
+    bottom: 5px;
+    z-index: 1;
     /* Adjust the height as needed */
 }
 
@@ -19,9 +21,18 @@
     /* Add any additional styles you want for the webcam component */
 }
 
-.showHideButton {
+.showHideButtonRound {
     position: absolute;
     z-index: 99;
     right: 0;
+    bottom: 0;
     border-radius: 20px !important;
+}
+
+.showHideButtonSquare {
+    position: absolute;
+    z-index: 99;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px 20px 0px 20px !important;
 }

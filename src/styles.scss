@@ -1253,6 +1253,7 @@
       line-height: 28px;
       color: $color51545F;
       margin-bottom: 30px;
+      width: 100%;
     }
 
     .qa-answer-type-text-option {
@@ -1935,8 +1936,7 @@
 
 //css for webcam don't remove
 webcam>.webcam-wrapper {
-  width: 100% !important;
-  height: 100% !important;
+
   border: 2px solid black;
 }
 

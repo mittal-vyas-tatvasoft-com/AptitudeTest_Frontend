@@ -27,7 +27,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
   targetElement = document.documentElement;
   private ngUnsubscribe$ = new Subject<void>();
   IsScreenCaptureEnabled = false;
-  ShowCam = false;
+  ShowCam = true;
   IsFaceCaptureEnabled = false;
   captureInterval = 0;
   CaptureImageSub: Subscription;
