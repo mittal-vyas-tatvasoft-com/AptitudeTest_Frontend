@@ -1777,6 +1777,32 @@
   .msg-block-inner {
     max-width: 722px;
     text-align: center;
+
+    ul {
+      display: flex;
+      flex-wrap: wrap;
+      max-width: 550px;
+      justify-content: center;
+      margin-bottom: 40px;
+
+      li {
+        margin: 5px;
+        border-radius: 4px;
+        padding: 6px 8px;
+        background: #FFF;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
+        font-size: 13px;
+        line-height: 16px;
+        font-weight: 500;
+        max-width: 98vw;
+        height: max-content;
+
+        span {
+          font-weight: 400;
+          color: #838898;
+        }
+      }
+    }
   }
 
   .msg-block-img {
