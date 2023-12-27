@@ -1,4 +1,4 @@
-<div class="msg-block">
+<!-- <div class="msg-block">
   <div class="msg-block-inner">
     <img src="assets/images/welcome-img.svg" alt="" class="msg-block-img" />
     <h2>welcome to {{ firstName + " " + lastName }}</h2>
@@ -33,5 +33,22 @@
         </div>
       </div>
     </div>
+  </div>
+</div> -->
+
+<div class="msg-block">
+  <div class="msg-block-inner">
+    <img src="assets/images/welcome-img.svg" alt="" class="msg-block-img" />
+    <h2>welcome to {{ firstName + " " + lastName }}</h2>
+    <ul>
+      <li><span>Test Name :</span> {{ testName }}</li>
+      <li><span>Date & time :</span> {{ testDate }}</li>
+      <li><span>Basic Points :</span> {{ basicPoints }} Marks</li>
+      <li><span>Test Duration :</span> {{ testDurationInMinutes }} Minutes</li>
+      <li><span>Negative Marks :</span> {{ negativeMarkingPoints }}%</li>
+    </ul>
+    <button mat-flat-button color="primary" (click)="readyForTest()">
+      I am Ready to Begin
+    </button>
   </div>
 </div>
