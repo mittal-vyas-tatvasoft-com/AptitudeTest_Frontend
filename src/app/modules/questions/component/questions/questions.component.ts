@@ -78,6 +78,9 @@ export class QuestionsComponent implements OnInit {
   }
 
   onDelete(event: void) {
-    this.getQuestionCount();
+    this.getQuestionCount(
+      this.filterForm.get('topic')?.value,
+      this.filterForm.get('status')?.value
+    );
   }
 }
