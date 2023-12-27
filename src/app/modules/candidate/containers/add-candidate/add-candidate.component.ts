@@ -1,4 +1,4 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -27,7 +27,7 @@ import { CandidateService } from '../../services/candidate.service';
   templateUrl: './add-candidate.component.html',
   styleUrls: ['./add-candidate.component.scss'],
 })
-export class AddCandidateComponent implements OnInit {
+export class AddCandidateComponent implements OnInit, AfterViewInit {
   selectOptionsForGender: SelectOption[] = selectOptionsForGender;
   selectOptionsForStatus: SelectOption[] = selectOptionsForStatus;
   CandidateModel = candidateControl;
@@ -35,6 +35,7 @@ export class AddCandidateComponent implements OnInit {
   groups: SelectOption[] = [];
   form: FormGroup;
   userId: number;
+  defaultGroupId: number;
   isLoading = false;
 
   constructor(
@@ -51,6 +52,17 @@ export class AddCandidateComponent implements OnInit {
     this.getDropdowns();
     this.createForm();
     this.getUserData();
+  }
+
+  ngAfterViewInit() {
+    this.candidateService.getGroupsForDropDown().subscribe((groups) => {
+      groups.forEach((group) => {
+        if (group.isDefault) {
+          this.defaultGroupId = group.id;
+          this.form.get('groupId')?.setValue(group.id);
+        }
+      });
+    });
   }
 
   closeModal() {
@@ -103,6 +115,7 @@ export class AddCandidateComponent implements OnInit {
           Validators.pattern(validations.common.mobileNumberREGEX),
         ],
       ],
+
       groupId: ['', Validators.required],
       collegeId: ['', Validators.required],
       gender: [+candidateControl.gender.value],
@@ -120,11 +133,17 @@ export class AddCandidateComponent implements OnInit {
     });
 
     this.candidateService.getGroupsForDropDown().subscribe((groups) => {
-      this.groups = groups.map((groups) => ({
-        id: groups.id,
-        key: groups.name,
-        value: groups.name,
-      }));
+      groups.forEach((group) => {
+        if (group.isDefault) {
+          const defaultGroupName = group.name + ' (Default Group) ';
+          this.groups.push({ value: defaultGroupName, id: group.id });
+        }
+      });
+      groups.forEach((element) => {
+        if (!element.isDefault) {
+          this.groups.push({ value: element.name, id: element.id });
+        }
+      });
     });
   }
 

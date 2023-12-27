@@ -1,4 +1,5 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { group } from '@angular/animations';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
@@ -155,8 +156,9 @@ export class CandidatesComponent implements OnInit {
           );
           this.fetchCandidate();
         } else {
-          this.selectedGroup = null;
+          this.selectedGroup = this.groups[0];
           this.selectedCollege = null;
+          this.fetchCandidate();
         }
       });
     });

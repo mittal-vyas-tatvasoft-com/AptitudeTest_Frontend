@@ -1,5 +1,5 @@
 import { SelectionModel } from '@angular/cdk/collections';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
@@ -41,7 +41,7 @@ import {
   templateUrl: './import-candidate.component.html',
   styleUrls: ['./import-candidate.component.scss'],
 })
-export class ImportCandidateComponent implements OnInit {
+export class ImportCandidateComponent implements OnInit, AfterViewInit {
   colleges: SelectOption[] = [];
   groups: SelectOption[] = [];
   collegesForFilter: DropdownItem[] = [{ id: 0, name: 'All' }];
@@ -59,6 +59,7 @@ export class ImportCandidateComponent implements OnInit {
   sortDirection: string;
   fileName = '';
   formData = new FormData();
+  defaultGroupId: number;
   noFileSet = true;
   groupAndCollegeSelected = false;
   importSuccessFully = false;
@@ -138,6 +139,17 @@ export class ImportCandidateComponent implements OnInit {
       collegeId: [''],
       status: [''],
       searchQuery: [''],
+    });
+  }
+
+  ngAfterViewInit(): void {
+    this.candidateService.getGroupsForDropDown().subscribe((groups) => {
+      groups.forEach((group) => {
+        if (group.isDefault) {
+          this.defaultGroupId = group.id;
+          this.form.get('groupId')?.setValue(group.id);
+        }
+      });
     });
   }
 

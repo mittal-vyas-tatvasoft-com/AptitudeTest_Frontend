@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { MatSort, Sort } from '@angular/material/sort';
@@ -25,12 +25,13 @@ import { TestService } from '../../services/test.service';
   templateUrl: './test.component.html',
   styleUrls: ['./test.component.scss'],
 })
-export class TestComponent implements OnInit {
+export class TestComponent implements OnInit, AfterViewInit {
   pageSize = 10;
   currentPageIndex = 0;
   totalItemsCount: number;
   sortField = '';
   sortOrder = '';
+  defaultGroupId: number;
   pageNumbers: number[] = [];
   form: FormGroup;
   formData = testFilterModel;
@@ -107,12 +108,22 @@ export class TestComponent implements OnInit {
   createForm() {
     this.form = this.formBuilder.group({
       searchQuery: [''],
-      groupId: [null],
+      groupId: [''],
       status: [null],
       date: [null],
     });
   }
 
+  ngAfterViewInit(): void {
+    this.testService.getGroups().subscribe((groups) => {
+      groups.data.forEach((group) => {
+        if (group.isDefault) {
+          this.defaultGroupId = group.id;
+          this.form.get('groupId')?.setValue(group.id);
+        }
+      });
+    });
+  }
   getTests() {
     const searchQuery = this.form.get('searchQuery')?.value;
     const groupId = this.form.get('groupId')?.value;
@@ -270,7 +281,7 @@ export class TestComponent implements OnInit {
   }
 
   appendPad(unit: any) {
-    return unit > 9 ? unit : `0` + unit
+    return unit > 9 ? unit : `0` + unit;
   }
 
   getTrimmedTime(date: string) {
