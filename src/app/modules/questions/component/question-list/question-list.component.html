@@ -25,6 +25,18 @@
             <img src="./assets/images/inactive.svg" alt="Inactive" />
           </mat-icon>
         </button>
+
+        <button
+          mat-stroked-button
+          class="card-header-btn"
+          [disabled]="statusUpdateList.length === 0"
+          (click)="deleteMultipleQuestions()"
+          matTooltip="Delete"
+        >
+          <mat-icon>
+            <img src="./assets/images/delete.svg" alt="Delete" />
+          </mat-icon>
+        </button>
       </div>
     </div>
   </div>

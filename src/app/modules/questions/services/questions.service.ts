@@ -106,4 +106,11 @@ export class QuestionsService {
       bulkStatusUpdate
     );
   }
+
+  deleteMultipleQuestions(questionIdList: number[]) {
+    return this.httpClient.put<ResponseModel<string>>(
+      `${environment.baseURL}Questions/DeleteMultipleQuestions`,
+      questionIdList
+    );
+  }
 }
