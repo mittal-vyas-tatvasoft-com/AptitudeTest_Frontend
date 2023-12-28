@@ -15,7 +15,7 @@ export class ImageService {
   }
 
   private readFile(blob: Blob): Observable<string> {
-    return Observable.create((obs: any) => {
+    return new Observable((obs: any) => {
       const reader = new FileReader();
 
       reader.onerror = (err) => obs.error(err);

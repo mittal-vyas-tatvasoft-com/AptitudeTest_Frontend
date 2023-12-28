@@ -49,11 +49,9 @@ export class ViewScreenshotsComponent implements OnInit {
   loadData() {
     switch (this.filesService.level) {
       case ReportLevels.Test:
-        {
-          this.reportsApiService.getTests().subscribe({
-            next: (res) => this.checkRes(res),
-          });
-        }
+        this.reportsApiService.getTests().subscribe({
+          next: (res) => this.checkRes(res),
+        });
         break;
 
       case ReportLevels.User:

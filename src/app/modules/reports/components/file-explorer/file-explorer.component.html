@@ -40,6 +40,7 @@
               *ngIf="filesService.getIconPath(element.name)"
               class="file-or-folder-icon pointer"
               [src]="getImgPath(filesService.getIconPath(element.name))"
+              alt="icon"
             />
             <mat-icon
               *ngIf="
