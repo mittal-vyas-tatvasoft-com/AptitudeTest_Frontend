@@ -16,8 +16,10 @@
 
   .inside-grid-tile {
     width: 100%;
-    padding: 0px 20px;
-    justify-content: flex-start !important;
+    padding: 0px 20px;    
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 }
 

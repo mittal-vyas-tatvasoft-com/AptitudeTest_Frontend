@@ -44,7 +44,7 @@
             <mat-icon
               *ngIf="
                 !element.isFolder &&
-                filesService.getIconPath(element.name) == undefined
+                filesService.getIconPath(element.name) === undefined
               "
               color="primary"
               class="file-or-folder-icon pointer"
@@ -61,6 +61,17 @@
               </span>
               {{ element.name }}
             </span>
+          </div>
+          <div
+            *ngIf="!element.isFolder"
+          >
+            <mat-icon
+              color="primary"
+              class="pointer"
+              (click)="downloadFile(element.name)"
+            >
+              arrow_downward
+            </mat-icon>
           </div>
         </div>
       </mat-grid-tile>

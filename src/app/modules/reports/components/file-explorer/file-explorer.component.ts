@@ -9,6 +9,7 @@ import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dial
 import { MatMenuTrigger } from '@angular/material/menu';
 import { FilesService } from '../../services/files.service';
 import { FileElement } from '../../interfaces/file-element';
+import { ImageService } from '../../services/image.service';
 
 @Component({
   selector: 'app-file-explorer',
@@ -34,7 +35,7 @@ export class FileExplorerComponent {
 
   @ViewChild('box') previewWindow: any;
 
-  constructor(public filesService: FilesService, public dialog: MatDialog) {}
+  constructor(public filesService: FilesService, public dialog: MatDialog, public imageService: ImageService) {}
 
   deleteElement(element: FileElement) {
     this.elementRemoved.emit(element);
@@ -68,5 +69,9 @@ export class FileExplorerComponent {
     if (name == undefined) return '';
 
     return `assets/images/${name}`;
+  }
+
+  downloadFile(name: string) {
+    this.imageService.download(this.filesService.getImagePath(name), name);
   }
 }
