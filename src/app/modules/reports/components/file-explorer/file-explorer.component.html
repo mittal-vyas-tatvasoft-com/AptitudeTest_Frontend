@@ -1,0 +1,84 @@
+<mat-toolbar class="c-toolbar">
+  <mat-icon *ngIf="canNavigateUp" class="pointer" (click)="navigateUp()">
+    arrow_back
+  </mat-icon>
+  <span style="margin-left: 8px"> {{ path || "Files" }} </span>
+</mat-toolbar>
+<mat-menu #rootMenu="matMenu" [overlapTrigger]="false">
+  <ng-template matMenuContent let-element="element">
+    <button mat-menu-item (click)="deleteElement(element)">
+      <mat-icon>delete</mat-icon>
+      <span>Delete</span>
+    </button>
+  </ng-template>
+</mat-menu>
+
+<div fxFlex fxLayout="row" fxLayoutAlign="space-between stretch">
+  <div class="content" fxFlex fxLayout="row">
+    <mat-grid-list cols="1" rowHeight="75px" fxFlex>
+      <div class="no-file-msg" *ngIf="fileElements.length === 0">
+        This folder is empty.
+      </div>
+      <mat-grid-tile
+        *ngFor="let element of fileElements"
+        class="file-or-folder"
+      >
+        <div class="inside-grid-tile">
+          <div
+            class="folder-file-list"
+            (click)="navigate(element)"
+            (contextmenu)="openMenu($event, menuTrigger)"
+          >
+            <mat-icon
+              color="primary"
+              class="file-or-folder-icon pointer"
+              *ngIf="element.isFolder"
+            >
+              folder
+            </mat-icon>
+            <img
+              *ngIf="filesService.getIconPath(element.name)"
+              class="file-or-folder-icon pointer"
+              [src]="getImgPath(filesService.getIconPath(element.name))"
+            />
+            <mat-icon
+              *ngIf="
+                !element.isFolder &&
+                filesService.getIconPath(element.name) == undefined
+              "
+              color="primary"
+              class="file-or-folder-icon pointer"
+            >
+              insert_drive_file
+            </mat-icon>
+
+            <span class="pointer">
+              <span
+                [matMenuTriggerFor]="rootMenu"
+                [matMenuTriggerData]="{ element: element }"
+                #menuTrigger="matMenuTrigger"
+              >
+              </span>
+              {{ element.name }}
+            </span>
+          </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </div>
+</div>
+
+<ng-template #box>
+  <div class="dialog-header">
+    <button mat-icon-button mat-dialog-close class="dialog-close">
+      <mat-icon>
+        <img src="assets/images/close-grey.svg" alt="Close" />
+      </mat-icon>
+    </button>
+  </div>
+  <mat-dialog-content class="dialog-body">
+    <img
+      src="https://localhost:7282/images/123/175/ScreenShots/Screenshot_1.png"
+    />
+  </mat-dialog-content>
+</ng-template>

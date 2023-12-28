@@ -45,5 +45,15 @@ export const navBarRoutes = {
   Results: {
     label: 'Results',
     path: `./${Navigation.Results}`,
+  },  
+  Reports: {
+    Components: [
+      {
+        label: 'Screenshots',
+        path: `./${Navigation.Reports}/${Navigation.ScreenShots}`,
+      },
+    ],
+    label: 'Reports',
+    icon: '	manage_accounts',
   },
 };

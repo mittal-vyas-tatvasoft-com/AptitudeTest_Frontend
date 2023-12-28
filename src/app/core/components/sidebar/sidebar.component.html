@@ -130,5 +130,46 @@
         {{ routeConfig.Setting.label }}
       </a>
     </li>
+    <li class="nav-link">
+      <mat-accordion class="nested-navigation" [multi]="false">
+        <mat-expansion-panel
+          class="nested-navigation"
+          (click)="toggleAccordion(2)"
+          [expanded]="currentlyOpenAccordion === 2"
+        >
+          <mat-expansion-panel-header>
+            <a
+              href="javascript:void(0)"
+              class="nav-item"
+              routerLinkActive="active"
+              title="Reports"
+            >
+              <mat-icon class="nav-icon">
+                <img
+                  src="./assets/images/reports-grey.svg"
+                  alt="Reports"
+                />
+              </mat-icon>
+              Reports
+            </a>
+          </mat-expansion-panel-header>
+          <mat-expansion-panel hideToggle> </mat-expansion-panel>
+          <ul class="sub-menu">
+            <li *ngFor="let item of routeConfig.Reports.Components">
+              <a
+                href="javascript:void(0)"
+                [routerLink]="item.path"
+                class="nav-item"
+                routerLinkActive="active"
+                [title]="item.label"
+                (click)="onClick()"
+              >
+                {{ item.label }}
+              </a>
+            </li>
+          </ul>
+        </mat-expansion-panel>
+      </mat-accordion>
+    </li>
   </ul>
 </aside>

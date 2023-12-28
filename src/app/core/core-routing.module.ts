@@ -71,6 +71,13 @@ const routes: Routes = [
             (m) => m.ResultsModule
           ),
       },
+      {
+        path: `${Navigation.Reports}`,
+        loadChildren: () =>
+          import('../modules/reports/reports.module').then(
+            (m) => m.ReportsModule
+          ),
+      },
     ],
   },
 ];

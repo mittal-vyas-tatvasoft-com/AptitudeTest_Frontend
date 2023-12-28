@@ -1,0 +1,15 @@
+<div class="page-header">
+  <div class="title-wrap">
+    <mat-icon class="page-icon">
+      <img src="./assets/images/reports-primary.svg" alt="Reports" />
+    </mat-icon>
+    <h4 class="title">Reports</h4>
+  </div>
+</div>
+<app-file-explorer 
+  [fileElements]="elements"
+  [canNavigateUp]="filesService.level > 1"
+  [path]="filesService.getPath()"
+  (navigatedDown)="navigateToFolder($event)"
+  (navigatedUp)="navigateUp()"
+></app-file-explorer>

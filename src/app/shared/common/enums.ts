@@ -52,6 +52,10 @@ export enum Navigation {
   Instructions = 'instructions',
   Test = 'test',
   Submitted = 'submitted',
+
+  //Reports navigation
+  Reports = 'reports',
+  ScreenShots = 'screen-shots',
 }
 
 export enum Type {
