@@ -55,6 +55,7 @@
     {{ isAdmin ? "Update" : candidateEditMode ? "Save" : "Register" }}
   </button>
   <button
+    *ngIf="!candidateEditMode"
     mat-stroked-button
     color="primary"
     (click)="handleBackBtn()"

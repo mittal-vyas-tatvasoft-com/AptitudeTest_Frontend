@@ -162,8 +162,8 @@
           <div class="col-lg-3 col-sm-4">
             <app-select
               [form]="filterForm"
-              [formControlModel]="candidateFilterForm.collegeId"
-              [options]="colleges"
+              [formControlModel]="candidateFilterForm.groupId"
+              [options]="groups"
               (selection)="onFilterChange()"
             >
             </app-select>
@@ -171,8 +171,8 @@
           <div class="col-lg-3 col-sm-4">
             <app-select
               [form]="filterForm"
-              [formControlModel]="candidateFilterForm.groupId"
-              [options]="groups"
+              [formControlModel]="candidateFilterForm.collegeId"
+              [options]="colleges"
               (selection)="onFilterChange()"
             >
             </app-select>

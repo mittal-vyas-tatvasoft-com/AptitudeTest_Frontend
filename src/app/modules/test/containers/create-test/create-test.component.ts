@@ -13,7 +13,6 @@ import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, debounceTime } from 'rxjs';
-import { DropdownItem } from 'src/app/modules/candidate/interfaces/candidate.interface';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 import { validations } from 'src/app/shared/messages/validation.static';
