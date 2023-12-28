@@ -221,15 +221,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res) => {
           if (res.statusCode == StatusCode.Success) {
-            this.snackbarService.success(res.message);
-            this.initializeEmptyResponse();
-            this.loadQuestions(
-              this.response.pageSize,
-              this.response?.currentPageIndex,
-              this.topic,
-              this.status
-            );
-            this.deleteQuestion.emit();
+            this.onSuccess(res);
           } else {
             this.snackbarService.error(res.message);
           }
@@ -238,5 +230,34 @@ export class QuestionListComponent implements OnInit, OnDestroy {
           this.snackbarService.error(error.message);
         },
       });
+  }
+
+  deleteMultipleQuestions() {
+    this.questionService
+      .deleteMultipleQuestions(this.statusUpdateList)
+      .subscribe({
+        next: (res) => {
+          if (res.statusCode == StatusCode.Success) {
+            this.onSuccess(res);
+          } else {
+            this.snackbarService.error(res.message);
+          }
+        },
+        error: (error) => {
+          this.snackbarService.error(error.message);
+        },
+      });
+  }
+
+  onSuccess(res: ResponseModel<string>) {
+    this.snackbarService.success(res.message);
+    this.initializeEmptyResponse();
+    this.loadQuestions(
+      this.response.pageSize,
+      this.response?.currentPageIndex,
+      this.topic,
+      this.status
+    );
+    this.deleteQuestion.emit();
   }
 }
