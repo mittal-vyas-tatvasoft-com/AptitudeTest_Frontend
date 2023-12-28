@@ -55,7 +55,7 @@ export enum Navigation {
 
   //Reports navigation
   Reports = 'reports',
-  ScreenShots = 'screen-shots',
+  ScreenShots = 'screenshots',
 }
 
 export enum Type {

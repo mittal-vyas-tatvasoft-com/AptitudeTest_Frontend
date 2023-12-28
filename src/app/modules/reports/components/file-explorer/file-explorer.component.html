@@ -2,7 +2,7 @@
   <mat-icon *ngIf="canNavigateUp" class="pointer" (click)="navigateUp()">
     arrow_back
   </mat-icon>
-  <span style="margin-left: 8px"> {{ path || "Files" }} </span>
+  <span class="file-path"> {{ path || "Files" }} </span>
 </mat-toolbar>
 <mat-menu #rootMenu="matMenu" [overlapTrigger]="false">
   <ng-template matMenuContent let-element="element">
@@ -69,16 +69,18 @@
 </div>
 
 <ng-template #box>
-  <div class="dialog-header">
+  <div class="dialog-header c-dialog-header">
     <button mat-icon-button mat-dialog-close class="dialog-close">
-      <mat-icon>
-        <img src="assets/images/close-grey.svg" alt="Close" />
-      </mat-icon>
+      <img src="assets/images/close-grey.svg" alt="Close" />
     </button>
   </div>
   <mat-dialog-content class="dialog-body">
-    <img
-      src="https://localhost:7282/images/123/175/ScreenShots/Screenshot_1.png"
-    />
+    <div>
+      <img
+        class="preview-img"
+        [src]="filesService.getImagePath(this.fileName)"
+        alt="ScreenShot"
+      />
+    </div>
   </mat-dialog-content>
 </ng-template>

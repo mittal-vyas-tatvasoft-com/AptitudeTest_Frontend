@@ -5,10 +5,10 @@ import {
   Output,
   ViewChild,
 } from '@angular/core';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig, MatDialogRef } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { FilesService } from '../../services/files.service';
-import { FileElement } from '../../types/FileElement';
+import { FileElement } from '../../interfaces/file-element';
 
 @Component({
   selector: 'app-file-explorer',
@@ -30,7 +30,9 @@ export class FileExplorerComponent {
   @Output() navigatedDown = new EventEmitter<FileElement>();
   @Output() navigatedUp = new EventEmitter();
 
-  @ViewChild('box') myTable: any;
+  fileName = '';
+
+  @ViewChild('box') previewWindow: any;
 
   constructor(public filesService: FilesService, public dialog: MatDialog) {}
 
@@ -42,9 +44,14 @@ export class FileExplorerComponent {
     if (element.isFolder) {
       this.navigatedDown.emit(element);
     } else {
-      this.dialog.open(this.myTable, {
-        height: '80%'
-      });
+      this.fileName = element.name;
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.autoFocus = false;
+      dialogConfig.height = '90%';
+      dialogConfig.minWidth = '50%';
+      dialogConfig.maxWidth = '90vw';
+
+      this.dialog.open(this.previewWindow, dialogConfig);
     }
   }
 

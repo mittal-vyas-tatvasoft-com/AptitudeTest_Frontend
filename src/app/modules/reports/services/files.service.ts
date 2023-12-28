@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
+import { environment } from 'src/environments/environment';
 import { ITestFolder } from '../interfaces/reports';
 import { ReportLevels } from '../interfaces/reports-levels.enum';
-import { FileElement } from '../types/FileElement';
+import { FileElement } from '../interfaces/file-element';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +80,10 @@ export class FilesService {
     }
 
     return undefined;
+  }
+
+  getImagePath(name: string) {
+    return `${environment.imageBase}/images/${this.test?.id}/${this.user?.id}/${this.userDir?.name}/${name}`
   }
 
   resetAll() {

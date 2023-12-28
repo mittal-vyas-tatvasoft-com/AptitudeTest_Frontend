@@ -5,7 +5,7 @@ import { ViewScreenshotsComponent } from './containers/view-screenshots/view-scr
 const routes: Routes = [
   {
     path: '',
-    redirectTo: 'screen-shots',
+    redirectTo: 'screenshots',
     pathMatch: 'full',
   },
   {

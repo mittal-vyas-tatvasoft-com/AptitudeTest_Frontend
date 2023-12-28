@@ -3,13 +3,14 @@
     <mat-icon class="page-icon">
       <img src="./assets/images/reports-primary.svg" alt="Reports" />
     </mat-icon>
-    <h4 class="title">Reports</h4>
+    <h4 class="title">Screenshots</h4>
   </div>
 </div>
 <app-file-explorer 
   [fileElements]="elements"
   [canNavigateUp]="filesService.level > 1"
   [path]="filesService.getPath()"
+  (elementRemoved)="deleteDirectory($event)"
   (navigatedDown)="navigateToFolder($event)"
   (navigatedUp)="navigateUp()"
 ></app-file-explorer>

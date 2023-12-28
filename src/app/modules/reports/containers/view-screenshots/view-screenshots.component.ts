@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { ITestFile, ITestFolder } from '../../interfaces/reports';
+import { IDeleteDirPayload, ITestFile, ITestFolder } from '../../interfaces/reports';
 import { ReportLevels } from '../../interfaces/reports-levels.enum';
 import { FilesService } from '../../services/files.service';
 import { ReportsApiService } from '../../services/reports-api.service';
-import { FileElement } from '../../types/FileElement';
+import { FileElement } from '../../interfaces/file-element';
 
 @Component({
   selector: 'app-view-screenshots',
@@ -98,6 +98,59 @@ export class ViewScreenshotsComponent implements OnInit {
       default:
         break;
     }
+  }
+
+  deleteDirectory(event: FileElement) {
+    let payload = {};
+
+    switch(this.filesService.level) {
+      case ReportLevels.Test:
+        payload = {
+          testId: event.id,
+          level: this.filesService.level
+        }
+        break;
+
+      case ReportLevels.User:
+        payload = {
+          testId: this.filesService.test?.id,
+          userId: event.id,
+          level: this.filesService.level
+        }
+        break;
+
+      case ReportLevels.UserDir:
+        payload = {
+          testId: this.filesService.test?.id,
+          userId: this.filesService.user?.id,
+          folder: event.id,
+          level: this.filesService.level
+        }
+        break;
+
+      case ReportLevels.Files:
+        payload = {
+          testId: this.filesService.test?.id,
+          userId: this.filesService.user?.id,
+          folder: this.filesService.userDir?.id,
+          fileName: event.name,
+          level: this.filesService.level
+        }
+        break;
+
+      default:
+        return;
+    }
+
+    this.reportsApiService.deleteDirectory(payload as IDeleteDirPayload).subscribe({
+      next: (res) => {
+        if (this.filesService.level === ReportLevels.Files) {
+          this.checkFileRes(res as ResponseModel<ITestFile[]>);
+        } else {
+          this.checkRes(res as ResponseModel<ITestFolder[]>);
+        }
+      },
+    });
   }
 
   transformDataToElement(data: ITestFolder[]): FileElement[] {
