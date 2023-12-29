@@ -235,7 +235,7 @@ export class ResultComponent implements OnInit {
   getTrimmedTime(date: string) {
     let tempDate = new Date(date);
     const year = tempDate.getFullYear();
-    const month = tempDate.getMonth();
+    const month = tempDate.getMonth() + 1;
     const day = tempDate.getDate();
     const hours = tempDate.getHours();
     const minutes = tempDate.getMinutes();
