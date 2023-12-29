@@ -201,8 +201,6 @@ export class ResultComponent implements OnInit {
     this.resultService
       .getResults(this.params, this.currentPageIndex, this.pageSize)
       .subscribe((res) => {
-        console.log(res);
-
         if (res.statusCode == StatusCode.Success) {
           if (res.data && res.data.length > 0) {
             let data: ResultModel[] = res.data.map((record) => {
