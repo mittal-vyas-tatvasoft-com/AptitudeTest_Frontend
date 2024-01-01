@@ -76,7 +76,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
         this.collegeName = candidate.data.collegeName;
       });
     this.getEndTime();
-    this.displayQuestion();
     this.interval = setInterval(() => {
       this.seconds = this.seconds - 1;
       let hours = Math.floor(this.seconds / 3600);
