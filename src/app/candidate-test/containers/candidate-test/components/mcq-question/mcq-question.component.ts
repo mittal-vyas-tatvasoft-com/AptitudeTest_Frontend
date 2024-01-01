@@ -15,7 +15,10 @@ import { environment } from 'src/environments/environment';
 })
 export class McqQuestionComponent implements OnInit {
   @Input() question: Question;
-  @Output() saveAnswer = new EventEmitter<Answer[]>();
+  @Output() saveAnswer = new EventEmitter<{
+    answers: Answer[];
+    questionNumber: number;
+  }>();
   @Output() endTestEvent = new EventEmitter<void>();
   isClearResponseEnable: boolean;
   optionIndex = OptionsIndex;
@@ -54,7 +57,10 @@ export class McqQuestionComponent implements OnInit {
   }
 
   save() {
-    this.saveAnswer.emit(this.question.answers);
+    this.saveAnswer.emit({
+      answers: this.question.answers,
+      questionNumber: this.question.questionNumber,
+    });
   }
 
   setAnswer(optionId: number) {

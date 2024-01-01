@@ -125,6 +125,8 @@ export class McqTestComponent implements OnInit, OnDestroy {
         .getQuestion(this.question.nextQuestionId, this.userId)
         .subscribe({
           next: (response: ResponseModel<Question>) => {
+            console.log(response);
+
             if (response.statusCode === StatusCode.Success) {
               this.question = response.data;
             } else {
@@ -135,23 +137,20 @@ export class McqTestComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(event: Answer[]) {
+  onSubmit(event: { answers: Answer[]; questionNumber: number }) {
     this.displayQuestion();
     this.saveAnswers(event);
-    if (this.question.questionNumber === this.question.totalQuestions) {
-      this.submitTest();
-    }
     let state =
-      event.filter((res) => res.isAnswer).length > 0
+      event.answers.filter((res) => res.isAnswer).length > 0
         ? QuestionStatus.Answered
         : QuestionStatus.Skipped;
     let status = [this.question.questionNumber - 1, this.question.id, state];
     this.candidateTestService.questionStatus.next(status);
   }
 
-  saveAnswers(answers: Answer[]) {
+  saveAnswers(event: { answers: Answer[]; questionNumber: number }) {
     let answer: number[] = [];
-    answers.forEach((isAnswer: Answer) => {
+    event.answers.forEach((isAnswer: Answer) => {
       if (isAnswer.isAnswer) {
         answer.push(isAnswer.optionId);
       }
@@ -165,7 +164,11 @@ export class McqTestComponent implements OnInit, OnDestroy {
     };
     this.candidateTestService.saveAnswer(data).subscribe({
       next: (res: ResponseModel<string>) => {
-        if (res.statusCode !== StatusCode.Success) {
+        if (res.statusCode === StatusCode.Success) {
+          if (event.questionNumber === this.question.totalQuestions) {
+            this.submitTest();
+          }
+        } else {
           this.snackBarService.error(res.message);
         }
       },
@@ -189,7 +192,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
     dialogRef?.afterClosed().subscribe((result: any) => {
       if (result) {
         this.submitTest();
-        this.router.navigate(['/user/submitted']);
       }
     });
   }
@@ -197,7 +199,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
   submitTest() {
     this.candidateTestService.endTest(this.userId).subscribe({
       next: (res: ResponseModel<string>) => {
-        if (res.statusCode == StatusCode.Success) {
+        if (res.statusCode === StatusCode.Success) {
           this.router.navigate(['/user/submitted']);
         }
       },
