@@ -11,8 +11,8 @@
     </mat-icon>
   </button>
 </div>
-<mat-dialog-content class="dialog-body pb-0">
-  <form [formGroup]="form">
+<form [formGroup]="form">
+  <mat-dialog-content class="dialog-body pb-0">
     <div class="row">
       <div class="col-12">
         <app-text-control
@@ -36,19 +36,20 @@
         ></app-select>
       </div>
     </div>
-  </form>
-</mat-dialog-content>
-<mat-dialog-actions align="end" class="dialog-footer">
-  <button
-    mat-raised-button
-    color="primary"
-    label="isEditMode ? 'Save' : 'Add'"
-    [disabled]="!form.valid"
-    [mat-dialog-close]="form.value"
-  >
-    {{ isEditMode ? "Save" : "Add" }}
-  </button>
-  <button mat-stroked-button color="primary" [mat-dialog-close]="false">
-    Cancel
-  </button>
-</mat-dialog-actions>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end" class="dialog-footer">
+    <button
+      mat-raised-button
+      color="primary"
+      label="isEditMode ? 'Save' : 'Add'"
+      [disabled]="!form.valid"
+      type="submit"
+      [mat-dialog-close]="form.value"
+    >
+      {{ isEditMode ? "Save" : "Add" }}
+    </button>
+    <button mat-stroked-button color="primary" [mat-dialog-close]="false">
+      Cancel
+    </button>
+  </mat-dialog-actions>
+</form>
