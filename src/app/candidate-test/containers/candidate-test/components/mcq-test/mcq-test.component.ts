@@ -76,7 +76,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
         this.collegeName = candidate.data.collegeName;
       });
     this.getEndTime();
-    this.displayQuestion();
     this.interval = setInterval(() => {
       this.seconds = this.seconds - 1;
       let hours = Math.floor(this.seconds / 3600);
@@ -125,8 +124,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
         .getQuestion(this.question.nextQuestionId, this.userId)
         .subscribe({
           next: (response: ResponseModel<Question>) => {
-            console.log(response);
-
             if (response.statusCode === StatusCode.Success) {
               this.question = response.data;
             } else {

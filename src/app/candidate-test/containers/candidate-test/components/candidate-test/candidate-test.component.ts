@@ -195,6 +195,8 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
               } else {
                 this.questionsStatus.questionStatusVMs[0].status =
                   this.questionStatus.Current;
+                //Here We are passing -1 to load initial question
+                this.testService.loadQuestion.next(-1);
               }
             }
             this.seconds = this.questionsStatus.timeLeft * 60;
