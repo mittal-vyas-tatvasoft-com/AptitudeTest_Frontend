@@ -125,8 +125,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
         .getQuestion(this.question.nextQuestionId, this.userId)
         .subscribe({
           next: (response: ResponseModel<Question>) => {
-            console.log(response);
-
             if (response.statusCode === StatusCode.Success) {
               this.question = response.data;
             } else {
