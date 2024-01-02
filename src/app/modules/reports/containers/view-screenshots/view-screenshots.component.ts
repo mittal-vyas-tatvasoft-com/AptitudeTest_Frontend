@@ -1,7 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
-import { IDeleteDirPayload, ITestFile, ITestFolder } from '../../interfaces/reports';
+import {
+  BreadcrumbsElement,
+  IDeleteDirPayload,
+  ITestFile,
+  ITestFolder,
+} from '../../interfaces/reports';
 import { ReportLevels } from '../../interfaces/reports-levels.enum';
 import { FilesService } from '../../services/files.service';
 import { ReportsApiService } from '../../services/reports-api.service';
@@ -101,20 +106,20 @@ export class ViewScreenshotsComponent implements OnInit {
   deleteDirectory(event: FileElement) {
     let payload = {};
 
-    switch(this.filesService.level) {
+    switch (this.filesService.level) {
       case ReportLevels.Test:
         payload = {
           testId: event.id,
-          level: this.filesService.level
-        }
+          level: this.filesService.level,
+        };
         break;
 
       case ReportLevels.User:
         payload = {
           testId: this.filesService.test?.id,
           userId: event.id,
-          level: this.filesService.level
-        }
+          level: this.filesService.level,
+        };
         break;
 
       case ReportLevels.UserDir:
@@ -122,8 +127,8 @@ export class ViewScreenshotsComponent implements OnInit {
           testId: this.filesService.test?.id,
           userId: this.filesService.user?.id,
           folder: event.id,
-          level: this.filesService.level
-        }
+          level: this.filesService.level,
+        };
         break;
 
       case ReportLevels.Files:
@@ -132,28 +137,29 @@ export class ViewScreenshotsComponent implements OnInit {
           userId: this.filesService.user?.id,
           folder: this.filesService.userDir?.id,
           fileName: event.name,
-          level: this.filesService.level
-        }
+          level: this.filesService.level,
+        };
         break;
 
       default:
         return;
     }
 
-    this.reportsApiService.deleteDirectory(payload as IDeleteDirPayload).subscribe({
-      next: (res) => {
-        if (this.filesService.level === ReportLevels.Files) {
-          this.checkFileRes(res as ResponseModel<ITestFile[]>);
-        } else {
-          this.checkRes(res as ResponseModel<ITestFolder[]>);
-        }
-      },
-    });
+    this.reportsApiService
+      .deleteDirectory(payload as IDeleteDirPayload)
+      .subscribe({
+        next: (res) => {
+          if (this.filesService.level === ReportLevels.Files) {
+            this.checkFileRes(res as ResponseModel<ITestFile[]>);
+          } else {
+            this.checkRes(res as ResponseModel<ITestFolder[]>);
+          }
+        },
+      });
   }
 
   transformDataToElement(data: ITestFolder[]): FileElement[] {
     const isFolder = this.filesService.level != ReportLevels.Files;
-
     return data.map((item) => ({
       isFolder: isFolder,
       name: item.name,
@@ -169,6 +175,11 @@ export class ViewScreenshotsComponent implements OnInit {
 
   navigateUp() {
     this.filesService.navigateUp();
+    this.loadData();
+  }
+
+  navigate(element: BreadcrumbsElement) {
+    this.filesService.navigate(element);
     this.loadData();
   }
 }

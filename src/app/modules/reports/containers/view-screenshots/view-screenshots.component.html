@@ -6,11 +6,12 @@
     <h4 class="title">Screenshots</h4>
   </div>
 </div>
-<app-file-explorer 
+<app-file-explorer
   [fileElements]="elements"
   [canNavigateUp]="filesService.level > 1"
-  [path]="filesService.getPath()"
+  [breadcrumbsElement]="filesService.getBreadcrumbs()"
   (elementRemoved)="deleteDirectory($event)"
   (navigatedDown)="navigateToFolder($event)"
   (navigatedUp)="navigateUp()"
+  (navigateThroughBreadCrumb)="navigate($event)"
 ></app-file-explorer>

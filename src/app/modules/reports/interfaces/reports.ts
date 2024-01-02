@@ -1,18 +1,24 @@
-import { ReportLevels } from "./reports-levels.enum";
+import { ReportLevels } from './reports-levels.enum';
 
 export interface ITestFolder {
-    id: number;
-    name: string;
+  id: number;
+  name: string;
 }
 
 export interface ITestFile {
-    path: string;
+  path: string;
 }
 
 export interface IDeleteDirPayload {
-    testId: number;
-    level: ReportLevels;
-    userId?: number;
-    folder?: string;
-    fileName?: string;
+  testId: number;
+  level: ReportLevels;
+  userId?: number;
+  folder?: string;
+  fileName?: string;
+}
+
+export interface BreadcrumbsElement {
+  id?: number;
+  path: string;
+  level: number;
 }

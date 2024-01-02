@@ -10,6 +10,7 @@ import { MatMenuTrigger } from '@angular/material/menu';
 import { FilesService } from '../../services/files.service';
 import { FileElement } from '../../interfaces/file-element';
 import { ImageService } from '../../services/image.service';
+import { BreadcrumbsElement } from '../../interfaces/reports';
 
 @Component({
   selector: 'app-file-explorer',
@@ -20,6 +21,7 @@ export class FileExplorerComponent {
   @Input() fileElements: FileElement[];
   @Input() canNavigateUp: boolean;
   @Input() path: string;
+  @Input() breadcrumbsElement: BreadcrumbsElement[];
 
   @Output() folderAdded = new EventEmitter<{ name: string }>();
   @Output() elementRemoved = new EventEmitter<FileElement>();
@@ -30,12 +32,17 @@ export class FileExplorerComponent {
   }>();
   @Output() navigatedDown = new EventEmitter<FileElement>();
   @Output() navigatedUp = new EventEmitter();
+  @Output() navigateThroughBreadCrumb = new EventEmitter<BreadcrumbsElement>();
 
   fileName = '';
 
   @ViewChild('box') previewWindow: any;
 
-  constructor(public filesService: FilesService, public dialog: MatDialog, public imageService: ImageService) {}
+  constructor(
+    public filesService: FilesService,
+    public dialog: MatDialog,
+    public imageService: ImageService
+  ) {}
 
   deleteElement(element: FileElement) {
     this.elementRemoved.emit(element);
@@ -51,7 +58,6 @@ export class FileExplorerComponent {
       dialogConfig.height = '90%';
       dialogConfig.minWidth = '50%';
       dialogConfig.maxWidth = '90vw';
-
       this.dialog.open(this.previewWindow, dialogConfig);
     }
   }
@@ -73,5 +79,12 @@ export class FileExplorerComponent {
 
   downloadFile(name: string) {
     this.imageService.download(this.filesService.getImagePath(name), name);
+  }
+
+  breadcrumbsClick(element: BreadcrumbsElement, index: number) {
+    if (index === this.breadcrumbsElement.length - 1) {
+      return;
+    }
+    this.navigateThroughBreadCrumb.emit(element);
   }
 }
