@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
-import { ITestFolder } from '../interfaces/reports';
+import { BreadcrumbsElement, ITestFolder } from '../interfaces/reports';
 import { ReportLevels } from '../interfaces/reports-levels.enum';
 import { FileElement } from '../interfaces/file-element';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FilesService {
   level: ReportLevels = 1;
@@ -13,7 +13,8 @@ export class FilesService {
   test?: ITestFolder;
   user?: ITestFolder;
   userDir?: ITestFolder;
-
+  testPath = 'Tests';
+  breadcrumbsElement: BreadcrumbsElement[] = [];
   navigateToFolder(event: FileElement) {
     this.updateIds(event);
     this.level += 1;
@@ -23,8 +24,22 @@ export class FilesService {
     this.level -= 1;
   }
 
+  navigate(element: BreadcrumbsElement) {
+    this.level -= 1;
+    const isFolder = this.level != ReportLevels.Files;
+    let fileElement: FileElement = {
+      isFolder: isFolder,
+      name: element.path,
+      data: element,
+      id: element.id,
+    };
+    this.updateIds(fileElement);
+    this.level = element.level;
+  }
+
   updateIds(fileElement: FileElement) {
-    switch(this.level) {
+    console.log('Updating', this.level, fileElement);
+    switch (this.level) {
       case ReportLevels.Test:
         this.test = fileElement.data;
         this.user = undefined;
@@ -45,22 +60,64 @@ export class FilesService {
     }
   }
 
-  getPath() {
-    switch(this.level) {
+  getBreadcrumbs() {
+    switch (this.level) {
       case ReportLevels.Test:
-        return '';
+        this.breadcrumbsElement = [
+          { level: ReportLevels.Test, path: this.testPath },
+        ];
+        return this.breadcrumbsElement;
 
       case ReportLevels.User:
-        return `${this.test?.name}`;
+        this.breadcrumbsElement = [
+          { level: ReportLevels.Test, path: this.testPath },
+          {
+            level: ReportLevels.User,
+            path: this.test?.name!,
+            id: this.test?.id,
+          },
+        ];
+        return this.breadcrumbsElement;
 
       case ReportLevels.UserDir:
-        return `${this.test?.name} > ${this.user?.name}`;
+        this.breadcrumbsElement = [
+          { level: ReportLevels.Test, path: this.testPath },
+          {
+            level: ReportLevels.User,
+            path: this.test?.name!,
+            id: this.test?.id,
+          },
+          {
+            level: ReportLevels.UserDir,
+            path: this.user?.name!,
+            id: this.user?.id,
+          },
+        ];
+        return this.breadcrumbsElement;
 
       case ReportLevels.Files:
-        return `${this.test?.name} > ${this.user?.name} > ${this.userDir?.name}`;
+        this.breadcrumbsElement = [
+          { level: ReportLevels.Test, path: this.testPath },
+          {
+            level: ReportLevels.User,
+            path: this.test?.name!,
+            id: this.test?.id,
+          },
+          {
+            level: ReportLevels.UserDir,
+            path: this.user?.name!,
+            id: this.user?.id,
+          },
+          {
+            level: ReportLevels.UserDir,
+            path: this.userDir?.name!,
+            id: this.userDir?.id,
+          },
+        ];
+        return this.breadcrumbsElement;
 
       default:
-        return '';
+        return this.breadcrumbsElement;
     }
   }
 
@@ -83,7 +140,7 @@ export class FilesService {
   }
 
   getImagePath(name: string) {
-    return `${environment.imageBase}/images/${this.test?.id}/${this.user?.id}/${this.userDir?.name}/${name}`
+    return `${environment.imageBase}/images/${this.test?.id}/${this.user?.id}/${this.userDir?.name}/${name}`;
   }
 
   resetAll() {

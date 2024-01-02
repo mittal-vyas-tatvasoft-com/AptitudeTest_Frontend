@@ -2,7 +2,13 @@
   <mat-icon *ngIf="canNavigateUp" class="pointer" (click)="navigateUp()">
     arrow_back
   </mat-icon>
-  <span class="file-path"> {{ path || "Files" }} </span>
+  <span
+    *ngFor="let element of breadcrumbsElement; let i = index"
+    class="file-path cursor-pointer"
+    (click)="breadcrumbsClick(element, i)"
+  >
+    {{ i == 0 ? element.path : " > " + element.path }}
+  </span>
 </mat-toolbar>
 <mat-menu #rootMenu="matMenu" [overlapTrigger]="false">
   <ng-template matMenuContent let-element="element">
@@ -63,9 +69,7 @@
               {{ element.name }}
             </span>
           </div>
-          <div
-            *ngIf="!element.isFolder"
-          >
+          <div *ngIf="!element.isFolder">
             <mat-icon
               color="primary"
               class="pointer"
