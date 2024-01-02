@@ -62,6 +62,10 @@ export class EditQuestionComponent {
         this.testService.questionCountMultiAnswer.next(QuestionCountInitial);
       }
     });
+    this.totalSelectedQuestionsWhileInsert =
+      this.data.topicWiseQuestionCount.totalMarks;
+    this.totalMarksWhileInsert =
+      this.data.topicWiseQuestionCount.totalQuestions;
   }
 
   createForm() {

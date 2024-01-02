@@ -59,7 +59,10 @@
             <div class="col-lg-4">
               <mat-form-field appearance="outline">
                 <mat-label>Difficulty</mat-label>
-                <mat-select formControlName="difficulty">
+                <mat-select
+                  formControlName="difficulty"
+                  [disabled]="!isTopicEditable"
+                >
                   <mat-option *ngFor="let item of difficulty" [value]="item">
                     {{ item }}
                   </mat-option>
