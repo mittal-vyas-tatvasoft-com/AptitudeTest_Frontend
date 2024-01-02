@@ -3,6 +3,7 @@ export interface Question {
   difficulty: number;
   questionText: string;
   questionType: number;
+  topic: number;
   optionType: number;
   nextQuestionId: number;
   questionNumber: number;
