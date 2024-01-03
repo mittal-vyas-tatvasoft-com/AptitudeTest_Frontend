@@ -9,7 +9,11 @@ import {
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
-import { QuestionStatus, StatusCode } from 'src/app/shared/common/enums';
+import {
+  QuestionStatus,
+  QuestionTopic,
+  StatusCode,
+} from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
@@ -24,8 +28,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
   lastName: string;
   userId: number;
   testStatus = 'Start';
-  groupName: string;
-  collegeName: string;
+
   timeRemaining = {
     hours: 0,
     minutes: 0,
@@ -36,6 +39,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     minutes: '0',
     seconds: '0',
   };
+  topic: string;
   endTime: string;
   remainingHours = '';
   remainingMinutes = '';
@@ -48,6 +52,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     options: [],
     optionType: 0,
     questionType: 0,
+    topic: 0,
     difficulty: 0,
     nextQuestionId: -1,
     questionNumber: 0,
@@ -69,12 +74,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.firstName = candidateDetails.FirstName;
     this.lastName = candidateDetails.Name;
     this.userId = candidateDetails.Id;
-    this.candidateService
-      .getCandidateData(this.userId)
-      .subscribe((candidate: any) => {
-        this.groupName = candidate.data.groupName;
-        this.collegeName = candidate.data.collegeName;
-      });
+
     this.getEndTime();
     this.interval = setInterval(() => {
       this.seconds = this.seconds - 1;
@@ -126,6 +126,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
           next: (response: ResponseModel<Question>) => {
             if (response.statusCode === StatusCode.Success) {
               this.question = response.data;
+              this.topic = QuestionTopic[response.data.topic];
             } else {
               this.snackBarService.error(response.message);
             }
