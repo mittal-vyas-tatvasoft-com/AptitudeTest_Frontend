@@ -188,6 +188,8 @@ export class ResultComponent implements OnInit {
             };
           });
           this.statisticsData = new MatTableDataSource<StatisticsData>(data);
+        } else {
+          this.statisticsData = new MatTableDataSource<StatisticsData>([]);
         }
       },
       error: (error) => {
