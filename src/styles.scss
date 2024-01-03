@@ -193,7 +193,8 @@
               vertical-align: middle;
               width: 16px;
               height: 16px;
-              background: url("./assets/images/chevron-down-grey.svg") no-repeat center center;
+              background: url("./assets/images/chevron-down-grey.svg") no-repeat
+                center center;
               background-size: 16px 16px;
               z-index: 0;
               pointer-events: none;
@@ -209,7 +210,7 @@
           .mat-expansion-panel-body {
             padding: 0 0 5px;
 
-            ul li>.nav-item {
+            ul li > .nav-item {
               padding: 6.5px 20px 6.5px 28px;
               font-size: 14px;
               line-height: 20px;
@@ -328,7 +329,7 @@
       margin-bottom: 6px;
     }
 
-    .mat-mdc-button-base+.mat-mdc-button-base {
+    .mat-mdc-button-base + .mat-mdc-button-base {
       margin: 6px 0 6px 12px;
     }
 
@@ -769,7 +770,7 @@
         background-color: #838898;
       }
 
-      +li {
+      + li {
         margin-top: 6px;
       }
 
@@ -822,7 +823,8 @@
             content: "";
             width: 30px;
             height: 30px;
-            background: url(assets/images/excel-icon.svg) center center no-repeat;
+            background: url(assets/images/excel-icon.svg) center center
+              no-repeat;
             display: block;
             margin-right: 10px;
           }
@@ -842,7 +844,7 @@
 
 // Question Answer cards
 .qa-card-listing {
-  li+li {
+  li + li {
     margin-top: 12px;
   }
 }
@@ -945,7 +947,8 @@
                 display: none;
               }
 
-              background: url("./assets/images/success-check.svg") center center no-repeat;
+              background: url("./assets/images/success-check.svg") center center
+                no-repeat;
               background-size: 22px 22px;
               width: 22px;
               height: 22px;
@@ -1061,26 +1064,56 @@
     margin: 0 12px;
   }
 
-  .mdc-checkbox .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
-  .mdc-checkbox .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,
-  .mdc-checkbox .mdc-checkbox__native-control[data-indeterminate="true"]:enabled~.mdc-checkbox__background,
-  .mdc-checkbox .mdc-checkbox__native-control:enabled:focus:checked~.mdc-checkbox__background,
-  .mdc-checkbox .mdc-checkbox__native-control:enabled:focus:indeterminate~.mdc-checkbox__background,
-  .mdc-checkbox:not(:disabled):active .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
-  .mdc-checkbox:hover .mdc-checkbox__native-control:enabled:checked~.mdc-checkbox__background,
-  .mdc-checkbox:hover .mdc-checkbox__native-control:enabled:indeterminate~.mdc-checkbox__background,
-  .mdc-checkbox:hover .mdc-checkbox__native-control[data-indeterminate="true"]:enabled~.mdc-checkbox__background {
+  .mdc-checkbox
+    .mdc-checkbox__native-control:enabled:checked
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox
+    .mdc-checkbox__native-control:enabled:indeterminate
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox
+    .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox
+    .mdc-checkbox__native-control:enabled:focus:checked
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox
+    .mdc-checkbox__native-control:enabled:focus:indeterminate
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox:not(:disabled):active
+    .mdc-checkbox__native-control:enabled:checked
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox:hover
+    .mdc-checkbox__native-control:enabled:checked
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox:hover
+    .mdc-checkbox__native-control:enabled:indeterminate
+    ~ .mdc-checkbox__background,
+  .mdc-checkbox:hover
+    .mdc-checkbox__native-control[data-indeterminate="true"]:enabled
+    ~ .mdc-checkbox__background {
     border-color: #46a746;
     background-color: #46a746;
   }
 
-  .mdc-checkbox .mdc-checkbox__native-control:focus:checked~.mdc-checkbox__ripple,
-  .mdc-checkbox .mdc-checkbox__native-control:focus~.mdc-checkbox__ripple {
+  .mdc-checkbox
+    .mdc-checkbox__native-control:focus:checked
+    ~ .mdc-checkbox__ripple,
+  .mdc-checkbox .mdc-checkbox__native-control:focus ~ .mdc-checkbox__ripple {
     background-color: #46a746;
   }
 
-  .mat-mdc-checkbox .mdc-checkbox:hover .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not([data-indeterminate="true"])~.mdc-checkbox__background,
-  .mat-mdc-checkbox .mdc-checkbox .mdc-checkbox__native-control:enabled:focus:focus:not(:checked):not( :indeterminate)~.mdc-checkbox__background {
+  .mat-mdc-checkbox
+    .mdc-checkbox:hover
+    .mdc-checkbox__native-control:enabled:not(:checked):not(:indeterminate):not(
+      [data-indeterminate="true"]
+    )
+    ~ .mdc-checkbox__background,
+  .mat-mdc-checkbox
+    .mdc-checkbox
+    .mdc-checkbox__native-control:enabled:focus:focus:not(:checked):not(
+      :indeterminate
+    )
+    ~ .mdc-checkbox__background {
     border-color: #46a746;
   }
 
@@ -1171,7 +1204,8 @@
 
           &::before {
             margin: 0 auto 4px;
-            background: url("./assets/images/add-photo-light.svg") no-repeat center center;
+            background: url("./assets/images/add-photo-light.svg") no-repeat
+              center center;
             background-size: 30px 30px;
           }
         }
@@ -1787,10 +1821,11 @@
       margin-bottom: 40px;
 
       li {
+        flex-grow: 1;
         margin: 5px;
         border-radius: 4px;
         padding: 6px 8px;
-        background: #FFF;
+        background: #fff;
         box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.15);
         font-size: 13px;
         line-height: 16px;
@@ -1935,8 +1970,7 @@
 }
 
 //css for webcam don't remove
-webcam>.webcam-wrapper {
-
+webcam > .webcam-wrapper {
   border: 2px solid black;
 }
 
