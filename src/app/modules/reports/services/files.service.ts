@@ -38,6 +38,7 @@ export class FilesService {
   }
 
   updateIds(fileElement: FileElement) {
+    console.log('Updating', this.level, fileElement);
     switch (this.level) {
       case ReportLevels.Test:
         this.test = fileElement.data;
