@@ -33,9 +33,7 @@ export class TestSubmittedComponent implements OnInit {
       .getInstructionsOfTheTestForUser(this.userId, this.testStatus)
       .subscribe({
         next: (res: any) => {
-          if (res.statusCode == StatusCode.Success) {
-            this.messageToShow = res.data;
-          }
+          this.messageToShow = res.message;
         },
       });
   }
