@@ -12,6 +12,7 @@ import { FormControlModule } from 'src/app/shared/modules/form-control/form-cont
 import { ResultTableComponent } from './component/result-table/result-table.component';
 import { StatisticsTableComponent } from './component/statistics-table/statistics-table.component';
 import { AdminApprovalComponent } from './component/admin-approval/admin-approval.component';
+import { UpdateTestTimeComponent } from './component/update-test-time/update-test-time.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { AdminApprovalComponent } from './component/admin-approval/admin-approva
     ResultTableComponent,
     StatisticsTableComponent,
     AdminApprovalComponent,
+    UpdateTestTimeComponent,
   ],
   imports: [
     CommonModule,

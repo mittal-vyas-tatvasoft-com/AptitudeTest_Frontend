@@ -1,22 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { Subject, debounceTime } from 'rxjs';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { SettingService } from 'src/app/modules/setting/services/setting.service';
-import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { Numbers, StatusCode, TestStatus } from 'src/app/shared/common/enums';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { FilterControls } from '../../configs/results.config';
 import {
+  ApproveTestParams,
   ResultModel,
   ResultQueryParam,
   StatisticsData,
 } from '../../interfaces/result.interface';
 import { ResultsService } from '../../services/results.service';
+import { AdminApprovalComponent } from '../admin-approval/admin-approval.component';
+import { UpdateTestTimeComponent } from '../update-test-time/update-test-time.component';
 
 @Component({
   selector: 'app-result',
@@ -37,9 +41,12 @@ export class ResultComponent implements OnInit {
   sortKey: string;
   sortDirection: string;
   cutOff: number;
+  isAllRowsSelected: boolean;
   filterControls = FilterControls;
   params: ResultQueryParam;
   private searchInputValue = new Subject<string>();
+  userAndTestIds: ApproveTestParams[] = [];
+  results: ResultModel[] = [];
 
   constructor(
     public dialog: MatDialog,
@@ -169,6 +176,62 @@ export class ResultComponent implements OnInit {
     this.router.navigate([
       `admin/results/result-details/${data.id}/${data.testId}`,
     ]);
+  }
+
+  handleAllRowsSelected(areAllRowsSelected: boolean) {
+    this.isAllRowsSelected = areAllRowsSelected;
+    if (this.isAllRowsSelected) {
+      this.resultService
+        .getResults(this.params, this.currentPageIndex, this.pageSize)
+        .subscribe((res) => {
+          res.data.forEach((result) => {
+            if (result.status === 'Active') {
+              const userExists = this.userAndTestIds.some(
+                (user) =>
+                  user.userId == result.userId &&
+                  user.testId == result.userTestId
+              );
+              if (!userExists) {
+                this.userAndTestIds.push({
+                  userId: result.userId,
+                  testId: result.userTestId,
+                });
+              }
+            }
+          });
+        });
+    } else {
+      this.userAndTestIds = [];
+    }
+    console.log(this.userAndTestIds);
+  }
+
+  handleCheckBoxData(data: { userId: number; testId: number }) {
+    const userExists = this.userAndTestIds.some(
+      (user) => user.userId == data.userId && user.testId == data.testId
+    );
+    if (!userExists) {
+      this.userAndTestIds.push({ userId: data.userId, testId: data.testId });
+    } else {
+      const index = this.userAndTestIds.findIndex(
+        (user) => user.userId == data.userId && user.testId == data.testId
+      );
+      if (index > -1) {
+        this.userAndTestIds.splice(index, 1);
+      }
+    }
+  }
+
+  updateTestTime() {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.panelClass = ['primary-dialog'];
+    dialogConfig.autoFocus = false;
+    dialogConfig.data = this.userAndTestIds;
+    console.log(dialogConfig);
+    this.dialog
+      .open(UpdateTestTimeComponent, dialogConfig)
+      .afterClosed()
+      .subscribe();
   }
 
   getStatistics() {
