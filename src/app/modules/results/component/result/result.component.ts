@@ -203,7 +203,6 @@ export class ResultComponent implements OnInit {
     } else {
       this.userAndTestIds = [];
     }
-    console.log(this.userAndTestIds);
   }
 
   handleCheckBoxData(data: { userId: number; testId: number }) {
@@ -227,7 +226,6 @@ export class ResultComponent implements OnInit {
     dialogConfig.panelClass = ['primary-dialog'];
     dialogConfig.autoFocus = false;
     dialogConfig.data = this.userAndTestIds;
-    console.log(dialogConfig);
     this.dialog
       .open(UpdateTestTimeComponent, dialogConfig)
       .afterClosed()
