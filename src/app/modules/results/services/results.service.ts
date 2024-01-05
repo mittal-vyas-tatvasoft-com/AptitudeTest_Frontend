@@ -1,4 +1,4 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, map } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
@@ -7,6 +7,7 @@ import * as XLSX from 'xlsx';
 import { DropdownItem } from '../../candidate/interfaces/candidate.interface';
 import {
   ApproveTestData,
+  ApproveTestParams,
   ResultData,
   ResultDetails,
   ResultDetailsParam,
@@ -49,6 +50,13 @@ export class ResultsService {
   approveResumeTest(data: ApproveTestData) {
     return this.http.put<ResponseModel<string>>(
       `${environment.baseURL}Results/ApproveResumeTest`,
+      data
+    );
+  }
+
+  updateTestTime(data: ApproveTestParams[], timeToBeAdded: number) {
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}Results/UpdateTestRemainingTime/${timeToBeAdded}`,
       data
     );
   }

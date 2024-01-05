@@ -31,3 +31,12 @@ export const AdminApproveControls = {
     maxLength: 3,
   },
 };
+
+export const UpdateTestTimeCOntrols = {
+  timeToBeAdded: {
+    value: '',
+    key: 'timeToBeAdded',
+    label: 'Time To Be Added In Minutes',
+    requiredErrMsg: 'Time is Required',
+  },
+};

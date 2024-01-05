@@ -6,6 +6,9 @@
     <h4 class="title">Results</h4>
   </div>
   <div class="action-list">
+    <button mat-flat-button color="primary" (click)="updateTestTime()">
+      Update Test Time
+    </button>
     <button
       mat-flat-button
       color="primary"
@@ -79,11 +82,13 @@
 <app-result-table
   [dataSource]="dataSource"
   (detailsClicked)="getDetails($event)"
+  (checkboxClicked)="handleCheckBoxData($event)"
   [totalItemsCount]="totalItemsCount"
   [pageSize]="pageSize"
   (pageSizeChanged)="handlePageSizeChange($event)"
   (pageToPage)="handlePageToPage($event)"
   (pageChanged)="handlePageChange($event)"
   (sortingChanged)="handleDataSorting($event)"
+  (allCheckboxesSelected)="handleAllRowsSelected($event)"
 ></app-result-table>
 <app-statistics-table [statisticsData]="statisticsData"></app-statistics-table>

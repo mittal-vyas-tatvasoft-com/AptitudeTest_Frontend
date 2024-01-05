@@ -12,6 +12,7 @@ import { DisplayedColumns } from '../../static/results.static';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AdminApprovalComponent } from '../admin-approval/admin-approval.component';
+import { SelectionModel } from '@angular/cdk/collections';
 
 @Component({
   selector: 'app-result-table',
@@ -33,6 +34,12 @@ export class ResultTableComponent {
   @Output() pageToPage = new EventEmitter<number>();
   @Output() sortingChanged = new EventEmitter<Sort>();
   @ViewChild(MatSort) sort = new MatSort();
+  @Output() checkboxClicked = new EventEmitter<{
+    userId: number;
+    testId: number;
+  }>();
+  @Output() allCheckboxesSelected = new EventEmitter<boolean>();
+  selection = new SelectionModel<any>(true, []); // This selection model is used for item selection, and the type is not specific.
 
   constructor(public dialog: MatDialog) {}
 
@@ -50,6 +57,42 @@ export class ResultTableComponent {
 
   handleDetails(id: number, testId: number) {
     this.detailsClicked.emit({ id, testId });
+  }
+
+  handleCheckBox(userId: number, testId: number) {
+    this.checkboxClicked.emit({ userId, testId });
+  }
+
+  toggleAllRows() {
+    if (this.isAllSelected()) {
+      this.selection.clear();
+      return;
+    }
+    this.selection.select(...this.dataSource.data);
+  }
+
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  checkboxLabel(row?: any): string {
+    if (!row) {
+      return `${this.isAllSelected() ? 'deselect' : 'select'} all`;
+    }
+    return `${this.selection.isSelected(row) ? 'deselect' : 'select'} row ${
+      row.firstName + 1
+    }`;
+  }
+
+  allRowsSelected() {
+    const areAllRowsSelected = this.isAllSelected();
+    if (areAllRowsSelected) {
+      this.allCheckboxesSelected.emit(true);
+    } else {
+      this.allCheckboxesSelected.emit(false);
+    }
   }
 
   onPageSizeChange() {
