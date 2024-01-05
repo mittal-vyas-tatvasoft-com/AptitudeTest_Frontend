@@ -64,7 +64,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
       this.academicDetails = [];
       return;
     }
-    
+
     this.candidateService
       .getCandidateData(Id)
       .pipe(takeUntil(this.ngUnsubscribe$))
@@ -75,10 +75,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
         }
         this.familyDetails = data.data.familyDetails;
         this.academicDetails = data.data.academicsDetails;
-        if (
-          this.candidateData.userCollege != null &&
-          this.candidateEditMode
-        ) {
+        if (this.candidateData.userCollege != null && this.candidateEditMode) {
           this.collegeSelectedByCandidate = true;
         } else {
           this.collegeSelectedByCandidate = false;
@@ -184,8 +181,15 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
           .subscribe(
             (response) => {
               if (response.statusCode === StatusCode.Success) {
+                const isSubmitted = Boolean(
+                  this.loginService.getGetSubmitted()
+                );
+                if (isSubmitted) {
+                  this.router.navigate([`user/${Navigation.Submitted}`]);
+                } else {
+                  this._location.back();
+                }
                 this.snackbarService.success(response.message);
-                this._location.back();
               } else {
                 this.snackbarService.error(response.message);
                 this.disabled = false;

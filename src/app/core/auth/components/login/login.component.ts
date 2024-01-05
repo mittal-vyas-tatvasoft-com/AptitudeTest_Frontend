@@ -73,27 +73,25 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   doUserLogin(payload: any) {
     this.loginService
-    .login(payload)
-    .pipe(takeUntil(this.ngUnsubscribe$))
-    .subscribe({
-      next: (res: ResponseModel<TokenWithSidVm>) => {
-        if (res.result) {
-          if (res.data.isSubmitted) {
-            this.loginService.setSubmitted('true');
-            this.router.navigate([`user/${Navigation.Submitted}`]);
-          } else {
+      .login(payload)
+      .pipe(takeUntil(this.ngUnsubscribe$))
+      .subscribe({
+        next: (res: ResponseModel<TokenWithSidVm>) => {
+          if (res.result) {
+            this.loginService.setSubmitted(
+              res.data.isSubmitted ? 'true' : 'false'
+            );
             this.loginService.setSubmitted('false');
             const token = this.loginService.decodeToken();
             this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
+          } else {
+            this.snackbarService.error(res.message);
           }
-        } else {
-          this.snackbarService.error(res.message);
-        }
-      },
-      error: (error: { message: string }) => {
-        this.snackbarService.error(error.message);
-      },
-    });
+        },
+        error: (error: { message: string }) => {
+          this.snackbarService.error(error.message);
+        },
+      });
   }
 
   login() {
