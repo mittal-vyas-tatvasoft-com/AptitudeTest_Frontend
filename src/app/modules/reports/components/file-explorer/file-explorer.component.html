@@ -10,18 +10,10 @@
     {{ i == 0 ? element.path : " > " + element.path }}
   </span>
 </mat-toolbar>
-<mat-menu #rootMenu="matMenu" [overlapTrigger]="false">
-  <ng-template matMenuContent let-element="element">
-    <button mat-menu-item (click)="deleteElement(element)">
-      <mat-icon>delete</mat-icon>
-      <span>Delete</span>
-    </button>
-  </ng-template>
-</mat-menu>
 
 <div fxFlex fxLayout="row" fxLayoutAlign="space-between stretch">
   <div class="content" fxFlex fxLayout="row">
-    <mat-grid-list cols="3" rowHeight="75px" fxFlex>
+    <mat-grid-list [cols]="breakpoint" rowHeight="75px" fxFlex>
       <div class="no-file-msg" *ngIf="fileElements.length === 0">
         This folder is empty.
       </div>
@@ -30,11 +22,7 @@
         class="file-or-folder"
       >
         <div class="inside-grid-tile">
-          <div
-            class="folder-file-list"
-            (click)="navigate(element)"
-            (contextmenu)="openMenu($event, menuTrigger)"
-          >
+          <div class="folder-file-list" (click)="navigate(element)">
             <mat-icon
               color="primary"
               class="file-or-folder-icon pointer"
@@ -60,22 +48,30 @@
             </mat-icon>
 
             <span class="pointer">
-              <span
-                [matMenuTriggerFor]="rootMenu"
-                [matMenuTriggerData]="{ element: element }"
-                #menuTrigger="matMenuTrigger"
-              >
-              </span>
               {{ element.name }}
             </span>
           </div>
-          <div *ngIf="!element.isFolder">
+          <mat-menu #rootMenu="matMenu">
+            <button mat-menu-item (click)="deleteElement(element)">
+              <mat-icon>delete</mat-icon>
+              <span>Delete</span>
+            </button>
+            <button
+              *ngIf="!element.isFolder"
+              mat-menu-item
+              (click)="downloadFile(element.name)"
+            >
+              <mat-icon>arrow_downward</mat-icon>
+              <span>Download</span>
+            </button>
+          </mat-menu>
+          <div>
             <mat-icon
               color="primary"
               class="pointer"
-              (click)="downloadFile(element.name)"
+              [mat-menu-trigger-for]="rootMenu"
             >
-              arrow_downward
+              more_vert
             </mat-icon>
           </div>
         </div>

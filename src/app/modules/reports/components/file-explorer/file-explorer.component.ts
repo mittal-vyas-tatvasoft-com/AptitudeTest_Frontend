@@ -1,7 +1,9 @@
 import {
   Component,
   EventEmitter,
+  HostListener,
   Input,
+  OnInit,
   Output,
   ViewChild,
 } from '@angular/core';
@@ -17,7 +19,7 @@ import { BreadcrumbsElement } from '../../interfaces/reports';
   templateUrl: './file-explorer.component.html',
   styleUrls: ['./file-explorer.component.scss'],
 })
-export class FileExplorerComponent {
+export class FileExplorerComponent implements OnInit {
   @Input() fileElements: FileElement[];
   @Input() canNavigateUp: boolean;
   @Input() path: string;
@@ -35,6 +37,7 @@ export class FileExplorerComponent {
   @Output() navigateThroughBreadCrumb = new EventEmitter<BreadcrumbsElement>();
 
   fileName = '';
+  breakpoint: number;
 
   @ViewChild('box') previewWindow: any;
 
@@ -44,6 +47,32 @@ export class FileExplorerComponent {
     public imageService: ImageService
   ) {}
 
+  ngOnInit(): void {
+    this.setBreakpoint();
+  }
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: Event) {
+    if (
+      this.fileElements == null ||
+      this.fileElements.length == 0 ||
+      this.fileElements[0].isFolder
+    ) {
+      this.setBreakpoint();
+    } else {
+      this.breakpoint = 1;
+    }
+  }
+
+  setBreakpoint() {
+    if (window.innerWidth >= 992) {
+      this.breakpoint = 3;
+    } else if (window.innerWidth < 992 && window.innerWidth > 768) {
+      this.breakpoint = 2;
+    } else {
+      this.breakpoint = 1;
+    }
+  }
   deleteElement(element: FileElement) {
     this.elementRemoved.emit(element);
   }
@@ -66,14 +95,8 @@ export class FileExplorerComponent {
     this.navigatedUp.emit();
   }
 
-  openMenu(event: MouseEvent, viewChild: MatMenuTrigger) {
-    event.preventDefault();
-    viewChild.openMenu();
-  }
-
   getImgPath(name: string | undefined) {
     if (name == undefined) return '';
-
     return `assets/images/${name}`;
   }
 
