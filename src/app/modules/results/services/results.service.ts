@@ -55,7 +55,6 @@ export class ResultsService {
   }
 
   updateTestTime(data: ApproveTestParams[], timeToBeAdded: number) {
-    console.log(data);
     return this.http.put<ResponseModel<string>>(
       `${environment.baseURL}Results/UpdateTestRemainingTime/${timeToBeAdded}`,
       data
