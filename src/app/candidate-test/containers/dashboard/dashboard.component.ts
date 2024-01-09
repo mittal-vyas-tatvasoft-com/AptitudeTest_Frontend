@@ -79,7 +79,9 @@ export class DashboardComponent implements OnInit {
     const year = testDate.getFullYear();
     const month = testDate.getMonth() + 1;
     const day = testDate.getDate();
-    const formattedTestDate = `${day}/${month}/${year}`;
+    const formattedTestDate = `${this.addPad(day)}/${this.addPad(
+      month
+    )}/${year}`;
     return formattedTestDate;
   }
   getTestStartTime(date: string) {
