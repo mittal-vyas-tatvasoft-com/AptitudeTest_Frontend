@@ -303,14 +303,8 @@ export class ResultComponent implements OnInit {
     const hours = tempDate.getHours();
     const minutes = tempDate.getMinutes();
     const seconds = tempDate.getSeconds();
-    const formattedDate = `${day}-${month}-${year} ${this.addPad(
-      hours
-    )}:${this.addPad(minutes)}:${this.addPad(seconds)}`;
+    const formattedDate = `${day}-${month}-${year} ${hours}:${minutes}:${seconds}`;
     return formattedDate;
-  }
-
-  addPad(digit: number) {
-    return digit > 9 ? digit : `0${digit}`;
   }
 
   createParam() {
