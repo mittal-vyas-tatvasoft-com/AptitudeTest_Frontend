@@ -19,7 +19,21 @@
       [formControlModel]="formControls.name"
     ></app-text-control>
     <div class="d-flex justify-content-between align-items-center mt-n1 mb-1">
-      <mat-checkbox color="primary" class="font14" formControlName="isDefault"
+      <mat-checkbox
+        *ngIf="data.isDefault"
+        color="primary"
+        class="default-group"
+        formControlName="isDefault"
+        [checked]="data.isDefault"
+        [disableRipple]="true"
+        (click)="$event.preventDefault()"
+        >Set as Default Group</mat-checkbox
+      >
+      <mat-checkbox
+        *ngIf="!data.isDefault"
+        color="primary"
+        class="font14"
+        formControlName="isDefault"
         >Set as Default Group</mat-checkbox
       >
     </div>
