@@ -173,7 +173,6 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
           ),
         state: personalInfo.state || null,
       };
-
       if (this.candidateId) {
         this.candidateService
           .updateCandidate(updateParams)
@@ -181,9 +180,8 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
           .subscribe(
             (response) => {
               if (response.statusCode === StatusCode.Success) {
-                const isSubmitted = Boolean(
-                  this.loginService.getGetSubmitted()
-                );
+                const isSubmitted =
+                  this.loginService.getGetSubmitted() === 'true';
                 if (isSubmitted) {
                   this.router.navigate([`user/${Navigation.Submitted}`]);
                 } else {
