@@ -1442,6 +1442,19 @@
           border: 1px solid #e19f51;
           background: #e19f51;
         }
+
+        &.unvisited::before {
+          content: "";
+          display: inline-block;
+          vertical-align: middle;
+          width: 8px;
+          height: 8px;
+          border-radius: 20px;
+          margin-right: 4px;
+          margin-bottom: 2px;
+          border: 1px solid #090b03;
+          background: #eef0f6;
+        }
       }
     }
 
@@ -1486,6 +1499,16 @@
           &:hover {
             border-color: #ab6f28;
             background: #d8923f;
+          }
+        }
+
+        &.unvisited {
+          color: $primary500;
+          background: #eef0f6;
+
+          &:hover {
+            border-color: $primary500;
+            background: #d5d6da;
           }
         }
 

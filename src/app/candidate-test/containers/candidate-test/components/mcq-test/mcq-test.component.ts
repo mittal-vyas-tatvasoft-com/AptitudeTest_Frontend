@@ -46,6 +46,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
   remainingSeconds = '';
   timeRemainingToEndTime: number;
   @Input() seconds = 0;
+  @Input() isQuestionMenu: boolean;
   question: Question = {
     id: 0,
     questionText: '',
@@ -136,6 +137,13 @@ export class McqTestComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(event: { answers: Answer[]; questionNumber: number }) {
+    if (
+      this.isQuestionMenu &&
+      event.questionNumber === this.question.totalQuestions
+    ) {
+      this.question.nextQuestionId = -1;
+    }
+
     this.displayQuestion();
     this.saveAnswers(event);
     let state =
@@ -164,7 +172,9 @@ export class McqTestComponent implements OnInit, OnDestroy {
       next: (res: ResponseModel<string>) => {
         if (res.statusCode === StatusCode.Success) {
           if (event.questionNumber === this.question.totalQuestions) {
-            this.submitTest();
+            if (!this.isQuestionMenu) {
+              this.submitTest();
+            }
           }
         } else {
           this.snackBarService.error(res.message);
