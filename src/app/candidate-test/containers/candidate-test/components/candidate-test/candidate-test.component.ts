@@ -177,7 +177,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
           if (response.statusCode === StatusCode.Success) {
             this.questionsStatus = response.data;
             if (this.questionsStatus.questionStatusVMs.length > 0) {
-              if (this.isResume()) {
+              if (this.isResume() && !this.questionsStatus.isQuestionsMenu) {
                 const currentQuestion =
                   this.questionsStatus.questionStatusVMs.find(
                     (x) => x.status === this.questionStatus.Unvisited

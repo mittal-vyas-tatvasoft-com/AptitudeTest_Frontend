@@ -30,6 +30,7 @@
           mat-mini-fab
           color="primary"
           class="answered"
+          (click)="fetchQuestion(question.questionId)"
         >
           {{ i + 1 }}
         </button>
@@ -38,6 +39,7 @@
           mat-mini-fab
           color="primary"
           class="not-answered"
+          (click)="fetchQuestion(question.questionId)"
         >
           {{ i + 1 }}
         </button>
@@ -45,10 +47,12 @@
           *ngIf="question.status == questionStatus.Unvisited"
           mat-mini-fab
           color="primary"
-          disabled
+          class="unvisited"
+          (click)="fetchQuestion(question.questionId)"
         >
           {{ i + 1 }}
         </button>
+        <!-- disabled -->
       </li>
     </ul>
   </mat-card-content>
