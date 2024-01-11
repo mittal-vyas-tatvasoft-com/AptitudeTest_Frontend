@@ -34,7 +34,12 @@ export class AddGroupComponent implements OnInit {
           Validators.pattern(validations.common.whitespaceREGEX),
         ],
       ],
-      isDefault: [GroupFormControls.default.value],
+      isDefault: [
+        {
+          value: GroupFormControls.default.value,
+          disabled: this.data.isDefault,
+        },
+      ],
     });
 
     if (this.data.id != 0) {
