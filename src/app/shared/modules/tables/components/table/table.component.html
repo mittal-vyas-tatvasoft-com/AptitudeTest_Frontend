@@ -107,7 +107,10 @@
                 mat-icon-button
                 [matMenuTriggerFor]="tableActionMenu"
                 class="btn-small"
-                *ngIf="!row.isSuperAdmin"
+                *ngIf="
+                  !row.isSuperAdmin &&
+                  (row.id !== this.adminId || role !== 'Admin')
+                "
                 matTooltip="Action"
               >
                 <mat-icon>

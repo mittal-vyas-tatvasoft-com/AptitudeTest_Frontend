@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -11,13 +12,14 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Numbers } from 'src/app/shared/common/enums';
 import { TableColumn } from '../../interfaces/table-data.interface';
+import { LoginService } from 'src/app/core/auth/services/login.service';
 
 @Component({
   selector: 'app-table',
   templateUrl: './table.component.html',
   styleUrls: ['./table.component.scss'],
 })
-export class TableComponent<T> {
+export class TableComponent<T> implements OnInit {
   pageNumbers: number[] = [];
   currentPageIndex: number = Numbers.Zero;
   pageSizeOptions: number[] = [10, 20, 50];
@@ -45,6 +47,13 @@ export class TableComponent<T> {
   @Output() pageToPage = new EventEmitter<number>();
   @Output() sortingChanged = new EventEmitter<Sort>();
   @ViewChild(MatSort) sort = new MatSort();
+  adminId: number;
+  role: string;
+  constructor(private loginService: LoginService) {}
+  ngOnInit() {
+    this.adminId = +this.loginService.decodeToken().Id;
+    this.role = this.loginService.decodeToken().Role;
+  }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes['totalItemsCount'] || changes['pageSize']) {
