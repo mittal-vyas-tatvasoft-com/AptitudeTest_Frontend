@@ -241,7 +241,7 @@ export class ResultComponent implements OnInit {
             return {
               name: record.statisticsHeader,
               points: record.points.toString(),
-              pointsColor: record.points <= this.cutOff ? 'red' : 'green',
+              pointsColor: record.points < this.cutOff ? 'red' : 'green',
               correct: record.correct,
               wrong: record.wrong,
               unanswered: record.unAnswered.toString(),

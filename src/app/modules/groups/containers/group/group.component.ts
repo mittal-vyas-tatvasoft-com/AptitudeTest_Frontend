@@ -3,9 +3,7 @@ import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
-import {
-  GroupsModel,
-} from '../../interfaces/groups.interface';
+import { GroupsModel } from '../../interfaces/groups.interface';
 import { GroupsService } from '../../services/groups.service';
 import { AddGroupComponent } from '../add-group/add-group.component';
 import { CollegeModel } from 'src/app/modules/masters/college/interfaces/college.interface';
@@ -41,7 +39,6 @@ export class GroupComponent implements OnInit {
   ngOnInit(): void {
     this.createForm();
     this.getGroups();
-    this.getColleges();
     this.searchGroupChanged
       .pipe(debounceTime(Numbers.Debounce))
       .subscribe(() => {
@@ -66,29 +63,11 @@ export class GroupComponent implements OnInit {
     });
   }
 
-  getColleges() {
-    this.groupsService.colleges().subscribe((collegeData) => {
-      this.colleges = collegeData;
-    });
-  }
-
   getFilteredGroups() {
     const search = this.form.get('searchedGroup')?.value;
     const collegeId = this.form.get('searchedCollege')?.value;
     this.groupsService.groups(search, collegeId).subscribe((groups) => {
       this.groupList = groups;
-    });
-  }
-
-  getFilteredGroupsFromCollege(search: string) {
-    const collegeId = this.form.get('searchedCollege')?.value;
-    this.groupsService.groups(search, collegeId).subscribe((groups) => {
-      if (groups === null) {
-        this.groupList.length = 0;
-        this.groupList = [];
-      } else if (groups.length > 0) {
-        this.groupList = groups;
-      }
     });
   }
 
