@@ -117,7 +117,10 @@
             <div class="col-lg-4 col-sm-6">
               <mat-form-field appearance="outline">
                 <mat-label>Type</mat-label>
-                <mat-select formControlName="questionType">
+                <mat-select
+                  formControlName="questionType"
+                  [disabled]="!isTopicEditable"
+                >
                   <mat-option
                     *ngFor="let item of answerType"
                     [value]="item.value"
