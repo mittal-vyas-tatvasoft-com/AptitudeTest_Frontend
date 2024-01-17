@@ -273,7 +273,7 @@ export class ResultComponent implements OnInit {
                 name: record.firstName + ' ' + record.lastName,
                 points: record.points.toString(),
                 correct: record.correctMarks + ' (' + record.correctCount + ')',
-                pointsColor: record.points <= this.cutOff ? 'red' : 'green',
+                pointsColor: record.points < this.cutOff ? 'red' : 'green',
                 status: record.status,
                 unanswered: record.unAnsweredCount.toString(),
                 undisplayed: record.unDisplayedCount.toString(),
