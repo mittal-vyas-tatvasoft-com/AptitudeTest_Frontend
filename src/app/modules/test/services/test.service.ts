@@ -337,6 +337,13 @@ export class TestService {
     );
   }
 
+  UpdateBasicPoints(testId: number) {
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}Tests/UpdateBasicPoints/${testId}`,
+      { testId }
+    );
+  }
+
   CheckSumAndSelectedQuestions(form: FormGroup) {
     const sum =
       form.get('oneMarkQuestionSingleAnswer')?.value +
