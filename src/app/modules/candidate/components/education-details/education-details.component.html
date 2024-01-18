@@ -96,9 +96,8 @@
                   matInput
                   type="number"
                   formControlName="grade"
-                  appNumbersOnly
                   appMaxLength
-                  [maxLength]="3"
+                  [maxLength]="5"
                 />
                 <mat-error>{{
                   validationService.getError(

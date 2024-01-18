@@ -13,6 +13,8 @@ import {
   AllInsertedQuestionModel,
   TopicWiseQuestionData,
 } from '../../interfaces/test.interface';
+import { TestService } from '../../services/test.service';
+import { StatusCode } from 'src/app/shared/common/enums';
 
 @Component({
   selector: 'app-test-questions-listing',
@@ -30,7 +32,8 @@ export class TestQuestionsListingComponent implements OnInit, AfterViewInit {
   constructor(
     private cdr: ChangeDetectorRef,
     private snackbarService: SnackbarService,
-    private router: Router
+    private router: Router,
+    private testService: TestService
   ) {}
   handleEditDialog(questionData: any, allInsertedQuestions: any) {
     this.handleEditQuestionsDialog.emit({ questionData, allInsertedQuestions });
@@ -56,7 +59,20 @@ export class TestQuestionsListingComponent implements OnInit, AfterViewInit {
     this.handleDeleteAllQuestionsDialog.emit();
   }
   showTestCreatedSnackbar() {
-    this.snackbarService.success(this.testCreatedMessage);
-    this.router.navigate(['/admin/tests']);
+    this.testService
+      .UpdateBasicPoints(this.allInsertedQuestions[0].testId)
+      .subscribe({
+        next: (res) => {
+          if (res.statusCode == StatusCode.Success) {
+            this.snackbarService.success(this.testCreatedMessage);
+            this.router.navigate(['/admin/tests']);
+          } else {
+            this.snackbarService.error(res.message);
+          }
+        },
+        error: (error) => {
+          this.snackbarService.error(error.message);
+        },
+      });
   }
 }

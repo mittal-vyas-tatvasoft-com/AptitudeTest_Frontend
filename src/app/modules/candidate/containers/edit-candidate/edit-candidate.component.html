@@ -52,7 +52,9 @@
     (click)="Save()"
     [disabled]="disabled"
   >
-    {{ isAdmin ? "Update" : candidateEditMode ? "Save" : "Register" }}
+    {{
+      isAdmin ? "Update" : candidateEditMode ? "Save &amp; Next" : "Register"
+    }}
   </button>
   <button
     *ngIf="!candidateEditMode"
