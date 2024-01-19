@@ -52,7 +52,12 @@
       </ul>
     </div>
 
-    <button mat-flat-button color="primary" (click)="readyForTest()">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="readyForTest()"
+      [disabled]="!isStart"
+    >
       I am Ready to Begin
     </button>
   </div>

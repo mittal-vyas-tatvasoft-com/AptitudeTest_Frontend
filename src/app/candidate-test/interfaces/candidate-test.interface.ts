@@ -53,4 +53,5 @@ export interface TestInstructions {
   testDurationInMinutes: number;
   basicPoints: number;
   negativeMarkingPoints: number;
+  timeToStartTest: number;
 }
