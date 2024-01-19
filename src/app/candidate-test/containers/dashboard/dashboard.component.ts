@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { StatusCode } from 'src/app/shared/common/enums';
@@ -11,7 +11,7 @@ import { NoTestAssigned } from '../../static/candidate-test.static';
   templateUrl: './dashboard.component.html',
   styleUrls: ['./dashboard.component.scss'],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent implements OnInit, OnDestroy {
   firstName: string;
   lastName: string;
   userId: number;
@@ -23,6 +23,9 @@ export class DashboardComponent implements OnInit {
   basicPoints: number;
   negativeMarkingPoints: number;
   testExists = false;
+  isStart = false;
+  timeToStartTest = 0;
+  interval: any;
   constructor(
     public loginService: LoginService,
     private router: Router,
@@ -65,6 +68,19 @@ export class DashboardComponent implements OnInit {
             this.startTime = this.getTestStartTime(test.data.startTime);
             this.testDurationInMinutes = test.data.testDurationInMinutes;
             this.negativeMarkingPoints = test.data.negativeMarkingPoints;
+            this.timeToStartTest = test.data.timeToStartTest;
+            if (this.timeToStartTest > 0) {
+              this.interval = setInterval(() => {
+                if (this.timeToStartTest > 0) {
+                  this.timeToStartTest--;
+                }
+                if (this.timeToStartTest == 0) {
+                  this.isStart = true;
+                }
+              }, 1000);
+            } else {
+              this.isStart = true;
+            }
           }
         },
       });
@@ -84,6 +100,7 @@ export class DashboardComponent implements OnInit {
     )}/${year}`;
     return formattedTestDate;
   }
+
   getTestStartTime(date: string) {
     const testDate = new Date(date);
     const hours = testDate.getHours();
@@ -93,5 +110,9 @@ export class DashboardComponent implements OnInit {
       minutes
     )}  ${amPm}`;
     return formattedTestTime;
+  }
+
+  ngOnDestroy(): void {
+    clearInterval(this.interval);
   }
 }
