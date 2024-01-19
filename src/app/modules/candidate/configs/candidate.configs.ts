@@ -189,7 +189,7 @@ export const candidateControl = {
     required: false,
     inputType: 'text',
     displayIcon: false,
-    maxLength: 3,
+    maxLength: 6,
     maxErrMsg: 'Invalid Score',
   },
   jeeScore: {

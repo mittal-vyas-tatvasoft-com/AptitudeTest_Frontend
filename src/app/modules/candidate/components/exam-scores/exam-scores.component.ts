@@ -10,6 +10,7 @@ import { validations } from 'src/app/shared/messages/validation.static';
 import { candidateControl } from '../../configs/candidate.configs';
 import { UserData } from '../../interfaces/candidate.interface';
 import { CandidateService } from '../../services/candidate.service';
+import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
 
 @Component({
   selector: 'app-exam-scores',
@@ -23,7 +24,8 @@ export class ExamScoresComponent implements OnInit, OnChanges {
 
   constructor(
     private formBuilder: FormBuilder,
-    private candidateService: CandidateService
+    private candidateService: CandidateService,
+    public validationService: ValidationService
   ) {}
 
   ngOnInit() {
