@@ -14,12 +14,23 @@
           ></app-text-control-number>
         </div>
         <div class="col-sm-6 col-md-4">
-          <app-text-control-number
-            [formControlModel]="CandidateModel.gujcetScore"
-            [form]="form"
-            class="w-100"
-            maxlength="3"
-          ></app-text-control-number>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{ CandidateModel.gujcetScore.label }}</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="gujcetScore"
+              appMaxLength
+              [maxLength]="CandidateModel.gujcetScore.maxLength"
+            />
+            <mat-error>{{
+              validationService.getError(
+                form,
+                CandidateModel.gujcetScore,
+                "gujcetScore"
+              )
+            }}</mat-error>
+          </mat-form-field>
         </div>
         <div class="col-sm-6 col-md-4">
           <app-text-control
