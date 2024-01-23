@@ -378,4 +378,8 @@ export class ResultComponent implements OnInit {
     this.sortDirection = event.direction;
     this.fetchResults();
   }
+
+  refresh() {
+    location.reload();
+  }
 }

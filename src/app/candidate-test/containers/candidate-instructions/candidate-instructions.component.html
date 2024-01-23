@@ -3,8 +3,10 @@
     <mat-card-content *ngIf="testExist">
       <h2>Important instructions for candidate</h2>
       <ul class="instructions-listing">
-        <li>
-          <p class="text-justify">{{ messageToShow }}</p>
+        <li *ngFor="let i of instructions">
+          <p class="text-justify">
+            {{ i }}
+          </p>
         </li>
       </ul>
     </mat-card-content>

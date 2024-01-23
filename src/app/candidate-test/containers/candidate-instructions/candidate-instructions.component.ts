@@ -16,7 +16,7 @@ export class CandidateInstructionsComponent implements OnInit {
   isChecked = false;
   testExist = false;
   NoCameraAccess = false;
-  messageToShow: string;
+  instructions: string[];
   IsFaceCaptureEnabled = false;
   status: string;
   testStatus = 'Start';
@@ -38,7 +38,7 @@ export class CandidateInstructionsComponent implements OnInit {
         next: (res) => {
           if (res.statusCode == StatusCode.Success) {
             this.testExist = true;
-            this.messageToShow = res.data.messageAtStartOfTheTest;
+            this.instructions = res.data.messageAtStartOfTheTest.split('\n');
             this.candidateTestService.endTime.next(res.data.endTime);
           } else {
             this.snackbarService.error(NoTestAssigned);
