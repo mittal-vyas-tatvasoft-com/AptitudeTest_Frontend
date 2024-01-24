@@ -67,11 +67,9 @@ export class ResultComponent implements OnInit {
         this.cutOff = res.data.cutOff;
       },
     });
+    this.initializeParam();
     this.createForm();
     this.getDropdowns();
-    this.initializeParam();
-    this.fetchResults();
-    this.getStatistics();
     this.searchInputValue
       .pipe(
         debounceTime(Numbers.Debounce) // Adjust the debounce time as needed
@@ -131,6 +129,9 @@ export class ResultComponent implements OnInit {
         if (groupElement.isDefault) {
           const defaultGroupName = groupElement.name + ' (Default Group) ';
           this.groups.push({ value: defaultGroupName, id: groupElement.id });
+          this.filterForm.get('group')?.setValue(groupElement.id);
+          this.fetchResults();
+          this.getStatistics();
         }
       });
       groupElements.forEach((groupElement) => {
@@ -380,6 +381,7 @@ export class ResultComponent implements OnInit {
   }
 
   refresh() {
-    location.reload();
+    this.fetchResults();
+    this.getStatistics();
   }
 }
