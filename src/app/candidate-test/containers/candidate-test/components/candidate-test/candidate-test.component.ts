@@ -207,6 +207,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
+    this.testService.removeScreenCapture();
     clearInterval(this.intervalCameraCapture);
     this.ngUnsubscribe$.next();
     this.ngUnsubscribe$.complete();

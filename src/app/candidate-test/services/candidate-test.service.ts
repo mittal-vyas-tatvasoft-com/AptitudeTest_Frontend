@@ -20,7 +20,7 @@ export class CandidateTestService {
   loadQuestion = new BehaviorSubject<number>(-1);
   endTime = new Subject<string>();
   screenStream: MediaStream | null = null;
-
+  videoTrack: MediaStreamTrack;
   constructor(
     private http: HttpClient,
     private snackbarServices: SnackbarService
@@ -82,13 +82,10 @@ export class CandidateTestService {
         this.screenStream = await navigator.mediaDevices.getDisplayMedia(
           constraints
         );
-        const videoTrack = this.screenStream.getVideoTracks()[0];
-        videoTrack.addEventListener('ended', () => {
-          this.snackbarServices.error(Messages.ScreenCaptureError);
-          this.stop();
-          this.getScreenStream();
-        });
-        const mediaSource = (videoTrack.getSettings() as any).displaySurface;
+        this.videoTrack = this.screenStream.getVideoTracks()[0];
+        this.videoTrack.addEventListener('ended', this.screenEventListener);
+        const mediaSource = (this.videoTrack.getSettings() as any)
+          .displaySurface;
         if (mediaSource !== 'monitor') {
           this.snackbarServices.error(Messages.ScreenCaptureError);
           this.stop();
@@ -142,5 +139,16 @@ export class CandidateTestService {
   stop() {
     this.screenStream?.getTracks().forEach((track) => track.stop());
     this.screenStream = null;
+  }
+
+  screenEventListener = () => {
+    this.snackbarServices.error(Messages.ScreenCaptureError);
+    this.stop();
+    this.getScreenStream();
+  };
+
+  removeScreenCapture() {
+    this.videoTrack.removeEventListener('ended', this.screenEventListener);
+    this.stop();
   }
 }
