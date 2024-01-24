@@ -65,23 +65,22 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
         if (data.data.camera || data.data.screenCapture) {
           this.checkPermissions();
         }
+        if (data.data.screenCapture) {
+          this.getScreenAccess();
+        }
       },
     });
   }
 
-  public sendImageToBackend(): void {
+  public async sendImageToBackend(): Promise<void> {
     this.formData.append('userId', this.userId.toString());
     if (this.IsScreenCaptureEnabled) {
-      html2canvas(this.targetElement).then((canvas) => {
-        // `canvas` now contains the screenshot
-        const imageDataUrl = canvas.toDataURL('image/jpeg');
-        this.capturedImages.push(imageDataUrl);
-        const screenShotData = imageDataUrl.split(',')[1];
-        const blobScreenShot = this.dataURItoBlob(screenShotData);
+      if (this.testService.screenStream) {
+        const blobScreenShot = await this.testService.captureScreen();
+        const url = URL.createObjectURL(blobScreenShot);
         this.formData.append('screenShot', blobScreenShot, 'xyz.jpg');
-        // Add the captured image URL to the array
-        this.capturedImages.push(imageDataUrl);
-      });
+        this.capturedImages.push(url);
+      }
     }
 
     if (this.IsFaceCaptureEnabled) {
@@ -113,7 +112,6 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
             width: 500,
             height: 500,
             frameRate: 0,
-
             facingMode: 'user',
           },
         })
@@ -228,5 +226,9 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
         (x) => x.status == this.questionStatus.Unvisited
       ).length != this.questionsStatus.questionStatusVMs.length
     );
+  }
+
+  getScreenAccess() {
+    this.testService.getScreenStream();
   }
 }
