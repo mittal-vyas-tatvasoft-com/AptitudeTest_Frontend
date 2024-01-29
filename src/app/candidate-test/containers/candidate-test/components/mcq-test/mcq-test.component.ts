@@ -5,6 +5,7 @@ import {
   Answer,
   Question,
   SaveAnswerModel,
+  UpdateTestTimeModel,
 } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
@@ -61,6 +62,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     answers: [],
   };
   interval: any;
+  updateTimeInterval: any;
   constructor(
     public loginService: LoginService,
     private router: Router,
@@ -113,6 +115,16 @@ export class McqTestComponent implements OnInit, OnDestroy {
         this.submitTest();
       }
     }, 1000);
+    this.updateTimeInterval = setInterval(() => {
+      let remainingTimeInMinutes = Math.floor(this.seconds / 60);
+      if (this.userId > 0 && remainingTimeInMinutes > 0) {
+        let data: UpdateTestTimeModel = {
+          userId: this.userId,
+          remainingTime: remainingTimeInMinutes,
+        };
+        this.updateTime(data);
+      }
+    }, 60000);
     this.candidateTestService.loadQuestion.subscribe((data) => {
       this.question.nextQuestionId = data;
       this.displayQuestion();
@@ -234,7 +246,18 @@ export class McqTestComponent implements OnInit, OnDestroy {
       });
   }
 
+  updateTime(data: UpdateTestTimeModel) {
+    this.candidateTestService.updateTime(data).subscribe({
+      next: (res: ResponseModel<string>) => {
+        if (res.statusCode !== StatusCode.Success) {
+          this.snackBarService.error(res.message);
+        }
+      },
+    });
+  }
+
   ngOnDestroy() {
     clearInterval(this.interval);
+    clearInterval(this.updateTimeInterval);
   }
 }

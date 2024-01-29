@@ -49,6 +49,9 @@ export class TableComponent<T> implements OnInit {
   @ViewChild(MatSort) sort = new MatSort();
   adminId: number;
   role: string;
+  pageLengthForNormalPages = 8;
+  pagesToDisplay = 3;
+
   constructor(private loginService: LoginService) {}
   ngOnInit() {
     this.adminId = +this.loginService.decodeToken().Id;
@@ -170,5 +173,9 @@ export class TableComponent<T> implements OnInit {
       userId: row.id,
       status: row.status,
     }));
+  }
+
+  get totalPages() {
+    return Math.ceil(this.totalItemsCount / this.pageSize);
   }
 }

@@ -55,3 +55,8 @@ export interface TestInstructions {
   negativeMarkingPoints: number;
   timeToStartTest: number;
 }
+
+export interface UpdateTestTimeModel {
+  userId: number;
+  remainingTime: number;
+}
