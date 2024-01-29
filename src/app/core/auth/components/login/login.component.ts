@@ -82,7 +82,11 @@ export class LoginComponent implements OnInit, OnDestroy {
               res.data.isSubmitted ? 'true' : 'false'
             );
             const token = this.loginService.decodeToken();
-            this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
+            if (res.data.isSubmitted) {
+              this.router.navigate([`user/${Navigation.Submitted}`]);
+            } else {
+              this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
+            }
           } else {
             this.snackbarService.error(res.message);
           }
