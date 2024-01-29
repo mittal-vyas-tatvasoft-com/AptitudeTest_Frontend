@@ -98,6 +98,7 @@ export interface ResultDetailsParam {
   marks: number;
   pagesize: number;
   pageIndex: number;
+  onlyCorrect: boolean;
 }
 
 export interface StatisticsModel {

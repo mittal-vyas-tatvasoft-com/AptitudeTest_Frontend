@@ -33,6 +33,7 @@ export class ResultDetailsComponent implements OnInit, OnDestroy {
   data: Pagination<ResultQuestion>;
   resultDetails: ResultDetails;
   optionType = OptionType;
+  onlyCorrect = false;
   private scrollSubject = new Subject<number>();
   private ngUnsubscribe$ = new Subject<void>();
 
@@ -66,7 +67,15 @@ export class ResultDetailsComponent implements OnInit, OnDestroy {
   }
 
   filterOnMarks(marks: number) {
+    this.onlyCorrect = false;
     this.marks = marks;
+    this.initializeEmptyResponse();
+    this.getResultDetails();
+  }
+
+  filterOnCorrect() {
+    this.marks = 0;
+    this.onlyCorrect = !this.onlyCorrect;
     this.initializeEmptyResponse();
     this.getResultDetails();
   }
@@ -76,6 +85,7 @@ export class ResultDetailsComponent implements OnInit, OnDestroy {
       id: this.id,
       testId: this.testId,
       marks: this.marks,
+      onlyCorrect: this.onlyCorrect,
       pageIndex: this.data.currentPageIndex,
       pagesize: 10,
     };
