@@ -232,16 +232,62 @@
             <img src="./assets/images/chevron-backward.svg" alt="Prev" />
           </a>
         </li>
-        <li *ngFor="let page of pageNumbers; let i = index">
-          <a
-            mat-stroked-button
-            href="javascript:void(0)"
-            (click)="onPageChangeToPage(page)"
-            [class.active]="currentPageIndex === i"
+
+        <ng-container
+          *ngIf="
+            pageNumbers.length <= pageLengthForNormalPages;
+            else otherPagination
+          "
+        >
+          <li *ngFor="let page of pageNumbers; let i = index">
+            <a
+              mat-stroked-button
+              href="javascript:void(0)"
+              (click)="onPageChangeToPage(page)"
+              [class.active]="currentPageIndex === i"
+            >
+              {{ page }}
+            </a>
+          </li>
+        </ng-container>
+
+        <ng-template #otherPagination>
+          <li
+            *ngFor="
+              let page of pageNumbers.slice(0, pagesToDisplay);
+              let i = index
+            "
           >
-            {{ page }}
-          </a>
-        </li>
+            <a
+              mat-stroked-button
+              href="javascript:void(0)"
+              (click)="onPageChangeToPage(page)"
+              [class.active]="currentPageIndex === page - 1"
+            >
+              {{ page }}
+            </a>
+          </li>
+          <span><b>&nbsp;.&nbsp; .&nbsp; .&nbsp; .&nbsp; .&nbsp;</b></span>
+          <li
+            *ngFor="
+              let page of pageNumbers.slice(
+                totalPages - pagesToDisplay - 1,
+                totalPages - 1
+              );
+              let i = index
+            "
+          >
+            <a
+              mat-stroked-button
+              href="javascript:void(0)"
+              (click)="onPageChangeToPage(page)"
+              [class.active]="currentPageIndex === page - 1"
+            >
+              {{ page }}
+            </a>
+          </li>
+        </ng-template>
+
         <li>
           <a
             mat-stroked-button
