@@ -43,7 +43,7 @@ export class ResultsService {
 
   getResultsDetails(param: ResultDetailsParam) {
     return this.http.get<ResponseModel<ResultDetails>>(
-      `${environment.baseURL}Results/Get/${param.id}/${param.testId}/${param.marks}/${param.pagesize}/${param.pageIndex}`
+      `${environment.baseURL}Results/Get/${param.id}/${param.testId}/${param.marks}/${param.pagesize}/${param.pageIndex}/${param.onlyCorrect}`
     );
   }
 

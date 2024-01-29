@@ -30,6 +30,9 @@
           {{ resultDetails.allQuestionCount }}</span
         ></mat-chip-option
       >
+      <mat-chip-option color="primary" (click)="filterOnCorrect()"
+        >Correct</mat-chip-option
+      >
       <mat-chip-option color="primary" (click)="filterOnMarks(1)"
         >1 mark<span class="result"
           ><em>{{ resultDetails.marks1CorrectQuestionCount }}</em> /
@@ -64,7 +67,10 @@
   </div>
 </div>
 
-<ul class="qa-card-listing">
+<ul
+  class="qa-card-listing"
+  *ngIf="data.entityList && data.entityList.length > 0; else noDataFound"
+>
   <li *ngFor="let item of data.entityList; let i = index">
     <div class="qa-card">
       <div class="qa-head no-wrap-md">
@@ -127,3 +133,12 @@
     </div>
   </li>
 </ul>
+<ng-template #noDataFound>
+  <div>
+    <mat-card class="form-block mb-3">
+      <mat-card-content>
+        <div class="no-data-message">No data found</div>
+      </mat-card-content>
+    </mat-card>
+  </div>
+</ng-template>
