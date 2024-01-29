@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isAdmin = false;
   OffCampusMode: boolean;
   rememberMe = false;
-  mobileDeviceErrMsg = 'Mobile device not allowed';
+  mobileDeviceErrMsg = 'Login is not allowed in Mobile device';
   private ngUnsubscribe$ = new Subject<void>();
 
   constructor(
