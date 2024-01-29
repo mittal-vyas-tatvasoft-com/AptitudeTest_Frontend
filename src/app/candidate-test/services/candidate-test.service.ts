@@ -8,6 +8,7 @@ import {
   QuestionStatusModel,
   SaveAnswerModel,
   TestInstructions,
+  UpdateTestTimeModel,
 } from '../interfaces/candidate-test.interface';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { Messages } from '../static/candidate-test.static';
@@ -62,6 +63,13 @@ export class CandidateTestService {
     return this.http.put<ResponseModel<string>>(
       `${environment.baseURL}Candidates/EndTest/${userId}`,
       { userId }
+    );
+  }
+
+  updateTime(data: UpdateTestTimeModel) {
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}Candidates/UpdateRemainingTime`,
+      data
     );
   }
 
