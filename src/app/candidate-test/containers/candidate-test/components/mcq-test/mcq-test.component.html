@@ -104,9 +104,13 @@
       </div>
     </div>
     <div class="test-body">
-      <p class="question-label">
-        Question {{ question.questionNumber }} of {{ question.totalQuestions }}
-      </p>
+      <div class="question-title">
+        <p class="question-label">
+          Question {{ question.questionNumber }} of
+          {{ question.totalQuestions }}
+        </p>
+        <p class="question-label">Marks({{ question.difficulty }})</p>
+      </div>
       <app-mcq-question
         [question]="question"
         (saveAnswer)="onSubmit($event)"
