@@ -1,8 +1,15 @@
 <ul class="qa-card-listing">
   <div class="card-header">
     <div class="row align-items-center">
-      <div class="col-sm"></div>
-      <div class="col-sm-auto d-flex justify-content-end">
+      <div class="col-2 col-sm-2">
+        <mat-checkbox
+          color="primary"
+          (change)="multipleSelect($event)"
+          [checked]="isAllSelected()"
+        >
+        </mat-checkbox>
+      </div>
+      <div class="col-10 col-sm-10 d-flex justify-content-end">
         <button
           mat-stroked-button
           class="card-header-btn"
@@ -47,6 +54,7 @@
           <mat-checkbox
             color="primary"
             (change)="checkboxChange($event, question.id)"
+            [checked]="statusUpdateList.indexOf(question.id) > -1"
           >
           </mat-checkbox>
           <span class="qa-sequence">{{ question.sequence }}. &nbsp;</span>
