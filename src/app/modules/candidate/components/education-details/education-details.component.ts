@@ -124,30 +124,35 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
               id: stream.id,
               key: stream.name,
               value: stream.name,
+              degreeId: stream.degreeId,
             });
           } else if (stream.level === 2) {
             this.HSCDiplomaStream.push({
               id: stream.id,
               key: stream.name,
               value: stream.name,
+              degreeId: stream.degreeId,
             });
           } else if (stream.level === 3) {
             this.bachelorStream.push({
               id: stream.id,
               key: stream.name,
               value: stream.name,
+              degreeId: stream.degreeId,
             });
           } else if (stream.level === 4) {
             this.masterStream.push({
               id: stream.id,
               key: stream.name,
               value: stream.name,
+              degreeId: stream.degreeId,
             });
           } else if (stream.level === 5) {
             this.otherStream.push({
               id: stream.id,
               key: stream.name,
               value: stream.name,
+              degreeId: stream.degreeId,
             });
           }
         });
@@ -278,15 +283,35 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
   StreamDetailOptions(index: number) {
     switch (index) {
       case 0:
-        return this.streamSpecialization;
+        return this.streamSpecialization.filter(
+          (x) =>
+            x.degreeId ===
+            this.educationDetailsArrayData.at(index).get('degreeId')?.value
+        );
       case 1:
-        return this.HSCDiplomaStream;
+        return this.HSCDiplomaStream.filter(
+          (x) =>
+            x.degreeId ===
+            this.educationDetailsArrayData.at(index).get('degreeId')?.value
+        );
       case 2:
-        return this.bachelorStream;
+        return this.bachelorStream.filter(
+          (x) =>
+            x.degreeId ===
+            this.educationDetailsArrayData.at(index).get('degreeId')?.value
+        );
       case 3:
-        return this.masterStream;
+        return this.masterStream.filter(
+          (x) =>
+            x.degreeId ===
+            this.educationDetailsArrayData.at(index).get('degreeId')?.value
+        );
       case 4:
-        return this.otherStream;
+        return this.otherStream.filter(
+          (x) =>
+            x.degreeId ===
+            this.educationDetailsArrayData.at(index).get('degreeId')?.value
+        );
       default:
         return [];
     }

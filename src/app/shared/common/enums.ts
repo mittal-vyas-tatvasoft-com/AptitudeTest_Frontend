@@ -182,5 +182,4 @@ export enum ResultStatus {
 export enum Gender {
   Male = 1,
   Female = 2,
-  Default = 0,
 }
