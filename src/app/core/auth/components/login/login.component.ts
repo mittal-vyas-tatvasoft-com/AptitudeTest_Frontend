@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   isAdmin = false;
   OffCampusMode: boolean;
   rememberMe = false;
+  mobileDeviceErrMsg = 'Login is not allowed in Mobile device';
   private ngUnsubscribe$ = new Subject<void>();
 
   constructor(
@@ -72,6 +73,10 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   doUserLogin(payload: any) {
+    if (window.screen.width <= 768) {
+      this.snackbarService.error(this.mobileDeviceErrMsg);
+      return;
+    }
     this.loginService
       .login(payload)
       .pipe(takeUntil(this.ngUnsubscribe$))
@@ -82,7 +87,11 @@ export class LoginComponent implements OnInit, OnDestroy {
               res.data.isSubmitted ? 'true' : 'false'
             );
             const token = this.loginService.decodeToken();
-            this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
+            if (res.data.isSubmitted) {
+              this.router.navigate([`user/${Navigation.Submitted}`]);
+            } else {
+              this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
+            }
           } else {
             this.snackbarService.error(res.message);
           }
