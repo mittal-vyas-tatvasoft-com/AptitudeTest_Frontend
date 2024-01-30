@@ -271,8 +271,8 @@
           <li
             *ngFor="
               let page of pageNumbers.slice(
-                totalPages - pagesToDisplay - 1,
-                totalPages - 1
+                totalPages - pagesToDisplay,
+                totalPages
               );
               let i = index
             "

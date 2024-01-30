@@ -61,7 +61,8 @@ export const candidateControl = {
     key: 'gender',
     label: 'Gender',
     inputType: 'select',
-    required: false,
+    required: true,
+    requiredErrMsg: 'Gender is required',
   },
   group: {
     value: '',
@@ -127,14 +128,17 @@ export const candidateControl = {
     key: 'technologyInterestedIn',
     label: 'Preferred Profile',
     inputType: 'select',
+    required: true,
+    requiredErrMsg: 'Preferred Profile is required',
   },
   permanentAddress: {
     value: '',
     key: 'permanentAddress1',
     label: 'Permanent Address',
-    required: false,
+    required: true,
     inputType: 'text',
     displayIcon: false,
+    requiredErrMsg: 'Address is required',
     patternErrMsg: 'Please enter valid address',
     maxLengthErrMsg: 'Max 500 characters allowed',
   },
@@ -142,10 +146,11 @@ export const candidateControl = {
     value: '',
     key: 'cityName',
     label: 'Town/City',
-    required: false,
+    required: true,
     inputType: 'text',
     displayIcon: false,
     maxLength: 30,
+    requiredErrMsg: 'Town/City is required',
     maxLengthErrMsg: 'Max 30 characters allowed',
   },
   pincode: {
@@ -164,6 +169,8 @@ export const candidateControl = {
     key: 'state',
     label: 'State',
     inputType: 'select',
+    required: true,
+    requiredErrMsg: 'State is required',
   },
   dateOfBirth: {
     value: '',
@@ -271,11 +278,6 @@ export const candidateControl = {
 };
 
 export const selectOptionsForGender = [
-  {
-    id: 0,
-    key: 'Select',
-    value: 'Select',
-  },
   {
     id: 1,
     key: 'Male',
