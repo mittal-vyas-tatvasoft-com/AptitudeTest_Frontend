@@ -19,6 +19,7 @@ export interface DropdownItem {
   name: string;
   level?: number;
   isDefault?: boolean;
+  degreeId?: number;
 }
 
 export interface FamilyDetail {

@@ -57,7 +57,7 @@ export const candidateControl = {
     displayIcon: false,
   },
   gender: {
-    value: Gender.Default.toString(),
+    value: '',
     key: 'gender',
     label: 'Gender',
     inputType: 'select',

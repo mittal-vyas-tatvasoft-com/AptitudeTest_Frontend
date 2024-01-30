@@ -118,7 +118,7 @@ export class AddCandidateComponent implements OnInit, AfterViewInit {
 
       groupId: ['', Validators.required],
       collegeId: ['', Validators.required],
-      gender: [+candidateControl.gender.value],
+      gender: [candidateControl.gender.value, [Validators.required]],
       status: [+candidateControl.status.value],
     });
   }
