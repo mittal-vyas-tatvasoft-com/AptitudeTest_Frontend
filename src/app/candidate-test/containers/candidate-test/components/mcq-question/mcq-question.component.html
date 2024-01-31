@@ -50,7 +50,10 @@
   </div>
   <div>
     <button mat-flat-button color="primary" (click)="save()">
-      Save &amp; Next
+      Save
+      {{
+        question.questionNumber !== question.totalQuestions ? "&amp; Next" : ""
+      }}
     </button>
   </div>
 </div>

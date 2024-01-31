@@ -73,7 +73,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   doUserLogin(payload: any) {
-    if (window.screen.width <= 768) {
+    if (window.screen.width <= 960 && screen.availWidth <= 960) {
       this.snackbarService.error(this.mobileDeviceErrMsg);
       return;
     }

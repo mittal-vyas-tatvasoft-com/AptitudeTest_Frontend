@@ -1,0 +1,24 @@
+.ql-editor strong{
+    font-weight:bold !important;
+}
+::ng-deep .ql-editor strong{    
+    font-weight: bold!important;
+}
+::ng-deep .ql-editor em{
+    font-style: italic !important;
+}
+::ng-deep .ql-editor sub{
+    vertical-align: sub !important;
+    font-size: smaller !important;
+  
+}
+::ng-deep .ql-editor s{
+    text-decoration: line-through !important;
+}
+::ng-deep .ql-editor sup{
+    vertical-align: super !important;
+  font-size: smaller !important;
+}
+::ng-deep .ql-editor u{
+    text-decoration: underline !important;
+}
