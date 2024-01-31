@@ -121,6 +121,7 @@ export class FamilyBackgroundComponent implements OnInit, OnChanges {
     let relationship = this.excludedRelationShips.find(
       (relation) => relation.rowId === i
     );
+    //If Mother/Father relation is selected first time
     if (
       (relationship === null || relationship == undefined) &&
       (event === 1 || event === 2)
@@ -129,10 +130,14 @@ export class FamilyBackgroundComponent implements OnInit, OnChanges {
         rowId: i,
         relationshipId: event,
       });
-    } else if (relationship != null && (event === 1 || event === 2)) {
+    }
+    // If Mother/Father relation is changed from same row
+    else if (relationship != null && (event === 1 || event === 2)) {
       relationship.rowId = i;
       relationship.relationshipId = event;
-    } else if (relationship != null && (event === 3 || event === 4)) {
+    }
+    // If Brother/Sister relation is selected from same row then remove existing excluded relationship for that row
+    else if (relationship != null && (event === 3 || event === 4)) {
       let index = this.excludedRelationShips.indexOf(relationship);
       this.excludedRelationShips.splice(index, 1);
     }
@@ -140,6 +145,7 @@ export class FamilyBackgroundComponent implements OnInit, OnChanges {
       let existingRelationship = this.excludedRelationShips.find(
         (relationship) => relationship.relationshipId === relation.id
       );
+      //Verifying that given relationship is excluded or not
       if (existingRelationship == null) {
         relation.isDisabled = false;
         this.filteredOptionsForRelationShip.push(relation);

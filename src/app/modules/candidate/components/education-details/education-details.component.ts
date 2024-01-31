@@ -204,7 +204,6 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
     } else if (optionValue.toLowerCase().toString() === 'diploma') {
       this.SelectedOption = 'diploma';
     }
-    console.log(this.SelectedOption);
     if (i === 1 && this.SelectedOption === 'diploma') {
       this.clearValidation('maths', data);
       this.clearValidation('physics', data);
