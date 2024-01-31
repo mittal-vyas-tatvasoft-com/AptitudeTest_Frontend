@@ -94,12 +94,17 @@
               </mat-form-field>
             </div>
             <div class="col-12 mb-3">
-              <ckeditor
+              <quill-editor
+                #editor
                 formControlName="questionText"
-                class="html-editor"
-                [editor]="Editor"
-                data="<p>Look at this series: 36, 34, 30, 28, 24, … What number should come next?</p>"
-              ></ckeditor>
+                [modules]="modules"
+                [styles]="{ height: '300px' }"
+                bounds="self"
+                format="html"
+                [sanitize]="true"
+                [trimOnValidation]="true"
+              >
+              </quill-editor>
               <mat-error>{{
                 validation.getError(
                   questionForm,

@@ -1,7 +1,6 @@
 import { Location } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { QuestionsService } from '../../services/questions.service';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -11,6 +10,7 @@ import {
   ImageSizeErrorMsg,
   ImageTypeErrorMsg,
   MaxImageSize,
+  Modules,
   OptionsIndex,
   Status,
   Topics,
@@ -41,8 +41,9 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
   styleUrls: ['./add-question.component.scss'],
 })
 export class AddQuestionComponent implements OnInit {
+  quillPlaceholder = '';
+  modules = Modules;
   public message: string = DragDropInput;
-  public Editor = ClassicEditor;
   dropzoneConfig = dropzoneConfig;
   questionId = 0;
   questionForm: FormGroup;
@@ -75,41 +76,7 @@ export class AddQuestionComponent implements OnInit {
     public validation: ValidationService,
     public snackbarService: SnackbarService,
     private router: Router
-  ) {
-    ClassicEditor.defaultConfig = {
-      toolbar: {
-        items: [
-          'undo',
-          'redo',
-          'heading',
-          '|',
-          'bold',
-          'italic',
-          '|',
-          'link',
-          '|',
-          'insertTable',
-          '|',
-          'blockQuote',
-          '|',
-          'bulletedList',
-          'numberedList',
-        ],
-      },
-      image: {
-        toolbar: [
-          'imageStyle:full',
-          'imageStyle:side',
-          '|',
-          'imageTextAlternative',
-        ],
-      },
-      table: {
-        contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells'],
-      },
-      language: 'en',
-    };
-  }
+  ) {}
 
   ngOnInit(): void {
     this.createForm();
