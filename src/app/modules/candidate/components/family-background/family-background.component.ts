@@ -20,6 +20,10 @@ import {
   selectOptionsForRelationship,
 } from '../../configs/candidate.configs';
 
+export interface excludedRelationship {
+  relationshipId: number;
+  rowId: number;
+}
 @Component({
   selector: 'app-family-background',
   templateUrl: './family-background.component.html',
@@ -28,7 +32,15 @@ import {
 export class FamilyBackgroundComponent implements OnInit, OnChanges {
   CandidateModel = candidateControl;
   selectOptionsForRelationship: SelectOption[] = selectOptionsForRelationship;
+  filteredOptionsForRelationShip: SelectOption[] = selectOptionsForRelationship;
   form: FormGroup;
+  excludedRelationShips: excludedRelationship[] = [
+    {
+      rowId: -1,
+      relationshipId: -1,
+    },
+  ];
+
   @Input() familyDetails: any[];
 
   constructor(
@@ -77,6 +89,8 @@ export class FamilyBackgroundComponent implements OnInit, OnChanges {
   }
 
   change(event: any, i: number, data: any) {
+    this.filteredOptionsForRelationShip = [];
+    this.updateRelationshipDropdown(event, i);
     if (event > 0) {
       data.get('qualification').touched = true;
       data
@@ -102,6 +116,44 @@ export class FamilyBackgroundComponent implements OnInit, OnChanges {
       data.get('occupation').clearValidators();
       data.get('occupation').updateValueAndValidity();
     }
+  }
+  updateRelationshipDropdown(event: any, i: number) {
+    let relationship = this.excludedRelationShips.find(
+      (relation) => relation.rowId === i
+    );
+    //If Mother/Father relation is selected first time
+    if (
+      (relationship === null || relationship == undefined) &&
+      (event === 1 || event === 2)
+    ) {
+      this.excludedRelationShips.push({
+        rowId: i,
+        relationshipId: event,
+      });
+    }
+    // If Mother/Father relation is changed from same row
+    else if (relationship != null && (event === 1 || event === 2)) {
+      relationship.rowId = i;
+      relationship.relationshipId = event;
+    }
+    // If Brother/Sister relation is selected from same row then remove existing excluded relationship for that row
+    else if (relationship != null && (event === 3 || event === 4)) {
+      let index = this.excludedRelationShips.indexOf(relationship);
+      this.excludedRelationShips.splice(index, 1);
+    }
+    this.selectOptionsForRelationship.forEach((relation) => {
+      let existingRelationship = this.excludedRelationShips.find(
+        (relationship) => relationship.relationshipId === relation.id
+      );
+      //Verifying that given relationship is excluded or not
+      if (existingRelationship == null) {
+        relation.isDisabled = false;
+        this.filteredOptionsForRelationShip.push(relation);
+      } else {
+        relation.isDisabled = true;
+        this.filteredOptionsForRelationShip.push(relation);
+      }
+    });
   }
 
   getFormData(): FormGroup {

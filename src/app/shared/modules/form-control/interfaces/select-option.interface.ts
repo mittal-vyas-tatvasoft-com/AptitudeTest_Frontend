@@ -4,4 +4,5 @@ export interface SelectOption {
   value: string;
   isDefault?: boolean;
   degreeId?: number;
+  isDisabled?: boolean;
 }
