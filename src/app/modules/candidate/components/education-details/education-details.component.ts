@@ -53,6 +53,7 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
   labelNameForCollege: string[] = labelNameForCollege;
   ErrorMessage = ErrorMessageForEductionDetail;
   MinMaxValue = MinMaxValue;
+  SelectedOption: string = '';
   @Input() academicDetails: any[];
   @Input() isAdmin: boolean;
 
@@ -193,6 +194,18 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
       this.clearValidation('maths', data);
     }
     if (i === 0 || i > 1) {
+      this.clearValidation('physics', data);
+    }
+  }
+
+  setSelectedValue(optionValue: string, i: number, data: any) {
+    if (optionValue.toLowerCase().toString() === '12th') {
+      this.SelectedOption = '12th';
+    } else if (optionValue.toLowerCase().toString() === 'diploma') {
+      this.SelectedOption = 'diploma';
+    }
+    if (i === 1 && this.SelectedOption === 'diploma') {
+      this.clearValidation('maths', data);
       this.clearValidation('physics', data);
     }
   }

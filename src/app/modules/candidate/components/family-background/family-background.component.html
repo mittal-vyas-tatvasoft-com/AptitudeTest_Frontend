@@ -32,8 +32,9 @@
                   (selectionChange)="change($event.value, i, familyDetail)"
                 >
                   <mat-option
-                    *ngFor="let item of selectOptionsForRelationship"
+                    *ngFor="let item of filteredOptionsForRelationShip"
                     [value]="item.id"
+                    [disabled]="item.isDisabled"
                   >
                     {{ item.value }}
                   </mat-option>
