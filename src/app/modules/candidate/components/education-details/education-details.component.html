@@ -108,7 +108,11 @@
                 }}</mat-error>
               </mat-form-field>
             </div>
-            <div class="col-6 col-sm-3 col-lg-1" *ngIf="i < 2">
+
+            <div
+              class="col-6 col-sm-3 col-lg-1"
+              *ngIf="i === 0 || (i == 1 && SelectedValue != 51)"
+            >
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Maths</mat-label>
                 <input
@@ -128,7 +132,10 @@
                 }}</mat-error>
               </mat-form-field>
             </div>
-            <div class="col-6 col-sm-3 col-lg-1" *ngIf="i === 1">
+            <div
+              class="col-6 col-sm-3 col-lg-1"
+              *ngIf="i == 1 && SelectedValue != 51"
+            >
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Physics</mat-label>
                 <input

@@ -53,6 +53,7 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
   labelNameForCollege: string[] = labelNameForCollege;
   ErrorMessage = ErrorMessageForEductionDetail;
   MinMaxValue = MinMaxValue;
+  SelectedValue: any;
   @Input() academicDetails: any[];
   @Input() isAdmin: boolean;
 
@@ -164,6 +165,9 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
   }
 
   change(event: any, i: number, data: any) {
+    if (event === 50 || event === 51) {
+      this.SelectedValue = event;
+    }
     if (event > 0) {
       this.setValidation('university', data, [
         ...this.commonValidationForUniversity,
@@ -193,6 +197,10 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
       this.clearValidation('maths', data);
     }
     if (i === 0 || i > 1) {
+      this.clearValidation('physics', data);
+    }
+    if (i === 1 && event === 51) {
+      this.clearValidation('maths', data);
       this.clearValidation('physics', data);
     }
   }
