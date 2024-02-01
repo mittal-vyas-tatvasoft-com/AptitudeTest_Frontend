@@ -27,6 +27,7 @@ import { Pagination } from 'src/app/shared/common/interfaces/pagination.interfac
 import { FormGroup } from '@angular/forms';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { Question } from '../../interfaces/question.interface';
+import { MatCheckboxChange } from '@angular/material/checkbox';
 @Component({
   selector: 'app-question-list',
   templateUrl: './question-list.component.html',
@@ -48,6 +49,7 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   private scrollSubject = new Subject<number>();
   private ngUnsubscribe$ = new Subject<void>();
   statusUpdateList: number[] = [];
+
   constructor(
     public dialog: MatDialog,
     private snackbarService: SnackbarService,
@@ -259,5 +261,21 @@ export class QuestionListComponent implements OnInit, OnDestroy {
       this.status
     );
     this.deleteQuestion.emit();
+  }
+
+  multipleSelect(event: MatCheckboxChange) {
+    if (event.checked) {
+      this.statusUpdateList = this.questions.map((x) => x.id);
+    } else {
+      this.statusUpdateList = [];
+    }
+  }
+
+  isChecked(id: number) {
+    return this.statusUpdateList.find((x) => x == id);
+  }
+
+  isAllSelected() {
+    return this.statusUpdateList.length === this.questions.length;
   }
 }

@@ -145,12 +145,12 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       ],
       userGroup: [''],
       userCollege: ['', Validators.required],
-      gender: [''],
+      gender: ['', [Validators.required]],
       status: [candidateControl.status.value],
       createdYear: [{ value: '', disabled: this.isAdmin }],
       password: ['', [Validators.pattern(validations.common.passwordREGEX)]],
       appliedThrough: ['', Validators.required],
-      technologyInterestedIn: [''],
+      technologyInterestedIn: ['', [Validators.required]],
       pincode: [
         '',
         [
@@ -158,15 +158,16 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
           Validators.pattern(validations.common.pinCodeREGEX),
         ],
       ],
-      cityName: [''],
+      cityName: ['', [Validators.required]],
       permanentAddress1: [
         '',
         [
+          Validators.required,
           Validators.maxLength(500),
           Validators.pattern(validations.common.whitespaceREGEX),
         ],
       ],
-      state: [''],
+      state: ['', [Validators.required]],
       dateOfBirth: ['', Validators.required],
     });
   }

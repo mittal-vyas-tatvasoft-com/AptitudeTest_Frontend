@@ -3,4 +3,6 @@ export interface SelectOption {
   key?: string | boolean;
   value: string;
   isDefault?: boolean;
+  degreeId?: number;
+  isDisabled?: boolean;
 }

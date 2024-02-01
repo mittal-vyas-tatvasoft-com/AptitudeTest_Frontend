@@ -9,7 +9,7 @@ import { SharedMaterialModule } from 'src/app/shared/material/shared-material.mo
 import { QuestionsService } from './services/questions.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { QuestionListComponent } from './component/question-list/question-list.component';
-
+import { QuillModule } from 'ngx-quill';
 @NgModule({
   declarations: [
     QuestionsComponent,
@@ -23,6 +23,7 @@ import { QuestionListComponent } from './component/question-list/question-list.c
     SharedMaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    QuillModule.forRoot(),
   ],
   providers: [QuestionsService],
 })
