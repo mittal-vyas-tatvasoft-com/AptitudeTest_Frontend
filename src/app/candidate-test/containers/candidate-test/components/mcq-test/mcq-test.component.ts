@@ -149,14 +149,9 @@ export class McqTestComponent implements OnInit, OnDestroy {
   }
 
   onSubmit(event: { answers: Answer[]; questionNumber: number }) {
-    if (
-      this.isQuestionMenu &&
-      event.questionNumber === this.question.totalQuestions
-    ) {
-      this.question.nextQuestionId = -1;
+    if (event.questionNumber !== this.question.totalQuestions) {
+      this.displayQuestion();
     }
-
-    this.displayQuestion();
     this.saveAnswers(event);
     let state =
       event.answers.filter((res) => res.isAnswer).length > 0
