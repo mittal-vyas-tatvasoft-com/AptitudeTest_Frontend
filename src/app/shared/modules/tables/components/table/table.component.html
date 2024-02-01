@@ -62,35 +62,53 @@
                 *ngIf="column.columnDef !== 'select'; else selectTemplate"
               >
                 <ng-container
-                  *ngIf="column.columnDef === 'status'; else defaultTemplate"
+                  *ngIf="
+                    column.columnDef !== 'isImported';
+                    else importedTemplate
+                  "
                 >
-                  <mat-chip
-                    *ngIf="!isTestTable"
-                    [ngClass]="row.status ? 'ChipSuccess' : 'ChipInactive'"
+                  <ng-container
+                    *ngIf="column.columnDef === 'status'; else defaultTemplate"
                   >
-                    {{ row.status ? "Active" : "Inactive" }}
-                  </mat-chip>
-                  <ng-container *ngIf="isTestTable">
-                    <ng-container [ngSwitch]="row.status">
-                      <mat-chip *ngSwitchCase="1" [class.ChipWarn]="row.status">
-                        Draft
-                      </mat-chip>
-                      <mat-chip
-                        *ngSwitchCase="2"
-                        [class.ChipSuccess]="row.status"
-                      >
-                        Active
-                      </mat-chip>
-                      <mat-chip *ngSwitchCase="3" [class.ChipInfo]="row.status">
-                        Completed
-                      </mat-chip>
+                    <mat-chip
+                      *ngIf="!isTestTable"
+                      [ngClass]="row.status ? 'ChipSuccess' : 'ChipInactive'"
+                    >
+                      {{ row.status ? "Active" : "Inactive" }}
+                    </mat-chip>
+                    <ng-container *ngIf="isTestTable">
+                      <ng-container [ngSwitch]="row.status">
+                        <mat-chip
+                          *ngSwitchCase="1"
+                          [class.ChipWarn]="row.status"
+                        >
+                          Draft
+                        </mat-chip>
+                        <mat-chip
+                          *ngSwitchCase="2"
+                          [class.ChipSuccess]="row.status"
+                        >
+                          Active
+                        </mat-chip>
+                        <mat-chip
+                          *ngSwitchCase="3"
+                          [class.ChipInfo]="row.status"
+                        >
+                          Completed
+                        </mat-chip>
+                      </ng-container>
                     </ng-container>
                   </ng-container>
+                  <ng-template #defaultTemplate>
+                    {{ row[column.columnDef] }}
+                  </ng-template>
                 </ng-container>
-                <ng-template #defaultTemplate>
-                  {{ row[column.columnDef] }}
-                </ng-template>
               </ng-container>
+              <ng-template #importedTemplate>
+                <mat-chip *ngIf="!isTestTable" [ngClass]="'ChipImported'">
+                  {{ row.isImported }}
+                </mat-chip>
+              </ng-template>
               <ng-template #selectTemplate>
                 <mat-checkbox
                   color="primary"

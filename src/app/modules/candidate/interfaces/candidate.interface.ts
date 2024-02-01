@@ -12,6 +12,7 @@ export interface CandidateModel {
   createdYear: number;
   createdBy: number;
   name: string;
+  isImported: boolean;
 }
 
 export interface DropdownItem {
