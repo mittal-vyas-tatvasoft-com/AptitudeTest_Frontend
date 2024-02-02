@@ -108,6 +108,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
         phoneNumber: personalData.controls['phoneNumber'].value,
         groupId: personalInfo.userGroup ? personalInfo.userGroup : 0,
         collegeId: personalData.controls['userCollege'].value,
+        otherCollege: personalData.controls['otherCollege'].value,
         gender: personalInfo.gender,
         status: personalInfo.status === 1,
         appliedThrough: personalInfo.appliedThrough,

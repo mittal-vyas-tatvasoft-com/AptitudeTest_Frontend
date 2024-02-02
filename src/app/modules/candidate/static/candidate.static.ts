@@ -16,3 +16,5 @@ export const defaultSelectOption = {
   key: 'Select',
   value: 'Select',
 };
+
+export const OtherCollegeName = 'Others';
