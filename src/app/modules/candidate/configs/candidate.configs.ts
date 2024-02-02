@@ -79,6 +79,15 @@ export const candidateControl = {
     inputType: 'select',
     requiredErrMsg: 'College is required',
   },
+  otherCollege: {
+    value: '',
+    key: 'otherCollege',
+    label: 'College',
+    inputType: 'text',
+    displayIcon: false,
+    requiredErrMsg: 'College is required',
+    maxLengthErrMsg: 'Max 50 characters allowed',
+  },
   userGroup: {
     value: '',
     key: 'userGroup',
