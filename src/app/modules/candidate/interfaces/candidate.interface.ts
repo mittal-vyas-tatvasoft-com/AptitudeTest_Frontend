@@ -12,6 +12,7 @@ export interface CandidateModel {
   createdYear: number;
   createdBy: number;
   name: string;
+  isImported: boolean;
 }
 
 export interface DropdownItem {
@@ -85,6 +86,7 @@ export interface UpdateParams {
   phoneNumber: number;
   groupId: number;
   collegeId: number;
+  otherCollege?: string;
   gender: number;
   status: any;
   dateOfBirth: string;

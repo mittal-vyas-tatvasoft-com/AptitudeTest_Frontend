@@ -46,8 +46,9 @@ export class ListOfQuestionsComponent implements OnInit {
           this.questionStatus.Current;
       }
       if (this.questionsStatus.questionStatusVMs.length === data[0] + 1) {
-        this.currentStatus = this.questionsStatus.questionStatusVMs[0].status;
-        this.questionsStatus.questionStatusVMs[0].status =
+        this.currentStatus =
+          this.questionsStatus.questionStatusVMs[data[0]].status;
+        this.questionsStatus.questionStatusVMs[data[0]].status =
           this.questionStatus.Current;
       }
     });

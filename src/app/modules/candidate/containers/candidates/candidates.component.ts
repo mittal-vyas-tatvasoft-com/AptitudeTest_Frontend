@@ -54,6 +54,7 @@ export class CandidatesComponent implements OnInit {
     { columnDef: 'email', header: 'Email ID', width: '20%' },
     { columnDef: 'phoneNumber', header: 'Contact No.', width: '10%' },
     { columnDef: 'createdYear', header: 'Year Added', width: '5%' },
+    { columnDef: 'isImported', header: 'Is Imported', width: '5%' },
     { columnDef: 'status', header: 'Status', width: '10%' },
     { columnDef: 'action', header: 'Action', isAction: true, width: '5%' },
   ];
@@ -93,9 +94,21 @@ export class CandidatesComponent implements OnInit {
       sortOrder: this.sortDirection,
     };
     this.candidateService.getCandidate(params).subscribe((data: any) => {
+      let i = 0;
       data.forEach(
-        (candidate: { name: string; firstName: string; lastName: string }) => {
+        (candidate: {
+          name: string;
+          firstName: string;
+          lastName: string;
+          isImported: string;
+        }) => {
           candidate.name = `${candidate.firstName} ${candidate.lastName || ''}`;
+          if (data[i].isImported) {
+            candidate.isImported = 'Yes';
+          } else {
+            candidate.isImported = 'No';
+          }
+          i = i + 1;
         }
       );
       this.dataSource = new MatTableDataSource<CandidateModel>(data);
@@ -359,6 +372,11 @@ export class CandidatesComponent implements OnInit {
 
       case 'createdYear':
         this.sortKey = 'CreatedYear';
+        this.sortDirection = event.direction;
+        break;
+
+      case 'isImported':
+        this.sortKey = 'IsImported';
         this.sortDirection = event.direction;
         break;
 

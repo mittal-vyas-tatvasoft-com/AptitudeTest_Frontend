@@ -27,6 +27,8 @@ import {
 } from '../../configs/candidate.configs';
 import { UserData } from '../../interfaces/candidate.interface';
 import { CandidateService } from '../../services/candidate.service';
+import { MatSelectChange } from '@angular/material/select';
+import { OtherCollegeName } from '../../static/candidate.static';
 
 @Component({
   selector: 'app-personal-info',
@@ -46,6 +48,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
   states: SelectOption[] = [];
   form: FormGroup;
   maxDate = new Date();
+  isOtherCollege = false;
   @Input() candidateData: UserData;
   @Input() isAdmin: boolean;
   @Input() candidateEditMode: boolean;
@@ -145,6 +148,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       ],
       userGroup: [''],
       userCollege: ['', Validators.required],
+      otherCollege: ['', [Validators.maxLength(10)]],
       gender: ['', [Validators.required]],
       status: [candidateControl.status.value],
       createdYear: [{ value: '', disabled: this.isAdmin }],
@@ -288,6 +292,24 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
         }
       },
     });
+  }
+
+  collegeChange(event: MatSelectChange) {
+    const collegeId = event.value;
+    const otherCollegeId = this.colleges.find(
+      (x) => x.value.toLocaleLowerCase() === OtherCollegeName.toLowerCase()
+    )?.id;
+    this.isOtherCollege = collegeId === otherCollegeId;
+    if (this.isOtherCollege) {
+      this.form
+        .get('otherCollege')
+        ?.setValidators([Validators.required, Validators.maxLength(50)]);
+      this.form.get('otherCollege')?.updateValueAndValidity();
+    } else {
+      this.form.get('otherCollege')?.removeValidators(Validators.required);
+      this.form.get('otherCollege')?.updateValueAndValidity();
+      this.form.get('otherCollege')?.setValue('');
+    }
   }
 }
 
