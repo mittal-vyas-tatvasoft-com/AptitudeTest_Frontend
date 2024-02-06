@@ -13,6 +13,7 @@ export class GroupCardComponent {
   @Output() editClicked = new EventEmitter<GroupsModel>();
   @Output() deleteClicked = new EventEmitter<number>();
   @Output() setDefaultClicked = new EventEmitter<GroupsModel>();
+  @Output() checkBoxClicked = new EventEmitter<number>();
 
   constructor(public dialog: MatDialog, private router: Router) {}
 
@@ -22,6 +23,10 @@ export class GroupCardComponent {
 
   handleDelete(id: number) {
     this.deleteClicked.emit(id);
+  }
+
+  handleCheckBox(id: number) {
+    this.checkBoxClicked.emit(id);
   }
 
   setAsDefault(group: GroupsModel) {

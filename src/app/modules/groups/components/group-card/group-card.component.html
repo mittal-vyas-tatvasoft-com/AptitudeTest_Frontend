@@ -1,8 +1,16 @@
 <mat-card class="group-card" fxLayout="column" fxLayoutAlign="start start"
   ><mat-card-content>
     <div class="row align-items-center group-card-header">
-      <div class="col" (click)="FilterGroupOrCollege(groupData.id, 0)">
-        <h3 class="group-card-heading">
+      <div class="col">
+        <mat-checkbox
+          *ngIf="!groupData.isDefault"
+          color="primary"
+          (change)="handleCheckBox(groupData.id)"
+        ></mat-checkbox>
+        <h3
+          class="group-card-heading"
+          (click)="FilterGroupOrCollege(groupData.id, 0)"
+        >
           {{ groupData.name }} :<b> {{ groupData.numberOfStudentsInGroup }}</b>
         </h3>
       </div>
