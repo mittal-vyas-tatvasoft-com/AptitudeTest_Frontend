@@ -24,6 +24,7 @@ export interface ResultModel {
   wrong: string;
   unanswered: string;
   undisplayed: string;
+  timeRemaining: number;
   status: string;
   action: string;
 }
@@ -42,6 +43,7 @@ export interface ResultData {
   unAnsweredCount: number;
   unDisplayedCount: number;
   userTestId: number;
+  timeRemaining: number;
   status: string;
   totalRecords: number;
   totalPages: number;
