@@ -6,10 +6,16 @@ import { MatTableDataSource } from '@angular/material/table';
 import { Router } from '@angular/router';
 import { debounceTime } from 'rxjs';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
-import { Numbers, StatusCode, TestStatus } from 'src/app/shared/common/enums';
+import {
+  Numbers,
+  StaticMessages,
+  StatusCode,
+  TestStatus,
+} from 'src/app/shared/common/enums';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+import { TableComponent } from 'src/app/shared/modules/tables/components/table/table.component';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { testFilterModel } from '../../config/test.configs';
@@ -33,10 +39,12 @@ export class TestComponent implements OnInit, AfterViewInit {
   sortOrder = '';
   defaultGroupId: number;
   pageNumbers: number[] = [];
+  testIds: number[] = [];
   form: FormGroup;
   formData = testFilterModel;
   dataSource!: MatTableDataSource<TestData>;
   displayedColumns: TableColumn<TestData>[] = [
+    { columnDef: 'select', header: '', width: '5%' },
     { columnDef: 'testName', header: 'Test', width: '20%' },
     { columnDef: 'groupName', header: 'Group', width: '15%' },
     { columnDef: 'testTime', header: 'Test Time', width: '10%' },
@@ -64,6 +72,7 @@ export class TestComponent implements OnInit, AfterViewInit {
   groups: SelectOption[] = [];
   nonDefaultGroups: SelectOption[] = [];
   @ViewChild(MatSort, { static: false }) sort!: MatSort;
+  @ViewChild('testTable') testTable: TableComponent<any>;
   candidateService: CandidateService;
 
   constructor(
@@ -163,6 +172,36 @@ export class TestComponent implements OnInit, AfterViewInit {
           }
         }
       });
+  }
+
+  handleMultipleTestDelete() {
+    this.testIds = this.testTable.getSelectedTestIds();
+    if (this.testIds && this.testIds.length > 0) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.panelClass = ['confirmation-dialog'];
+      dialogConfig.autoFocus = false;
+      const dialogRef = this.dialog.open(
+        DeleteConfirmationDialogComponent,
+        dialogConfig
+      );
+      dialogRef?.afterClosed().subscribe((result: any) => {
+        if (result) {
+          this.testService.deleteMultiple(this.testIds).subscribe({
+            next: (res: any) => {
+              if (res.statusCode == StatusCode.Success) {
+                this.getTests();
+                this.snackbarService.success(res.message);
+              } else {
+                this.snackbarService.error(res.message);
+              }
+            },
+          });
+        }
+      });
+      this.testTable.selection.clear();
+    } else {
+      this.snackbarService.warn(StaticMessages.SelectRow);
+    }
   }
 
   handleDeleteTestDialog(id: number) {

@@ -175,6 +175,10 @@ export class TableComponent<T> implements OnInit {
     }));
   }
 
+  getSelectedTestIds(): number[] {
+    return this.selection.selected.map((row) => row.id);
+  }
+
   get totalPages() {
     return Math.ceil(this.totalItemsCount / this.pageSize);
   }

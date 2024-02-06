@@ -152,6 +152,7 @@ export enum StaticMessages {
   //warning static message
   SelectRow = 'Please select atleast one row',
   AlreadyLoggedInError = 'Your account has already been logged in on another device.',
+  SelectCard = 'Please select atleast one group',
 }
 
 export enum TestStatus {

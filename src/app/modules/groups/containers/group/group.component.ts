@@ -1,6 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
-import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import {
+  Numbers,
+  StaticMessages,
+  StatusCode,
+} from 'src/app/shared/common/enums';
 import { DeleteConfirmationDialogComponent } from 'src/app/shared/dialogs/delete-confirmation-dialog/delete-confirmation-dialog.component';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { GroupsModel } from '../../interfaces/groups.interface';
@@ -9,6 +13,7 @@ import { AddGroupComponent } from '../add-group/add-group.component';
 import { CollegeModel } from 'src/app/modules/masters/college/interfaces/college.interface';
 import { debounceTime, Subject } from 'rxjs';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 
 @Component({
   selector: 'app-group',
@@ -19,6 +24,7 @@ export class GroupComponent implements OnInit {
   groupList: GroupsModel[] = [];
   colleges: CollegeModel[];
   filteredGroupList: GroupsModel[];
+  groupIds: number[] = [];
   addGroup: GroupsModel = {
     id: 0,
     name: '',
@@ -61,6 +67,44 @@ export class GroupComponent implements OnInit {
     this.groupsService.groups().subscribe((groups) => {
       this.groupList = groups;
     });
+  }
+
+  deleteMultipleGroups() {
+    if (this.groupIds.length > 0) {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.panelClass = ['confirmation-dialog'];
+      dialogConfig.autoFocus = false;
+      const dialogRef = this.dialog.open(
+        DeleteConfirmationDialogComponent,
+        dialogConfig
+      );
+      dialogRef?.afterClosed().subscribe((result: any) => {
+        if (result) {
+          this.groupsService.deleteMultiple(this.groupIds).subscribe({
+            next: (res: any) => {
+              if (res.statusCode == StatusCode.Success) {
+                this.groupIds = [];
+                this.getGroups();
+                this.snackbarService.success(res.message);
+              } else {
+                this.snackbarService.error(res.message);
+              }
+            },
+          });
+        }
+      });
+    } else {
+      this.snackbarService.warn(StaticMessages.SelectCard);
+    }
+  }
+  handleSelectedGroups(id: number) {
+    const groupExists = this.groupIds.includes(id);
+    if (groupExists) {
+      const index = this.groupIds.indexOf(id);
+      this.groupIds.splice(index, 1);
+    } else {
+      this.groupIds.push(id);
+    }
   }
 
   getFilteredGroups() {

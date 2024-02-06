@@ -64,4 +64,17 @@ export class GroupsService {
         })
       );
   }
+
+  deleteMultiple(groupIds: number[]) {
+    return this.httpClient
+      .put<ResponseModel<string>>(
+        `${environment.baseURL}Groups/DeleteMultiple`,
+        groupIds
+      )
+      .pipe(
+        map((res: ResponseModel<string>) => {
+          return res;
+        })
+      );
+  }
 }

@@ -223,6 +223,19 @@ export class TestService {
     );
   }
 
+  deleteMultiple(testIds: number[]) {
+    return this.http
+      .put<ResponseModel<string>>(
+        `${environment.baseURL}Tests/DeleteMultiple`,
+        testIds
+      )
+      .pipe(
+        map((res: ResponseModel<string>) => {
+          return res;
+        })
+      );
+  }
+
   getGroups(): Observable<ResponseModel<DropdownItem[]>> {
     return this.http.get<ResponseModel<DropdownItem[]>>(
       `${environment.baseURL}Groups/GetGroupsForDropDown`
