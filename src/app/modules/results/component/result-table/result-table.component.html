@@ -79,6 +79,14 @@
         </ng-container>
 
         <!-- Undisplayed Column -->
+        <ng-container matColumnDef="timeRemaining">
+          <th mat-header-cell mat-sort-header *matHeaderCellDef>
+            Remaining Time
+          </th>
+          <td mat-cell *matCellDef="let row">{{ row.timeRemaining }}</td>
+        </ng-container>
+
+        <!-- Remaining Time Column -->
         <ng-container matColumnDef="undisplayed">
           <th mat-header-cell mat-sort-header *matHeaderCellDef>Undisplayed</th>
           <td mat-cell *matCellDef="let row">{{ row.undisplayed }}</td>

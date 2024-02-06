@@ -20,6 +20,7 @@ export const DisplayedColumns: string[] = [
   'wrong',
   'unanswered',
   'undisplayed',
+  'timeRemaining',
   'status',
   'action',
 ];

@@ -87,6 +87,7 @@ export const candidateControl = {
     displayIcon: false,
     requiredErrMsg: 'College is required',
     maxLengthErrMsg: 'Max 50 characters allowed',
+    patternErrMsg: 'Please enter valid College',
   },
   userGroup: {
     value: '',
