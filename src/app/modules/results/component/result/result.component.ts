@@ -269,6 +269,7 @@ export class ResultComponent implements OnInit {
           if (res.data && res.data.length > 0) {
             let data: ResultModel[] = res.data.map((record) => {
               return {
+                timeRemaining: record.timeRemaining,
                 id: record.userId,
                 testId: record.userTestId,
                 name: record.firstName + ' ' + record.lastName,

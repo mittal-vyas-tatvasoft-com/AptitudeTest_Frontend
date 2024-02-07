@@ -9,6 +9,13 @@
     <button
       mat-flat-button
       color="primary"
+      (click)="handleMultipleTestDelete()"
+    >
+      Delete Tests
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
       class="btn-with-icon"
       routerLink="/admin/tests/create"
     >
@@ -83,4 +90,5 @@
   (pageChanged)="handlePageChange($event)"
   (sortingChanged)="handleDataSorting($event)"
   (testActionClicked)="handleTestStatus($event)"
+  #testTable
 ></app-table>

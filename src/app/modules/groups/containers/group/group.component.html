@@ -6,6 +6,9 @@
     <h4 class="title">Group</h4>
   </div>
   <div class="action-list">
+    <button mat-flat-button color="primary" (click)="deleteMultipleGroups()">
+      Delete Groups
+    </button>
     <button
       mat-fab
       color="primary"
@@ -55,6 +58,7 @@
         (editClicked)="handleAddGroupDialog($event)"
         (deleteClicked)="handleDeleteGroupDialog($event)"
         (setDefaultClicked)="setGroupAsDefault($event)"
+        (checkBoxClicked)="handleSelectedGroups($event)"
       >
       </app-group-card>
     </div>

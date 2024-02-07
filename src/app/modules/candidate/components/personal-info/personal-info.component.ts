@@ -303,7 +303,11 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
     if (this.isOtherCollege) {
       this.form
         .get('otherCollege')
-        ?.setValidators([Validators.required, Validators.maxLength(50)]);
+        ?.setValidators([
+          Validators.required,
+          Validators.maxLength(50),
+          Validators.pattern(validations.common.whitespaceREGEX),
+        ]);
       this.form.get('otherCollege')?.updateValueAndValidity();
     } else {
       this.form.get('otherCollege')?.removeValidators(Validators.required);

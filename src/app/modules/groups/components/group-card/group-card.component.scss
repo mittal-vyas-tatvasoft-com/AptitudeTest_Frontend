@@ -17,7 +17,11 @@
   cursor: pointer;
 }
 
-.group-card-heading,
+.group-card-heading {
+  display: inline;
+  cursor: pointer;
+}
+
 .group-card-listing {
   cursor: pointer;
 }
