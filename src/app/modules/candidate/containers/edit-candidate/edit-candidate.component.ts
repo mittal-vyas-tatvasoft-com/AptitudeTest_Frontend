@@ -111,6 +111,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
         otherCollege: personalData.controls['otherCollege'].value,
         gender: personalInfo.gender,
         status: personalInfo.status === 1,
+        isProfileEdited: !this.isAdmin,
         appliedThrough: personalInfo.appliedThrough,
         technologyInterestedIn: personalInfo.technologyInterestedIn || null,
         pincode: personalInfo.pincode || 0,
