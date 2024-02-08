@@ -38,8 +38,15 @@ export class FileExplorerComponent implements OnInit {
 
   fileName = '';
   breakpoint: number;
+  thumbnailBreakpoint: number;
+  isListViewSelected: boolean = true;
+  isThumbnailViewSelected: boolean = false;
+  contextmenuX = 0;
+  contextmenuY = 0;
 
   @ViewChild('box') previewWindow: any;
+  @ViewChild(MatMenuTrigger)
+  rootMenu: MatMenuTrigger;
 
   constructor(
     public filesService: FilesService,
@@ -49,19 +56,34 @@ export class FileExplorerComponent implements OnInit {
 
   ngOnInit(): void {
     this.setBreakpoint();
+    this.setThumbnailBreakpoint();
   }
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
-    if (
-      this.fileElements == null ||
-      this.fileElements.length == 0 ||
-      this.fileElements[0].isFolder
-    ) {
-      this.setBreakpoint();
-    } else {
-      this.breakpoint = 1;
-    }
+    // if (
+    //   this.fileElements == null ||
+    //   this.fileElements.length == 0 ||
+    //   this.fileElements[0].isFolder
+    // ) {
+    //   this.setBreakpoint();
+    //   this.setThumbnailBreakpoint();
+    // } else {
+    //   this.breakpoint = 1;
+    //   this.thumbnailBreakpoint = 1;
+    // }
+
+    this.setBreakpoint();
+    this.setThumbnailBreakpoint();
+  }
+
+  contextMenuPosition = { x: '0px', y: '0px' };
+
+  onContextMenu(event: MouseEvent) {
+    event.preventDefault();
+    this.contextMenuPosition.x = event.clientX + 'px';
+    this.contextMenuPosition.y = event.clientY + 'px';
+    this.rootMenu.openMenu();
   }
 
   setBreakpoint() {
@@ -73,6 +95,17 @@ export class FileExplorerComponent implements OnInit {
       this.breakpoint = 1;
     }
   }
+
+  setThumbnailBreakpoint() {
+    if (window.innerWidth >= 992) {
+      this.thumbnailBreakpoint = 9;
+    } else if (window.innerWidth < 992 && window.innerWidth > 768) {
+      this.thumbnailBreakpoint = 6;
+    } else {
+      this.thumbnailBreakpoint = 3;
+    }
+  }
+
   deleteElement(element: FileElement) {
     this.elementRemoved.emit(element);
   }
@@ -92,6 +125,7 @@ export class FileExplorerComponent implements OnInit {
   }
 
   navigateUp() {
+    this.generateListView();
     this.navigatedUp.emit();
   }
 
@@ -105,9 +139,28 @@ export class FileExplorerComponent implements OnInit {
   }
 
   breadcrumbsClick(element: BreadcrumbsElement, index: number) {
+    this.generateListView();
     if (index === this.breadcrumbsElement.length - 1) {
       return;
     }
     this.navigateThroughBreadCrumb.emit(element);
+  }
+
+  generateListView() {
+    this.isListViewSelected = true;
+    this.isThumbnailViewSelected = false;
+  }
+
+  generateThumbnailView() {
+    this.isListViewSelected = false;
+    this.isThumbnailViewSelected = true;
+  }
+
+  getBreakPointValue(): number {
+    if (this.isListViewSelected) {
+      return this.breakpoint;
+    } else {
+      return this.thumbnailBreakpoint;
+    }
   }
 }
