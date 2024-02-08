@@ -9,11 +9,27 @@
   >
     {{ i == 0 ? element.path : " > " + element.path }}
   </span>
+  <span class="spacer"></span>
+  <div *ngFor="let element of breadcrumbsElement">
+    <div
+      class="main-div"
+      *ngIf="
+        element.path === 'ScreenShots' || element.path === 'UserFaceCamShots'
+      "
+    >
+      <button class="list-button" (click)="generateListView()">
+        <mat-icon class="list-icon">list</mat-icon>
+      </button>
+      <button class="thumbnail-button" (click)="generateThumbnailView()">
+        <mat-icon class="thumbnail-icon">collections</mat-icon>
+      </button>
+    </div>
+  </div>
 </mat-toolbar>
 
 <div fxFlex fxLayout="row" fxLayoutAlign="space-between stretch">
   <div class="content" fxFlex fxLayout="row">
-    <mat-grid-list [cols]="breakpoint" rowHeight="75px" fxFlex>
+    <mat-grid-list [cols]="getBreakPointValue()" rowHeight="75px" fxFlex>
       <div class="no-file-msg" *ngIf="fileElements.length === 0">
         This folder is empty.
       </div>
@@ -31,13 +47,34 @@
               folder
             </mat-icon>
             <img
-              *ngIf="filesService.getIconPath(element.name)"
+              *ngIf="
+                isListViewSelected && filesService.getIconPath(element.name)
+              "
               class="file-or-folder-icon pointer"
               [src]="getImgPath(filesService.getIconPath(element.name))"
               alt="icon"
             />
+
+            <div class="thumbnail-container" *ngIf="isThumbnailViewSelected">
+              <div (contextmenu)="onContextMenu($event)">
+                <img
+                  class="thumbnail-image pointer"
+                  [src]="filesService.getImagePath(element.name)"
+                  alt="icon"
+                  loading="eager"
+                />
+              </div>
+              <div
+                style="visibility: hidden; position: fixed"
+                [style.left]="contextMenuPosition.x"
+                [style.top]="contextMenuPosition.y"
+                [matMenuTriggerFor]="rootMenu"
+              ></div>
+            </div>
+
             <mat-icon
               *ngIf="
+                isListViewSelected &&
                 !element.isFolder &&
                 filesService.getIconPath(element.name) === undefined
               "
@@ -47,7 +84,10 @@
               insert_drive_file
             </mat-icon>
 
-            <span class="pointer">
+            <span
+              class="pointer"
+              *ngIf="isListViewSelected || element.isFolder"
+            >
               {{ element.name }}
             </span>
           </div>
@@ -65,7 +105,7 @@
               <span>Download</span>
             </button>
           </mat-menu>
-          <div>
+          <div *ngIf="isListViewSelected">
             <mat-icon
               color="primary"
               class="pointer"
