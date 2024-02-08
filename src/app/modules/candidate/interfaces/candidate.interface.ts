@@ -89,6 +89,7 @@ export interface UpdateParams {
   otherCollege?: string;
   gender: number;
   status: any;
+  isProfileEdited: boolean;
   dateOfBirth: string;
   permanentAddress1: string;
   permanentAddress2: string;

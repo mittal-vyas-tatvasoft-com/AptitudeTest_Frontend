@@ -11,4 +11,5 @@ export interface TokenWithSidVm {
   refreshTokenExpiryTime: DateTime;
   sid: string;
   isSubmitted: boolean;
+  isProfileEdited: boolean;
 }
