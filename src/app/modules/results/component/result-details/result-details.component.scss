@@ -1,8 +1,12 @@
 .no-data-message {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 100px;
-    font-size: 18px;
-    color: #999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100px;
+  font-size: 18px;
+  color: #999;
+}
+
+.space {
+  padding-right: 10px;
 }

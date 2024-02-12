@@ -18,6 +18,7 @@ export class McqQuestionComponent implements OnInit {
   @Output() saveAnswer = new EventEmitter<{
     answers: Answer[];
     questionNumber: number;
+    timeSpent: number;
   }>();
   @Output() endTestEvent = new EventEmitter<void>();
   isClearResponseEnable: boolean;
@@ -25,6 +26,8 @@ export class McqQuestionComponent implements OnInit {
   optionType = OptionType;
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
   questionType = QuestionType;
+  questionStartTime = new Date();
+  questionEndTime: Date;
 
   constructor(private settingService: SettingService) {}
 
@@ -57,12 +60,19 @@ export class McqQuestionComponent implements OnInit {
   }
 
   save() {
+    this.questionEndTime = new Date();
+    const endTime = this.questionEndTime.getTime();
+    const startTime = this.questionStartTime.getTime();
+
+    const timeTakenInSeconds = Math.floor((endTime - startTime) / 1000);
+
     this.saveAnswer.emit({
       answers: this.question.answers,
       questionNumber: this.question.questionNumber,
+      timeSpent: timeTakenInSeconds,
     });
+    this.questionStartTime = new Date();
   }
-
   setAnswer(optionId: number) {
     this.question.answers = this.question.answers.map((ans) => {
       if (ans.optionId === optionId) {
