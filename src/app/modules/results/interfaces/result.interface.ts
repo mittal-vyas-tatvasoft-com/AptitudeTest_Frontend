@@ -81,6 +81,7 @@ export interface ResultDetails {
 export interface ResultQuestion {
   id: number;
   difficulty: number;
+  timeSpent: string;
   questionText: string;
   optionType: number;
   userAnswers: number[];
