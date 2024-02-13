@@ -166,6 +166,7 @@ export class GroupComponent implements OnInit {
             next: (res) => {
               if (res.statusCode == StatusCode.Success) {
                 this.snackbarService.success(res.message);
+                this.groupIds = [];
                 this.getGroups();
               } else {
                 this.snackbarService.error(res.message);
