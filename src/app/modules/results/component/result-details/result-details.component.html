@@ -79,7 +79,10 @@
           <p class="question-text" [innerHTML]="item.questionText"></p>
         </div>
         <div class="qa-right">
-          <mat-chip class="ChipInfo question-mark me-0">
+          <mat-chip
+            class="ChipInfo question-mark me-0"
+            *ngIf="item.timeSpentInSeconds > 0"
+          >
             Time Spent : {{ item.timeSpent }}
           </mat-chip>
 
