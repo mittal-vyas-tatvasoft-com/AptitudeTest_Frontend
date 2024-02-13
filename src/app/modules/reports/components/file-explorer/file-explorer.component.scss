@@ -16,7 +16,7 @@
 
   .inside-grid-tile {
     width: 100%;
-    padding: 0px 20px;    
+    padding: 0px 20px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -44,6 +44,11 @@
   .file-or-folder-icon {
     margin-right: 8px;
   }
+}
+
+.thumbnail-image {
+  padding-top: 10px;
+  height: 60px;
 }
 
 .no-file-msg {
@@ -82,12 +87,40 @@
 
 .c-dialog-header {
   display: flex;
-  justify-content: flex-end;    
+  justify-content: flex-end;
   align-items: center;
   background: #eef0f6;
   padding: 12px 8px 12px 20px;
 }
 
-.cursor-pointer{
-cursor: pointer;
+.cursor-pointer {
+  cursor: pointer;
+}
+
+.main-div {
+  display: inline-flex;
+  overflow: auto;
+}
+
+.list-icon,
+.thumbnail-icon {
+  font-size: 30px; /* Adjust the font size of the icons */
+  flex-shrink: 0; /* Prevent icons from shrinking and getting trimmed */
+  color: blue;
+}
+
+.view-button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.list-button,
+.thumbnail-button {
+  background-color: transparent;
+  border: 1px solid blue;
+  border-radius: 5px;
+  padding: 6px;
+  margin-right: 8px;
+  cursor: pointer;
 }

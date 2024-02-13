@@ -32,6 +32,7 @@ export interface SaveAnswerModel {
   timeRemaining: number;
   userAnswers: number[];
   isAttended: boolean;
+  timeSpent: number;
 }
 
 export interface Options {

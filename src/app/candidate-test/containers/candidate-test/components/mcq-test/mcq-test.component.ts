@@ -148,7 +148,11 @@ export class McqTestComponent implements OnInit, OnDestroy {
     }
   }
 
-  onSubmit(event: { answers: Answer[]; questionNumber: number }) {
+  onSubmit(event: {
+    answers: Answer[];
+    questionNumber: number;
+    timeSpent: number;
+  }) {
     if (event.questionNumber !== this.question.totalQuestions) {
       this.displayQuestion();
     }
@@ -161,7 +165,11 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.candidateTestService.questionStatus.next(status);
   }
 
-  saveAnswers(event: { answers: Answer[]; questionNumber: number }) {
+  saveAnswers(event: {
+    answers: Answer[];
+    questionNumber: number;
+    timeSpent: number;
+  }) {
     let answer: number[] = [];
     event.answers.forEach((isAnswer: Answer) => {
       if (isAnswer.isAnswer) {
@@ -174,6 +182,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
       userId: this.userId,
       userAnswers: answer,
       isAttended: true,
+      timeSpent: event.timeSpent,
     };
     this.candidateTestService.saveAnswer(data).subscribe({
       next: (res: ResponseModel<string>) => {
