@@ -218,6 +218,7 @@ export class TestComponent implements OnInit, AfterViewInit {
         this.testService.delete(id).subscribe({
           next: (res: ResponseModel<string>) => {
             if (res.statusCode == StatusCode.Success) {
+              this.testTable.selection.clear();
               this.getTests();
               this.snackbarService.success(res.message);
             } else {
