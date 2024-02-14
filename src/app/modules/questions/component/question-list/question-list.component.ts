@@ -276,6 +276,9 @@ export class QuestionListComponent implements OnInit, OnDestroy {
   }
 
   isAllSelected() {
-    return this.statusUpdateList.length === this.questions.length;
+    return (
+      this.statusUpdateList.length === this.questions.length &&
+      this.questions.length != 0
+    );
   }
 }
