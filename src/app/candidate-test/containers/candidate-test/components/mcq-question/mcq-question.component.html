@@ -49,10 +49,28 @@
     </button>
   </div>
   <div>
-    <button mat-flat-button color="primary" (click)="save()">
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="save()"
+      *ngIf="isQuestionMenu"
+    >
       Save
       {{
         question.questionNumber !== question.totalQuestions ? "&amp; Next" : ""
+      }}
+    </button>
+    <button
+      mat-flat-button
+      color="primary"
+      (click)="save()"
+      *ngIf="!isQuestionMenu"
+    >
+      Save
+      {{
+        question.questionNumber !== question.totalQuestions
+          ? "&amp; Next"
+          : "&amp; Finish Test"
       }}
     </button>
   </div>

@@ -9,7 +9,7 @@
       </div>
       <div class="right">
         <p class="data-value">
-          Time Remaining
+          Test Time Remaining
           <b
             *ngIf="
               timeRemaining.hours > 0 &&
@@ -109,10 +109,122 @@
           Question {{ question.questionNumber }} of
           {{ question.totalQuestions }}
         </p>
+        <p
+          class="question-label"
+          *ngIf="
+            timeSpent.hours > 0 &&
+            timeSpent.minutes > 0 &&
+            timeSpent.seconds > 0
+          "
+        >
+          Time Spent :
+          {{
+            timeSpentForQuestion.hours +
+              ":" +
+              timeSpentForQuestion.minutes +
+              ":" +
+              timeSpentForQuestion.seconds
+          }}
+        </p>
+
+        <p
+          class="question-label"
+          *ngIf="
+            timeSpent.hours === 0 &&
+            timeSpent.minutes > 0 &&
+            timeSpent.seconds > 0
+          "
+        >
+          Time Spent :
+          {{
+            timeSpentForQuestion.minutes + ":" + timeSpentForQuestion.seconds
+          }}
+        </p>
+
+        <p
+          class="question-label"
+          *ngIf="
+            timeSpent.hours === 0 &&
+            timeSpent.minutes === 0 &&
+            timeSpent.seconds > 0
+          "
+        >
+          Time Spent :
+          {{ timeSpentForQuestion.seconds }}
+        </p>
+
+        <p
+          class="question-label"
+          *ngIf="
+            timeSpent.hours > 0 &&
+            timeSpent.minutes > 0 &&
+            timeSpent.seconds === 0
+          "
+        >
+          Time Spent :
+          {{
+            timeSpentForQuestion.hours +
+              ":" +
+              timeSpentForQuestion.minutes +
+              ":" +
+              timeSpentForQuestion.seconds
+          }}
+        </p>
+
+        <p
+          class="question-label"
+          *ngIf="
+            timeSpent.hours > 0 &&
+            timeSpent.minutes === 0 &&
+            timeSpent.seconds > 0
+          "
+        >
+          Time Spent :
+          {{
+            timeSpentForQuestion.hours +
+              ":" +
+              timeSpentForQuestion.minutes +
+              ":" +
+              timeSpentForQuestion.seconds
+          }}
+        </p>
+
+        <p
+          class="question-label"
+          *ngIf="
+            timeSpent.hours === 0 &&
+            timeSpent.minutes > 0 &&
+            timeSpent.seconds === 0
+          "
+        >
+          Time Spent :
+          {{
+            timeSpentForQuestion.minutes + ":" + timeSpentForQuestion.seconds
+          }}
+        </p>
+
+        <p
+          class="question-label"
+          *ngIf="
+            timeSpent.hours > 0 &&
+            timeSpent.minutes === 0 &&
+            timeSpent.seconds === 0
+          "
+        >
+          Time Spent :
+          {{
+            timeSpentForQuestion.hours +
+              ":" +
+              timeSpentForQuestion.minutes +
+              ":" +
+              timeSpentForQuestion.seconds
+          }}
+        </p>
         <p class="question-label">Marks({{ question.difficulty }})</p>
       </div>
       <app-mcq-question
         [question]="question"
+        [isQuestionMenu]="isQuestionMenu"
         (saveAnswer)="onSubmit($event)"
         (endTestEvent)="endTest()"
       ></app-mcq-question>

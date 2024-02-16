@@ -35,6 +35,12 @@ export interface SaveAnswerModel {
   timeSpent: number;
 }
 
+export interface QuestionTimerDetail {
+  userId: number;
+  questionId: number;
+  timeSpent: number;
+}
+
 export interface Options {
   optionId: number;
   optionData: string;
