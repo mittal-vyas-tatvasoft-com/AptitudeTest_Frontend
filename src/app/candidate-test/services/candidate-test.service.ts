@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 import {
   Question,
   QuestionStatusModel,
+  QuestionTimerDetail,
   SaveAnswerModel,
   TestInstructions,
   UpdateTestTimeModel,
@@ -55,6 +56,13 @@ export class CandidateTestService {
   saveAnswer(data: SaveAnswerModel) {
     return this.http.put<ResponseModel<string>>(
       `${environment.baseURL}Candidates/SaveTestQuestionAnswer`,
+      data
+    );
+  }
+
+  updateQuestionTimer(data: QuestionTimerDetail) {
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}Candidates/UpdateQuestionTimer`,
       data
     );
   }
@@ -156,7 +164,9 @@ export class CandidateTestService {
   };
 
   removeScreenCapture() {
-    this.videoTrack.removeEventListener('ended', this.screenEventListener);
-    this.stop();
+    if (this.videoTrack) {
+      this.videoTrack.removeEventListener('ended', this.screenEventListener);
+      this.stop();
+    }
   }
 }
