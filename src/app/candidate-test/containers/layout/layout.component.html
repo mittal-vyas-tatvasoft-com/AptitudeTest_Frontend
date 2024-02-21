@@ -1,8 +1,4 @@
-<div
-  class="wrapper"
-  (contextmenu)="preventRightClick($event)"
-  (window:keydown)="onKeyDown($event)"
->
+<div class="wrapper" [appPreventContextMenu]="getRole()">
   <mat-sidenav-container class="layout-sidenav-container">
     <mat-sidenav-content>
       <app-header></app-header>

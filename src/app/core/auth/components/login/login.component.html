@@ -1,8 +1,4 @@
-<div
-  class="login-wrapper"
-  (contextmenu)="preventRightClick($event)"
-  (window:keydown)="onKeyDown($event)"
->
+<div class="login-wrapper" [appPreventContextMenu]="false">
   <div class="login-header">
     <a class="logo" title="Tatvasoft">
       <img src="./assets/images/tatvasoft-white.svg" alt="Tatvasoft" />

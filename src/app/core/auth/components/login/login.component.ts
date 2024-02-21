@@ -127,21 +127,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     }
   }
 
-  @HostListener('window:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent): void {
-    if (!this.isAdmin) {
-      if (event.key === 'F12' || event.keyCode === 123) {
-        event.preventDefault();
-      }
-    }
-  }
-
-  preventRightClick(event: MouseEvent): void {
-    if (!this.isAdmin) {
-      event.preventDefault();
-    }
-  }
-
   isRouteAdmin(route: ActivatedRoute | null): any {
     const decodedToken = this.loginService.decodeToken();
     if (decodedToken) {

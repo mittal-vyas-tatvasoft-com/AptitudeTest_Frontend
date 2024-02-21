@@ -9,20 +9,12 @@ import { LoginService } from 'src/app/core/auth/services/login.service';
 export class LayoutComponent {
   constructor(private loginService: LoginService) {}
 
-  @HostListener('window:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent): void {
+  getRole(): boolean {
     var role = this.loginService.getUserRole();
-    if (role !== 'Admin') {
-      if (event.key === 'F12' || event.keyCode === 123) {
-        event.preventDefault();
-      }
-    }
-  }
-
-  preventRightClick(event: MouseEvent): void {
-    var role = this.loginService.getUserRole();
-    if (role !== 'Admin') {
-      event.preventDefault();
+    if (role === 'Admin') {
+      return true;
+    } else {
+      return false;
     }
   }
 }

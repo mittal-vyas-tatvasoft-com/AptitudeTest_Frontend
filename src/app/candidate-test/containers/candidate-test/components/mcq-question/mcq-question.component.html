@@ -1,7 +1,6 @@
 <div
   class="d-flex align-content-center align-items-start"
-  (contextmenu)="preventRightClick($event)"
-  (window:keydown)="onKeyDown($event)"
+  [appPreventContextMenu]="false"
 >
   <h4
     class="question"
@@ -13,11 +12,7 @@
     "
   ></h4>
 </div>
-<div
-  class="row"
-  (contextmenu)="preventRightClick($event)"
-  (window:keydown)="onKeyDown($event)"
->
+<div class="row" [appPreventContextMenu]="false">
   <div class="col-md-6" *ngFor="let option of question.options; let i = index">
     <div
       class="qa-answer-type-text-option"

@@ -236,13 +236,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
     }, 1000);
   }
 
-  transform(value: number): string {
-    if (value !== null && value !== undefined) {
-      return value.toString().padStart(2, '0');
-    }
-    return '';
-  }
-
   endQuestionTimer(): number {
     return this.getTimeSpentInSeconds();
   }
@@ -309,17 +302,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
         }
       },
     });
-  }
-
-  @HostListener('window:keydown', ['$event'])
-  onKeyDown(event: KeyboardEvent): void {
-    if (event.key === 'F12' || event.keyCode === 123) {
-      event.preventDefault();
-    }
-  }
-
-  preventRightClick(event: MouseEvent): void {
-    event.preventDefault();
   }
 
   endTest() {

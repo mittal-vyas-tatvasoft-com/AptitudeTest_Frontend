@@ -1,8 +1,4 @@
-<div
-  class="container-xxl px-0 mt-xl-3 mt-1"
-  (contextmenu)="preventRightClick($event)"
-  (window:keydown)="onKeyDown($event)"
->
+<div class="container-xxl px-0 mt-xl-3 mt-1" [appPreventContextMenu]="false">
   <div class="row">
     <div class="col-lg no-print">
       <app-mcq-test
