@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { CandidateTestService } from '../../services/candidate-test.service';
@@ -36,6 +36,17 @@ export class TestSubmittedComponent implements OnInit {
           this.messageToShow = res.data;
         },
       });
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'F12' || event.keyCode === 123) {
+      event.preventDefault();
+    }
+  }
+
+  preventRightClick(event: MouseEvent): void {
+    event.preventDefault();
   }
   logout() {
     this.loginService.logout();

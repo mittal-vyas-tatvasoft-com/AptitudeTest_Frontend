@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { StatusCode } from 'src/app/shared/common/enums';
@@ -88,6 +88,17 @@ export class DashboardComponent implements OnInit, OnDestroy {
 
   addPad(digit: number) {
     return digit > 9 ? digit : `0${digit}`;
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'F12' || event.keyCode === 123) {
+      event.preventDefault();
+    }
+  }
+
+  preventRightClick(event: MouseEvent): void {
+    event.preventDefault();
   }
 
   getTestStartDate(date: string) {

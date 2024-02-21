@@ -197,6 +197,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
                 this.testService.loadQuestion.next(-1);
               }
             }
+
             this.seconds = this.questionsStatus.timeLeft * 60;
           } else {
             this.snackBarService.error(response.message);
@@ -206,6 +207,16 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
     }
   }
 
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'F12' || event.keyCode === 123) {
+      event.preventDefault();
+    }
+  }
+
+  preventRightClick(event: MouseEvent): void {
+    event.preventDefault();
+  }
   ngOnDestroy(): void {
     this.testService.removeScreenCapture();
     clearInterval(this.intervalCameraCapture);

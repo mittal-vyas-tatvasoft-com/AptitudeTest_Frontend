@@ -12,9 +12,12 @@ import { Sort } from '@angular/material/sort';
 import { MatStepper } from '@angular/material/stepper';
 import { MatTableDataSource } from '@angular/material/table';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ElementPaint } from 'html2canvas/dist/types/render/stacking-context';
+import * as moment from 'moment';
 import { Subject, debounceTime } from 'rxjs';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { Numbers, StatusCode } from 'src/app/shared/common/enums';
+import { Messages } from 'src/app/shared/messages/messages.static';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import { ValidationService } from 'src/app/shared/modules/form-control/services/validation.service';
@@ -477,13 +480,45 @@ export default class CreateTestComponent implements OnInit, AfterViewInit {
       createdBy: 1,
     };
 
-    if (this.startEndTimeDifferenceValid && this.basicTestDetails.valid) {
+    var testStartTime = this.getStartOrEndTime(
+      utcDate,
+      this.basicTestDetails.get('startTime')?.value
+    );
+    var testEndTime = this.getStartOrEndTime(
+      utcDate,
+      this.basicTestDetails.get('endTime')?.value
+    );
+
+    var currentDateAndTime = new Date();
+    if (
+      testStartTime < currentDateAndTime &&
+      testEndTime < currentDateAndTime
+    ) {
+      this.snackbarService.error(Messages.timeError);
+    } else {
       if (this.basicTestDetails.get('testId')?.value == 0) {
         this.createTest(payload);
       } else {
         this.updateTest(payload);
       }
     }
+  }
+
+  getStartOrEndTime(date: Date, selectedTime: string) {
+    const today = new Date(date);
+    const [time, period] = selectedTime.split(' ');
+    const [hours, minutes] = time.split(':');
+    if (period === 'AM' && hours !== '12') {
+      today.setHours(Number(hours));
+    } else if (period === 'PM' && hours !== '12') {
+      today.setHours(Number(hours) + 12);
+    } else if (period === 'AM' && hours === '12') {
+      today.setHours(Number('00'));
+    } else {
+      today.setHours(Number(hours));
+    }
+    today.setMinutes(Number(minutes));
+    return today;
   }
 
   updateTestGroup() {

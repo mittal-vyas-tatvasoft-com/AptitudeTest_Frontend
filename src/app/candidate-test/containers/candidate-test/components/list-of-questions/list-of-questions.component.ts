@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { retry } from 'rxjs';
 import { QuestionStatusModel } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
@@ -75,5 +75,16 @@ export class ListOfQuestionsComponent implements OnInit {
         }
       });
     this.testService.loadQuestion.next(id);
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'F12' || event.keyCode === 123) {
+      event.preventDefault();
+    }
+  }
+
+  preventRightClick(event: MouseEvent): void {
+    event.preventDefault();
   }
 }

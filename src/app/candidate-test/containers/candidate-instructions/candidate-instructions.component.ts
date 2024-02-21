@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { SettingService } from 'src/app/modules/setting/services/setting.service';
@@ -91,6 +91,16 @@ export class CandidateInstructionsComponent implements OnInit {
       });
   }
 
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'F12' || event.keyCode === 123) {
+      event.preventDefault();
+    }
+  }
+
+  preventRightClick(event: MouseEvent): void {
+    event.preventDefault();
+  }
   startTest() {
     this.candidateTestService.StartUserTest(this.userId).subscribe({
       next: (res) => {

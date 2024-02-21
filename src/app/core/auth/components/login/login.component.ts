@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
@@ -124,6 +124,21 @@ export class LoginComponent implements OnInit, OnDestroy {
       }
     } else {
       this.form.markAllAsTouched();
+    }
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    if (!this.isAdmin) {
+      if (event.key === 'F12' || event.keyCode === 123) {
+        event.preventDefault();
+      }
+    }
+  }
+
+  preventRightClick(event: MouseEvent): void {
+    if (!this.isAdmin) {
+      event.preventDefault();
     }
   }
 

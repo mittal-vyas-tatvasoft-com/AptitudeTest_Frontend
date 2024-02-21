@@ -1,4 +1,8 @@
-<div class="container-xxl p-0">
+<div
+  class="container-xxl p-0"
+  (contextmenu)="preventRightClick($event)"
+  (window:keydown)="onKeyDown($event)"
+>
   <mat-card class="instructions-block mb-3">
     <mat-card-content *ngIf="testExist">
       <h2>Important instructions for candidate</h2>

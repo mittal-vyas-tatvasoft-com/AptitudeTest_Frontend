@@ -1,4 +1,8 @@
-<div class="wrapper">
+<div
+  class="wrapper"
+  (contextmenu)="preventRightClick($event)"
+  (window:keydown)="onKeyDown($event)"
+>
   <mat-sidenav-container class="layout-sidenav-container">
     <mat-sidenav-content>
       <app-header></app-header>

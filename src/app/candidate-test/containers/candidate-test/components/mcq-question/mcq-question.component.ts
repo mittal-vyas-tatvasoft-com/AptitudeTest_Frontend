@@ -1,4 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  HostListener,
+  Input,
+  OnInit,
+  Output,
+} from '@angular/core';
 import {
   Answer,
   Question,
@@ -39,6 +46,17 @@ export class McqQuestionComponent implements OnInit {
 
   getSelectedAns(optionId: number) {
     return this.question.answers.find((d) => d.optionId === optionId)?.isAnswer;
+  }
+
+  @HostListener('window:keydown', ['$event'])
+  onKeyDown(event: KeyboardEvent): void {
+    if (event.key === 'F12' || event.keyCode === 123) {
+      event.preventDefault();
+    }
+  }
+
+  preventRightClick(event: MouseEvent): void {
+    event.preventDefault();
   }
 
   toggleCheckbox(optionId: number) {

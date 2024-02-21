@@ -1,4 +1,8 @@
-<mat-card class="form-block ask-question-box">
+<mat-card
+  class="form-block ask-question-box"
+  (contextmenu)="preventRightClick($event)"
+  (window:keydown)="onKeyDown($event)"
+>
   <mat-card-content>
     <div class="test-header">
       <div class="left">

@@ -1,9 +1,13 @@
-<div class="container-xxl px-0 mt-xl-3 mt-1">
+<div
+  class="container-xxl px-0 mt-xl-3 mt-1"
+  (contextmenu)="preventRightClick($event)"
+  (window:keydown)="onKeyDown($event)"
+>
   <div class="row">
     <div class="col-lg no-print">
       <app-mcq-test
         *ngIf="seconds"
-        [seconds]="seconds"
+        [remainingSecondsForExam]="seconds"
         [isQuestionMenu]="questionsStatus.isQuestionsMenu"
       ></app-mcq-test>
     </div>
