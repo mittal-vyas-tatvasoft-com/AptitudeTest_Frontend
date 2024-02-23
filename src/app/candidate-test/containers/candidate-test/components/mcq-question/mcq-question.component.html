@@ -1,4 +1,7 @@
-<div class="d-flex align-content-center align-items-start">
+<div
+  class="d-flex align-content-center align-items-start"
+  [appPreventContextMenu]="false"
+>
   <h4
     class="question"
     [innerHTML]="
@@ -9,7 +12,7 @@
     "
   ></h4>
 </div>
-<div class="row">
+<div class="row" [appPreventContextMenu]="false">
   <div class="col-md-6" *ngFor="let option of question.options; let i = index">
     <div
       class="qa-answer-type-text-option"

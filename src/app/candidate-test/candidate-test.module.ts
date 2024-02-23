@@ -17,6 +17,8 @@ import { RegisterComponent } from './containers/candidate-test/components/regist
 import { DashboardComponent } from './containers/dashboard/dashboard.component';
 import { LayoutComponent } from './containers/layout/layout.component';
 import { TestSubmittedComponent } from './containers/test-submitted/test-submitted.component';
+import { PreventContextMenuDirective } from '../shared/directives/prevent-context-menu.directive';
+import { SharedModule } from '../shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -39,6 +41,7 @@ import { TestSubmittedComponent } from './containers/test-submitted/test-submitt
     AuthModule,
     CandidateModule,
     WebcamModule,
+    SharedModule,
   ],
 })
 export class CandidateTestModule {}
