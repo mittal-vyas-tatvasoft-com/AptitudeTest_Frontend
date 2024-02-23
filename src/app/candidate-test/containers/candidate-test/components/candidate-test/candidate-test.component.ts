@@ -197,6 +197,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
                 this.testService.loadQuestion.next(-1);
               }
             }
+
             this.seconds = this.questionsStatus.timeLeft * 60;
           } else {
             this.snackBarService.error(response.message);

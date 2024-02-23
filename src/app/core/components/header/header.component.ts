@@ -10,6 +10,7 @@ import {
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
+import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { ChangePasswordComponent } from '../../auth/components/change-password/change-password.component';
@@ -40,7 +41,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private loginService: LoginService,
     public dialog: MatDialog,
     public snackbar: SnackbarService,
-    private router: Router
+    private router: Router,
+    private candidateTestService: CandidateTestService
   ) {}
 
   ngOnInit(): void {

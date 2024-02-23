@@ -90,7 +90,6 @@ export class CandidateInstructionsComponent implements OnInit {
         }
       });
   }
-
   startTest() {
     this.candidateTestService.StartUserTest(this.userId).subscribe({
       next: (res) => {

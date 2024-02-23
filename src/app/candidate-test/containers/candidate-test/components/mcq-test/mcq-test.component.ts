@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
+import { NgZone } from '@angular/core';
 import { Router } from '@angular/router';
 import {
   Answer,
@@ -19,6 +20,7 @@ import {
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-mcq-test',
@@ -62,8 +64,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
   remainingMinutes = '';
   remainingSeconds = '';
   timeRemainingToEndTime: number;
-  isLastQuestionSubmitted: boolean;
-  @Input() seconds = 0;
+  @Input() remainingSecondsForExam = 0;
   @Input() isQuestionMenu: boolean;
   question: Question = {
     id: 0,
@@ -81,13 +82,15 @@ export class McqTestComponent implements OnInit, OnDestroy {
   interval: any;
   updateTimeInterval: any;
   questionTimeInterval: any;
+  loadQuestionSubscription: Subscription;
   constructor(
     public loginService: LoginService,
     private router: Router,
     private candidateTestService: CandidateTestService,
     private candidateService: CandidateService,
     private snackBarService: SnackbarService,
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private zone: NgZone
   ) {}
 
   ngOnInit(): void {
@@ -98,10 +101,10 @@ export class McqTestComponent implements OnInit, OnDestroy {
 
     this.getEndTime();
     this.interval = setInterval(() => {
-      this.seconds = this.seconds - 1;
-      let hours = Math.floor(this.seconds / 3600);
-      let minutes = Math.floor((this.seconds % 3600) / 60);
-      let seconds = this.seconds - minutes * 60 - hours * 3600;
+      this.remainingSecondsForExam = this.remainingSecondsForExam - 1;
+      let hours = Math.floor(this.remainingSecondsForExam / 3600);
+      let minutes = Math.floor((this.remainingSecondsForExam % 3600) / 60);
+      let seconds = this.remainingSecondsForExam - minutes * 60 - hours * 3600;
       if (hours <= 9) {
         this.remainingHours = '0' + hours;
       } else {
@@ -129,12 +132,14 @@ export class McqTestComponent implements OnInit, OnDestroy {
         seconds: this.remainingSeconds,
       };
 
-      if (this.seconds === 0) {
+      if (this.remainingSecondsForExam === 0) {
         this.submitTest();
       }
     }, 1000);
     this.updateTimeInterval = setInterval(() => {
-      let remainingTimeInMinutes = Math.floor(this.seconds / 60);
+      let remainingTimeInMinutes = Math.floor(
+        this.remainingSecondsForExam / 60
+      );
       if (this.userId > 0 && remainingTimeInMinutes > 0) {
         let data: UpdateTestTimeModel = {
           userId: this.userId,
@@ -143,10 +148,19 @@ export class McqTestComponent implements OnInit, OnDestroy {
         this.updateTime(data);
       }
     }, 60000);
-    this.candidateTestService.loadQuestion.subscribe((data) => {
-      this.question.nextQuestionId = data;
+    this.loadQuestionSubscription =
+      this.candidateTestService.loadQuestion.subscribe((data) => {
+        if (data != -1) {
+          this.question.nextQuestionId = data;
+          this.displayQuestion();
+        }
+      });
+    if (
+      this.loadQuestionSubscription &&
+      this.candidateTestService.loadQuestion.getValue() === -1
+    ) {
       this.displayQuestion();
-    });
+    }
   }
 
   displayQuestion() {
@@ -177,8 +191,13 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.currentTimeSpentForQuestionInSeconds = 1;
     this.questionTimeInterval = setInterval(() => {
       const time = localStorage.getItem(this.key);
-      const timeSpentInSeconds = time ? JSON.parse(time) : null;
-      this.currentTimeSpentForQuestionInSeconds = timeSpentInSeconds + 1;
+      this.currentTimeSpentForQuestionInSeconds = time
+        ? JSON.parse(time)
+        : null;
+
+      this.currentTimeSpentForQuestionInSeconds =
+        this.currentTimeSpentForQuestionInSeconds + 1;
+
       localStorage.setItem(
         this.key,
         JSON.stringify(this.currentTimeSpentForQuestionInSeconds)
@@ -190,22 +209,19 @@ export class McqTestComponent implements OnInit, OnDestroy {
       );
       let seconds =
         this.currentTimeSpentForQuestionInSeconds - minutes * 60 - hours * 3600;
-      if (hours <= 9) {
-        this.timeSpentForQuestion.hours = '0' + hours;
-      } else {
-        this.timeSpentForQuestion.hours = hours.toString();
-      }
 
-      if (minutes <= 9) {
-        this.timeSpentForQuestion.minutes = '0' + minutes;
-      } else {
-        this.timeSpentForQuestion.minutes = minutes.toString();
-      }
-      if (seconds <= 9) {
-        this.timeSpentForQuestion.seconds = '0' + seconds;
-      } else {
-        this.timeSpentForQuestion.seconds = seconds.toString();
-      }
+      this.timeSpentForQuestion.hours = (
+        hours > 9 ? hours : `0${hours}`
+      ).toString();
+
+      this.timeSpentForQuestion.minutes = (
+        minutes > 9 ? minutes : `0${minutes}`
+      ).toString();
+
+      this.timeSpentForQuestion.seconds = (
+        seconds > 9 ? seconds : `0${seconds}`
+      ).toString();
+
       this.timeSpent = {
         hours: hours,
         minutes: minutes,
@@ -215,9 +231,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
   }
 
   endQuestionTimer(): number {
-    if (!this.isLastQuestionSubmitted) {
-      clearInterval(this.questionTimeInterval);
-    }
     return this.getTimeSpentInSeconds();
   }
 
@@ -234,7 +247,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
       userId: this.userId,
       timeSpent: this.getTimeSpentInSeconds(),
     };
-
     this.candidateTestService.updateQuestionTimer(data).subscribe({
       next: (res: ResponseModel<string>) => {},
     });
@@ -243,9 +255,8 @@ export class McqTestComponent implements OnInit, OnDestroy {
   onSubmit(event: { answers: Answer[]; questionNumber: number }) {
     if (event.questionNumber !== this.question.totalQuestions) {
       this.displayQuestion();
-    } else {
-      this.isLastQuestionSubmitted = true;
     }
+
     this.saveAnswers(event);
     let state =
       event.answers.filter((res) => res.isAnswer).length > 0
@@ -265,7 +276,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
 
     let data: SaveAnswerModel = {
       questionId: this.question.id,
-      timeRemaining: Math.floor(this.seconds / 60),
+      timeRemaining: Math.floor(this.remainingSecondsForExam / 60),
       userId: this.userId,
       userAnswers: answer,
       isAttended: true,
@@ -335,8 +346,9 @@ export class McqTestComponent implements OnInit, OnDestroy {
             this.timeRemainingToEndTime = Math.floor(
               (new Date(this.endTime).getTime() - new Date().getTime()) / 1000
             );
-            if (this.timeRemainingToEndTime <= this.seconds) {
-              this.seconds = this.timeRemainingToEndTime;
+
+            if (this.timeRemainingToEndTime <= this.remainingSecondsForExam) {
+              this.remainingSecondsForExam = this.timeRemainingToEndTime;
             }
           } else {
             this.snackBarService.error(res.message);
@@ -356,6 +368,9 @@ export class McqTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
+    if (this.loadQuestionSubscription) {
+      this.loadQuestionSubscription.unsubscribe();
+    }
     clearInterval(this.questionTimeInterval);
     clearInterval(this.interval);
     clearInterval(this.updateTimeInterval);
