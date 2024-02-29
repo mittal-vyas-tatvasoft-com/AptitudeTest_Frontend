@@ -1,4 +1,10 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import {
+  Component,
+  HostListener,
+  Input,
+  OnDestroy,
+  OnInit,
+} from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NgZone } from '@angular/core';
 import { Router } from '@angular/router';
@@ -21,6 +27,7 @@ import { ResponseModel } from 'src/app/shared/common/interfaces/response.interfa
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { Subscription } from 'rxjs';
+import { JsonPipe } from '@angular/common';
 
 @Component({
   selector: 'app-mcq-test',
@@ -82,6 +89,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
   interval: any;
   updateTimeInterval: any;
   questionTimeInterval: any;
+  tabChangeInterval: any;
   loadQuestionSubscription: Subscription;
   constructor(
     public loginService: LoginService,
@@ -137,17 +145,17 @@ export class McqTestComponent implements OnInit, OnDestroy {
       }
     }, 1000);
     this.updateTimeInterval = setInterval(() => {
-      let remainingTimeInMinutes = Math.floor(
-        this.remainingSecondsForExam / 60
-      );
-      if (this.userId > 0 && remainingTimeInMinutes > 0) {
+      // let remainingTimeInMinutes = Math.floor(
+      //   this.remainingSecondsForExam / 60
+      // );
+      if (this.userId > 0 && this.remainingSecondsForExam > 0) {
         let data: UpdateTestTimeModel = {
           userId: this.userId,
-          remainingTime: remainingTimeInMinutes,
+          remainingTime: this.remainingSecondsForExam,
         };
         this.updateTime(data);
       }
-    }, 60000);
+    }, 6000);
     this.loadQuestionSubscription =
       this.candidateTestService.loadQuestion.subscribe((data) => {
         if (data != -1) {
@@ -160,6 +168,17 @@ export class McqTestComponent implements OnInit, OnDestroy {
       this.candidateTestService.loadQuestion.getValue() === -1
     ) {
       this.displayQuestion();
+    }
+  }
+
+  @HostListener('document:visibilitychange', ['$event'])
+  visibilitychange() {
+    this.checkTabActivity();
+  }
+
+  checkTabActivity() {
+    if (document.hidden) {
+      this.loginService.logout();
     }
   }
 
@@ -374,5 +393,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
     clearInterval(this.questionTimeInterval);
     clearInterval(this.interval);
     clearInterval(this.updateTimeInterval);
+    clearInterval(this.tabChangeInterval);
   }
 }
