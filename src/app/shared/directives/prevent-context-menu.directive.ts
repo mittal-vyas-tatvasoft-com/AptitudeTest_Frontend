@@ -1,5 +1,4 @@
 import { Directive, HostListener, Input } from '@angular/core';
-import { LoginService } from 'src/app/core/auth/services/login.service';
 
 @Directive({
   selector: '[appPreventContextMenu]',
