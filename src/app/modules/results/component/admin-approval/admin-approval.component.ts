@@ -59,7 +59,9 @@ export class AdminApprovalComponent implements OnInit, AfterViewInit {
           next: (res: ResponseModel<ApproveTestData>) => {
             if (res.statusCode == StatusCode.Success) {
               this.form.setValue({
-                remainingTimeInMinutes: res.data.remainingTimeInMinutes,
+                remainingTimeInMinutes: Math.floor(
+                  res.data.remainingTimeInMinutes / 60
+                ),
               });
               this.hint = this.hint + res.data.duration + ' Minutes';
               this.approveTestData = res.data;

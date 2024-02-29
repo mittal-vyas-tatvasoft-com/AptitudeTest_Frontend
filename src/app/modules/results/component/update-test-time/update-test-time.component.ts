@@ -37,7 +37,7 @@ export class UpdateTestTimeComponent implements OnInit {
   }
 
   updateTestTime() {
-    const time = this.form.get('timeToBeAdded')?.value;
+    const time = this.form.get('timeToBeAdded')?.value * 60;
     this.resultsService.updateTestTime(this.data, time).subscribe({
       next: (res: ResponseModel<string>) => {
         if (res.statusCode == StatusCode.Success) {
