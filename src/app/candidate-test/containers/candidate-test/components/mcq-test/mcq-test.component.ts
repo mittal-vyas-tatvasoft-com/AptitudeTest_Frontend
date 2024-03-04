@@ -210,9 +210,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.currentTimeSpentForQuestionInSeconds = 1;
     this.questionTimeInterval = setInterval(() => {
       const time = localStorage.getItem(this.key);
-      this.currentTimeSpentForQuestionInSeconds = time
-        ? JSON.parse(time)
-        : null;
+      this.currentTimeSpentForQuestionInSeconds = time ? JSON.parse(time) : 0;
 
       this.currentTimeSpentForQuestionInSeconds =
         this.currentTimeSpentForQuestionInSeconds + 1;
@@ -266,9 +264,11 @@ export class McqTestComponent implements OnInit, OnDestroy {
       userId: this.userId,
       timeSpent: this.getTimeSpentInSeconds(),
     };
-    this.candidateTestService.updateQuestionTimer(data).subscribe({
-      next: (res: ResponseModel<string>) => {},
-    });
+    if (data.timeSpent != null) {
+      this.candidateTestService.updateQuestionTimer(data).subscribe({
+        next: (res: ResponseModel<string>) => {},
+      });
+    }
   }
 
   onSubmit(event: { answers: Answer[]; questionNumber: number }) {
