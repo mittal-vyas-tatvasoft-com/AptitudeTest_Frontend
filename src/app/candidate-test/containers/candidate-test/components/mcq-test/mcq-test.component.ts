@@ -107,6 +107,9 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.lastName = candidateDetails.Name;
     this.userId = candidateDetails.Id;
 
+    this.tabChangeInterval = setInterval(() => {
+      this.checkTabActivity();
+    }, 1000);
     this.getEndTime();
     this.interval = setInterval(() => {
       this.remainingSecondsForExam = this.remainingSecondsForExam - 1;
@@ -169,11 +172,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
     ) {
       this.displayQuestion();
     }
-  }
-
-  @HostListener('document:visibilitychange', ['$event'])
-  visibilitychange() {
-    this.checkTabActivity();
   }
 
   checkTabActivity() {
