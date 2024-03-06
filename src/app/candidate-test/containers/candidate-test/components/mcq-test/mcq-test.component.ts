@@ -14,6 +14,7 @@ import {
   QuestionTimerDetail,
   SaveAnswerModel,
   UpdateTestTimeModel,
+  UpdateUserTestStatusModel,
 } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
@@ -176,6 +177,13 @@ export class McqTestComponent implements OnInit, OnDestroy {
 
   checkTabActivity() {
     if (document.hidden) {
+      const updateUserTestStatusModel: UpdateUserTestStatusModel = {
+        isActive: false,
+        userId: this.userId,
+      };
+      this.candidateTestService
+        .updateUserTestStatus(updateUserTestStatusModel)
+        .subscribe();
       this.loginService.logout();
     }
   }
