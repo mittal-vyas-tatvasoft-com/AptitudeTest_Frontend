@@ -3,7 +3,10 @@ import { Router } from '@angular/router';
 import html2canvas from 'html2canvas';
 import { WebcamImage } from 'ngx-webcam';
 import { Observable, Subject, Subscription, takeUntil } from 'rxjs';
-import { QuestionStatusModel } from 'src/app/candidate-test/interfaces/candidate-test.interface';
+import {
+  QuestionStatusModel,
+  UpdateUserTestStatusModel,
+} from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { SettingService } from 'src/app/modules/setting/services/setting.service';
@@ -41,6 +44,7 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
   };
   seconds: number;
   questionStatus = QuestionStatus;
+
   constructor(
     public loginService: LoginService,
     private router: Router,
@@ -49,6 +53,17 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
     private settingService: SettingService
   ) {}
 
+  @HostListener('window:beforeunload', ['$event'])
+  beforeUnloadHandler(event: any) {
+    const updateUserTestStatusModel: UpdateUserTestStatusModel = {
+      isActive: false,
+      userId: this.userId,
+    };
+    this.testService
+      .updateUserTestStatus(updateUserTestStatusModel)
+      .subscribe();
+  }
+
   get $trigger(): Observable<void> {
     return this.trigger.asObservable();
   }
@@ -56,6 +71,12 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     const candidateDetails = this.loginService.decodeToken();
     this.userId = candidateDetails.Id;
+    this.testService
+      .updateUserTestStatus({
+        isActive: true,
+        userId: this.userId,
+      })
+      .subscribe();
     this.getQuestionsStatus();
     this.settingService.get().subscribe({
       next: (data) => {

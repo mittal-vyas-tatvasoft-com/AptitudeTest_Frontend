@@ -8,6 +8,7 @@ import {
   QuestionStatusModel,
   QuestionTimerDetail,
   SaveAnswerModel,
+  UpdateUserTestStatusModel,
   TestInstructions,
   UpdateTestTimeModel,
 } from '../interfaces/candidate-test.interface';
@@ -168,5 +169,12 @@ export class CandidateTestService {
       this.videoTrack.removeEventListener('ended', this.screenEventListener);
       this.stop();
     }
+  }
+
+  updateUserTestStatus(updateUserTestStatusModel: UpdateUserTestStatusModel) {
+    return this.http.put<ResponseModel<string>>(
+      `${environment.baseURL}Candidates/UpdateUserTestStatus`,
+      updateUserTestStatusModel
+    );
   }
 }
