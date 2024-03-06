@@ -67,3 +67,8 @@ export interface UpdateTestTimeModel {
   userId: number;
   remainingTime: number;
 }
+
+export interface UpdateUserTestStatusModel {
+  userId: number;
+  isActive: boolean;
+}

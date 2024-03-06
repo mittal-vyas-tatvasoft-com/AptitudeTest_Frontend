@@ -13,6 +13,7 @@ import { ChangePasswordModel } from '../interfaces/change-password.interface';
 import { ForgotPasswordModel } from '../interfaces/forgot-password.interface';
 import { LoginModel, TokenWithSidVm } from '../interfaces/login.interface';
 import { ResetPasswordModel } from '../interfaces/reset-password.interface';
+import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 
 @Injectable({
   providedIn: 'root',
@@ -29,7 +30,8 @@ export class LoginService {
   constructor(
     private http: HttpClient,
     private router: Router,
-    private dialogRef: MatDialog
+    private dialogRef: MatDialog,
+    private candidateTestService: CandidateTestService
   ) {}
 
   storage() {
@@ -95,6 +97,9 @@ export class LoginService {
     if (data !== null && data.Role == Navigation.RoleAdmin) {
       this.router.navigate([Navigation.AdminLogin]);
     } else {
+      this.candidateTestService
+        .updateUserTestStatus({ isActive: false, userId: Number(data.Id) })
+        .subscribe();
       this.router.navigate(['/']);
     }
     this.storage().removeItem(this.storageToken);
