@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NgZone } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationStart, Router } from '@angular/router';
 import {
   Answer,
   Question,
@@ -72,6 +72,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
   remainingMinutes = '';
   remainingSeconds = '';
   timeRemainingToEndTime: number;
+  refreshSubscription: Subscription;
   @Input() remainingSecondsForExam = 0;
   @Input() isQuestionMenu: boolean;
   question: Question = {
@@ -100,7 +101,22 @@ export class McqTestComponent implements OnInit, OnDestroy {
     private snackBarService: SnackbarService,
     public dialog: MatDialog,
     private zone: NgZone
-  ) {}
+  ) {
+    this.refreshSubscription = router.events.subscribe((event) => {
+      if (event instanceof NavigationStart) {
+        var browserRefresh = !router.navigated;
+        if (browserRefresh) {
+          if (this.userId > 0 && this.remainingSecondsForExam > 0) {
+            let data: UpdateTestTimeModel = {
+              userId: this.userId,
+              remainingTime: this.remainingSecondsForExam,
+            };
+            this.updateTime(data);
+          }
+        }
+      }
+    });
+  }
 
   ngOnInit(): void {
     const candidateDetails = this.loginService.decodeToken();
@@ -143,7 +159,8 @@ export class McqTestComponent implements OnInit, OnDestroy {
         minutes: this.remainingMinutes,
         seconds: this.remainingSeconds,
       };
-
+      this.loginService.remainingExamTimeInSeconds =
+        this.remainingSecondsForExam;
       if (this.remainingSecondsForExam === 0) {
         this.submitTest();
       }
@@ -159,7 +176,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
         };
         this.updateTime(data);
       }
-    }, 6000);
+    }, 60000);
     this.loadQuestionSubscription =
       this.candidateTestService.loadQuestion.subscribe((data) => {
         if (data != -1) {
@@ -184,6 +201,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
       this.candidateTestService
         .updateUserTestStatus(updateUserTestStatusModel)
         .subscribe();
+
       this.loginService.logout();
     }
   }
@@ -390,6 +408,17 @@ export class McqTestComponent implements OnInit, OnDestroy {
         }
       },
     });
+  }
+
+  @HostListener('window:beforeunload', ['$event'])
+  HandleRefreshOrTabClose(event: any) {
+    if (this.userId > 0 && this.remainingSecondsForExam > 0) {
+      let data: UpdateTestTimeModel = {
+        userId: this.userId,
+        remainingTime: this.remainingSecondsForExam,
+      };
+      this.updateTime(data);
+    }
   }
 
   ngOnDestroy() {
