@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { MatTableDataSource } from '@angular/material/table';
 import { ResultModel } from '../../interfaces/result.interface';
-import { DisplayedColumns } from '../../static/results.static';
+import { DisplayedColumns, ResultStatus } from '../../static/results.static';
 import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AdminApprovalComponent } from '../admin-approval/admin-approval.component';
@@ -20,6 +20,7 @@ import { SelectionModel } from '@angular/cdk/collections';
   styleUrls: ['./result-table.component.scss'],
 })
 export class ResultTableComponent {
+  resultStatus = ResultStatus;
   displayedColumns = DisplayedColumns;
   selectedOption = '10';
   pageNumbers: number[] = [];
