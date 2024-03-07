@@ -20,7 +20,10 @@
           </th>
           <td mat-cell *matCellDef="let row">
             <mat-checkbox
-              *ngIf="row.status === 'Active' || row.status === 'LoggedOut'"
+              *ngIf="
+                row.status === resultStatus.Active ||
+                row.status === resultStatus.LoggedOut
+              "
               color="primary"
               (change)="
                 $event ? selection.toggle(row) : null;
@@ -106,20 +109,26 @@
           <td mat-cell *matCellDef="let row" class="text-center">
             <ng-container [ngSwitch]="row.status">
               <mat-chip
-                *ngSwitchCase="'Active'"
+                *ngSwitchCase="resultStatus.Active"
                 [class.ChipSuccess]="row.status"
               >
                 {{ row.status }}
               </mat-chip>
-              <mat-chip *ngSwitchCase="'Pending'" [class.ChipWarn]="row.status">
-                {{ row.status }}
-              </mat-chip>
-              <mat-chip *ngSwitchCase="'Locked'" [class.ChipInfo]="row.status">
+              <mat-chip
+                *ngSwitchCase="resultStatus.Pending"
+                [class.ChipWarn]="row.status"
+              >
                 {{ row.status }}
               </mat-chip>
               <mat-chip
-                *ngSwitchCase="'LoggedOut'"
-                [class.ChipWarn]="'Pending'"
+                *ngSwitchCase="resultStatus.Locked"
+                [class.ChipInfo]="row.status"
+              >
+                {{ row.status }}
+              </mat-chip>
+              <mat-chip
+                *ngSwitchCase="resultStatus.LoggedOut"
+                [class.ChipWarn]="resultStatus.Pending"
               >
                 {{ row.status }}
               </mat-chip>
@@ -150,7 +159,10 @@
               </button>
               <button
                 mat-menu-item
-                *ngIf="row.status === 'Active' || row.status === 'LoggedOut'"
+                *ngIf="
+                  row.status === resultStatus.Active ||
+                  row.status === resultStatus.LoggedOut
+                "
                 (click)="handleAdminApproveDialog(row.id, row.testId)"
               >
                 <mat-icon>
