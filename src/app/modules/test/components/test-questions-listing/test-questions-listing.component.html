@@ -168,6 +168,15 @@
 
 <div class="col-lg-3 col-sm-6">
   <app-button
+    *ngIf="isTestInEditMode"
+    [color]="'primary'"
+    [label]="'Save Test'"
+    (click)="showTestCreatedSnackbar()"
+    [class]="'button'"
+  ></app-button>
+
+  <app-button
+    *ngIf="!isTestInEditMode"
     [color]="'primary'"
     [label]="'Create Test'"
     (click)="showTestCreatedSnackbar()"

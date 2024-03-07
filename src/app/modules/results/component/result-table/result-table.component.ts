@@ -13,6 +13,7 @@ import { MatSort, Sort } from '@angular/material/sort';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { AdminApprovalComponent } from '../admin-approval/admin-approval.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import { last } from 'rxjs';
 
 @Component({
   selector: 'app-result-table',
@@ -25,7 +26,13 @@ export class ResultTableComponent {
   selectedOption = '10';
   pageNumbers: number[] = [];
   currentPageIndex: number = 0;
-  pageSizeOptions: number[] = [10, 20, 50];
+  pageSizeOptions: any[] = [
+    { display: '10', value: 10 },
+    { display: '20', value: 20 },
+    { display: '50', value: 50 },
+    { display: '100', value: 100 },
+    { display: 'All', value: 'All' },
+  ];
   @Input() totalItemsCount: number = 0;
   @Input() pageSize: number = 10;
   @Input() dataSource: MatTableDataSource<ResultModel>;
@@ -98,6 +105,11 @@ export class ResultTableComponent {
 
   onPageSizeChange() {
     this.currentPageIndex = 0;
+    if (this.pageSize.toString() === 'All') {
+      this.pageSizeChanged.emit(this.totalItemsCount);
+    } else {
+      this.pageSizeChanged.emit(this.pageSize);
+    }
     this.pageSizeChanged.emit(this.pageSize);
   }
 
@@ -139,8 +151,11 @@ export class ResultTableComponent {
   }
 
   getDisplayedRange(): string {
-    const firstEntry = this.getFirstEntryIndex();
-    const lastEntry = this.getLastEntryIndex();
+    var firstEntry = this.getFirstEntryIndex();
+    var lastEntry = this.getLastEntryIndex();
+    if (isNaN(Number(firstEntry)) && lastEntry == this.totalItemsCount) {
+      return 'Showing All Entries';
+    }
     return `Showing ${firstEntry} - ${lastEntry} of ${this.totalItemsCount} entries`;
   }
 
