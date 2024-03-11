@@ -7,7 +7,7 @@ import {
   OnInit,
   Output,
 } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
   AllInsertedQuestionModel,
@@ -28,12 +28,14 @@ export class TestQuestionsListingComponent implements OnInit, AfterViewInit {
   @Output() handleDeleteAllQuestionsDialog = new EventEmitter();
   dataToShow: AllInsertedQuestionModel[] = [];
   marksChipData: TopicWiseQuestionData[] = [];
+  isTestInEditMode: boolean;
   testCreatedMessage = 'Test Created Successfully';
   constructor(
     private cdr: ChangeDetectorRef,
     private snackbarService: SnackbarService,
     private router: Router,
-    private testService: TestService
+    private testService: TestService,
+    private route: ActivatedRoute
   ) {}
   handleEditDialog(questionData: any, allInsertedQuestions: any) {
     this.handleEditQuestionsDialog.emit({ questionData, allInsertedQuestions });
@@ -44,6 +46,14 @@ export class TestQuestionsListingComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.cdr.detectChanges();
+    this.route.queryParams.subscribe((params) => {
+      const id = params['id'];
+      if (id) {
+        this.isTestInEditMode = true;
+      } else {
+        this.isTestInEditMode = false;
+      }
+    });
   }
 
   ngAfterViewInit() {
