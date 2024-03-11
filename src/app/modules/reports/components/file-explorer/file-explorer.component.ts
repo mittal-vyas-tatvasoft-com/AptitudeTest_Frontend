@@ -43,7 +43,7 @@ export class FileExplorerComponent implements OnInit {
   isThumbnailViewSelected: boolean = false;
   contextmenuX = 0;
   contextmenuY = 0;
-  currentImageIndex : number;
+  currentImageIndex: number;
 
   @ViewChild('box') previewWindow: any;
   @ViewChild(MatMenuTrigger)
@@ -174,7 +174,7 @@ export class FileExplorerComponent implements OnInit {
 
   getBreakPointValue(): number {
     if (this.isListViewSelected) {
-      return this.breakpoint = 1;
+      return (this.breakpoint = 1);
     } else {
       return this.thumbnailBreakpoint;
     }
