@@ -143,8 +143,9 @@ export class TestService {
 
   generateTests(testId: number) {
     return this.http
-      .get<ResponseModel<string>>(
-        `${environment.baseURL}Tests/GenerateTestsForCandidates/${testId}`
+      .post<ResponseModel<string>>(
+        `${environment.baseURL}Tests/GenerateTestsForCandidates/${testId}`,
+        null
       )
       .pipe(
         map((res: ResponseModel<string>) => {
