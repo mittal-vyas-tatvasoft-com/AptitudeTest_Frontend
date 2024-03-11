@@ -33,17 +33,11 @@
       <div class="no-file-msg" *ngIf="fileElements.length === 0">
         This folder is empty.
       </div>
-      <mat-grid-tile
-        *ngFor="let element of fileElements"
-        class="file-or-folder"
-      >
+      <mat-grid-tile *ngFor="let element of fileElements ;let i = index" class="file-or-folder">
         <div class="inside-grid-tile">
           <div class="folder-file-list" (click)="navigate(element)">
-            <mat-icon
-              color="primary"
-              class="file-or-folder-icon pointer"
-              *ngIf="element.isFolder"
-            >
+            <span class="number" *ngIf="isListViewSelected">{{ i + 1 }}.</span>
+            <mat-icon color="primary" class="file-or-folder-icon pointer" *ngIf="element.isFolder">
               folder
             </mat-icon>
             <img
@@ -127,6 +121,9 @@
     </button>
   </div>
   <mat-dialog-content class="dialog-body">
+    <button mat-icon-button class="prev-button" (click)="prevImage()" [disabled]="currentImageIndex === 0">
+      <mat-icon>keyboard_arrow_left</mat-icon>
+    </button>
     <div>
       <img
         class="preview-img"
@@ -134,5 +131,8 @@
         alt="ScreenShot"
       />
     </div>
+    <button mat-icon-button class="next-button" (click)="nextImage()" [disabled]="currentImageIndex === fileElements.length - 1">
+      <mat-icon>keyboard_arrow_right</mat-icon>
+    </button>
   </mat-dialog-content>
 </ng-template>
