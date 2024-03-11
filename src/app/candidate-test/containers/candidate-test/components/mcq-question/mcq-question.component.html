@@ -57,6 +57,7 @@
       color="primary"
       (click)="save()"
       *ngIf="isQuestionMenu"
+      [disabled]="candidateTestService.isSavingAnswer"
     >
       Save
       {{
@@ -68,6 +69,7 @@
       color="primary"
       (click)="save()"
       *ngIf="!isQuestionMenu"
+      [disabled]="candidateTestService.isSavingAnswer"
     >
       Save
       {{
