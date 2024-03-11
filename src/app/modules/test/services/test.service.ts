@@ -141,6 +141,18 @@ export class TestService {
       );
   }
 
+  generateTests(testId: number) {
+    return this.http
+      .get<ResponseModel<string>>(
+        `${environment.baseURL}Tests/GenerateTestsForCandidates/${testId}`
+      )
+      .pipe(
+        map((res: ResponseModel<string>) => {
+          return res;
+        })
+      );
+  }
+
   updateTest(data: CreateTestModel) {
     return this.http
       .put<ResponseModel<string>>(

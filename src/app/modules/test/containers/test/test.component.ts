@@ -236,6 +236,18 @@ export class TestComponent implements OnInit, AfterViewInit {
     });
   }
 
+  handleTestGeneration(id: number) {
+    this.testService.generateTests(id).subscribe({
+      next: (res: ResponseModel<string>) => {
+        if (res.statusCode == StatusCode.Success) {
+          this.snackbarService.success(res.message);
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+    });
+  }
+
   handleDataSorting(event: Sort) {
     switch (event.active) {
       case 'testName':

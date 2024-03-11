@@ -47,10 +47,16 @@ export class CandidateTestService {
     );
   }
 
-  StartUserTest(userId: number) {
-    return this.http.post<ResponseModel<string>>(
-      `${environment.baseURL}Candidates/StartUserTest/${userId}`,
-      userId
+  // StartUserTest(userId: number) {
+  //   return this.http.post<ResponseModel<string>>(
+  //     `${environment.baseURL}Candidates/StartUserTest/${userId}`,
+  //     userId
+  //   );
+  // }
+
+  GetUserTest(userId: number) {
+    return this.http.get<ResponseModel<string>>(
+      `${environment.baseURL}Candidates/GetUserTest/${userId}`
     );
   }
 
