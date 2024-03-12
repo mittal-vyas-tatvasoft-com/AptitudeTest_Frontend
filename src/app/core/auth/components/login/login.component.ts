@@ -87,7 +87,6 @@ export class LoginComponent implements OnInit, OnDestroy {
               res.data.isSubmitted ? 'true' : 'false'
             );
             const token = this.loginService.decodeToken();
-            debugger;
             if (res.data.isSubmitted) {
               this.router.navigate([`user/${Navigation.Submitted}`]);
             } else if (res.data.isProfileEdited) {
