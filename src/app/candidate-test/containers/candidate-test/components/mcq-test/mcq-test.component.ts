@@ -123,7 +123,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     this.firstName = candidateDetails.FirstName;
     this.lastName = candidateDetails.Name;
     this.userId = candidateDetails.Id;
-
+    this.loginService.isUpdateTime = true;
     this.tabChangeInterval = setInterval(() => {
       this.checkTabActivity();
     }, 1000);
@@ -319,7 +319,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
 
     let data: SaveAnswerModel = {
       questionId: this.question.id,
-      timeRemaining: Math.floor(this.remainingSecondsForExam / 60),
+      timeRemaining: Math.floor(this.remainingSecondsForExam),
       userId: this.userId,
       userAnswers: answer,
       isAttended: true,
