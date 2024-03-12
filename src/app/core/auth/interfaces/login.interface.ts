@@ -12,4 +12,5 @@ export interface TokenWithSidVm {
   sid: string;
   isSubmitted: boolean;
   isProfileEdited: boolean;
+  isStarted: boolean;
 }
