@@ -102,15 +102,20 @@ export class McqTestComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
     private zone: NgZone
   ) {
+    console.log('in constructor');
     this.refreshSubscription = router.events.subscribe((event) => {
+      console.log('Event', event);
+      console.log('Subscription', this.refreshSubscription);
       if (event instanceof NavigationStart) {
         var browserRefresh = !router.navigated;
         if (browserRefresh) {
+          console.log('refresh detected');
           if (this.userId > 0 && this.remainingSecondsForExam > 0) {
             let data: UpdateTestTimeModel = {
               userId: this.userId,
               remainingTime: this.remainingSecondsForExam,
             };
+            console.log(data);
             this.updateTime(data);
           }
         }
