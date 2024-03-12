@@ -3,6 +3,7 @@ import {
   Answer,
   Question,
 } from 'src/app/candidate-test/interfaces/candidate-test.interface';
+import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { OptionsIndex } from 'src/app/modules/questions/static/question.static';
 import { SettingService } from 'src/app/modules/setting/services/setting.service';
 import { OptionType, QuestionType } from 'src/app/shared/common/enums';
@@ -27,7 +28,10 @@ export class McqQuestionComponent implements OnInit {
   baseImageUrl = environment.baseURL.slice(0, -4) + 'Files/';
   questionType = QuestionType;
 
-  constructor(private settingService: SettingService) {}
+  constructor(
+    private settingService: SettingService,
+    public candidateTestService: CandidateTestService
+  ) {}
 
   ngOnInit(): void {
     this.settingService.get().subscribe({
@@ -58,11 +62,13 @@ export class McqQuestionComponent implements OnInit {
   }
 
   save() {
+    this.candidateTestService.isSavingAnswer = true;
     this.saveAnswer.emit({
       answers: this.question.answers,
       questionNumber: this.question.questionNumber,
     });
   }
+
   setAnswer(optionId: number) {
     this.question.answers = this.question.answers.map((ans) => {
       if (ans.optionId === optionId) {

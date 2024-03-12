@@ -333,6 +333,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
 
     this.candidateTestService.saveAnswer(data).subscribe({
       next: (res: ResponseModel<string>) => {
+        this.candidateTestService.isSavingAnswer = false;
         if (res.statusCode === StatusCode.Success) {
           if (event.questionNumber === this.question.totalQuestions) {
             if (!this.isQuestionMenu) {
@@ -342,6 +343,9 @@ export class McqTestComponent implements OnInit, OnDestroy {
         } else {
           this.snackBarService.error(res.message);
         }
+      },
+      error: () => {
+        this.candidateTestService.isSavingAnswer = false;
       },
     });
   }
@@ -370,10 +374,14 @@ export class McqTestComponent implements OnInit, OnDestroy {
   submitTest() {
     this.candidateTestService.endTest(this.userId).subscribe({
       next: (res: ResponseModel<string>) => {
+        this.candidateTestService.isEndingTest = false;
         if (res.statusCode === StatusCode.Success) {
           this.clearStorage();
           this.router.navigate(['/user/submitted']);
         }
+      },
+      error: () => {
+        this.candidateTestService.isEndingTest = false;
       },
     });
   }

@@ -24,6 +24,8 @@ export class CandidateTestService {
   endTime = new Subject<string>();
   screenStream: MediaStream | null = null;
   videoTrack: MediaStreamTrack;
+  isSavingAnswer = false;
+  isEndingTest = false;
   constructor(
     private http: HttpClient,
     private snackbarServices: SnackbarService

@@ -9,6 +9,7 @@
     mat-dialog-close
     color="primary"
     (click)="confirmed(true)"
+    [disabled]="candidateTestService.isEndingTest"
   >
     {{ data.confirmText }}
   </button>
