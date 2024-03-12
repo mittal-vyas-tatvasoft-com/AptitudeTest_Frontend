@@ -43,6 +43,7 @@ export class FileExplorerComponent implements OnInit {
   isThumbnailViewSelected: boolean = false;
   contextmenuX = 0;
   contextmenuY = 0;
+  currentImageIndex: number;
 
   @ViewChild('box') previewWindow: any;
   @ViewChild(MatMenuTrigger)
@@ -115,12 +116,27 @@ export class FileExplorerComponent implements OnInit {
       this.navigatedDown.emit(element);
     } else {
       this.fileName = element.name;
+      this.currentImageIndex = this.fileElements.indexOf(element);
       const dialogConfig = new MatDialogConfig();
       dialogConfig.autoFocus = false;
       dialogConfig.height = '90%';
       dialogConfig.minWidth = '50%';
       dialogConfig.maxWidth = '90vw';
       this.dialog.open(this.previewWindow, dialogConfig);
+    }
+  }
+
+  prevImage() {
+    if (this.currentImageIndex > 0) {
+      this.currentImageIndex -= 1;
+      this.fileName = this.fileElements[this.currentImageIndex].name;
+    }
+  }
+
+  nextImage() {
+    if (this.currentImageIndex < this.fileElements.length - 1) {
+      this.currentImageIndex += 1;
+      this.fileName = this.fileElements[this.currentImageIndex].name;
     }
   }
 
@@ -158,7 +174,7 @@ export class FileExplorerComponent implements OnInit {
 
   getBreakPointValue(): number {
     if (this.isListViewSelected) {
-      return this.breakpoint;
+      return (this.breakpoint = 1);
     } else {
       return this.thumbnailBreakpoint;
     }

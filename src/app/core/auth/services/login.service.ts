@@ -14,6 +14,7 @@ import { ForgotPasswordModel } from '../interfaces/forgot-password.interface';
 import { LoginModel, TokenWithSidVm } from '../interfaces/login.interface';
 import { ResetPasswordModel } from '../interfaces/reset-password.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
+import { UpdateTestTimeModel } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,8 @@ export class LoginService {
   private rememberMeKey = 'rM';
   private submitted = 'submitted';
   private sId = 'sId';
+  public remainingExamTimeInSeconds: number;
+  isUpdateTime = false;
   refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(
     private http: HttpClient,
@@ -97,6 +100,13 @@ export class LoginService {
     if (data !== null && data.Role == Navigation.RoleAdmin) {
       this.router.navigate([Navigation.AdminLogin]);
     } else {
+      let timeData: UpdateTestTimeModel = {
+        userId: Number(data.Id),
+        remainingTime: this.remainingExamTimeInSeconds,
+      };
+      if (this.isUpdateTime) {
+        this.candidateTestService.updateTime(timeData).subscribe();
+      }
       this.candidateTestService
         .updateUserTestStatus({ isActive: false, userId: Number(data.Id) })
         .subscribe();

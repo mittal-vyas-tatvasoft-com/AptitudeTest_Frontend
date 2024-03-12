@@ -32,6 +32,7 @@ export class TableComponent<T> implements OnInit {
   @Input() isTestTable: boolean = false;
   @Input() isCandidateTable: boolean = false;
   @Output() editClicked = new EventEmitter<T>();
+  @Output() generateTestsClicked = new EventEmitter<number>();
   @Output() deleteClicked = new EventEmitter<number>();
   @Output() changePasswordClicked = new EventEmitter<number>();
   @Output() actionClicked = new EventEmitter<{
@@ -76,6 +77,10 @@ export class TableComponent<T> implements OnInit {
 
   handleDelete(id: number) {
     this.deleteClicked.emit(id);
+  }
+
+  handleTestGeneration(id: number) {
+    this.generateTestsClicked.emit(id);
   }
 
   handleChangePassword(row: any) {

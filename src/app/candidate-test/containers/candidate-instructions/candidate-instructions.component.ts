@@ -91,7 +91,16 @@ export class CandidateInstructionsComponent implements OnInit {
       });
   }
   startTest() {
-    this.candidateTestService.StartUserTest(this.userId).subscribe({
+    // this.candidateTestService.StartUserTest(this.userId).subscribe({
+    //   next: (res) => {
+    //     if (res.statusCode == StatusCode.Success) {
+    //       this.router.navigate(['/user/test']);
+    //     } else {
+    //       this.snackbarService.error(res.message);
+    //     }
+    //   },
+    // });
+    this.candidateTestService.GetUserTest(this.userId).subscribe({
       next: (res) => {
         if (res.statusCode == StatusCode.Success) {
           this.router.navigate(['/user/test']);

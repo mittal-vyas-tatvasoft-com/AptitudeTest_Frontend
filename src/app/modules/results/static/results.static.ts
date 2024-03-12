@@ -1,5 +1,8 @@
 export const ResultStatus = {
-  active: 'Active',
+  Active: 'Active',
+  Pending: 'Pending',
+  LoggedOut: 'Logged Out',
+  Locked: 'Locked',
 };
 
 export const DisplayedStatisticsColumns: string[] = [
