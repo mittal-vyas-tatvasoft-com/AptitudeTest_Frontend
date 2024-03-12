@@ -204,6 +204,16 @@
                   </mat-icon>
                   Delete
                 </button>
+                <button
+                  *ngIf="isTestTable"
+                  mat-menu-item
+                  (click)="handleTestGeneration(row.id)"
+                >
+                  <mat-icon>
+                    <img src="./assets/images/active.svg" alt="Active" />
+                  </mat-icon>
+                  Generate Tests
+                </button>
               </mat-menu>
             </ng-template>
           </td>

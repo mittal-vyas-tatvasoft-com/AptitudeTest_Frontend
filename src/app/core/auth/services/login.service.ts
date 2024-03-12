@@ -28,6 +28,7 @@ export class LoginService {
   private submitted = 'submitted';
   private sId = 'sId';
   public remainingExamTimeInSeconds: number;
+  isUpdateTime = false;
   refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(
     private http: HttpClient,
@@ -103,9 +104,9 @@ export class LoginService {
         userId: Number(data.Id),
         remainingTime: this.remainingExamTimeInSeconds,
       };
-
-      this.candidateTestService.updateTime(timeData).subscribe();
-
+      if (this.isUpdateTime) {
+        this.candidateTestService.updateTime(timeData).subscribe();
+      }
       this.candidateTestService
         .updateUserTestStatus({ isActive: false, userId: Number(data.Id) })
         .subscribe();
