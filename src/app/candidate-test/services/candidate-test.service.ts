@@ -49,7 +49,7 @@ export class CandidateTestService {
     );
   }
 
-  GetUserTest(userId: number) {
+  getUserTest(userId: number) {
     return this.http.get<ResponseModel<string>>(
       `${environment.baseURL}Candidates/GetUserTest/${userId}`
     );

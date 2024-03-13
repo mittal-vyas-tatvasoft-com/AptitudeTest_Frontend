@@ -873,6 +873,18 @@ $color676D79: #676d79;
     }
   }
 }
+
+.ChipLoggedOut.mat-mdc-chip.mat-mdc-standard-chip:not(
+    .mdc-evolution-chip--disabled
+  ) {
+  background-color: #edf9ed;
+  .mdc-evolution-chip__action {
+    .mat-mdc-chip-action-label {
+      color: red;
+    }
+  }
+}
+
 .ChipDanger.mat-mdc-chip.mat-mdc-standard-chip:not(
     .mdc-evolution-chip--disabled
   ) {

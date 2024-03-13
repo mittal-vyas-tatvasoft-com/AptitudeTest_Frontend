@@ -128,7 +128,7 @@
               </mat-chip>
               <mat-chip
                 *ngSwitchCase="resultStatus.LoggedOut"
-                [class.ChipWarn]="resultStatus.Pending"
+                [ngClass]="'ChipLoggedOut'"
               >
                 {{ row.status }}
               </mat-chip>
