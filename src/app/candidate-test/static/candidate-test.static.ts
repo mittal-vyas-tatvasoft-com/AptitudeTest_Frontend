@@ -4,3 +4,5 @@ export const NoTestAssigned =
 export const Messages = {
   ScreenCaptureError: 'Please Share Entire Screen',
 };
+
+export const RefreshKey = 'isRefresh';

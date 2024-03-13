@@ -8,6 +8,7 @@ import {
   UpdateUserTestStatusModel,
 } from 'src/app/candidate-test/interfaces/candidate-test.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
+import { RefreshKey } from 'src/app/candidate-test/static/candidate-test.static';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { SettingService } from 'src/app/modules/setting/services/setting.service';
 import { QuestionStatus, StatusCode } from 'src/app/shared/common/enums';
@@ -55,12 +56,11 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
 
   @HostListener('window:beforeunload', ['$event'])
   beforeUnloadHandler(event: any) {
-    const updateUserTestStatusModel: UpdateUserTestStatusModel = {
-      isActive: false,
-      userId: this.userId,
-    };
     this.testService
-      .updateUserTestStatus(updateUserTestStatusModel)
+      .updateUserTestStatus({
+        isActive: false,
+        userId: this.userId,
+      })
       .subscribe();
   }
 
@@ -191,8 +191,18 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
 
   getQuestionsStatus() {
     if (this.userId) {
-      this.testService.getQuestionsStatus(this.userId).subscribe({
+      let isRefresh: boolean = false;
+      let localIsRefresh = localStorage.getItem(RefreshKey);
+      if (
+        localIsRefresh != '' &&
+        localIsRefresh != undefined &&
+        localIsRefresh != null
+      ) {
+        isRefresh = localIsRefresh === 'true';
+      }
+      this.testService.getQuestionsStatus(this.userId, isRefresh).subscribe({
         next: (response: ResponseModel<QuestionStatusModel>) => {
+          localStorage.setItem(RefreshKey, 'false');
           if (response.statusCode === StatusCode.Success) {
             this.questionsStatus = response.data;
             if (this.questionsStatus.questionStatusVMs.length > 0) {
