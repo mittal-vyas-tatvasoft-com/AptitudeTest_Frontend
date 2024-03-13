@@ -91,7 +91,7 @@ export class CandidateInstructionsComponent implements OnInit {
       });
   }
   startTest() {
-    this.candidateTestService.GetUserTest(this.userId).subscribe({
+    this.candidateTestService.getUserTest(this.userId).subscribe({
       next: (res) => {
         if (res.statusCode == StatusCode.Success) {
           this.router.navigate(['/user/test']);
