@@ -37,9 +37,9 @@ export class CandidateTestService {
     );
   }
 
-  getQuestionsStatus(userId: number) {
+  getQuestionsStatus(userId: number, isRefresh: boolean) {
     return this.http.get<ResponseModel<QuestionStatusModel>>(
-      `${environment.baseURL}Candidates/GetQuestionsStatus/${userId}`
+      `${environment.baseURL}Candidates/GetQuestionsStatus/${userId}/${isRefresh}`
     );
   }
 
@@ -48,13 +48,6 @@ export class CandidateTestService {
       `${environment.baseURL}Candidates/GetInstructionsOfTheTestForUser/${userId}/${testStatus}`
     );
   }
-
-  // StartUserTest(userId: number) {
-  //   return this.http.post<ResponseModel<string>>(
-  //     `${environment.baseURL}Candidates/StartUserTest/${userId}`,
-  //     userId
-  //   );
-  // }
 
   GetUserTest(userId: number) {
     return this.http.get<ResponseModel<string>>(
