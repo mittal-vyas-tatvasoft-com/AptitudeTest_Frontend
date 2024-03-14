@@ -1,0 +1,15 @@
+.delete-tests-btn {
+  padding: 12px;
+  margin-left: 12px;
+
+  .mat-icon {
+    padding-left: 1px;
+    width: 20px;
+    height: 20px;
+    margin: 0;
+  }
+}
+
+.delete-tests-btn:hover {
+  background-color: #2d61ac; /* Change background color when hovered */
+}

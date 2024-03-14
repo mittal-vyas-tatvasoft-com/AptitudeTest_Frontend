@@ -7,22 +7,29 @@
   </div>
   <div class="action-list">
     <button
-      mat-flat-button
-      color="primary"
+      mat-stroked-button
+      class="delete-tests-btn"
       (click)="handleMultipleTestDelete()"
+      (mouseenter)="isButtonHovered = true"
+      (mouseleave)="isButtonHovered = false"
     >
-      Delete Tests
+      <mat-icon *ngIf="!isButtonHovered">
+        <img src="./assets/images/delete.svg" alt="Delete" />
+      </mat-icon>
+      <mat-icon *ngIf="isButtonHovered">
+        <img src="./assets/images/delete-icon-white.svg" alt="Add" />
+      </mat-icon>
     </button>
+
     <button
-      mat-flat-button
+      mat-fab
       color="primary"
-      class="btn-with-icon"
       routerLink="/admin/tests/create"
+      matTooltip="Add"
     >
       <mat-icon
         ><img src="./assets/images/add-white-full.svg" alt="Test"
       /></mat-icon>
-      Create Test
     </button>
   </div>
 </div>
