@@ -7,7 +7,7 @@ import {
 } from '@angular/core';
 import { MatDialog, MatDialogConfig } from '@angular/material/dialog';
 import { NgZone } from '@angular/core';
-import { NavigationStart, Router } from '@angular/router';
+import { Router } from '@angular/router';
 import {
   Answer,
   Question,
@@ -28,7 +28,7 @@ import { ResponseModel } from 'src/app/shared/common/interfaces/response.interfa
 import { ConfirmationDialogComponent } from 'src/app/shared/dialogs/confirmation-dialog/confirmation-dialog.component';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { Subscription } from 'rxjs';
-import { JsonPipe } from '@angular/common';
+import { RefreshKey } from 'src/app/candidate-test/static/candidate-test.static';
 
 @Component({
   selector: 'app-mcq-test',
@@ -72,7 +72,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
   remainingMinutes = '';
   remainingSeconds = '';
   timeRemainingToEndTime: number;
-  refreshSubscription: Subscription;
   @Input() remainingSecondsForExam = 0;
   @Input() isQuestionMenu: boolean;
   question: Question = {
@@ -101,22 +100,7 @@ export class McqTestComponent implements OnInit, OnDestroy {
     private snackBarService: SnackbarService,
     public dialog: MatDialog,
     private zone: NgZone
-  ) {
-    this.refreshSubscription = router.events.subscribe((event) => {
-      if (event instanceof NavigationStart) {
-        var browserRefresh = !router.navigated;
-        if (browserRefresh) {
-          if (this.userId > 0 && this.remainingSecondsForExam > 0) {
-            let data: UpdateTestTimeModel = {
-              userId: this.userId,
-              remainingTime: this.remainingSecondsForExam,
-            };
-            this.updateTime(data);
-          }
-        }
-      }
-    });
-  }
+  ) {}
 
   ngOnInit(): void {
     const candidateDetails = this.loginService.decodeToken();
@@ -166,9 +150,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
       }
     }, 1000);
     this.updateTimeInterval = setInterval(() => {
-      // let remainingTimeInMinutes = Math.floor(
-      //   this.remainingSecondsForExam / 60
-      // );
       if (this.userId > 0 && this.remainingSecondsForExam > 0) {
         let data: UpdateTestTimeModel = {
           userId: this.userId,
@@ -420,13 +401,13 @@ export class McqTestComponent implements OnInit, OnDestroy {
 
   @HostListener('window:beforeunload', ['$event'])
   HandleRefreshOrTabClose(event: any) {
-    if (this.userId > 0 && this.remainingSecondsForExam > 0) {
-      let data: UpdateTestTimeModel = {
+    localStorage.setItem('isRefresh', 'true');
+    this.candidateTestService
+      .updateTime({
         userId: this.userId,
         remainingTime: this.remainingSecondsForExam,
-      };
-      this.updateTime(data);
-    }
+      })
+      .subscribe();
   }
 
   ngOnDestroy() {
