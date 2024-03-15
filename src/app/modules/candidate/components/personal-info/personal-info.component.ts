@@ -84,6 +84,12 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
     if (this.candidateData?.appliedThrough == 0) {
       this.form.get('appliedThrough')?.patchValue('');
     }
+    if (this.candidateData?.technologyInterestedIn == 0) {
+      this.form.get('technologyInterestedIn')?.patchValue('');
+    }
+    if (this.candidateData?.state == 0) {
+      this.form.get('state')?.patchValue('');
+    }
     if (this.candidateData?.dateOfBirth == '0001-01-01T00:00:00') {
       this.form.get('dateOfBirth')?.patchValue('');
     }
