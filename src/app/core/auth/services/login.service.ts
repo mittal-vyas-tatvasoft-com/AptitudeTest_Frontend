@@ -15,7 +15,7 @@ import { LoginModel, TokenWithSidVm } from '../interfaces/login.interface';
 import { ResetPasswordModel } from '../interfaces/reset-password.interface';
 import { CandidateTestService } from 'src/app/candidate-test/services/candidate-test.service';
 import { UpdateTestTimeModel } from 'src/app/candidate-test/interfaces/candidate-test.interface';
-
+import { Location } from '@angular/common';
 @Injectable({
   providedIn: 'root',
 })
@@ -26,6 +26,7 @@ export class LoginService {
   private sidebarStateKey = 'sidebarState';
   private rememberMeKey = 'rM';
   private submitted = 'submitted';
+  private profileSaved = 'saved';
   private sId = 'sId';
   public remainingExamTimeInSeconds: number;
   isUpdateTime = false;
@@ -34,7 +35,8 @@ export class LoginService {
     private http: HttpClient,
     private router: Router,
     private dialogRef: MatDialog,
-    private candidateTestService: CandidateTestService
+    private candidateTestService: CandidateTestService,
+    private location: Location
   ) {}
 
   storage() {
@@ -54,7 +56,7 @@ export class LoginService {
     this.storage().setItem(this.submitted, submitted);
   }
 
-  getGetSubmitted(): string | null {
+  getSubmitted(): string | null {
     return this.storage().getItem(this.submitted);
   }
 
@@ -116,6 +118,8 @@ export class LoginService {
     this.storage().removeItem(this.storageRefreshToken);
     this.storage().removeItem(this.storageTokenExpiry);
     this.storage().removeItem(this.sId);
+    this.storage().removeItem(this.submitted);
+    this.storage().removeItem(this.profileSaved);
     localStorage.removeItem(this.rememberMeKey);
   }
 
@@ -246,5 +250,35 @@ export class LoginService {
       }
     }
     return null;
+  }
+
+  checkProfileSaved() {
+    const isProfileSaved = this.getProfileEdited() === 'true';
+    if (isProfileSaved) {
+      this.router.navigate([`user/${Navigation.Submitted}`]);
+    }
+  }
+
+  checkProfileNotSaved() {
+    const isProfileSaved = this.getProfileEdited() === 'true';
+    if (!isProfileSaved) {
+      const token = this.decodeToken();
+      this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
+    }
+  }
+
+  checkTestSubmitted() {
+    const isSubmitted = this.getSubmitted() === 'true';
+    if (isSubmitted) {
+      this.router.navigate([`user/${Navigation.Submitted}`]);
+    }
+  }
+
+  setProfileEdited(edited: string): void {
+    this.storage().setItem(this.profileSaved, edited);
+  }
+
+  getProfileEdited(): string | null {
+    return this.storage().getItem(this.profileSaved);
   }
 }
