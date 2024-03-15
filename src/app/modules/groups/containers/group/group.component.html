@@ -6,8 +6,19 @@
     <h4 class="title">Group</h4>
   </div>
   <div class="action-list">
-    <button mat-flat-button color="primary" (click)="deleteMultipleGroups()">
-      Delete Groups
+    <button
+      mat-stroked-button
+      class="delete-groups-btn"
+      (click)="deleteMultipleGroups()"
+      (mouseenter)="isButtonHovered = true"
+      (mouseleave)="isButtonHovered = false"
+    >
+      <mat-icon *ngIf="!isButtonHovered">
+        <img src="./assets/images/delete.svg" alt="Delete" />
+      </mat-icon>
+      <mat-icon *ngIf="isButtonHovered">
+        <img src="./assets/images/delete-icon-white.svg" alt="Add" />
+      </mat-icon>
     </button>
     <button
       mat-fab

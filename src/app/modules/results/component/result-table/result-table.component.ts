@@ -31,7 +31,6 @@ export class ResultTableComponent {
     { display: '20', value: 20 },
     { display: '50', value: 50 },
     { display: '100', value: 100 },
-    { display: 'All', value: 'All' },
   ];
   @Input() totalItemsCount: number = 0;
   @Input() pageSize: number = 10;
@@ -54,6 +53,12 @@ export class ResultTableComponent {
   ngOnChanges(changes: SimpleChanges) {
     if (changes['totalItemsCount'] || changes['pageSize']) {
       this.updatePageNumbers();
+    }
+    if (this.totalItemsCount > 0) {
+      this.pageSizeOptions.push({
+        display: 'All',
+        value: this.totalItemsCount,
+      });
     }
   }
 
@@ -110,7 +115,7 @@ export class ResultTableComponent {
     } else {
       this.pageSizeChanged.emit(this.pageSize);
     }
-    this.pageSizeChanged.emit(this.pageSize);
+    //this.pageSizeChanged.emit(this.pageSize);
   }
 
   onPageChange(direction: 'prev' | 'next') {
@@ -153,7 +158,11 @@ export class ResultTableComponent {
   getDisplayedRange(): string {
     var firstEntry = this.getFirstEntryIndex();
     var lastEntry = this.getLastEntryIndex();
-    if (isNaN(Number(firstEntry)) && lastEntry == this.totalItemsCount) {
+
+    // if (isNaN(Number(firstEntry)) && lastEntry == this.totalItemsCount) {
+    //   return 'Showing All Entries';
+    // }
+    if (lastEntry == this.totalItemsCount) {
       return 'Showing All Entries';
     }
     return `Showing ${firstEntry} - ${lastEntry} of ${this.totalItemsCount} entries`;

@@ -42,6 +42,7 @@ export class TestComponent implements OnInit, AfterViewInit {
   testIds: number[] = [];
   form: FormGroup;
   formData = testFilterModel;
+  isButtonHovered: boolean = false;
   dataSource!: MatTableDataSource<TestData>;
   displayedColumns: TableColumn<TestData>[] = [
     { columnDef: 'select', header: '', width: '5%' },
