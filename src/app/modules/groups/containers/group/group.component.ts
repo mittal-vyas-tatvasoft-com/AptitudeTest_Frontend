@@ -32,6 +32,7 @@ export class GroupComponent implements OnInit {
     isDefault: false,
     collegesUnderGroup: [],
   };
+  isButtonHovered: boolean = false;
   private searchGroupChanged = new Subject<string>();
   form: FormGroup;
 

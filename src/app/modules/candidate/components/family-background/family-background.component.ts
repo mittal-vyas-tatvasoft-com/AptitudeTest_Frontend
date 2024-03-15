@@ -121,8 +121,17 @@ export class FamilyBackgroundComponent implements OnInit, OnChanges {
     let relationship = this.excludedRelationShips.find(
       (relation) => relation.rowId === i
     );
-    //If Mother/Father relation is selected first time
+
+    //If dropdown value gets unselected in rows where Mother or father was selected initially
     if (
+      !event &&
+      (relationship?.relationshipId === 1 || relationship?.relationshipId === 2)
+    ) {
+      let index = this.excludedRelationShips.indexOf(relationship);
+      this.excludedRelationShips.splice(index, 1);
+    }
+    //If Mother/Father relation is selected first time
+    else if (
       (relationship === null || relationship == undefined) &&
       (event === 1 || event === 2)
     ) {

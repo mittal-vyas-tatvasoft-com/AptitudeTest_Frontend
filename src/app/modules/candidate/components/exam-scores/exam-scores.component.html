@@ -20,6 +20,7 @@
               matInput
               type="number"
               formControlName="gujcetScore"
+              appNumbersAndDecimalsOnly
               appMaxLength
               [maxLength]="CandidateModel.gujcetScore.maxLength"
             />
@@ -33,11 +34,22 @@
           </mat-form-field>
         </div>
         <div class="col-sm-6 col-md-4">
-          <app-text-control
-            [formControlModel]="CandidateModel.jeeScore"
-            [form]="form"
-            class="w-100"
-          ></app-text-control>
+          <mat-form-field appearance="outline" class="w-100">
+            <mat-label>{{ CandidateModel.jeeScore.label }}</mat-label>
+            <input
+              matInput
+              type="number"
+              formControlName="jeeScore"
+              appNumbersAndDecimalsOnly
+            />
+            <mat-error>{{
+              validationService.getError(
+                form,
+                CandidateModel.jeeScore,
+                "jeeScore"
+              )
+            }}</mat-error>
+          </mat-form-field>
         </div>
       </div>
     </form>

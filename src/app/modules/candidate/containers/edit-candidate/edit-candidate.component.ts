@@ -88,6 +88,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
   }
 
   Save() {
+    this.loginService.setProfileEdited('true');
     this.disabled = true;
     const forms = [
       this.personalInfoComponent.getFormData(),
@@ -182,8 +183,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
           .subscribe(
             (response) => {
               if (response.statusCode === StatusCode.Success) {
-                const isSubmitted =
-                  this.loginService.getGetSubmitted() === 'true';
+                const isSubmitted = this.loginService.getSubmitted() === 'true';
                 if (isSubmitted) {
                   this.router.navigate([`user/${Navigation.Submitted}`]);
                 } else {

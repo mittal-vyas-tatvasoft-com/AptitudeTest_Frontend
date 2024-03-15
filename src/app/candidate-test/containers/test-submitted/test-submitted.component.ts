@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { StatusCode } from 'src/app/shared/common/enums';
 import { CandidateTestService } from '../../services/candidate-test.service';
@@ -8,19 +8,22 @@ import { CandidateTestService } from '../../services/candidate-test.service';
   templateUrl: './test-submitted.component.html',
   styleUrls: ['./test-submitted.component.scss'],
 })
-export class TestSubmittedComponent implements OnInit {
+export class TestSubmittedComponent implements OnInit, OnDestroy {
   userId: number;
   testFinished: boolean;
   messageToShow: string;
   seconds = 10;
+  timeOut: any;
   message = `You will be automatically logged out within ${this.seconds} seconds.`;
   testStatus: 'End';
   constructor(
     private loginService: LoginService,
     private candidateTestService: CandidateTestService
   ) {}
+
   ngOnInit(): void {
-    setTimeout(() => {
+    this.loginService.setSubmitted('true');
+    this.timeOut = setTimeout(() => {
       this.logout();
     }, 10000);
     setInterval(() => {
@@ -41,7 +44,11 @@ export class TestSubmittedComponent implements OnInit {
         },
       });
   }
+
   logout() {
     this.loginService.logout();
+  }
+  ngOnDestroy(): void {
+    clearTimeout(this.timeOut);
   }
 }
