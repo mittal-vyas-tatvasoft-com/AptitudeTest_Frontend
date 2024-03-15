@@ -29,6 +29,7 @@ import { TimePickerComponent } from './components/time-picker/time-picker.compon
 import { CharactersOnlyDirective } from './directives/characters-only.directive';
 import { MaxLengthDirective } from './directives/max-length.directive';
 import { NumbersOnlyDirective } from './directives/numbers-only.directive';
+import { NumbersAndDecimalsOnlyDirective } from './directives/numbers-and-decimals-only.directive';
 
 @NgModule({
   declarations: [
@@ -45,6 +46,7 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
     CharactersOnlyDirective,
     TextControlCharacterComponent,
     MaxLengthDirective,
+    NumbersAndDecimalsOnlyDirective,
   ],
   providers: [
     {
@@ -70,6 +72,7 @@ import { NumbersOnlyDirective } from './directives/numbers-only.directive';
     TextControlNumberComponent,
     TimePickerComponent,
     NumbersOnlyDirective,
+    NumbersAndDecimalsOnlyDirective,
     CharactersOnlyDirective,
     MaxLengthDirective,
     DatePickerComponent,
