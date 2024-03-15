@@ -14,6 +14,9 @@ import {
 } from '../interfaces/candidate-test.interface';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { Messages } from '../static/candidate-test.static';
+import { Router } from '@angular/router';
+import { Navigation } from 'src/app/shared/common/enums';
+import { LoginService } from 'src/app/core/auth/services/login.service';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +31,8 @@ export class CandidateTestService {
   isEndingTest = false;
   constructor(
     private http: HttpClient,
-    private snackbarServices: SnackbarService
+    private snackbarServices: SnackbarService,
+    private router: Router
   ) {}
 
   getQuestion(questionId: number, userId: number) {
@@ -90,7 +94,10 @@ export class CandidateTestService {
     );
   }
 
-  async getScreenStream(): Promise<MediaStream> {
+  async getScreenStream(): Promise<MediaStream | null> {
+    if (this.router.url !== '/user/test') {
+      return Promise.resolve(null);
+    }
     if (!this.screenStream) {
       const constraints: MediaStreamConstraints = {
         video: { mediaSource: 'screen' } as MediaTrackConstraints,

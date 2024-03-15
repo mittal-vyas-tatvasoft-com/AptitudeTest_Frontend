@@ -69,6 +69,8 @@ export class CandidateTestComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.loginService.checkTestSubmitted();
+    this.loginService.checkProfileNotSaved();
     const candidateDetails = this.loginService.decodeToken();
     this.userId = candidateDetails.Id;
     this.testService

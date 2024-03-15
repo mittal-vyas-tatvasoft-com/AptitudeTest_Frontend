@@ -20,6 +20,7 @@ import { CandidateTestService } from 'src/app/candidate-test/services/candidate-
 import { LoginService } from 'src/app/core/auth/services/login.service';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import {
+  Navigation,
   QuestionStatus,
   QuestionTopic,
   StatusCode,
@@ -122,7 +123,6 @@ export class McqTestComponent implements OnInit, OnDestroy {
       } else {
         this.remainingHours = hours.toString();
       }
-
       if (minutes <= 9) {
         this.remainingMinutes = '0' + minutes;
       } else {
