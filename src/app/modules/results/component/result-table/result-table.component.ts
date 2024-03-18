@@ -2,6 +2,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnInit,
   Output,
   SimpleChanges,
   ViewChild,
@@ -54,11 +55,15 @@ export class ResultTableComponent {
     if (changes['totalItemsCount'] || changes['pageSize']) {
       this.updatePageNumbers();
     }
+
     if (this.totalItemsCount > 0) {
-      this.pageSizeOptions.push({
-        display: 'All',
-        value: this.totalItemsCount,
-      });
+      const item = this.pageSizeOptions.find((x) => x.display === 'All');
+      if (item == undefined) {
+        this.pageSizeOptions.push({
+          display: 'All',
+          value: this.totalItemsCount,
+        });
+      }
     }
   }
 
