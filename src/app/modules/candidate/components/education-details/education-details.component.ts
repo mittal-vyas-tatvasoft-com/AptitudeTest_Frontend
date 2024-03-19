@@ -251,7 +251,6 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
           const control = this.educationDetailsArrayData.controls[
             index
           ] as FormGroup;
-
           control.patchValue({
             degreeId: academicDetail.degreeId,
             university: academicDetail.university,
@@ -357,7 +356,24 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
         if (i < 3) {
           const fm = this.educationDetailsArrayData.at(i);
           fm.get('degreeId')?.setValidators(Validators.required);
-          fm.get('degreeId')?.updateValueAndValidity();
+          fm.get('university')?.setValidators([
+            ...this.commonValidationForUniversity,
+            Validators.required,
+          ]);
+          fm.get('streamId')?.setValidators(Validators.required);
+          fm.get('grade')?.setValidators([
+            ...this.commonValidationForGrade,
+            Validators.required,
+          ]);
+          fm.get('maths')?.setValidators([
+            ...this.commonValidationForGrade,
+            Validators.required,
+          ]);
+          fm.get('physics')?.setValidators([
+            ...this.commonValidationForGrade,
+            Validators.required,
+          ]);
+          fm.updateValueAndValidity();
         }
       }
     }
