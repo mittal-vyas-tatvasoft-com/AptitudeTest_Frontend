@@ -7,7 +7,12 @@ import { Router } from '@angular/router';
 import { Subject, debounceTime } from 'rxjs';
 import { CandidateService } from 'src/app/modules/candidate/services/candidate.service';
 import { SettingService } from 'src/app/modules/setting/services/setting.service';
-import { Numbers, StatusCode, TestStatus } from 'src/app/shared/common/enums';
+import {
+  Numbers,
+  ResultStatus,
+  StatusCode,
+  TestStatus,
+} from 'src/app/shared/common/enums';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import { TableColumn } from 'src/app/shared/modules/tables/interfaces/table-data.interface';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
@@ -186,7 +191,7 @@ export class ResultComponent implements OnInit {
         .getResults(this.params, this.currentPageIndex, this.pageSize)
         .subscribe((res) => {
           res.data.forEach((result) => {
-            if (result.status === 'Active') {
+            if (result.status === 'Logged Out') {
               const userExists = this.userAndTestIds.some(
                 (user) =>
                   user.userId == result.userId &&
@@ -376,6 +381,7 @@ export class ResultComponent implements OnInit {
   }
 
   handleDataSorting(event: Sort) {
+    this.userAndTestIds = [];
     this.sortKey = event.active;
     this.sortDirection = event.direction;
     this.fetchResults();
