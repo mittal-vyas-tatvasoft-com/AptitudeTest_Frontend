@@ -63,6 +63,8 @@ export class ResultTableComponent {
           display: 'All',
           value: this.totalItemsCount,
         });
+      } else {
+        item.value = this.totalItemsCount;
       }
     }
   }
