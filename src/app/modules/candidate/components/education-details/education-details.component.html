@@ -101,13 +101,19 @@
                   appMaxLength
                   [maxLength]="5"
                 />
-                <mat-error>{{
-                  validationService.getError(
-                    educationDetail,
-                    CandidateModel.Grade,
-                    "grade"
-                  )
-                }}</mat-error>
+                <mat-error
+                  [ngClass]="{
+                    'grade-error': !register,
+                    'grade-error-register': register
+                  }"
+                  >{{
+                    validationService.getError(
+                      educationDetail,
+                      CandidateModel.Grade,
+                      "grade"
+                    )
+                  }}</mat-error
+                >
               </mat-form-field>
             </div>
 
@@ -125,13 +131,19 @@
                   [maxLength]="3"
                   formControlName="maths"
                 />
-                <mat-error>{{
-                  validationService.getError(
-                    educationDetail,
-                    CandidateModel.Grade,
-                    "maths"
-                  )
-                }}</mat-error>
+                <mat-error
+                  [ngClass]="{
+                    'grade-error': !register,
+                    'grade-error-register': register
+                  }"
+                  >{{
+                    validationService.getError(
+                      educationDetail,
+                      CandidateModel.Grade,
+                      "maths"
+                    )
+                  }}</mat-error
+                >
               </mat-form-field>
             </div>
             <div
@@ -148,13 +160,19 @@
                   [maxLength]="3"
                   formControlName="physics"
                 />
-                <mat-error>{{
-                  validationService.getError(
-                    educationDetail,
-                    CandidateModel.Grade,
-                    "physics"
-                  )
-                }}</mat-error>
+                <mat-error
+                  [ngClass]="{
+                    'grade-error': !register,
+                    'grade-error-register': register
+                  }"
+                  >{{
+                    validationService.getError(
+                      educationDetail,
+                      CandidateModel.Grade,
+                      "physics"
+                    )
+                  }}</mat-error
+                >
               </mat-form-field>
             </div>
           </div>

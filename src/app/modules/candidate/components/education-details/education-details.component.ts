@@ -56,6 +56,7 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
   SelectedOption: string = '';
   @Input() academicDetails: any[];
   @Input() isAdmin: boolean;
+  @Input() register: boolean;
 
   constructor(
     private formBuilder: FormBuilder,
