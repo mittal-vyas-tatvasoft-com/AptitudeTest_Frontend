@@ -38,6 +38,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
   @ViewChild(EducationDetailsComponent)
   educationDetailsComponent: EducationDetailsComponent;
   @Input() candidateEditMode = false;
+  @Input() register = false;
   constructor(
     private _location: Location,
     private route: ActivatedRoute,
