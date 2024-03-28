@@ -34,7 +34,7 @@ const routes: Routes = [
   {
     path: Navigation.Register,
     component: RegisterComponent,
-    canActivate: [OffCampusModeGuard],
+    //canActivate: [OffCampusModeGuard],
   },
   {
     path: `${Navigation.Edit}/:id`,
