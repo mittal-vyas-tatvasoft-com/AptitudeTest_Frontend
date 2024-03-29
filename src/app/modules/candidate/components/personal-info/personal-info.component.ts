@@ -42,10 +42,10 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
     selectOptionsForAppliedThrough;
   selectOptionsForYear: SelectOption[] = [];
   CandidateModel = candidateControl;
-  colleges: SelectOption[] = [];
+  colleges: SelectOption[] = [{id: 33, value: "Marwadi University"}];
   groups: SelectOption[] = [];
-  profiles: SelectOption[] = [];
-  states: SelectOption[] = [];
+  profiles: SelectOption[] =  [{id: 7, value: "C++"}];
+  states: SelectOption[] =  [{id: 1, value: "Gujarat"}];
   form: FormGroup;
   maxDate = new Date();
   isOtherCollege = false;
@@ -183,15 +183,15 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
   }
 
   getDropdowns() {
-    this.candidateService
-      .getCollegesForDropDown(this.isAdmin)
-      .subscribe((colleges) => {
-        this.colleges = colleges.map((college) => ({
-          id: college.id,
-          key: college.name,
-          value: college.name,
-        }));
-      });
+    // this.candidateService
+    //   .getCollegesForDropDown(this.isAdmin)
+    //   .subscribe((colleges) => {
+    //     this.colleges = colleges.map((college) => ({
+    //       id: college.id,
+    //       key: college.name,
+    //       value: college.name,
+    //     }));
+    //   });
 
     if (this.isAdmin) {
       this.candidateService.getGroupsForDropDown().subscribe((groups) => {
@@ -204,25 +204,25 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       });
     }
 
-    this.candidateService
-      .getProfilesForDropDown(this.isAdmin)
-      .subscribe((profiles) => {
-        this.profiles = profiles.map((profiles) => ({
-          id: profiles.id,
-          key: profiles.name,
-          value: profiles.name,
-        }));
-      });
+    // this.candidateService
+    //   .getProfilesForDropDown(this.isAdmin)
+    //   .subscribe((profiles) => {
+    //     this.profiles = profiles.map((profiles) => ({
+    //       id: profiles.id,
+    //       key: profiles.name,
+    //       value: profiles.name,
+    //     }));
+    //   });
 
-    this.candidateService
-      .getStateForDropDown(this.isAdmin)
-      .subscribe((states) => {
-        this.states = states.map((states) => ({
-          id: states.id,
-          key: states.name,
-          value: states.name,
-        }));
-      });
+    // this.candidateService
+    //   .getStateForDropDown(this.isAdmin)
+    //   .subscribe((states) => {
+    //     this.states = states.map((states) => ({
+    //       id: states.id,
+    //       key: states.name,
+    //       value: states.name,
+    //     }));
+    //   });
 
     const currentYear = new Date().getFullYear();
     for (let year = 2023; year <= currentYear; year++) {

@@ -39,16 +39,17 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
   CandidateModel = candidateControl;
   form: FormGroup;
   selectOptionsForStream: SelectOption[] = selectOptionsForStream;
-  degreeSpecialization: SelectOption[] = [];
-  HSCDiploma: SelectOption[] = [];
-  bachelorDegree: SelectOption[] = [];
-  masterDegree: SelectOption[] = [];
-  otherDegree: SelectOption[] = [];
-  streamSpecialization: SelectOption[] = [];
-  HSCDiplomaStream: SelectOption[] = [];
-  bachelorStream: SelectOption[] = [];
-  masterStream: SelectOption[] = [];
-  otherStream: SelectOption[] = [];
+  degreeSpecialization: SelectOption[] = [{id: 49, value: "10th"}];
+  HSCDiploma: SelectOption[] =[{id: 50, value: "12th"}];
+  bachelorDegree: SelectOption[] = [
+    {id: 38, value: "BE/B.Tech."}];
+  masterDegree: SelectOption[] = [{id:1,value:"ABC"}];
+  otherDegree: SelectOption[] = [{id:1,value:"ABC"}];
+  streamSpecialization: SelectOption[] = [{id: 284, value: "English"}];
+  HSCDiplomaStream: SelectOption[] = [{id: 288, value: "Science - English"}];
+  bachelorStream: SelectOption[] = [{id: 320, value: "BSC - IT"}];
+  masterStream: SelectOption[] = [{id:1,value:"ABC"}];
+  otherStream: SelectOption[] = [{id:1,value:"ABC"}];
   labelNameForDegree: string[] = labelNameForDegree;
   labelNameForCollege: string[] = labelNameForCollege;
   ErrorMessage = ErrorMessageForEductionDetail;
@@ -79,86 +80,86 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
   }
 
   getDropdowns() {
-    this.candidateService
-      .getDegreeForDropDown(this.isAdmin)
-      .subscribe((Degrees) => {
-        Degrees.forEach((degree) => {
-          if (degree.level === 1) {
-            this.degreeSpecialization.push({
-              id: degree.id,
-              key: degree.name,
-              value: degree.name,
-            });
-          } else if (degree.level === 2) {
-            this.HSCDiploma.push({
-              id: degree.id,
-              key: degree.name,
-              value: degree.name,
-            });
-          } else if (degree.level === 3) {
-            this.bachelorDegree.push({
-              id: degree.id,
-              key: degree.name,
-              value: degree.name,
-            });
-          } else if (degree.level === 4) {
-            this.masterDegree.push({
-              id: degree.id,
-              key: degree.name,
-              value: degree.name,
-            });
-          } else if (degree.level === 5) {
-            this.otherDegree.push({
-              id: degree.id,
-              key: degree.name,
-              value: degree.name,
-            });
-          }
-        });
-      });
+    // this.candidateService
+    //   .getDegreeForDropDown(this.isAdmin)
+    //   .subscribe((Degrees) => {
+    //     Degrees.forEach((degree) => {
+    //       if (degree.level === 1) {
+    //         this.degreeSpecialization.push({
+    //           id: degree.id,
+    //           key: degree.name,
+    //           value: degree.name,
+    //         });
+    //       } else if (degree.level === 2) {
+    //         this.HSCDiploma.push({
+    //           id: degree.id,
+    //           key: degree.name,
+    //           value: degree.name,
+    //         });
+    //       } else if (degree.level === 3) {
+    //         this.bachelorDegree.push({
+    //           id: degree.id,
+    //           key: degree.name,
+    //           value: degree.name,
+    //         });
+    //       } else if (degree.level === 4) {
+    //         this.masterDegree.push({
+    //           id: degree.id,
+    //           key: degree.name,
+    //           value: degree.name,
+    //         });
+    //       } else if (degree.level === 5) {
+    //         this.otherDegree.push({
+    //           id: degree.id,
+    //           key: degree.name,
+    //           value: degree.name,
+    //         });
+    //       }
+    //     });
+    //   });
 
-    this.candidateService
-      .getStremForDropDown(this.isAdmin)
-      .subscribe((Streams) => {
-        Streams.forEach((stream) => {
-          if (stream.level === 1) {
-            this.streamSpecialization.push({
-              id: stream.id,
-              key: stream.name,
-              value: stream.name,
-              degreeId: stream.degreeId,
-            });
-          } else if (stream.level === 2) {
-            this.HSCDiplomaStream.push({
-              id: stream.id,
-              key: stream.name,
-              value: stream.name,
-              degreeId: stream.degreeId,
-            });
-          } else if (stream.level === 3) {
-            this.bachelorStream.push({
-              id: stream.id,
-              key: stream.name,
-              value: stream.name,
-              degreeId: stream.degreeId,
-            });
-          } else if (stream.level === 4) {
-            this.masterStream.push({
-              id: stream.id,
-              key: stream.name,
-              value: stream.name,
-              degreeId: stream.degreeId,
-            });
-          } else if (stream.level === 5) {
-            this.otherStream.push({
-              id: stream.id,
-              key: stream.name,
-              value: stream.name,
-              degreeId: stream.degreeId,
-            });
-          }
-        });
-      });
+    // this.candidateService
+    //   .getStremForDropDown(this.isAdmin)
+    //   .subscribe((Streams) => {
+    //     Streams.forEach((stream) => {
+    //       if (stream.level === 1) {
+    //         this.streamSpecialization.push({
+    //           id: stream.id,
+    //           key: stream.name,
+    //           value: stream.name,
+    //           degreeId: stream.degreeId,
+    //         });
+    //       } else if (stream.level === 2) {
+    //         this.HSCDiplomaStream.push({
+    //           id: stream.id,
+    //           key: stream.name,
+    //           value: stream.name,
+    //           degreeId: stream.degreeId,
+    //         });
+    //       } else if (stream.level === 3) {
+    //         this.bachelorStream.push({
+    //           id: stream.id,
+    //           key: stream.name,
+    //           value: stream.name,
+    //           degreeId: stream.degreeId,
+    //         });
+    //       } else if (stream.level === 4) {
+    //         this.masterStream.push({
+    //           id: stream.id,
+    //           key: stream.name,
+    //           value: stream.name,
+    //           degreeId: stream.degreeId,
+    //         });
+    //       } else if (stream.level === 5) {
+    //         this.otherStream.push({
+    //           id: stream.id,
+    //           key: stream.name,
+    //           value: stream.name,
+    //           degreeId: stream.degreeId,
+    //         });
+    //       }
+    //     });
+    //   });
     this.masterDegree.unshift(defaultSelectOption);
     this.masterStream.unshift(defaultSelectOption);
     this.otherDegree.unshift(defaultSelectOption);
@@ -294,37 +295,18 @@ export class EducationDetailsComponent implements OnInit, OnChanges {
   }
 
   StreamDetailOptions(index: number) {
+    //return [{id:1,value:"ABC"}];
     switch (index) {
       case 0:
-        return this.streamSpecialization.filter(
-          (x) =>
-            x.degreeId ===
-            this.educationDetailsArrayData.at(index).get('degreeId')?.value
-        );
+        return this.streamSpecialization
       case 1:
-        return this.HSCDiplomaStream.filter(
-          (x) =>
-            x.degreeId ===
-            this.educationDetailsArrayData.at(index).get('degreeId')?.value
-        );
+        return this.HSCDiplomaStream
       case 2:
-        return this.bachelorStream.filter(
-          (x) =>
-            x.degreeId ===
-            this.educationDetailsArrayData.at(index).get('degreeId')?.value
-        );
+        return this.bachelorStream
       case 3:
-        return this.masterStream.filter(
-          (x) =>
-            x.degreeId ===
-            this.educationDetailsArrayData.at(index).get('degreeId')?.value
-        );
+        return this.masterStream
       case 4:
-        return this.otherStream.filter(
-          (x) =>
-            x.degreeId ===
-            this.educationDetailsArrayData.at(index).get('degreeId')?.value
-        );
+        return this.otherStream
       default:
         return [];
     }
