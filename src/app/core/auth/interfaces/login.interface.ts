@@ -6,6 +6,7 @@ export interface LoginModel {
 }
 
 export interface TokenWithSidVm {
+  id: number;
   accessToken: string;
   refreshToken: string;
   refreshTokenExpiryTime: DateTime;
