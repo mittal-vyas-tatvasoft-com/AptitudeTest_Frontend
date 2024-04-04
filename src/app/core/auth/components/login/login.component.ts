@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit, OnDestroy {
   loginModel = loginControl;
   isAdmin = false;
   OffCampusMode: boolean;
-  //offCampusMode: boolean = false;
   rememberMe = false;
   mobileDeviceErrMsg = 'Login is not allowed in Mobile device';
   private ngUnsubscribe$ = new Subject<void>();
@@ -36,12 +35,11 @@ export class LoginComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    // this.settingService.get().subscribe({
-    //   next: (res) => {
-    //     this.OffCampusMode = res.data.userRegistration;
-    //   },
-    // });
-    this.OffCampusMode = true;
+    this.settingService.get().subscribe({
+      next: (res) => {
+        this.OffCampusMode = res.data.userRegistration;
+      },
+    });
     this.isAdmin = this.isRouteAdmin(this.activatedRoute);
     this.form = this.formBuilder.group({
       userName: [
