@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { ResponseModel } from 'src/app/shared/common/interfaces/response.interface';
+import { validations } from 'src/app/shared/messages/validation.static';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { SettingControls } from '../configs/setting.config';
 import { Setting } from '../interfaces/setting';
@@ -30,6 +31,14 @@ export class SettingComponent implements OnInit {
       screenCapture: [''],
       intervalForScreenCapture: [0, [Validators.min(0)]],
       cutOff: [0, [Validators.min(0)]],
+      email: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.emailREGEX),
+        ],
+      ],
+      password: ['', Validators.required],
     });
 
     this.settingService.get().subscribe({
@@ -41,6 +50,8 @@ export class SettingComponent implements OnInit {
           screenCapture: res.data.screenCapture,
           intervalForScreenCapture: +res.data.intervalForScreenCapture,
           cutOff: +res.data.cutOff,
+          email: res.data.email,
+          password: res.data.password,
         });
       },
       error: (error) => {
@@ -61,5 +72,17 @@ export class SettingComponent implements OnInit {
           this.snackbarService.error(error.message);
         },
       });
+  }
+
+  onIconClick(event: any) {
+    if (event.inputType === 'text') {
+      event.inputType = 'password';
+      this.settingControls.Password.iconName =
+        'password-visibility-show-dark.svg';
+    } else {
+      event.inputType = 'text';
+      this.settingControls.Password.iconName =
+        'password-visibility-hide-dark.svg';
+    }
   }
 }
