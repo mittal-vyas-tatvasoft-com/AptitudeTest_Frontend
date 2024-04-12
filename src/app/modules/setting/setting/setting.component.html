@@ -75,6 +75,23 @@
             </div>
           </div>
           <div class="col-md-12 ps-sm-5 pe-sm-5">
+            <div class="switch-block-wrapper ms-sm-5 me-sm-5">
+              <app-text-control
+                [formControlModel]="settingControls.Email"
+                [form]="settingForm"
+              ></app-text-control>
+            </div>
+          </div>
+          <div class="col-md-12 ps-sm-5 pe-sm-5">
+            <div class="switch-block-wrapper ms-sm-5 me-sm-5">
+              <app-text-control
+                [formControlModel]="settingControls.Password"
+                [form]="settingForm"
+                (iconClick)="onIconClick(settingControls.Password)"
+              ></app-text-control>
+            </div>
+          </div>
+          <div class="col-md-12 ps-sm-5 pe-sm-5">
             <div class="ms-sm-5 me-sm-5">
               <button
                 type="button"

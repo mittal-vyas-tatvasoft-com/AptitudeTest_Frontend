@@ -5,4 +5,6 @@ export interface Setting {
   screenCapture: boolean;
   intervalForScreenCapture: number;
   cutOff: number;
+  email: string;
+  password: string;
 }
