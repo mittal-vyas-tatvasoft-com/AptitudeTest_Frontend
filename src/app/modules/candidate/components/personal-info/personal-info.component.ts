@@ -54,6 +54,11 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
   @Input() candidateEditMode: boolean;
   @Input() collegeSelectedByCandidate: boolean;
   isCollegeSelectedByCandidate = false;
+  preferredLocations: SelectOption[] = [
+    { value: 'Only Ahmedabad', id: 1 },
+    { value: 'Preferred Rajkot', id: 2 },
+    { value: 'Only Rajkot', id: 3 },
+  ];
 
   constructor(
     private formBuilder: FormBuilder,
@@ -89,6 +94,9 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
     }
     if (this.candidateData?.state == 0) {
       this.form.get('state')?.patchValue('');
+    }
+    if (this.candidateData?.preferedLocation == 0) {
+      this.form.get('preferedLocation')?.patchValue('');
     }
     if (this.candidateData?.dateOfBirth == '0001-01-01T00:00:00') {
       this.form.get('dateOfBirth')?.patchValue('');
@@ -178,6 +186,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
         ],
       ],
       state: ['', [Validators.required]],
+      preferedLocation: ['', [Validators.required]],
       dateOfBirth: ['', Validators.required],
     });
   }

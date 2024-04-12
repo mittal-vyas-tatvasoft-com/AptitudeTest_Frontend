@@ -67,6 +67,7 @@ export interface UserData {
   collegeName: string;
   appliedThrough: number;
   technologyInterestedIn: number;
+  preferedLocation: number;
   technologyName: string;
   acpcMeritRank: number;
   gujcetScore: number;
@@ -96,6 +97,7 @@ export interface UpdateParams {
   pincode: number;
   city: string;
   state: number | null;
+  preferedLocation: number;
   appliedThrough: number;
   technologyInterestedIn: number;
   relationshipWithExistingEmployee: string;

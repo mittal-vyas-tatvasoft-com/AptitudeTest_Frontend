@@ -176,6 +176,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
             })
           ),
         state: personalInfo.state || null,
+        preferedLocation: personalInfo.preferedLocation,
       };
       if (this.candidateId) {
         this.candidateService
@@ -224,6 +225,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
     } else {
       this.personalInfoComponent.validateForm();
       this.educationDetailsComponent.validateForm();
+      this.examScoresComponent.validateForm();
       window.scroll({ top: 0, behavior: 'smooth' });
       this.snackbarService.error(Messages.fillRequiredField);
       this.disabled = false;
