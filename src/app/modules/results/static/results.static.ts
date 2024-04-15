@@ -16,6 +16,7 @@ export const DisplayedStatisticsColumns: string[] = [
 
 export const DisplayedColumns: string[] = [
   'select',
+  'number',
   'name',
   'startTime',
   'points',
