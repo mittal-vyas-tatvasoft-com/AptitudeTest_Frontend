@@ -19,6 +19,7 @@ import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import {
   CandidateModel,
   DropdownItem,
+  ExportCandidatesParams,
   GetAllCandidateParams,
 } from '../../interfaces/candidate.interface';
 import { CandidateService } from '../../services/candidate.service';
@@ -75,6 +76,39 @@ export class CandidatesComponent implements OnInit {
     this.setupSearchObservable();
     this.getDropdowns();
     this.fetchCandidate();
+  }
+
+  exportData() {
+    const searchQuery = this.searchCandidate;
+    const collegeId = this.selectedCollege ? this.selectedCollege.id : null;
+    const groupId = this.selectedGroup ? this.selectedGroup.id : null;
+    const year = this.selectedYear ?? null;
+    const params: ExportCandidatesParams = {
+      currentPageIndex: this.currentPageIndex,
+      pageSize: this.pageSize,
+      searchQuery: searchQuery,
+      collegeId: collegeId,
+      groupId: groupId,
+      year: year,
+      sortField: this.sortKey,
+      sortOrder: this.sortDirection,
+    };
+    this.candidateService.getExportData(params).subscribe({
+      next: (res) => {
+        if (res.statusCode == StatusCode.Success) {
+          if (res.data.length > 0) {
+            let data = this.candidateService.mapExportData(res.data);
+            this.candidateService.downloadExcel(data);
+            this.snackbarService.success(res.message);
+          }
+        } else {
+          this.snackbarService.error(res.message);
+        }
+      },
+      error: (error) => {
+        this.snackbarService.error(error.message);
+      },
+    });
   }
 
   fetchCandidate() {

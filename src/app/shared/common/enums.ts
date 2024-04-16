@@ -184,3 +184,9 @@ export enum Gender {
   Male = 1,
   Female = 2,
 }
+
+export enum PreferredLocations {
+  OnlyAhmedabad = 1,
+  PreferredRajkot = 2,
+  OnlyRajkot = 3,
+}

@@ -22,6 +22,7 @@ import {
   ResultModel,
   ResultQueryParam,
   StatisticsData,
+  UnlockTestParams,
 } from '../../interfaces/result.interface';
 import { ResultsService } from '../../services/results.service';
 import { AdminApprovalComponent } from '../admin-approval/admin-approval.component';
@@ -52,6 +53,7 @@ export class ResultComponent implements OnInit {
   private searchInputValue = new Subject<string>();
   userAndTestIds: ApproveTestParams[] = [];
   results: ResultModel[] = [];
+  isUnlockTestButtonDisabled: boolean = true;
 
   constructor(
     public dialog: MatDialog,
@@ -191,12 +193,13 @@ export class ResultComponent implements OnInit {
         .getResults(this.params, this.currentPageIndex, this.pageSize)
         .subscribe((res) => {
           res.data.forEach((result) => {
-            if (result.status === 'Logged Out') {
+            if (result.status === 'Logged Out' || result.status === 'Active') {
               const userExists = this.userAndTestIds.some(
                 (user) =>
                   user.userId == result.userId &&
                   user.testId == result.userTestId
               );
+
               if (!userExists) {
                 this.userAndTestIds.push({
                   userId: result.userId,
@@ -225,6 +228,21 @@ export class ResultComponent implements OnInit {
         this.userAndTestIds.splice(index, 1);
       }
     }
+  }
+
+  handleTestUnlock(data: { userId: number; testId: number }) {
+    const unlockTestDetails: UnlockTestParams = {
+      userIds: [data.userId],
+      testId: data.testId,
+    };
+
+    this.resultService.unlockTests(unlockTestDetails).subscribe((res) => {
+      if (res.statusCode === StatusCode.Success) {
+        this.snackbarService.success(res.message);
+      } else {
+        this.snackbarService.error(res.message);
+      }
+    });
   }
 
   updateTestTime() {
@@ -291,6 +309,7 @@ export class ResultComponent implements OnInit {
                 action: '',
               };
             });
+
             this.totalItemsCount = res.data[0].totalRecords;
             this.dataSource = new MatTableDataSource<ResultModel>(data);
           } else {

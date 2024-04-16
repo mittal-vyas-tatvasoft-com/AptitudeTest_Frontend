@@ -40,13 +40,26 @@ export class ExamScoresComponent implements OnInit, OnChanges {
 
   createForm() {
     this.form = this.formBuilder.group({
-      acpcMeritRank: [''],
-      gujcetScore: ['', [Validators.max(120), Validators.min(0)]],
-      jeeScore: ['', [Validators.pattern(validations.common.fractionREGEX)]],
+      acpcMeritRank: ['', [Validators.required]],
+      gujcetScore: [
+        '',
+        [Validators.required, Validators.max(120), Validators.min(0)],
+      ],
+      jeeScore: [
+        '',
+        [
+          Validators.required,
+          Validators.pattern(validations.common.fractionREGEX),
+        ],
+      ],
     });
   }
 
   getFormData(): FormGroup {
     return this.form;
+  }
+
+  validateForm() {
+    this.form.markAllAsTouched();
   }
 }

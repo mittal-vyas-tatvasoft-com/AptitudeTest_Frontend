@@ -15,7 +15,7 @@ import {
   Validators,
 } from '@angular/forms';
 import * as moment from 'moment';
-import { StatusCode } from 'src/app/shared/common/enums';
+import { PreferredLocations, StatusCode } from 'src/app/shared/common/enums';
 import { validations } from 'src/app/shared/messages/validation.static';
 import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
@@ -28,7 +28,10 @@ import {
 import { UserData } from '../../interfaces/candidate.interface';
 import { CandidateService } from '../../services/candidate.service';
 import { MatSelectChange } from '@angular/material/select';
-import { OtherCollegeName } from '../../static/candidate.static';
+import {
+  OtherCollegeName,
+  preferredLocations,
+} from '../../static/candidate.static';
 
 @Component({
   selector: 'app-personal-info',
@@ -54,6 +57,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
   @Input() candidateEditMode: boolean;
   @Input() collegeSelectedByCandidate: boolean;
   isCollegeSelectedByCandidate = false;
+  preferredLocationList = preferredLocations;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -89,6 +93,9 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
     }
     if (this.candidateData?.state == 0) {
       this.form.get('state')?.patchValue('');
+    }
+    if (this.candidateData?.preferredLocation == 0) {
+      this.form.get('preferredLocation')?.patchValue('');
     }
     if (this.candidateData?.dateOfBirth == '0001-01-01T00:00:00') {
       this.form.get('dateOfBirth')?.patchValue('');
@@ -178,6 +185,7 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
         ],
       ],
       state: ['', [Validators.required]],
+      preferredLocation: ['', [Validators.required]],
       dateOfBirth: ['', Validators.required],
     });
   }
