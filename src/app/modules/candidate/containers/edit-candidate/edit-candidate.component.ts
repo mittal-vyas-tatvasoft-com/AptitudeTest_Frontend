@@ -176,7 +176,7 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
             })
           ),
         state: personalInfo.state || null,
-        preferedLocation: personalInfo.preferedLocation,
+        preferredLocation: personalInfo.preferredLocation,
       };
       if (this.candidateId) {
         this.candidateService

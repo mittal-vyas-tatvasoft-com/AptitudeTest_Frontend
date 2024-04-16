@@ -205,6 +205,11 @@ export interface ApproveTestParams {
   userId: number;
   testId: number;
 }
+
+export interface UnlockTestParams {
+  userIds: number[];
+  testId: number;
+}
 export interface ApproveTestData {
   userId: number;
   testId: number;

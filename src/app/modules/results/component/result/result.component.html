@@ -10,6 +10,7 @@
     <button mat-flat-button color="primary" (click)="updateTestTime()">
       Update Test Time
     </button>
+
     <button
       mat-flat-button
       color="primary"
@@ -84,6 +85,7 @@
   [dataSource]="dataSource"
   (detailsClicked)="getDetails($event)"
   (checkboxClicked)="handleCheckBoxData($event)"
+  (testUnlockClicked)="handleTestUnlock($event)"
   [totalItemsCount]="totalItemsCount"
   [pageSize]="pageSize"
   (pageSizeChanged)="handlePageSizeChange($event)"

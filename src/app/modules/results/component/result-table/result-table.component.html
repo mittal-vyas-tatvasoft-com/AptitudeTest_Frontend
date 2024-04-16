@@ -20,7 +20,10 @@
           </th>
           <td mat-cell *matCellDef="let row">
             <mat-checkbox
-              *ngIf="row.status === resultStatus.LoggedOut"
+              *ngIf="
+                row.status === resultStatus.Active ||
+                row.status === resultStatus.LoggedOut
+              "
               color="primary"
               (change)="
                 $event ? selection.toggle(row) : null;
@@ -173,6 +176,16 @@
                   <img src="./assets/images/edit.svg" alt="Edit" />
                 </mat-icon>
                 Approve
+              </button>
+              <button
+                mat-menu-item
+                *ngIf="row.status === resultStatus.Locked"
+                (click)="handleTestUnlock(row.id, row.testId)"
+              >
+                <mat-icon>
+                  <img src="./assets/images/lock-open.svg" alt="Unlock" />
+                </mat-icon>
+                Unlock Test
               </button>
             </mat-menu>
           </td>

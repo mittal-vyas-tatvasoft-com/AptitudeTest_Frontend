@@ -67,7 +67,7 @@ export interface UserData {
   collegeName: string;
   appliedThrough: number;
   technologyInterestedIn: number;
-  preferedLocation: number;
+  preferredLocation: number;
   technologyName: string;
   acpcMeritRank: number;
   gujcetScore: number;
@@ -97,7 +97,7 @@ export interface UpdateParams {
   pincode: number;
   city: string;
   state: number | null;
-  preferedLocation: number;
+  preferredLocation: number;
   appliedThrough: number;
   technologyInterestedIn: number;
   relationshipWithExistingEmployee: string;
@@ -150,4 +150,45 @@ export interface GetAllCandidateParams {
   year?: number | null;
   sortField: string;
   sortOrder: string;
+}
+
+export interface ExportCandidatesParams {
+  currentPageIndex: number;
+  pageSize: number;
+  searchQuery?: string;
+  collegeId?: number | null;
+  groupId?: number | null;
+  year?: number | null;
+  sortField: string;
+  sortOrder: string;
+}
+
+export interface CandidateExportData {
+  fullName: string;
+  userName: string;
+  gender: string;
+  abbreviationofCollege: string;
+  location: string;
+  preferredProfile: string;
+  appliedThrough: string;
+  permanentAddress: string;
+  mobile: string;
+  email: string;
+  dateOfBirth_Age: string;
+  sscUniversity: string;
+  sscStream: string;
+  sscGrade: string;
+  sscMaths: string;
+  hscUniversity: string;
+  hscStream: string;
+  hscGrade: string;
+  hscMaths_Account: string;
+  hscPhysics_State: string;
+  degree1: string;
+  degree1University: string;
+  degree1Stream: string;
+  degree1Grade: string;
+  acpcMeritRank: number;
+  gujcetScore: number;
+  jeescore: number;
 }

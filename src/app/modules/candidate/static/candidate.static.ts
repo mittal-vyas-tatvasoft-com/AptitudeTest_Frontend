@@ -1,3 +1,6 @@
+import { PreferredLocations } from 'src/app/shared/common/enums';
+import { SelectOption } from 'src/app/shared/modules/form-control/interfaces/select-option.interface';
+
 export const DragDropInput =
   'Drag & Drop or <span class="link-primary ml-4p">Browse</span>';
 
@@ -16,5 +19,11 @@ export const defaultSelectOption = {
   key: 'Select',
   value: 'Select',
 };
+
+export const preferredLocations: SelectOption[] = [
+  { value: 'Only Ahmedabad', id: PreferredLocations.OnlyAhmedabad },
+  { value: 'Preferred Rajkot', id: PreferredLocations.PreferredRajkot },
+  { value: 'Only Rajkot', id: PreferredLocations.OnlyRajkot },
+];
 
 export const OtherCollegeName = 'Others';

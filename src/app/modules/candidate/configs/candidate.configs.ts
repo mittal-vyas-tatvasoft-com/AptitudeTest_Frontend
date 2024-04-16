@@ -182,9 +182,9 @@ export const candidateControl = {
     required: true,
     requiredErrMsg: 'State is required',
   },
-  preferedLocation: {
+  preferredLocation: {
     value: '',
-    key: 'preferedLocation',
+    key: 'preferredLocation',
     label: 'Preferred Location',
     inputType: 'select',
     required: true,
