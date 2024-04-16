@@ -14,6 +14,7 @@ import {
   ResultExportData,
   ResultQueryParam,
   StatisticsModel,
+  UnlockTestParams,
 } from '../interfaces/result.interface';
 @Injectable({
   providedIn: 'root',
@@ -59,6 +60,21 @@ export class ResultsService {
       `${environment.baseURL}Results/UpdateTestRemainingTime/${timeToBeAdded}`,
       data
     );
+  }
+
+  unlockTests(
+    unlockTestsPayload: UnlockTestParams
+  ): Observable<ResponseModel<number>> {
+    return this.http
+      .put<ResponseModel<number>>(
+        `${environment.baseURL}Results/ReverseLockedTests`,
+        unlockTestsPayload
+      )
+      .pipe(
+        map((res: ResponseModel<number>) => {
+          return res;
+        })
+      );
   }
 
   getApproveTestDetails(userId: number, testId: number) {

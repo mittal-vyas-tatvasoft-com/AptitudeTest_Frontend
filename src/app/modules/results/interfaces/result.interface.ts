@@ -16,6 +16,7 @@ export interface ResultModel {
   id: number;
   testId: number;
   name: string;
+  number:number;
   universityName: string;
   startTime: string;
   points: string;
@@ -30,10 +31,13 @@ export interface ResultModel {
 }
 
 export interface ResultData {
+  index:number
   userId: number;
   firstName: string;
+  fatherName: string;
   lastName: string;
   collegeName: string;
+  shortCollegeName: string;
   startTime: string;
   points: number;
   correctMarks: number;
@@ -199,6 +203,11 @@ export interface ResultExportData {
 
 export interface ApproveTestParams {
   userId: number;
+  testId: number;
+}
+
+export interface UnlockTestParams {
+  userIds: number[];
   testId: number;
 }
 export interface ApproveTestData {

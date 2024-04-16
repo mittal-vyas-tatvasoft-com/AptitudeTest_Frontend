@@ -28,6 +28,17 @@
       Import
     </button>
     <button
+      mat-flat-button
+      color="primary"
+      class="btn-with-icon"
+      (click)="exportData()"
+    >
+      <mat-icon
+        ><img src="./assets/images/export-white.svg" alt="Export"
+      /></mat-icon>
+      Export
+    </button>
+    <button
       mat-stroked-button
       [matMenuTriggerFor]="actionMenu"
       class="btn-stroked-default"

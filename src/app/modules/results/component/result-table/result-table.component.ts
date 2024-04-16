@@ -46,6 +46,10 @@ export class ResultTableComponent {
     userId: number;
     testId: number;
   }>();
+  @Output() testUnlockClicked = new EventEmitter<{
+    userId: number;
+    testId: number;
+  }>();
   @Output() allCheckboxesSelected = new EventEmitter<boolean>();
   selection = new SelectionModel<any>(true, []); // This selection model is used for item selection, and the type is not specific.
 
@@ -81,6 +85,10 @@ export class ResultTableComponent {
 
   handleCheckBox(userId: number, testId: number) {
     this.checkboxClicked.emit({ userId, testId });
+  }
+
+  handleTestUnlock(userId: number, testId: number) {
+    this.testUnlockClicked.emit({ userId, testId });
   }
 
   toggleAllRows() {
