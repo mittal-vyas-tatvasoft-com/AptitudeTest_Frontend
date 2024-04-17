@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private snackbarService: SnackbarService,
-    private settingService: SettingService
+    private settingService: SettingService,
   ) {}
 
   ngOnInit() {
@@ -83,25 +83,30 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: ResponseModel<TokenWithSidVm>) => {
           if (res.result) {
-            this.loginService.setSubmitted(
-              res.data.isSubmitted ? 'true' : 'false'
-            );
-            this.loginService.setProfileEdited(
-              res.data.isProfileEdited ? 'true' : 'false'
-            );
-            const token = this.loginService.decodeToken();
-            if (res.data.isSubmitted) {
-              this.router.navigate([`user/${Navigation.Submitted}`]);
-            } else if (res.data.isProfileEdited) {
-              if (res.data.isStarted) {
-                this.router.navigate([
-                  `${Navigation.CandidateUser}/${Navigation.Instructions}`,
-                ]);
+            if(!res.data.isFirstLoggedIn){
+              this.router.navigate([`${Navigation.ChangePassword}`]);
+            }
+            else{
+              this.loginService.setSubmitted(
+                res.data.isSubmitted ? 'true' : 'false'
+              );
+              this.loginService.setProfileEdited(
+                res.data.isProfileEdited ? 'true' : 'false'
+              );
+              const token = this.loginService.decodeToken();
+              if (res.data.isSubmitted) {
+                this.router.navigate([`user/${Navigation.Submitted}`]);
+              } else if (res.data.isProfileEdited) {
+                if (res.data.isStarted) {
+                  this.router.navigate([
+                    `${Navigation.CandidateUser}/${Navigation.Instructions}`,
+                  ]);
+                } else {
+                  this.router.navigate([`${Navigation.CandidateUser}`]);
+                }
               } else {
-                this.router.navigate([`${Navigation.CandidateUser}`]);
+                this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
               }
-            } else {
-              this.router.navigate([`${Navigation.Edit}/${token.Id}`]);
             }
           } else {
             this.snackbarService.error(res.message);

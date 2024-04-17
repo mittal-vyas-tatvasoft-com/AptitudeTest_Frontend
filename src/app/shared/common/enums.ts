@@ -52,6 +52,7 @@ export enum Navigation {
   Instructions = 'instructions',
   Test = 'test',
   Submitted = 'submitted',
+  ChangePassword = 'change-user-password',
 
   //Reports navigation
   Reports = 'reports',

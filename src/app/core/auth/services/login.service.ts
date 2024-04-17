@@ -36,7 +36,7 @@ export class LoginService {
     private router: Router,
     private dialogRef: MatDialog,
     private candidateTestService: CandidateTestService,
-    private location: Location
+    private location: Location,
   ) {}
 
   storage() {
@@ -192,6 +192,15 @@ export class LoginService {
   ): Observable<ResponseModel<string>> {
     return this.http.post<ResponseModel<string>>(
       `${environment.baseURL}AdminAuthentication/ChangePassword`,
+      payload
+    );
+  }
+
+  changeUserPassword(
+    payload: ChangePasswordModel
+  ): Observable<ResponseModel<string>> {
+    return this.http.post<ResponseModel<string>>(
+      `${environment.baseURL}UserAuthentication/ChangePassword`,
       payload
     );
   }

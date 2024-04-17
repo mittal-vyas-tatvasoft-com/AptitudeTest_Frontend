@@ -11,6 +11,7 @@ import { CoreModule } from '../core.module';
 import { SharedMaterialModule } from '../../shared/material/shared-material.module';
 import { ChangePasswordComponent } from './components/change-password/change-password.component';
 import { ChangePasswordActionComponent } from './components/change-password-action/change-password-action.component';
+import { ChangeUserPasswordComponent } from './components/change-user-password/change-user-password.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { ChangePasswordActionComponent } from './components/change-password-acti
     ResetPasswordComponent,
     ChangePasswordComponent,
     ChangePasswordActionComponent,
+    ChangeUserPasswordComponent,
   ],
   imports: [
     CommonModule,
