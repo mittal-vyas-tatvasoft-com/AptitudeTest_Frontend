@@ -8,6 +8,7 @@ import { OffCampusModeGuard } from '../guards/offCampusMode/off-campus-mode.guar
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 import { LoginComponent } from './components/login/login.component';
 import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
+import { ChangeUserPasswordComponent } from './components/change-user-password/change-user-password.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
     path: Navigation.Register,
     component: RegisterComponent,
     canActivate: [OffCampusModeGuard],
+  },
+  {
+    path: Navigation.ChangePassword,
+    component: ChangeUserPasswordComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: `${Navigation.Edit}/:id`,
