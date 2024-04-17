@@ -14,4 +14,5 @@ export interface TokenWithSidVm {
   isSubmitted: boolean;
   isProfileEdited: boolean;
   isStarted: boolean;
+  isFirstLoggedIn: boolean;
 }
