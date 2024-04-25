@@ -99,7 +99,20 @@ export class AddCandidateComponent implements OnInit, AfterViewInit {
           Validators.maxLength(30),
         ],
       ],
-      fatherName: [''],
+      fatherName: [
+        '',
+        [
+          Validators.required,
+          regexValidator(
+            new RegExp(validations.common.characterWithSpaceREGEX),
+            { characterOnly: true }
+          ),
+          regexValidator(new RegExp(validations.common.whitespaceREGEX), {
+            pattern: true,
+          }),
+          Validators.maxLength(30),
+        ],
+      ],
       email: [
         '',
         [
