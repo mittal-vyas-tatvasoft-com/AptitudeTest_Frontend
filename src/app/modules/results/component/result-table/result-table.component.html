@@ -35,10 +35,10 @@
           </td>
         </ng-container>
 
-         <!-- Index Column -->
-         <ng-container matColumnDef="number">
+        <!-- Index Column -->
+        <ng-container matColumnDef="number">
           <th mat-header-cell mat-sort-header *matHeaderCellDef>No.</th>
-          <td mat-cell *matCellDef="let row;">{{ row.number }}</td>
+          <td mat-cell *matCellDef="let row">{{ row.number }}</td>
         </ng-container>
 
         <!-- Name Column -->
@@ -231,16 +231,62 @@
             <img src="./assets/images/chevron-backward.svg" alt="Prev" />
           </a>
         </li>
-        <li *ngFor="let page of pageNumbers; let i = index">
-          <a
-            mat-stroked-button
-            href="javascript:void(0)"
-            (click)="onPageChangeToPage(page)"
-            [class.active]="currentPageIndex === i"
+
+        <ng-container
+          *ngIf="
+            pageNumbers.length <= pageLengthForNormalPages;
+            else otherPagination
+          "
+        >
+          <li *ngFor="let page of pageNumbers; let i = index">
+            <a
+              mat-stroked-button
+              href="javascript:void(0)"
+              (click)="onPageChangeToPage(page)"
+              [class.active]="currentPageIndex === i"
+            >
+              {{ page }}
+            </a>
+          </li>
+        </ng-container>
+
+        <ng-template #otherPagination>
+          <li
+            *ngFor="
+              let page of pageNumbers.slice(0, pagesToDisplay);
+              let i = index
+            "
           >
-            {{ page }}
-          </a>
-        </li>
+            <a
+              mat-stroked-button
+              href="javascript:void(0)"
+              (click)="onPageChangeToPage(page)"
+              [class.active]="currentPageIndex === page - 1"
+            >
+              {{ page }}
+            </a>
+          </li>
+          <span><b>&nbsp;.&nbsp; .&nbsp; .&nbsp; .&nbsp; .&nbsp;</b></span>
+          <li
+            *ngFor="
+              let page of pageNumbers.slice(
+                getTotalPages() - pagesToDisplay,
+                getTotalPages()
+              );
+              let i = index
+            "
+          >
+            <a
+              mat-stroked-button
+              href="javascript:void(0)"
+              (click)="onPageChangeToPage(page)"
+              [class.active]="currentPageIndex === page - 1"
+            >
+              {{ page }}
+            </a>
+          </li>
+        </ng-template>
+
         <li>
           <a
             mat-stroked-button

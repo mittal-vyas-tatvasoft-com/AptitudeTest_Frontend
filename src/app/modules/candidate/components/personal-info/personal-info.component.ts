@@ -136,12 +136,17 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
         ],
       ],
       fatherName: [
-        '',
+        { value: '', disabled: this.candidateEditMode },
         [
+          Validators.required,
+          Validators.maxLength(30),
+          regexValidator(
+            new RegExp(validations.common.characterWithSpaceREGEX),
+            { characterOnly: true }
+          ),
           regexValidator(new RegExp(validations.common.whitespaceREGEX), {
             pattern: true,
           }),
-          Validators.maxLength(30),
         ],
       ],
       email: [
@@ -165,7 +170,8 @@ export class PersonalInfoComponent implements OnInit, OnChanges {
       gender: ['', [Validators.required]],
       status: [candidateControl.status.value],
       createdYear: [{ value: '', disabled: this.isAdmin }],
-      password: ['', [Validators.pattern(validations.common.passwordREGEX)]],
+      //password: ['', [Validators.pattern(validations.common.passwordREGEX)]],
+      password: [''],
       appliedThrough: ['', Validators.required],
       technologyInterestedIn: ['', [Validators.required]],
       pincode: [

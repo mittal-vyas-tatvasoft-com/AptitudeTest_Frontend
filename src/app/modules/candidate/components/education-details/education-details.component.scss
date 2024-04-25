@@ -1,15 +1,17 @@
 @media (min-width: 992px) and (max-width: 1416px) {
-    .grade-error-register {
-        position: relative;
-        top: -10px;
-        left: -15px;
-    }
+  .grade-error-register {
+    // position: relative;
+    // top: -10px;
+    // left: -15px;
+    white-space: nowrap;
+  }
 }
 
 @media (min-width: 992px) {
-    .grade-error {
-        position: relative;
-        top: -10px;
-        left: -15px;
-    }
+  .grade-error {
+    // position: relative;
+    // top: -10px;
+    // left: -15px;
+    white-space: nowrap;
+  }
 }
