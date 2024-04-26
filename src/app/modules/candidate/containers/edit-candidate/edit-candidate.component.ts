@@ -104,8 +104,8 @@ export class EditCandidateComponent implements OnInit, OnDestroy {
       const updateParams: UpdateParams = {
         id: this.candidateId ? this.candidateId : 0,
         firstName: personalData.controls['firstName'].value,
+        fatherName: personalData.controls['fatherName'].value,
         lastName: personalData.controls['lastName'].value,
-        fatherName: personalInfo.fatherName,
         email: personalData.controls['email'].value,
         phoneNumber: personalData.controls['phoneNumber'].value,
         groupId: personalInfo.userGroup ? personalInfo.userGroup : 0,

@@ -33,6 +33,8 @@ export class ResultTableComponent {
     { display: '50', value: 50 },
     { display: '100', value: 100 },
   ];
+  pageLengthForNormalPages = 8;
+  pagesToDisplay = 3;
   @Input() totalItemsCount: number = 0;
   @Input() pageSize: number = 10;
   @Input() dataSource: MatTableDataSource<ResultModel>;
@@ -145,6 +147,10 @@ export class ResultTableComponent {
   updatePageNumbers() {
     const totalPages = Math.ceil(this.totalItemsCount / this.pageSize);
     this.pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1);
+  }
+
+  getTotalPages() {
+    return Math.ceil(this.totalItemsCount / this.pageSize);
   }
 
   onPageChangeToPage(page: number) {
