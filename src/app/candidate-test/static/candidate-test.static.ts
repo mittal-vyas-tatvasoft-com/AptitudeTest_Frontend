@@ -3,6 +3,8 @@ export const NoTestAssigned =
 
 export const Messages = {
   ScreenCaptureError: 'Please Share Entire Screen',
+  CheckboxError:"Please check Terms and conditions",
+  CameraAccessError:"Please give camera permission"
 };
 
 export const RefreshKey = 'isRefresh';

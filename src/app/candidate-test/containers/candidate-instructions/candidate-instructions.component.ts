@@ -5,7 +5,7 @@ import { SettingService } from 'src/app/modules/setting/services/setting.service
 import { StatusCode } from 'src/app/shared/common/enums';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { CandidateTestService } from '../../services/candidate-test.service';
-import { NoTestAssigned } from '../../static/candidate-test.static';
+import { NoTestAssigned,Messages } from '../../static/candidate-test.static';
 
 @Component({
   selector: 'app-candidate-instructions',
@@ -91,6 +91,14 @@ export class CandidateInstructionsComponent implements OnInit {
       });
   }
   startTest() {
+    if(!this.isChecked){
+      this.snackbarService.error(Messages.CheckboxError);
+      return;
+    }
+    if(this.NoCameraAccess){
+      this.snackbarService.error(Messages.CameraAccessError);
+      return;
+    }
     this.candidateTestService.getUserTest(this.userId).subscribe({
       next: (res) => {
         if (res.statusCode == StatusCode.Success) {
