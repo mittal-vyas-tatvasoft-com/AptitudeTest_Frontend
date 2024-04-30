@@ -87,9 +87,21 @@
 
             <span
               class="pointer"
-              *ngIf="isListViewSelected || element.isFolder"
+              *ngIf="
+                (isListViewSelected || element.isFolder) &&
+                element.name !== 'UserFaceCamShots'
+              "
             >
               {{ element.name }}
+            </span>
+            <span
+              class="pointer"
+              *ngIf="
+                (isListViewSelected || element.isFolder) &&
+                element.name === 'UserFaceCamShots'
+              "
+            >
+              Camera Captures
             </span>
           </div>
           <mat-menu #rootMenu="matMenu">
