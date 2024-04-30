@@ -22,6 +22,13 @@ export class PreventContextMenuDirective {
       if (event.key === 'F12' || event.keyCode === 123) {
         event.preventDefault();
       }
+      if (
+        event.ctrlKey &&
+        event.shiftKey &&
+        (event.key === 'I' || event.key === 'i')
+      ) {
+        event.preventDefault();
+      }
     }
   }
 }
