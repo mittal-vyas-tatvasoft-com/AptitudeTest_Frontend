@@ -44,7 +44,7 @@ email:string
         ],
         confirmPasswordField: ['', [Validators.required]],
       },
-      { validator: this.checkPasswords } as AbstractControlOptions
+      { validator: [this.checkNewPasswords,this.checkConfirmPassword] } as AbstractControlOptions
     );
   }
 
@@ -81,22 +81,33 @@ email:string
     }
   }
 
-  checkPasswords(group: FormGroup) {
+  checkNewPasswords(group: FormGroup) {
     const currentPassword = group.controls['currentPasswordField'];
     const newPassword = group.controls['newPasswordField'];
-    const confirmPassword = group.controls['confirmPasswordField'];
+
     if (currentPassword.value !== '') {
-      if (currentPassword.value === newPassword.value) {
-        group.get('newPasswordField')?.setErrors({ newPassword: true });
-        return { newPassword: true };
-      }
-      if (newPassword.value === confirmPassword.value) {
-        return null;
-      } else {
-        group.get('confirmPasswordField')?.setErrors({ confirmPassword: true });
-        return { confirmPassword: true };
-      }
+        if (currentPassword.value === newPassword.value) {
+          group.get('newPasswordField')?.setErrors({ newPassword: true });
+          return { newPassword: true };
+        } 
+        else{
+          group.get('newPasswordField')?.setErrors({ newPassword: null });
+          return null;
+        }
     } else {
+      return null;
+    }
+  }
+
+  checkConfirmPassword(group: FormGroup) {
+    const newPassword = group.controls['newPasswordField'];
+    const confirmPassword = group.controls['confirmPasswordField'];
+    if (newPassword.value != confirmPassword.value) {
+      group.get('confirmPasswordField')?.setErrors({ confirmPassword: true });
+      return { confirmPassword: true };
+    }
+    else{
+      group.get('confirmPasswordField')?.setErrors({ confirmPassword: null });
       return null;
     }
   }
