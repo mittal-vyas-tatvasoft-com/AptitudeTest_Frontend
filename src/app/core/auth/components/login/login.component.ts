@@ -83,7 +83,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe({
         next: (res: ResponseModel<TokenWithSidVm>) => {
           if (res.result) {
-            if(!res.data.isFirstLoggedIn){
+            this.loginService.isFirstLoggedIn=res.data.isFirstLoggedIn;
+            if(!res.data.isFirstLoggedIn){  
               this.router.navigate([`${Navigation.ChangePassword}`]);
             }
             else{

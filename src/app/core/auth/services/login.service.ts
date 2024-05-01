@@ -30,6 +30,7 @@ export class LoginService {
   private sId = 'sId';
   public remainingExamTimeInSeconds: number;
   isUpdateTime = false;
+  isFirstLoggedIn=false;
   refreshTokenSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   constructor(
     private http: HttpClient,
