@@ -12,6 +12,7 @@ import {
   Answer,
   Question,
   QuestionTimerDetail,
+  RemainingTime,
   SaveAnswerModel,
   UpdateTestTimeModel,
   UpdateUserTestStatusModel,
@@ -391,8 +392,13 @@ export class McqTestComponent implements OnInit, OnDestroy {
 
   updateTime(data: UpdateTestTimeModel) {
     this.candidateTestService.updateTime(data).subscribe({
-      next: (res: ResponseModel<string>) => {
-        if (res.statusCode !== StatusCode.Success) {
+      next: (res: ResponseModel<RemainingTime>) => {
+        if (
+          res.statusCode === StatusCode.Success &&
+          res.data.isTimeUpdatedByAdmin
+        ) {
+          this.remainingSecondsForExam = res.data.timeRemaining;
+        } else if (res.statusCode !== StatusCode.Success) {
           this.snackBarService.error(res.message);
         }
       },

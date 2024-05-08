@@ -11,6 +11,7 @@ import {
   UpdateUserTestStatusModel,
   TestInstructions,
   UpdateTestTimeModel,
+  RemainingTime,
 } from '../interfaces/candidate-test.interface';
 import { SnackbarService } from 'src/app/shared/snackbar/snackbar.service';
 import { Messages } from '../static/candidate-test.static';
@@ -81,7 +82,7 @@ export class CandidateTestService {
   }
 
   updateTime(data: UpdateTestTimeModel) {
-    return this.http.put<ResponseModel<string>>(
+    return this.http.put<ResponseModel<RemainingTime>>(
       `${environment.baseURL}Candidates/UpdateRemainingTime`,
       data
     );
