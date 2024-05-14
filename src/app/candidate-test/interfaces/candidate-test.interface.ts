@@ -72,3 +72,8 @@ export interface UpdateUserTestStatusModel {
   userId: number;
   isActive: boolean;
 }
+
+export interface RemainingTime {
+  isTimeUpdatedByAdmin: boolean;
+  timeRemaining: number;
+}
